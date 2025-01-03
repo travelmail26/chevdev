@@ -41,7 +41,7 @@ class AIHandler:
         #self.logger = ConversationLogger()
         self.user_id = user_id
         self.messages = self.initialize_messages()
-        
+
         self.conversation_info = {
             "messages": self.messages,
             "user_id": self.user_id
@@ -53,7 +53,7 @@ class AIHandler:
         system_content_parts = []
 
         # Add current time context as the first instruction
-        
+
         # Add system instruction to record conversation with user id
         system_content_parts.append(
             '=== SYSTEM INSTRUCTION ===\nConversation with User ID: ' +
@@ -64,20 +64,20 @@ class AIHandler:
         )
 
         # Load and append contents from each file
-        with open('reporter/chef/instructions_base.txt', 'r') as file:
+        with open('chef/instructions_base.txt', 'r') as file:
             system_content_parts.append("=== BASE DEFAULT INSTRUCTIONS ===\n" +
                                         file.read())
         # with open('reporter/chef/instructions_diet_logistics.txt','r') as file:
         #     system_content_parts.append(
         #         "=== DIET LOGISTICS INSTRUCTIONS ===\n" + file.read())
-        with open('reporter/chef/instructions_brainstorm.txt', 'r') as file:
+        with open('chef/instructions_brainstorm.txt', 'r') as file:
             system_content_parts.append("=== BRAINSTORM INSTRUCTIONS ===\n" +
                                         file.read())
         # with open('reporter/chef/exploring_additional_instructions.txt',
         #           'r') as file:
         #     system_content_parts.append(
         #         "=== EXPLORING ADDITIONAL INSTRUCTIONS ===\n" + file.read())
-        with open('reporter/chef/instructions_log.txt', 'r') as file:
+        with open('chef/instructions_log.txt', 'r') as file:
             system_content_parts.append(
                 "=== LOGGING ADDITIONAL INSTRUCTIONS ===\n" + file.read())
         # with open('reporter/chef/instructions_mealplan.txt', 'r') as file:
