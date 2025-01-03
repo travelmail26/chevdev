@@ -4,4 +4,14 @@ version = "0.1.0"
 description = ""
 authors = ["Your Name <you@example.com>"]
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "africanwhisper>=0.9.23",
+    "firebase>=4.0.1",
+    "flask>=3.1.0",
+    "google-auth>=2.37.0",
+    "gspread>=6.1.4",
+    "nest-asyncio>=1.6.0",
+    "openai>=1.59.2",
+    "requests>=2.32.3",
+    "telegram>=0.0.1",
+]
