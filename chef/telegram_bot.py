@@ -151,17 +151,8 @@ async def setup_bot():
 async def run_bot():
     application = None
     try:
-        # Clear any existing application
-        if 'application' in globals():
-            try:
-                await globals()['application'].shutdown()
-                await globals()['application'].stop()
-            except Exception:
-                pass
-
         application = await setup_bot()
-        await application.initialize()
-        await application.start()
+        print("Starting polling...", flush=True)
         await application.run_polling(
             allowed_updates=Update.ALL_TYPES,
             drop_pending_updates=True,
@@ -169,10 +160,15 @@ async def run_bot():
         )
     except Exception as e:
         print(f"Error during bot execution: {e}")
+        if application:
+            try:
+                await application.shutdown()
+            except Exception:
+                pass
         raise
     finally:
         if application:
             try:
-                await application.stop()
+                await application.shutdown()
             except Exception as e:
                 print(f"Error during shutdown: {e}")
