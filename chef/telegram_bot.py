@@ -11,7 +11,7 @@ from chefwriter import AIHandler
 from threading import Thread
 from datetime import datetime
 from pathlib import Path
-from testingscripts.accesschat import readchatfile, appendturn
+#from testingscripts.accesschat import readchatfile, appendturn
 from firebase import firebase_get_media_url
 import traceback
 
