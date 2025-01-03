@@ -138,6 +138,7 @@ async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 async def setup_bot():
+    print ('DEBUG: token in setup_bot', TOKEN)
     application = Application.builder().token(TOKEN).build()
     await application.initialize()
     application.add_handler(CommandHandler("start", start))
