@@ -34,6 +34,7 @@ try:
         print("Running in PRODUCTION mode")
     else:
         TOKEN = os.environ['TELEGRAM_DEV_KEY']
+        print ('DEBUG active token:', TOKEN)
         print("Running in DEVELOPMENT mode")
 
     if not TOKEN:
