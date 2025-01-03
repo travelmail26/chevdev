@@ -46,7 +46,8 @@ async def async_main():
         await run_bot()
     except Exception as e:
         print(f"Critical error in bot: {str(e)}", flush=True)
-        sys.exit(1)
+        return False
+    return True
 
 def main():
     try:
@@ -58,11 +59,14 @@ def main():
         print("Flask thread started", flush=True)
         
         # Run telegram bot in the main event loop
-        asyncio.run(async_main())
-        
+        if not asyncio.run(async_main()):
+            print("Bot initialization failed", flush=True)
+            return
+            
     except Exception as e:
         print(f"Critical error: {str(e)}", flush=True)
-        sys.exit(1)
+    finally:
+        print("Shutting down...", flush=True)
 
 if __name__ == "__main__":
     print("Starting program...", flush=True)
