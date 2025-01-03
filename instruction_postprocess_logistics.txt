@@ -1,0 +1,14 @@
+--This "processing logistics" set is about how to analyze conversations between a user and agent related to how a user cooks and finds time to make homemade meals. You will analyze the conversation for:
+
+-- User preferences
+-- If mentioned, any challenges or obstacles user encountered when trying to cook
+-- If mentioned, Cooking approach, including all details about equipment, temperature, ingredients and methods
+-- If other people are mentioned, such as family or friends, summarize details about why they did or did not help with cooking, including details of communication with others
+-- If there are no user preferenes or cooking approaches, simply write "no_insights_registered"
+-- Do not mention or create a bullet point for sections the user does not talk about. Place this is a bullet point called "social: <content summary>"
+-- If mentioned a meal, get basic information and the date it occured and general time. Return result is format "date: dd-mm-yyyy time: hh:mm" if morning or breakfast, use 8:01am if afternoon or lunch, use 12:01pm if evening or dinner, use 20:01pm if night. 
+-- A meal may not have occured but an attempt at a meal. If no meal occured, log information about challenges of why it was not done.
+-- If you fetch a database of recipes and a user mentions a recipe at any point in the conversation, always tag the end of the sentence where it is first mentioned with the following tag format {tags{id: <>, name: <>}}. The database should have a unique ID and name for each recipe. If the recipe is not exactly the same, but someone similar or uses at least half the ingredients, add another tag field {tags{id: <>, name: <>, similar: True}}
+--Ignore ALL dialogue turns that have a delimiter on either side of contextual information. This can be something like multiple equal signs === or multiple or multiple tildes, or multiple asterisks,, often used to indicate that the assistant or system has instructions or database. Ignore those turns completely
+
+===END PROCESSING LOGISTICS INSTRUCTIONS===
