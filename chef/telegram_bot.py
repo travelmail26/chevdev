@@ -28,14 +28,17 @@ import traceback
 
 try:
     ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
-
+    print(f"Current environment variables: {list(os.environ.keys())}")
+    
     if ENVIRONMENT == 'production':
-        TOKEN = os.environ['TELEGRAM_KEY']
+        TOKEN = os.environ.get('TELEGRAM_KEY')
         print("Running in PRODUCTION mode")
     else:
-        TOKEN = os.environ['TELEGRAM_DEV_KEY']
-        print ('DEBUG active token:', TOKEN)
+        TOKEN = os.environ.get('TELEGRAM_DEV_KEY')
         print("Running in DEVELOPMENT mode")
+        if 'TELEGRAM_DEV_KEY' not in os.environ:
+            raise ValueError("TELEGRAM_DEV_KEY not found in environment variables")
+        print(f"Token length: {len(TOKEN) if TOKEN else 0}")
 
     if not TOKEN:
         raise ValueError(f"No Telegram token found for {ENVIRONMENT} environment")
@@ -43,7 +46,7 @@ try:
 except KeyError as e:
     raise ValueError(f"Missing required token for {ENVIRONMENT} environment")
 except Exception as e:
-    raise
+    raise ValueError(f"Error loading token: {str(e)}")
 
 conversations = {}
 handlers_per_user = {}
