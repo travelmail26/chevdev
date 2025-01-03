@@ -11,7 +11,6 @@ import nest_asyncio
 from flask import Flask
 from telegram_bot import run_bot
 from threading import Thread
-#from deployment import setup_hot_reload
 import logging
 import time
 
@@ -41,6 +40,14 @@ def home():
 def run_flask():
     app.run(host="0.0.0.0", port=3000)
 
+async def async_main():
+    try:
+        print("Starting telegram bot", flush=True)
+        await run_bot()
+    except Exception as e:
+        print(f"Critical error in bot: {str(e)}", flush=True)
+        sys.exit(1)
+
 def main():
     try:
         print("Main function started", flush=True)
@@ -50,27 +57,13 @@ def main():
         flask_thread.start()
         print("Flask thread started", flush=True)
         
-        # Start hot-reloading
-        #observer = setup_hot_reload()
-        print("Hot reload observer started", flush=True)
-        
-        # Run telegram bot
-        print("Starting telegram bot", flush=True)
-        asyncio.run(run_bot())
+        # Run telegram bot in the main event loop
+        asyncio.run(async_main())
         
     except Exception as e:
         print(f"Critical error: {str(e)}", flush=True)
-        # if observer:
-        #     observer.stop()
-        #     observer.join()
         sys.exit(1)
 
 if __name__ == "__main__":
     print("Starting program...", flush=True)
     main()
-    print("Program started, keeping alive...", flush=True)
-    
-    # Keep the program running
-    while True:
-        sys.stdout.flush()
-        time.sleep(1)
