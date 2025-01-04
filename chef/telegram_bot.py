@@ -1,7 +1,12 @@
 import os
 import sys
 import asyncio
+import logging
 from telegram import Update
+
+# Configure logging
+logging.getLogger('httpx').setLevel(logging.WARNING)
+logging.getLogger('telegram').setLevel(logging.WARNING)
 from telegram.ext import (
     Application,
     CommandHandler,
@@ -123,5 +128,4 @@ async def run_bot():
 
     # No explicit initialize/shutdown calls unless you want them.
     # run_polling() handles all that internally.
-    print("Starting Telegram polling...")
     await app.run_polling(allowed_updates=Update.ALL_TYPES)
