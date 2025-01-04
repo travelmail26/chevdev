@@ -257,7 +257,7 @@ class AIHandler:
                 "function": {
                     "name": "perplexitycall",
                     "description":
-                    "Trigger when a user asks to Browse the internet for an answer. Then fill in the parameter with the user's query.",
+                    "Trigger when a user asks to Browse for an answer. Keyword browse should trigger this function. Then fill in the parameter with the user's query vebatim.",
                     "parameters": {
                         "type": "object",
                         "properties": {
