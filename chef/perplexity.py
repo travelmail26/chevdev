@@ -48,19 +48,26 @@ def perplexitychat():
 
 
 def perplexitycall(messages):
-    logging.info('Perplexity API call triggered')
     print('**DEBUG: perplexitycall triggered**')
 
     client = OpenAI(api_key=YOUR_API_KEY, base_url="https://api.perplexity.ai")
 
-    print ('**DEBUG: messages sent perplexity api**', messages)
+    print('**DEBUG: messages sent perplexity api**', messages)
 
+    messages.insert(
+        0, {
+            "role":
+            "system",
+            "content":
+            "Return the full citations and bibliography for each result."
+        })
+
+    print('DEBUG: messages sent perplexity api**', messages)
     # chat completion with streaming
     stream = client.chat.completions.create(
-        model="llama-3.1-sonar-large-128k-online", 
+        model="llama-3.1-sonar-huge-128k-online",
         messages=messages,
-        stream=True
-    )
+        stream=True)
 
     buffer = ""
     content = ""
@@ -75,13 +82,16 @@ def perplexitycall(messages):
     if buffer:  # Print any remaining content
         print(buffer, end='', flush=True)
 
-    add_chatlog_entry(content)
+    #add_chatlog_entry(content)
     return content  # Return the complete content
 
 
 if __name__ == "__main__":
-    test_messages = [
-        {"role": "user", "content": "recipe for short meatballs"}
-    ]
+    test_messages = [{
+        "role":
+        "user",
+        "content":
+        "i'm not sure i believe that bone broth loses flavor or nutrition when cooked at boiling temperatures. Search for stack exchange for anyone who has direct experience comparing cooking broth at simmer or boil or at much higher temperatures. Let's think step by step. Double check your answers so that youre giving the user the most accurate response. print the full url and name of the website in a citation."
+    }]
     result = perplexitycall(test_messages)
     print(result)

@@ -92,7 +92,6 @@ class AIHandler:
         return [{"role": "system", "content": combined_content}]
 
     def openai_request(self):
-        print(f"DEBUG: openai_request triggered")
         if not self.openai_key:
             return "OpenAI API key is missing."
 
@@ -354,13 +353,7 @@ class AIHandler:
                     if function_name == 'perplexitycall':
                         query = function_args.get('query')
                         if query:
-                            logging.info(
-                                f"Perplexity function called with query: {query}"
-                            )
-                            print(
-                                "Agent is searching the internet for an answer..."
-                            )
-
+                            print("Agent is searching the internet for an answer...")
                             # Prepare the conversation history for perplexitycall
                             structured_message = []
 
@@ -390,17 +383,18 @@ class AIHandler:
                             perplexity_messages_filtered = filter_messages(
                                 structured_message)
                             # Call Perplexity with the conversation history
-                            response_content = perplexitycall(
+                            perplexity_response_content = perplexitycall(
                                 perplexity_messages_filtered)
 
                             # Ensure response_content is a string
-                            if isinstance(response_content, dict):
-                                response_content = json.dumps(response_content)
+                            if isinstance(perplexity_response_content, dict):
+                                perplexity_response_content = json.dumps(perplexity_response_content)
 
+                            #print ('DEBUG: perplexity_response_content', perplexity_response_content)
                             # Properly format and send the function result back to the model
                             function_call_result_message = {
                                 "role": "tool",
-                                "content": response_content,
+                                "content": perplexity_response_content,
                                 "tool_call_id": tool_call_id
                             }
 
@@ -412,6 +406,11 @@ class AIHandler:
                             # print('DEBUG: function_call_result_message: ',
                             #       function_call_result_message)
 
+                            #system message not to truncate perplexity output
+                            self.messages.append({
+                                "role": "system",
+                                "content": "Do not truncate or summarize this function call result. Return the text as is. It will include both text and citations. It is from another agent, perplexity. Do not make an exceptions to this system instruction. In your response, start with 'result from perplexity:' and then return the exact result, which may urls, citations or special characters."
+                            })
                             # Prepare the payload for the second API call
                             completion_payload = {
                                 "model": 'gpt-4o-mini',
@@ -865,7 +864,6 @@ class AIHandler:
 
     def agentchat(self, prompt=None):
         print('DEBUG: agent chat triggered')
-        logging.info('DEBUG: agent chat triggered')
         print(f"DEBUG: user_id {self.user_id}")
 
         # Add user input to messages
@@ -876,14 +874,14 @@ class AIHandler:
         response = self.openai_request()
 
         #function: add chats to google sheets
-        try:
-            #print (f"DEBUG: attempt chatlog entry:")
-            #self.logger.log_conversation(str(self.messages))
-            add_chatlog_entry(self.messages)
+        # try:
+        #     #print (f"DEBUG: attempt chatlog entry:")
+        #     #self.logger.log_conversation(str(self.messages))
+        #     add_chatlog_entry(self.messages)
 
-        except:
-            print("Error adding chatlog entry agentchat")
-            logger.info(f"Error adding chatlog entry agentchat")
+        # except:
+        #     print("Error adding chatlog entry agentchat")
+        #     logger.info(f"Error adding chatlog entry agentchat")
 
         # try:
         #     #print (f"DEBUG: attempt chatlog entry:")
