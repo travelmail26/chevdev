@@ -14,6 +14,9 @@ jobs:
     # Step 1: Check out the repository
     - uses: actions/checkout@v4
 
+    - name: List directory for debugging
+      run: ls -R ./chef
+
     # Step 2: Log in to Docker Hub
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
