@@ -18,7 +18,7 @@ jobs:
       with:
         version: '427.0.0'
         service_account_key: ${{ secrets.GCLOUD_AUTH }}
-        project_id: "your-google-project-id"
+        project_id: "cheftest-f174c"
 
     - name: Configure Docker authentication
       env:
@@ -29,13 +29,13 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker build -t gcr.io/your-google-project-id/your-service-name:latest .
-        docker push gcr.io/your-google-project-id/your-service-name:latest
+        docker build -t travelmail26/cheftest:latest .
+        docker push travelmail26/cheftest:latest
 
     - name: Deploy to Google Cloud Run
       run: |
-        gcloud run deploy your-service-name \
-          --image gcr.io/your-google-project-id/your-service-name:latest \
+        gcloud run deploy chef-bot \
+          --image travelmail26/cheftest:latest \
           --region us-central1 \
           --allow-unauthenticated \
           --set-env-vars ENVIRONMENT=${{ secrets.ENVIRONMENT }},\
