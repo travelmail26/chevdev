@@ -20,7 +20,7 @@ def run_flask():
     Runs Flask in a background thread so we don't block
     our main asyncio event loop.
     """
-    app.run(host="0.0.0.0", port=3000)
+    app.run(host="0.0.0.0", port=8080)
 
 async def main():
     """
