@@ -874,14 +874,14 @@ class AIHandler:
         response = self.openai_request()
 
         #function: add chats to google sheets
-        # try:
-        #     #print (f"DEBUG: attempt chatlog entry:")
-        #     #self.logger.log_conversation(str(self.messages))
-        #     add_chatlog_entry(self.messages)
+        try:
+            #print (f"DEBUG: attempt chatlog entry:")
+            #self.logger.log_conversation(str(self.messages))
+            add_chatlog_entry(self.messages)
 
-        # except:
-        #     print("Error adding chatlog entry agentchat")
-        #     logger.info(f"Error adding chatlog entry agentchat")
+        except:
+            print("Error adding chatlog entry agentchat")
+            logger.info(f"Error adding chatlog entry agentchat")
 
         # try:
         #     #print (f"DEBUG: attempt chatlog entry:")

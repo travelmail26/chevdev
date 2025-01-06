@@ -19,6 +19,11 @@ deploymentTarget = "cloudrun"
 localPort = 3000
 externalPort = 80
 
+[[ports]]
+localPort = 8085
+externalPort = 3000
+exposeLocalhost = true
+
 [env]
 REPLIT_NO_WEBVIEW = "true"
 ENVIRONMENT = "development"
