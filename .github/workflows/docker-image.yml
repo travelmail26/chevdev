@@ -71,12 +71,17 @@ jobs:
           TELEGRAM_KEY: "${{ secrets.TELEGRAM_KEY }}"
           EOF
 
-      # Step 9: Set up Google Cloud SDK
+      # Authenticate with Google Cloud
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCLOUD_AUTH }}
+      
+      # Set up Google Cloud SDK
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
           version: '427.0.0'
-          service_account_key: ${{ secrets.GCLOUD_AUTH }}
           project_id: "cheftest-f174c"
 
       # Step 10: Deploy to Google Cloud Run using the env-vars.yaml file
