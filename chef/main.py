@@ -1,32 +1,37 @@
 #!/usr/bin/env python3
 import os
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
 
 # Method 1: Direct dictionary access
 try:
-    print('DEBUG: Testing direct dictionary access')
-    print(os.environ['SERVICE_ACCOUNT_FILE_PH'])
-    print('Direct dictionary access successful')
+    logging.debug('Testing direct dictionary access')
+    logging.debug(os.environ['SERVICE_ACCOUNT_FILE_PH'])
+    logging.debug('Direct dictionary access successful')
 except KeyError:
-    print('DEBUG: Direct dictionary access failed')
+    logging.debug('Direct dictionary access failed')
 
 # Method 2: Using get() with default value
 try:
-    print('DEBUG: Testing get() method')
-    print(os.environ.get('SERVICE_ACCOUNT_FILE_PH', 'Not found'))
-    print('Get method access successful')
+    logging.debug('Testing get() method')
+    logging.debug(os.environ.get('SERVICE_ACCOUNT_FILE_PH', 'Not found'))
+    logging.debug('Get method access successful')
 except Exception as e:
-    print('DEBUG: Get method access failed:', str(e))
+    logging.debug(f'Get method access failed: {str(e)}')
 
 # Method 3: Dictionary membership test
 try:
-    print('DEBUG: Testing membership test')
+    logging.debug('Testing membership test')
     if 'SERVICE_ACCOUNT_FILE_PH' in os.environ:
-        print(os.environ['SERVICE_ACCOUNT_FILE_PH'])
-        print('Membership test successful')
+        logging.debug(os.environ['SERVICE_ACCOUNT_FILE_PH'])
+        logging.debug('Membership test successful')
     else:
-        print('SERVICE_ACCOUNT_FILE_PH not in environment')
+        logging.debug('SERVICE_ACCOUNT_FILE_PH not in environment')
 except Exception as e:
-    print('DEBUG: Membership test failed:', str(e))
+    logging.debug(f'Membership test failed: {str(e)}')
+
 
 
 
