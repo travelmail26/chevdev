@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-import asyncio
-import nest_asyncio
-from flask import Flask
-from threading import Thread
-from telegram_bot import run_bot
 import os
 
 # Method 1: Direct dictionary access
@@ -32,6 +27,15 @@ try:
         print('SERVICE_ACCOUNT_FILE_PH not in environment')
 except Exception as e:
     print('DEBUG: Membership test failed:', str(e))
+
+
+
+import asyncio
+import nest_asyncio
+from flask import Flask
+from threading import Thread
+from telegram_bot import run_bot
+
 
 app = Flask(__name__)
 
