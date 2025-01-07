@@ -60,6 +60,7 @@ def run_flask():
     app.run(host="0.0.0.0", port=8080)
 
 async def main():
+    logging.debug('main function in main.py triggered')
     """
     1. Start Flask in a background thread
     2. Await the Telegram bot's polling

@@ -7,6 +7,8 @@ from telegram import Update
 # Configure logging
 logging.getLogger('httpx').setLevel(logging.WARNING)
 logging.getLogger('telegram').setLevel(logging.WARNING)
+
+
 from telegram.ext import (
     Application,
     CommandHandler,
@@ -14,6 +16,9 @@ from telegram.ext import (
     filters,
     ContextTypes
 )
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
 
 from chefwriter import AIHandler
 from firebase import firebase_get_media_url
@@ -27,6 +32,7 @@ def get_user_handler(user_id):
     return handlers_per_user[user_id]
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    logging.debug('start triggered in telegram_bot.py')
     await update.message.reply_text("Hello! I'm your AI assistant. How can I help you today?")
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -72,6 +78,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             return
 
         # Text
+        logging.debug('DEBUG: message handler triggered with message ', update.message.text)
         text_input = update.message.text
         if not text_input:
             await update.message.reply_text("I received an empty message. Please send text or media!")
