@@ -1,13 +1,15 @@
-name: Build and Push Docker Image
+name: Build and Deploy to Google Cloud Run
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,11 +19,11 @@ jobs:
       with:
         fetch-depth: 0
 
-    # Step 2: List the root directory for debugging
+    # Step 2: Debug - List the root directory for verification
     - name: List repository root for debugging
       run: ls -R .
 
-    # Step 3: List the 'chef' directory for debugging
+    # Step 3: Debug - List the 'chef' directory for verification
     - name: List chef directory for debugging
       run: ls -R ./chef
 
@@ -39,3 +41,40 @@ jobs:
     # Step 6: Push the Docker image to Docker Hub
     - name: Push Docker image
       run: docker push travelmail26/cheftest:latest
+
+    # Step 7: Debug Secrets
+    - name: Debug Secrets
+      run: |
+        echo "Checking secrets passed to GitHub Actions:"
+        echo "ENVIRONMENT=${{ secrets.ENVIRONMENT }}"
+        echo "FIREBASE_KEY=${{ secrets.FIREBASE_KEY }}"
+        echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}"
+        echo "PERPLEXITY_KEY=${{ secrets.PERPLEXITY_KEY }}"
+        echo "SERVICE_ACCOUNT_FILE=${{ secrets.SERVICE_ACCOUNT_FILE }}"
+        echo "SERVICE_ACCOUNT_FILE_PH=${{ secrets.SERVICE_ACCOUNT_FILE_PH }}"
+        echo "TELEGRAM_DEV_KEY=${{ secrets.TELEGRAM_DEV_KEY }}"
+        echo "TELEGRAM_KEY=${{ secrets.TELEGRAM_KEY }}"
+
+    # Step 8: Set up Google Cloud SDK
+    - name: Set up Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        version: '427.0.0'
+        service_account_key: ${{ secrets.GCLOUD_AUTH }}
+        project_id: "cheftest-f174c"
+
+    # Step 9: Deploy to Google Cloud Run
+    - name: Deploy to Google Cloud Run
+      run: |
+        gcloud run deploy chef-bot \
+          --image travelmail26/cheftest:latest \
+          --region us-central1 \
+          --allow-unauthenticated \
+          --set-env-vars ENVIRONMENT=${{ secrets.ENVIRONMENT }},\
+          FIREBASE_KEY=${{ secrets.FIREBASE_KEY }},\
+          OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }},\
+          PERPLEXITY_KEY=${{ secrets.PERPLEXITY_KEY }},\
+          SERVICE_ACCOUNT_FILE=${{ secrets.SERVICE_ACCOUNT_FILE }},\
+          SERVICE_ACCOUNT_FILE_PH=${{ secrets.SERVICE_ACCOUNT_FILE_PH }},\
+          TELEGRAM_DEV_KEY=${{ secrets.TELEGRAM_DEV_KEY }},\
+          TELEGRAM_KEY=${{ secrets.TELEGRAM_KEY }}
