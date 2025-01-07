@@ -65,8 +65,8 @@ jobs:
 
     # Step 9: Deploy to Google Cloud Run
     - name: Deploy to Google Cloud Run
-      run: | 
-      gcloud run deploy chef-bot \
+      run: |
+        gcloud run deploy chef-bot \
         --image docker.io/travelmail26/cheftest:latest \
         --region us-central1 \
         --allow-unauthenticated \
@@ -78,4 +78,5 @@ jobs:
         SERVICE_ACCOUNT_FILE_PH=${{ secrets.SERVICE_ACCOUNT_FILE_PH }},\
         TELEGRAM_DEV_KEY=${{ secrets.TELEGRAM_DEV_KEY }},\
         TELEGRAM_KEY=${{ secrets.TELEGRAM_KEY }}
+
 
