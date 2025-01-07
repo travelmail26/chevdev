@@ -67,16 +67,17 @@ jobs:
     - name: Deploy to Google Cloud Run
       run: |
         gcloud run deploy chef-bot \
-        --image docker.io/travelmail26/cheftest:latest \
-        --region us-central1 \
-        --allow-unauthenticated \
-        --set-env-vars ENVIRONMENT=${{ secrets.ENVIRONMENT }},\
-        FIREBASE_KEY=${{ secrets.FIREBASE_KEY }},\
-        OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }},\
-        PERPLEXITY_KEY=${{ secrets.PERPLEXITY_KEY }},\
-        SERVICE_ACCOUNT_FILE=${{ secrets.SERVICE_ACCOUNT_FILE }},\
-        SERVICE_ACCOUNT_FILE_PH=${{ secrets.SERVICE_ACCOUNT_FILE_PH }},\
-        TELEGRAM_DEV_KEY=${{ secrets.TELEGRAM_DEV_KEY }},\
-        TELEGRAM_KEY=${{ secrets.TELEGRAM_KEY }}
+          --image docker.io/travelmail26/cheftest:latest \
+          --region us-central1 \
+          --allow-unauthenticated \
+          --set-env-vars \
+            ENVIRONMENT=${{ secrets.ENVIRONMENT }},\
+            FIREBASE_KEY=${{ secrets.FIREBASE_KEY }},\
+            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }},\
+            PERPLEXITY_KEY=${{ secrets.PERPLEXITY_KEY }},\
+            SERVICE_ACCOUNT_FILE=${{ secrets.SERVICE_ACCOUNT_FILE }},\
+            SERVICE_ACCOUNT_FILE_PH=${{ secrets.SERVICE_ACCOUNT_FILE_PH }},\
+            TELEGRAM_DEV_KEY=${{ secrets.TELEGRAM_DEV_KEY }},\
+            TELEGRAM_KEY=${{ secrets.TELEGRAM_KEY }}
 
 
