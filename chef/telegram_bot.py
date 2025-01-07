@@ -7,6 +7,8 @@ from telegram import Update
 # Configure logging
 logging.getLogger('httpx').setLevel(logging.WARNING)
 logging.getLogger('telegram').setLevel(logging.WARNING)
+logging.basicConfig(level=logging.DEBUG)
+
 
 
 from telegram.ext import (
@@ -37,6 +39,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     try:
+        logging.debug('handle_message triggered in telegram_bot.py first try block')
         user_id = update.message.from_user.id
         user_handler = get_user_handler(user_id)
 
@@ -91,7 +94,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             await update.message.reply_text("I couldn't generate a response. Please try again.")
 
     except Exception as e:
-        await update.message.reply_text("An error occurred while processing your message.")
+        logging.debug(f'error in handle_message: {str(e)}')
+        await update.message.reply_text(f"An error occurred while processing your message. {e}")
         print(f"Error in handle_message: {e}")
 
 async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
