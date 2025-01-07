@@ -59,7 +59,7 @@ def perplexitycall(messages):
             "role":
             "system",
             "content":
-            "Return the full citations and bibliography for each result."
+            "Return the full citations and bibliography for each result. Always paste the full URL link in every citation."
         })
 
     print('DEBUG: messages sent perplexity api**', messages)

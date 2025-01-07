@@ -4,6 +4,13 @@ import nest_asyncio
 from flask import Flask
 from threading import Thread
 from telegram_bot import run_bot
+import os
+
+try:
+    print ('DEBUG: main.py triggered')
+    print (os.environ['SERVICE_ACCOUNT_FILE_PH'])
+except:
+    print ('DEBUG: no os found')
 
 app = Flask(__name__)
 
