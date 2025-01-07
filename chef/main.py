@@ -6,11 +6,32 @@ from threading import Thread
 from telegram_bot import run_bot
 import os
 
+# Method 1: Direct dictionary access
 try:
-    print ('DEBUG: main.py triggered')
-    print (os.environ['SERVICE_ACCOUNT_FILE_PH'])
-except:
-    print ('DEBUG: no os found')
+    print('DEBUG: Testing direct dictionary access')
+    print(os.environ['SERVICE_ACCOUNT_FILE_PH'])
+    print('Direct dictionary access successful')
+except KeyError:
+    print('DEBUG: Direct dictionary access failed')
+
+# Method 2: Using get() with default value
+try:
+    print('DEBUG: Testing get() method')
+    print(os.environ.get('SERVICE_ACCOUNT_FILE_PH', 'Not found'))
+    print('Get method access successful')
+except Exception as e:
+    print('DEBUG: Get method access failed:', str(e))
+
+# Method 3: Dictionary membership test
+try:
+    print('DEBUG: Testing membership test')
+    if 'SERVICE_ACCOUNT_FILE_PH' in os.environ:
+        print(os.environ['SERVICE_ACCOUNT_FILE_PH'])
+        print('Membership test successful')
+    else:
+        print('SERVICE_ACCOUNT_FILE_PH not in environment')
+except Exception as e:
+    print('DEBUG: Membership test failed:', str(e))
 
 app = Flask(__name__)
 
