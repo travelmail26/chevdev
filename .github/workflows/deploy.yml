@@ -46,3 +46,15 @@ SERVICE_ACCOUNT_FILE=${{ secrets.SERVICE_ACCOUNT_FILE }},\
 SERVICE_ACCOUNT_FILE_PH=${{ secrets.SERVICE_ACCOUNT_FILE_PH }},\
 TELEGRAM_DEV_KEY=${{ secrets.TELEGRAM_DEV_KEY }},\
 TELEGRAM_KEY=${{ secrets.TELEGRAM_KEY }}
+
+    - name: Debug Secrets
+      run: |
+        echo "Checking secrets passed to GitHub Actions:"
+        echo "ENVIRONMENT=${{ secrets.ENVIRONMENT }}"
+        echo "FIREBASE_KEY=${{ secrets.FIREBASE_KEY }}"
+        echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}"
+        echo "PERPLEXITY_KEY=${{ secrets.PERPLEXITY_KEY }}"
+        echo "SERVICE_ACCOUNT_FILE=${{ secrets.SERVICE_ACCOUNT_FILE }}"
+        echo "SERVICE_ACCOUNT_FILE_PH=${{ secrets.SERVICE_ACCOUNT_FILE_PH }}"
+        echo "TELEGRAM_DEV_KEY=${{ secrets.TELEGRAM_DEV_KEY }}"
+        echo "TELEGRAM_KEY=${{ secrets.TELEGRAM_KEY }}"
