@@ -80,12 +80,20 @@ async def main():
     await run_bot()
 
 if __name__ == "__main__":
-    # nest_asyncio allows you to re-enter the already running loop, 
+    try:
+        print("Starting application...", flush=True)
+        main()
+        while True:
+            time.sleep(1)
+    except Exception as e:
+        print(f"Startup error: {str(e)}", flush=True)
+        sys.exit(1)
+    # nest_asyncio allows you to re-enter the already running loop,
     # helpful if the library tries to handle its own event loop internally.
+
     nest_asyncio.apply()
 
     try:
         asyncio.run(main())
     except Exception as e:
         print(f"Critical error in main: {e}")
-        # If desired, do a sys.exit(1) or just let it crash.
