@@ -15,16 +15,8 @@ run = ["sh", "-c", "python3 chef/main.py"]
 deploymentTarget = "gce"
 
 [[ports]]
-localPort = 3000
-externalPort = 80
-
-[[ports]]
 localPort = 8080
-externalPort = 3000
-
-[[ports]]
-localPort = 8085
-externalPort = 8080
+externalPort = 80
 exposeLocalhost = true
 
 [env]
