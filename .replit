@@ -12,7 +12,7 @@ language = "python3"
 requiredFiles = [".replit", "replit.nix"]
 
 [deployment]
-run = ["python3", "chef/main.py"]
+run = ["sh", "-c", "python import time while True: print(\"Test log\", flush=True) time.sleep(5))"]
 deploymentTarget = "gce"
 
 [[ports]]
