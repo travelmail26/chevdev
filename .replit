@@ -11,7 +11,7 @@ language = "python3"
 requiredFiles = [".replit", "replit.nix"]
 
 [deployment]
-run = ["sh", "-c", "python3 -c 'import time; while True: print(\"Test log\", flush=True); time.sleep(5)'"]
+run = ["sh", "-c", "python3 -c \"import time; while True: print('Test log', flush=True); time.sleep(5)\""]
 deploymentTarget = "gce"
 
 [[ports]]
