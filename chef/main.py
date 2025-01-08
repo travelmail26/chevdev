@@ -3,6 +3,11 @@ import os
 import sys
 import time
 import logging
+import asyncio
+import nest_asyncio
+from flask import Flask
+from threading import Thread
+from telegram_bot import run_bot
 
 # Configure logging
 logging.basicConfig(
@@ -12,47 +17,20 @@ logging.basicConfig(
     force=True
 )
 
-# Method 1: Direct dictionary access
-try:
-    logging.debug('Testing direct dictionary access')
-    logging.debug(os.environ['SERVICE_ACCOUNT_FILE_PH'])
-    logging.debug('Direct dictionary access successful')
-except KeyError:
-    logging.debug('Direct dictionary access failed')
+# Test environment variable
+def test_env_variable():
+    try:
+        logging.info("Testing environment variable 'SERVICE_ACCOUNT_FILE_PH'")
+        env_value = os.environ.get('SERVICE_ACCOUNT_FILE_PH', None)
+        if env_value:
+            logging.info(f"'SERVICE_ACCOUNT_FILE_PH': {env_value}")
+        else:
+            logging.warning("'SERVICE_ACCOUNT_FILE_PH' not found in environment variables")
+    except Exception as e:
+        logging.error(f"Error accessing 'SERVICE_ACCOUNT_FILE_PH': {e}")
 
-# Method 2: Using get() with default value
-try:
-    logging.debug('Testing get() method')
-    logging.debug(os.environ.get('SERVICE_ACCOUNT_FILE_PH', 'Not found'))
-    logging.debug('Get method access successful')
-except Exception as e:
-    logging.debug(f'Get method access failed: {str(e)}')
-
-# Method 3: Dictionary membership test
-try:
-    logging.debug('Testing membership test')
-    if 'SERVICE_ACCOUNT_FILE_PH' in os.environ:
-        logging.debug(os.environ['SERVICE_ACCOUNT_FILE_PH'])
-        logging.debug('Membership test successful')
-    else:
-        logging.debug('SERVICE_ACCOUNT_FILE_PH not in environment')
-except Exception as e:
-    logging.debug(f'Membership test failed: {str(e)}')
-
-
-
-
-import asyncio
-import nest_asyncio
-from flask import Flask
-from threading import Thread
-from telegram_bot import run_bot
-
-
+# Flask application
 app = Flask(__name__)
-
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8080)
 
 @app.route("/health")
 def health():
@@ -69,25 +47,24 @@ def run_flask():
     """
     app.run(host="0.0.0.0", port=8080)
 
+# Main async function
 async def main():
-    logging.debug('main function in main.py triggered')
-    """
-    1. Start Flask in a background thread
-    2. Await the Telegram bot's polling
-    """
+    logging.info("Starting Flask in a background thread...")
     flask_thread = Thread(target=run_flask, daemon=True)
     flask_thread.start()
 
-    # Now run the Telegram bot (which starts its own polling internally).
+    logging.info("Starting Telegram bot polling...")
     await run_bot()
 
+# Guardrail to keep the application running
 if __name__ == "__main__":
+    logging.info("Starting application...")
+    test_env_variable()  # Check the environment variable on startup
     try:
-        print("Starting application...", flush=True)
         nest_asyncio.apply()
         asyncio.run(main())
         while True:
             time.sleep(1)  # Keep the application running
     except Exception as e:
-        print(f"Critical error in main: {e}", flush=True)
+        logging.critical(f"Critical error in main: {e}")
         sys.exit(1)
