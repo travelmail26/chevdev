@@ -113,7 +113,7 @@ async def setup_bot():
     if production_environment == "production":
         token = os.environ['TELEGRAM_KEY']
     else:
-        token = os.environ['TELEGRAM_DEV_KEY'])
+        token = os.environ['TELEGRAM_DEV_KEY']
 
     if not token:
         raise ValueError("No Telegram token found; check environment variables.")
