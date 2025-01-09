@@ -21,3 +21,4 @@ exposeLocalhost = true
 
 [env]
 REPLIT_NO_WEBVIEW = "true"
+PRODUCTION_OR_DEVELOPMENT = 'production'
