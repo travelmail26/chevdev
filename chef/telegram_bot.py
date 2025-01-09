@@ -109,8 +109,8 @@ async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.reply_text(f"Error during restart: {str(e)}")
 
 async def setup_bot():
-    environment = os.getenv("ENVIRONMENT", "development")
-    if environment == "production":
+    production_environment = os.environ['ENVIROMENT']
+    if production_environment == "production":
         token = os.getenv("TELEGRAM_KEY")
     else:
         token = os.getenv("TELEGRAM_DEV_KEY")
