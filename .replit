@@ -21,4 +21,3 @@ exposeLocalhost = true
 
 [env]
 REPLIT_NO_WEBVIEW = "true"
-ENVIRONMENT = "development"
