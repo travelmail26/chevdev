@@ -17,7 +17,6 @@ deploymentTarget = "gce"
 [[ports]]
 localPort = 8080
 externalPort = 80
-exposeLocalhost = true
 
 [env]
 REPLIT_NO_WEBVIEW = "true"
