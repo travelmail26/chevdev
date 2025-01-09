@@ -1,5 +1,6 @@
 
+import os
 
-from perplexity import perplexitycall
+value = os.environ.get('PRODUCTION_OR_DEVELOPMENT')
 
-print(perplexitycall('recipe for meatballs'))
+print (value)

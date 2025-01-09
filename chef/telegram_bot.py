@@ -109,11 +109,11 @@ async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.reply_text(f"Error during restart: {str(e)}")
 
 async def setup_bot():
-    production_environment = os.environ['ENVIROMENT']
+    production_environment = os.environ.get('PRODUCTION_OR_DEVELOPMENT')
     if production_environment == "production":
-        token = os.getenv("TELEGRAM_KEY")
+        token = os.environ['TELEGRAM_KEY']
     else:
-        token = os.getenv("TELEGRAM_DEV_KEY")
+        token = os.environ['TELEGRAM_DEV_KEY'])
 
     if not token:
         raise ValueError("No Telegram token found; check environment variables.")
