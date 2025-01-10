@@ -39,9 +39,8 @@ def sheets_call(tab='database'):
     try:
         spreadsheet_id = '1RsNekDFNwk67j66g57VN3WOUM2I-4yXGfVtWUg56C20'
         sheet_name = tab
-    # print(f"Attempting to open the spreadsheet with ID: {spreadsheet_id}")
-
-    spreadsheet = client.open_by_key(spreadsheet_id)
+        # print(f"Attempting to open the spreadsheet with ID: {spreadsheet_id}")
+        spreadsheet = client.open_by_key(spreadsheet_id)
         sheet = spreadsheet.worksheet(sheet_name)
         data = sheet.get_all_values()
     except gspread.exceptions.APIError as e:
