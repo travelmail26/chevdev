@@ -7,7 +7,8 @@ from telegram import Update
 # Configure logging
 logging.getLogger('httpx').setLevel(logging.WARNING)
 logging.getLogger('telegram').setLevel(logging.WARNING)
-logging.basicConfig(level=logging.DEBUG)
+logging.getLogger('httpcore').setLevel(logging.WARNING)
+logging.basicConfig(level=logging.INFO)
 
 
 
