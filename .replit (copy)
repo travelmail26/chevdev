@@ -11,17 +11,13 @@ language = "python3"
 requiredFiles = [".replit", "replit.nix"]
 
 [deployment]
-run = ["python3", "chef/main.py"]
+run = ["sh", "-c", "python3 chef/main.py"]
 deploymentTarget = "gce"
 
 [[ports]]
-localPort = 3000
-externalPort = 80
-
-[[ports]]
 localPort = 8080
-externalPort = 8080
+externalPort = 80
 
 [env]
 REPLIT_NO_WEBVIEW = "true"
-ENVIRONMENT = "development"
+PRODUCTION_OR_DEVELOPMENT = 'development'

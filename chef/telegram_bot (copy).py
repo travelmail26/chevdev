@@ -39,7 +39,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     try:
-        logging.debug('Testing get() method')
+        logging.debug('handle_message triggered in telegram_bot.py first try block')
         user_id = update.message.from_user.id
         user_handler = get_user_handler(user_id)
 
@@ -94,7 +94,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             await update.message.reply_text("I couldn't generate a response. Please try again.")
 
     except Exception as e:
-        await update.message.reply_text("An error occurred while processing your message.")
+        logging.debug(f'error in handle_message: {str(e)}')
+        await update.message.reply_text(f"An error occurred while processing your message. {e}")
         print(f"Error in handle_message: {e}")
 
 async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -108,11 +109,11 @@ async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.reply_text(f"Error during restart: {str(e)}")
 
 async def setup_bot():
-    environment = os.getenv("ENVIRONMENT", "development")
-    if environment == "production":
-        token = os.getenv("TELEGRAM_KEY")
-    else:
-        token = os.getenv("TELEGRAM_DEV_KEY")
+    #production_environment = os.environ.get('PRODUCTION_OR_DEVELOPMENT')
+    #if production_environment == "production":
+    #    token = os.environ['TELEGRAM_KEY']
+    #else:
+    token = os.environ['TELEGRAM_DEV_KEY']
 
     if not token:
         raise ValueError("No Telegram token found; check environment variables.")
