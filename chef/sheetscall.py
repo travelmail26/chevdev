@@ -24,36 +24,35 @@ SCOPES = [
 
 
 def sheets_call(tab='database'):
-
     try:
         service_account_info = json.loads(SERVICE_ACCOUNT_FILE)
         creds = Credentials.from_service_account_info(service_account_info,
                                                       scopes=SCOPES)
         client = gspread.authorize(creds)
-    except FileNotFoundError:
-        print(
-            f"Error: Service account file not found at path: {SERVICE_ACCOUNT_FILE}"
-        )
-        return
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"Error with credentials: {e}")
+        return None
+    except Exception as e:
+        print(f"Unexpected credential error: {e}")
+        return None
 
-        # Open your Google Sheet by ID
-    #spreadsheet_id = '1HiSZNWimhPHUW7CuXc-rBNLR55tYhbagQa0EgF8nHn8'
-    spreadsheet_id = '1RsNekDFNwk67j66g57VN3WOUM2I-4yXGfVtWUg56C20'
-    sheet_name = tab
+    try:
+        spreadsheet_id = '1RsNekDFNwk67j66g57VN3WOUM2I-4yXGfVtWUg56C20'
+        sheet_name = tab
     # print(f"Attempting to open the spreadsheet with ID: {spreadsheet_id}")
 
-    # Access the spreadsheet
     spreadsheet = client.open_by_key(spreadsheet_id)
-    # print(f"Spreadsheet '{spreadsheet.title}' opened successfully.")
-
-    # Access the worksheet by name
-    #print(f"Attempting to access the worksheet named: {sheet_name}")
-    sheet = spreadsheet.worksheet(sheet_name)
-    # print(f"Worksheet '{sheet_name}' accessed successfully.")
-
-    # Fetch data from the sheet
-    #print("Attempting to fetch data from the worksheet...")
-    data = sheet.get_all_values()
+        sheet = spreadsheet.worksheet(sheet_name)
+        data = sheet.get_all_values()
+    except gspread.exceptions.APIError as e:
+        print(f"Google Sheets API error: {e}")
+        return None
+    except gspread.exceptions.WorksheetNotFound:
+        print(f"Worksheet '{sheet_name}' not found")
+        return None
+    except Exception as e:
+        print(f"Error accessing spreadsheet: {e}")
+        return None
     #print('json format', json.dumps(data))
 
     # print ('get all values', sheet.get_all_values())
