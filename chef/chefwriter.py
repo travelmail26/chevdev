@@ -67,6 +67,9 @@ class AIHandler:
         with open('chef/instructions_base.txt', 'r') as file:
             system_content_parts.append("=== BASE DEFAULT INSTRUCTIONS ===\n" +
                                         file.read())
+        with open('chef/instruction_recipe.txt', 'r') as file:
+            system_content_parts.append("=== BASE DEFAULT INSTRUCTIONS ===\n" +
+                                        file.read())
         # with open('reporter/chef/instructions_diet_logistics.txt','r') as file:
         #     system_content_parts.append(
         #         "=== DIET LOGISTICS INSTRUCTIONS ===\n" + file.read())
@@ -123,6 +126,22 @@ class AIHandler:
             #         "strict": False
             #     }
             # },
+            
+            {
+                "type": "function",
+                "function": {
+                    "name": "fetch_hummus",
+                    "description":
+                    "Fetch hummus recipes when user specifically asks for a hummus recipe.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {},
+                        "additionalProperties": False
+                    },
+                    "strict": False
+                }
+            },
+            
             {
                 "type": "function",
                 "function": {
@@ -509,6 +528,62 @@ class AIHandler:
                     #     return final_assistant_message.get(
                     #         'content', 'No content in response.')
 
+
+
+                    ###hummus tool call
+
+                    elif function_name == 'fetch_hummus':
+                        print("DEBUG: triggered tool hummus")
+                        try:
+                            result_data = fetch_sheet_data_rows(
+                                'recipe_hummus')
+                        except Exception as e:
+                            print(f"ERROR: fetching hummus recipes: {e}")
+                            return "Failed to fetch hummus recipes"
+    
+                        function_call_result_message = {
+                            "role": "tool",
+                            "content": str(result_data),
+                            "tool_call_id": tool_call_id
+                        }
+    
+                        database_hummus_context = {
+                            "role":
+                            "system",
+                            "content":
+                            f"""Here is the hummus recipes from our database
+    
+                            *HUMMUS RECIPES FOLLOW*:
+                            {str(result_data)} ~~*END HUMMUS RECIPES*~~
+                            """
+                        }
+    
+                        self.messages.append(assistant_message)
+                        self.messages.append(function_call_result_message)
+                        self.messages.append(database_hummus_context)
+    
+                        completion_payload = {
+                            "model": 'gpt-4o-mini',
+                            "messages": self.messages
+                        }
+    
+                        try:
+                            second_response = requests.post(
+                                'https://api.openai.com/v1/chat/completions',
+                                headers=headers,
+                                json=completion_payload)
+                            second_response.raise_for_status()
+                        except requests.exceptions.RequestException as e:
+                            print(f"ERROR: API call failed: {e}")
+                            return "Failed to fetch completion"
+    
+                        second_response_json = second_response.json()
+                        final_assistant_message = second_response_json[
+                            'choices'][0]['message']
+                        self.messages.append(final_assistant_message)
+                        return final_assistant_message.get(
+                            'content', 'No content in response.')
+                    
                     #recipes fetch
                     elif function_name == 'fetch_recipes':
                         print("DEBUG: triggered tool recipes")
