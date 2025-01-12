@@ -32,25 +32,24 @@ try:
 except Exception as e:
     logging.debug(f'Membership test failed: {str(e)}')
 
-
-
-
 import asyncio
 import nest_asyncio
 from flask import Flask
 from threading import Thread
 from telegram_bot import run_bot
 
-
 app = Flask(__name__)
+
 
 @app.route("/health")
 def health():
     return "OK"
 
+
 @app.route("/")
 def home():
     return "Telegram Bot is running!"
+
 
 def run_flask():
     """
@@ -58,6 +57,26 @@ def run_flask():
     our main asyncio event loop.
     """
     app.run(host="0.0.0.0", port=8080, debug=False)
+
+
+
+pid_file = "bot.pid"
+
+def check_running_instances():
+    """Check for other running instances of this bot"""
+    current_pid = os.getpid()
+    current_script = os.path.abspath(__file__)
+
+    for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+        try:
+            if proc.info['cmdline'] and current_script == proc.info['cmdline'][0]:
+                if proc.pid != current_pid:
+                    logging.warning(f"Found another instance running with PID: {proc.pid}")
+                    return True
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess) as e:
+            logging.debug(f"Skipped a process due to: {e}")
+    return False
+
 
 async def main():
     logging.debug('Testing direct dictionary access')
@@ -71,9 +90,39 @@ async def main():
     # Now run the Telegram bot (which starts its own polling internally).
     await run_bot()
 
+
+
+
 if __name__ == "__main__":
-    # nest_asyncio allows you to re-enter the already running loop, 
+    # nest_asyncio allows you to re-enter the already running loop,
     # helpful if the library tries to handle its own event loop internally.
+    
+    if check_running_instances():
+        logging.error("Another instance is already running. Exiting.")
+        sys.exit(1)
+
+    # Handle PID file
+    if os.path.exists(pid_file):
+        with open(pid_file, "r") as f:
+            old_pid = int(f.read().strip())
+            if psutil.pid_exists(old_pid):
+                logging.error(f"Bot is already running with PID: {old_pid}. Exiting.")
+                sys.exit(1)
+
+    with open(pid_file, "w") as f:
+        f.write(str(os.getpid()))
+
+    try:
+        # Ensure compatibility with nested event loops
+        nest_asyncio.apply()
+        asyncio.run(main())
+    except Exception as e:
+        logging.critical(f"Critical error in main: {e}")
+    finally:
+        # Clean up PID file
+        if os.path.exists(pid_file):
+            os.remove(pid_file)
+    
     nest_asyncio.apply()
 
     try:
