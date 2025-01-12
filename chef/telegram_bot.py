@@ -98,15 +98,21 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         await update.message.reply_text("An error occurred while processing your message.")
         print(f"Error in handle_message: {e}")
 
+
 async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    # Clear memory and restart
     try:
         handlers_per_user.clear()
         conversations.clear()
         await update.message.reply_text("Bot memory cleared. Restarting...")
+
+        # Stop the bot gracefully
+        await context.application.stop()  # Await this async function
+
+        # Restart the bot process
         os.execv(sys.executable, [sys.executable] + sys.argv)
     except Exception as e:
         await update.message.reply_text(f"Error during restart: {str(e)}")
+
 
 async def setup_bot():
     environment = os.getenv("ENVIRONMENT", "development")

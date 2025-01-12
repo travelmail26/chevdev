@@ -1,132 +1,123 @@
 #!/usr/bin/env python3
 import os
+import sys
 import logging
-
-# Configure logging
-logging.basicConfig(level=logging.DEBUG)
-
-# Method 1: Direct dictionary access
-try:
-    logging.debug('Testing direct dictionary access')
-    logging.debug(os.environ['SERVICE_ACCOUNT_FILE_PH'])
-    logging.debug('Direct dictionary access successful')
-except KeyError:
-    logging.debug('Direct dictionary access failed')
-
-# Method 2: Using get() with default value
-try:
-    logging.debug('Testing get() method')
-    logging.debug(os.environ.get('SERVICE_ACCOUNT_FILE_PH', 'Not found'))
-    logging.debug('Get method access successful')
-except Exception as e:
-    logging.debug(f'Get method access failed: {str(e)}')
-
-# Method 3: Dictionary membership test
-try:
-    logging.debug('Testing membership test')
-    if 'SERVICE_ACCOUNT_FILE_PH' in os.environ:
-        logging.debug(os.environ['SERVICE_ACCOUNT_FILE_PH'])
-        logging.debug('Membership test successful')
-    else:
-        logging.debug('SERVICE_ACCOUNT_FILE_PH not in environment')
-except Exception as e:
-    logging.debug(f'Membership test failed: {str(e)}')
-
+import psutil
 import asyncio
 import nest_asyncio
 from flask import Flask
 from threading import Thread
-from telegram_bot import run_bot
+from telegram import Bot
+from telegram.error import TelegramError
 
+# Configure logging
+logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
+
+# Flask app for health checks
 app = Flask(__name__)
-
 
 @app.route("/health")
 def health():
     return "OK"
 
-
 @app.route("/")
 def home():
     return "Telegram Bot is running!"
 
-
 def run_flask():
-    """
-    Runs Flask in a background thread so we don't block
-    our main asyncio event loop.
-    """
+    """Run Flask in a background thread."""
     app.run(host="0.0.0.0", port=8080, debug=False)
 
+PID_FILE = "bot.pid"
 
-
-pid_file = "bot.pid"
-
-def check_running_instances():
-    """Check for other running instances of this bot"""
-    current_pid = os.getpid()
-    current_script = os.path.abspath(__file__)
-
-    for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
-        try:
-            if proc.info['cmdline'] and current_script == proc.info['cmdline'][0]:
-                if proc.pid != current_pid:
-                    logging.warning(f"Found another instance running with PID: {proc.pid}")
-                    return True
-        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess) as e:
-            logging.debug(f"Skipped a process due to: {e}")
-    return False
-
-
-async def main():
-    logging.debug('Testing direct dictionary access')
-    """
-    1. Start Flask in a background thread
-    2. Await the Telegram bot's polling
-    """
-    flask_thread = Thread(target=run_flask, daemon=True)
-    flask_thread.start()
-
-    # Now run the Telegram bot (which starts its own polling internally).
-    await run_bot()
-
-
-
-
-if __name__ == "__main__":
-    # nest_asyncio allows you to re-enter the already running loop,
-    # helpful if the library tries to handle its own event loop internally.
-    
-    if check_running_instances():
-        logging.error("Another instance is already running. Exiting.")
+async def log_out_bot():
+    """Log out all active Telegram bot sessions."""
+    token = os.getenv("TELEGRAM_KEY") or os.getenv("TELEGRAM_DEV_KEY")
+    if not token:
+        logging.error("No Telegram token found in environment variables. Exiting.")
         sys.exit(1)
 
-    # Handle PID file
-    if os.path.exists(pid_file):
-        with open(pid_file, "r") as f:
+    try:
+        bot = Bot(token)
+        logging.info("Logging out all active bot sessions...")
+        await bot.log_out()  # Await the coroutine
+        logging.info("Successfully logged out all active bot sessions.")
+    except TelegramError as e:
+        logging.error(f"Failed to log out bot: {e}")
+
+def terminate_other_instances():
+    """Terminate any other running instances of this bot."""
+    current_pid = os.getpid()
+    current_script = os.path.abspath(__file__)
+    terminated = False
+
+    for proc in psutil.process_iter(['pid', 'cmdline']):
+        try:
+            if proc.info['cmdline'] and current_script in proc.info['cmdline'][0]:
+                if proc.pid != current_pid:
+                    logging.warning(f"Terminating another instance of the bot with PID: {proc.pid}")
+                    proc.terminate()  # Send SIGTERM
+                    proc.wait(timeout=5)  # Wait for the process to terminate
+                    terminated = True
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess) as e:
+            logging.debug(f"Error while processing another instance: {e}")
+
+    if terminated:
+        logging.info("Terminated all other running instances of the bot.")
+    else:
+        logging.info("No other running instances found.")
+
+def handle_pid_file():
+    """Create and manage the PID file."""
+    if os.path.exists(PID_FILE):
+        with open(PID_FILE, "r") as f:
             old_pid = int(f.read().strip())
             if psutil.pid_exists(old_pid):
-                logging.error(f"Bot is already running with PID: {old_pid}. Exiting.")
-                sys.exit(1)
+                logging.warning(f"Terminating stale process with PID: {old_pid}")
+                proc = psutil.Process(old_pid)
+                proc.terminate()
+                proc.wait(timeout=5)
 
-    with open(pid_file, "w") as f:
+    with open(PID_FILE, "w") as f:
         f.write(str(os.getpid()))
 
+def cleanup_pid_file():
+    """Remove the PID file on shutdown."""
+    if os.path.exists(PID_FILE):
+        os.remove(PID_FILE)
+
+async def main():
+    """Main function to run the bot."""
+    # Log out active bot sessions
+    await log_out_bot()
+
+    # Terminate other instances
+    terminate_other_instances()
+
+    # Handle PID file
+    handle_pid_file()
+
+    # Run Flask server
+    flask_thread = Thread(target=run_flask, daemon=True)
+    flask_thread.start()
     try:
-        # Ensure compatibility with nested event loops
-        nest_asyncio.apply()
-        asyncio.run(main())
-    except Exception as e:
-        logging.critical(f"Critical error in main: {e}")
-    finally:
-        # Clean up PID file
-        if os.path.exists(pid_file):
-            os.remove(pid_file)
-    
+        logging.info("Bot is running. Press Ctrl+C to stop.")
+        while True:
+            await asyncio.sleep(3600)  # Keep the loop alive indefinitely
+    except KeyboardInterrupt:
+        logging.info("Shutting down bot...")# Placeholder for actual bot logic
+
+if __name__ == "__main__":
+    # Apply nest_asyncio for re-entrant event loops
     nest_asyncio.apply()
 
     try:
         asyncio.run(main())
+    except KeyboardInterrupt:
+        logging.info("Shutting down bot.")
     except Exception as e:
-        print(f"Critical error in main: {e}")
-        # If desired, do a sys.exit(1) or just let it crash.
+        logging.critical(f"Critical error in main: {e}")
+    finally:
+        cleanup_pid_file()
+
+    
