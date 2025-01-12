@@ -1,5 +1,7 @@
+
 entrypoint = "chef/main.py"
 modules = ["python-3.11"]
+hidden = false
 
 [nix]
 channel = "stable-24_05"
