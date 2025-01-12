@@ -1,11 +1,18 @@
 import logging
 
 # Configure logging
+import sys
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s - %(levelname)s - %(message)s",
-    force=True  # Ensures any previous logging configuration is overridden
+    handlers=[
+        logging.StreamHandler(sys.stdout)  # Ensure logs go to stdout
+    ]
 )
+
+import sys
+sys.stdout.flush()
+
 
 # Log a basic startup message
 logging.info(
@@ -21,10 +28,6 @@ from flask import Flask
 from threading import Thread
 from telegram import Bot
 from telegram.error import TelegramError
-
-# Configure logging
-logging.basicConfig(level=logging.DEBUG,
-                    format="%(asctime)s - %(levelname)s - %(message)s")
 
 # Flask app for health checks
 app = Flask(__name__)
