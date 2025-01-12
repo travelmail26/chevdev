@@ -1,4 +1,12 @@
-#!/usr/bin/env python3
+
+
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
+
+# Log a basic startup message
+logging.info("DEBUG: zzz main.py: Script is running in Google Cloud Run environment.")
+
 import os
 import sys
 import logging
