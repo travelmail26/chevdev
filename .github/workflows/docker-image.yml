@@ -36,7 +36,7 @@ jobs:
 
       # Step 5: Build the Docker image
       - name: Build Docker image
-        run: docker build --no-cache ./chef --file ./chef/Dockerfile --tag travelmail26/cheftest:latestv630
+        run: docker build --no-cache ./chef --file ./chef/Dockerfile --tag travelmail26/cheftest:v630
 
 # Step 6: Push the Docker image to Docker Hub
       - name: Push Docker image
