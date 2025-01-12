@@ -26,7 +26,7 @@ def home():
 
 def run_flask():
     """Run Flask in a background thread."""
-    app.run(host="0.0.0.0", port=80, debug=False)
+    app.run(host="0.0.0.0", port=8080, debug=False)
 
 PID_FILE = "bot.pid"
 
