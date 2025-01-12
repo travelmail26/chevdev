@@ -1,8 +1,11 @@
 import logging
 
 # Configure logging
-logging.basicConfig(level=logging.DEBUG,
-                    format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    force=True  # Ensures any previous logging configuration is overridden
+)
 
 # Log a basic startup message
 logging.info(
