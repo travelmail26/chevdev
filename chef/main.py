@@ -1,15 +1,16 @@
-
-
+import logging
 
 # Configure logging
-logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(level=logging.DEBUG,
+                    format="%(asctime)s - %(levelname)s - %(message)s")
 
 # Log a basic startup message
-logging.info("DEBUG: zzz main.py: Script is running in Google Cloud Run environment.")
+logging.info(
+    "DEBUG: zzz main.py: Script is running in Google Cloud Run environment.")
 
 import os
 import sys
-import logging
+
 import psutil
 import asyncio
 import nest_asyncio
@@ -19,30 +20,37 @@ from telegram import Bot
 from telegram.error import TelegramError
 
 # Configure logging
-logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(level=logging.DEBUG,
+                    format="%(asctime)s - %(levelname)s - %(message)s")
 
 # Flask app for health checks
 app = Flask(__name__)
+
 
 @app.route("/health")
 def health():
     return "OK"
 
+
 @app.route("/")
 def home():
     return "Telegram Bot is running!"
+
 
 def run_flask():
     """Run Flask in a background thread."""
     app.run(host="0.0.0.0", port=8080, debug=False)
 
+
 PID_FILE = "bot.pid"
+
 
 async def log_out_bot():
     """Log out all active Telegram bot sessions."""
     token = os.getenv("TELEGRAM_KEY") or os.getenv("TELEGRAM_DEV_KEY")
     if not token:
-        logging.error("No Telegram token found in environment variables. Exiting.")
+        logging.error(
+            "No Telegram token found in environment variables. Exiting.")
         sys.exit(1)
 
     try:
@@ -53,6 +61,7 @@ async def log_out_bot():
     except TelegramError as e:
         logging.error(f"Failed to log out bot: {e}")
 
+
 def terminate_other_instances():
     """Terminate any other running instances of this bot."""
     current_pid = os.getpid()
@@ -61,13 +70,17 @@ def terminate_other_instances():
 
     for proc in psutil.process_iter(['pid', 'cmdline']):
         try:
-            if proc.info['cmdline'] and current_script in proc.info['cmdline'][0]:
+            if proc.info['cmdline'] and current_script in proc.info['cmdline'][
+                    0]:
                 if proc.pid != current_pid:
-                    logging.warning(f"Terminating another instance of the bot with PID: {proc.pid}")
+                    logging.warning(
+                        f"Terminating another instance of the bot with PID: {proc.pid}"
+                    )
                     proc.terminate()  # Send SIGTERM
                     proc.wait(timeout=5)  # Wait for the process to terminate
                     terminated = True
-        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess) as e:
+        except (psutil.NoSuchProcess, psutil.AccessDenied,
+                psutil.ZombieProcess) as e:
             logging.debug(f"Error while processing another instance: {e}")
 
     if terminated:
@@ -75,13 +88,15 @@ def terminate_other_instances():
     else:
         logging.info("No other running instances found.")
 
+
 def handle_pid_file():
     """Create and manage the PID file."""
     if os.path.exists(PID_FILE):
         with open(PID_FILE, "r") as f:
             old_pid = int(f.read().strip())
             if psutil.pid_exists(old_pid):
-                logging.warning(f"Terminating stale process with PID: {old_pid}")
+                logging.warning(
+                    f"Terminating stale process with PID: {old_pid}")
                 proc = psutil.Process(old_pid)
                 proc.terminate()
                 proc.wait(timeout=5)
@@ -89,10 +104,12 @@ def handle_pid_file():
     with open(PID_FILE, "w") as f:
         f.write(str(os.getpid()))
 
+
 def cleanup_pid_file():
     """Remove the PID file on shutdown."""
     if os.path.exists(PID_FILE):
         os.remove(PID_FILE)
+
 
 async def main():
     """Main function to run the bot."""
@@ -113,7 +130,9 @@ async def main():
         while True:
             await asyncio.sleep(3600)  # Keep the loop alive indefinitely
     except KeyboardInterrupt:
-        logging.info("Shutting down bot...")# Placeholder for actual bot logic
+        logging.info(
+            "Shutting down bot...")  # Placeholder for actual bot logic
+
 
 if __name__ == "__main__":
     # Apply nest_asyncio for re-entrant event loops
@@ -127,5 +146,3 @@ if __name__ == "__main__":
         logging.critical(f"Critical error in main: {e}")
     finally:
         cleanup_pid_file()
-
-    
