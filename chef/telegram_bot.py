@@ -123,6 +123,7 @@ async def setup_bot():
     else:
         token = os.getenv("TELEGRAM_DEV_KEY")
 
+    print ('DEBUG: bot key from telegram', token)
     if not token:
         raise ValueError("No Telegram token found; check environment variables.")
 
