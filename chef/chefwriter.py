@@ -5,7 +5,7 @@ import requests
 from datetime import datetime
 import pytz
 from perplexity import perplexitycall
-from sheetscall import add_chatlog_entry, sheets_call, fetch_chatlog, task_create, fetch_preferences, fetch_recipes, update_task
+from sheetscall import add_chatlog_entry, sheets_call, fetch_chatlog, task_create, fetch_preferences, fetch_recipes, update_task, fetch_sheet_data_rows
 #from loggerbackup import ConversationLogger
 
 #from postprocess import auto_postprocess
