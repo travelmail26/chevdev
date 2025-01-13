@@ -40,16 +40,26 @@ def run_flask():
 
 async def monitor_logging():
     """Log a message periodically to ensure the bot is running."""
-    while True:
-        logging.info("from main.py: Bot is actively polling for updates...")
-        await asyncio.sleep(300)  # Log every 5 minutes
+    try:
+        while True:
+            logging.info("from main.py: Bot is actively polling for updates...")
+            await asyncio.sleep(300)  # Log every 5 minutes
+    except asyncio.CancelledError:
+        logging.info("Monitor logging task was cancelled.")
+    except Exception as e:
+        logging.error(f"Error in monitor_logging: {e}\n{traceback.format_exc()}")
 
 async def log_active_tasks():
     """Log all active tasks periodically."""
-    while True:
-        active_tasks = asyncio.all_tasks()
-        logging.debug(f"Active tasks: {[task.get_name() for task in active_tasks]}")
-        await asyncio.sleep(60)  # Log every minute
+    try:
+        while True:
+            active_tasks = asyncio.all_tasks()
+            logging.debug(f"Active tasks: {[task.get_name() for task in active_tasks]}")
+            await asyncio.sleep(60)  # Log every minute
+    except asyncio.CancelledError:
+        logging.info("Active task logger was cancelled.")
+    except Exception as e:
+        logging.error(f"Error in log_active_tasks: {e}\n{traceback.format_exc()}")
 
 async def main():
     """Main function to run the bot and Flask server."""

@@ -448,22 +448,10 @@ def update_task(task_id, updates):
         print(f"An error occurred while updating task: {e}")
         return False
 
-def fetch_sheet_data_rows(tab_name, start_row=None, end_row=None):
-    """
-    Fetches specific rows from a sheet tab efficiently using batch_get
-
-    Args:
-        tab_name (str): Name of the sheet tab to fetch from
-        start_row (int, optional): Starting row number (1-based indexing)
-        end_row (int, optional): Ending row number (1-based indexing)
-
-    Returns:
-        list: List of dictionaries containing the row data with headers as keys
-    """
+def fetch_sheet_data_rows(tab_name, start_row=2, end_row=None):
     try:
         service_account_info = json.loads(SERVICE_ACCOUNT_FILE)
-        creds = Credentials.from_service_account_info(service_account_info,
-                                                      scopes=SCOPES)
+        creds = Credentials.from_service_account_info(service_account_info, scopes=SCOPES)
         client = gspread.authorize(creds)
     except FileNotFoundError:
         print(f"Error: Service account file not found")
@@ -477,24 +465,29 @@ def fetch_sheet_data_rows(tab_name, start_row=None, end_row=None):
 
         # First, get just the headers
         headers = sheet.row_values(1)
+        headers.insert(0, "index")  # Add "index" as the first header
 
         # Calculate range
         start = start_row if start_row else 2
         end = end_row if end_row else sheet.row_count
 
-        # Fetch specified rows
-        rows = sheet.batch_get([f'A{start}:Z{end}'])[0]
+        # Fetch rows
+        rows = sheet.get_all_values()[start-1:end]
 
-        # Convert to list of dicts
-        return [dict(zip(headers, row)) for row in rows]
+        # Process rows
+        processed_rows = []
+        for index, row in enumerate(rows, start=start):
+            row_data = dict(zip(headers[1:], row))  # Skip the "index" header for zipping
+            row_data["index"] = index  # Add the index to the row data
+            processed_rows.append(row_data)
 
-        return result_rows
+        # Convert to JSON format
+        result = processed_rows
 
-    except gspread.exceptions.WorksheetNotFound:
-        print(f"Sheet tab '{tab_name}' not found")
-        return None
+        return json.dumps(result)
+
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"Error: {e}")
         return None
 
 if __name__ == "__main__":
