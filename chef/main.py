@@ -17,8 +17,17 @@ logging.basicConfig(
     ]
 )
 
+import os
+import logging
+
+logging.info("Current working directory: %s", os.getcwd())
+logging.info("Files in /chef directory: %s", os.listdir('/chef'))
+
+
 # Flask app for health checks
 app = Flask(__name__)
+
+
 
 
 @app.route("/health")
