@@ -40,10 +40,10 @@ PID_FILE = "bot.pid"
 
 
 async def monitor_logging():
-    """Log a message every 5 seconds to ensure the bot is running."""
+    """Log a message periodically to ensure the bot is running."""
     while True:
-        logging.info("Bot is actively polling for updates...")
-        await asyncio.sleep(5)
+        logging.info("from main.py: Bot is actively polling for updates...")
+        await asyncio.sleep(12600)
 
 async def main():
     """Main function to run the bot and Flask server."""

@@ -144,7 +144,7 @@ async def monitor_polling():
     """Logs polling activity every 5 seconds."""
     while True:
         logging.info("Bot is polling for updates...")
-        await asyncio.sleep(12600)  # 3.5 hours
+        await asyncio.sleep(5)  # 3.5 hours
 
 async def run_bot():
     """
