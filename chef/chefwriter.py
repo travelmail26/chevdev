@@ -34,6 +34,8 @@ def get_current_time():
     return datetime.now(eastern).strftime('%Y-%m-%d %H:%M:%S %Z')
 
 
+base_path = os.getcwd()
+
 class AIHandler:
 
     def __init__(self, user_id, openai_key=None):
@@ -64,23 +66,24 @@ class AIHandler:
         )
 
         # Load and append contents from each file
-        with open('chef/instructions_base.txt', 'r') as file:
+
+        with open(os.path.join(base_path, 'instructions_base.txt'), 'r') as file:
             system_content_parts.append("=== BASE DEFAULT INSTRUCTIONS ===\n" +
                                         file.read())
-        with open('chef/instructions_recipe.txt', 'r') as file:
+        with open(os.path.join(base_path, 'instructions_recipe.txt'), 'r') as file:
             system_content_parts.append("=== BASE DEFAULT INSTRUCTIONS ===\n" +
                                         file.read())
         # with open('reporter/chef/instructions_diet_logistics.txt','r') as file:
         #     system_content_parts.append(
         #         "=== DIET LOGISTICS INSTRUCTIONS ===\n" + file.read())
-        with open('chef/instructions_brainstorm.txt', 'r') as file:
+        with open(os.path.join(base_path, 'instructions_brainstorm.txt'), 'r') as file:
             system_content_parts.append("=== BRAINSTORM INSTRUCTIONS ===\n" +
                                         file.read())
         # with open('reporter/chef/exploring_additional_instructions.txt',
         #           'r') as file:
         #     system_content_parts.append(
         #         "=== EXPLORING ADDITIONAL INSTRUCTIONS ===\n" + file.read())
-        with open('chef/instructions_log.txt', 'r') as file:
+        with open(os.path.join(base_path, 'instructions_log.txt'), 'r') as file:
             system_content_parts.append(
                 "=== LOGGING ADDITIONAL INSTRUCTIONS ===\n" + file.read())
         # with open('reporter/chef/instructions_mealplan.txt', 'r') as file:
