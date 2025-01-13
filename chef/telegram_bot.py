@@ -137,12 +137,29 @@ async def setup_bot():
 
     return application
 
+async def monitor_polling():
+    """Logs polling activity every 5 seconds."""
+    while True:
+        logging.info("Bot is polling for updates...")
+        await asyncio.sleep(5)  # Log every 5 seconds
+
 async def run_bot():
     """
     This is what main.py calls to actually start the bot.
     """
     app = await setup_bot()
 
-    # No explicit initialize/shutdown calls unless you want them.
-    # run_polling() handles all that internally.
-    await app.run_polling(allowed_updates=Update.ALL_TYPES)
+    # Create a background task for monitoring polling
+    polling_monitor_task = asyncio.create_task(monitor_polling())
+
+    try:
+        # Run the bot's polling
+        await app.run_polling(allowed_updates=Update.ALL_TYPES)
+    finally:
+        # Ensure the polling monitor task is cancelled on shutdown
+        polling_monitor_task.cancel()
+        try:
+            await polling_monitor_task
+        except asyncio.CancelledError:
+            logging.info("Polling monitor task cancelled.")
+
