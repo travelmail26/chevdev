@@ -11,6 +11,8 @@ logging.getLogger('httpcore').setLevel(logging.DEBUG)
 logging.basicConfig(level=logging.DEBUG)
 
 
+logging.info("telegram_bot.py module imported.")
+
 
 from telegram.ext import (
     Application,

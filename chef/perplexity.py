@@ -4,7 +4,11 @@ from sheetscall import add_chatlog_entry
 
 from openai import OpenAI
 
-YOUR_API_KEY = openai_api_key = os.environ['PERPLEXITY_KEY']
+try:
+    YOUR_API_KEY = os.environ.get('PERPLEXITY_KEY')
+
+except:
+    raise ValueError("The 'PERPLEXITY_KEY' environment variable is not set.")
 
 try:
     with open('tools.txt', 'r') as file:

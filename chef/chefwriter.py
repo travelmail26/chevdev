@@ -67,7 +67,7 @@ class AIHandler:
         with open('chef/instructions_base.txt', 'r') as file:
             system_content_parts.append("=== BASE DEFAULT INSTRUCTIONS ===\n" +
                                         file.read())
-        with open('chef/instruction_recipe.txt', 'r') as file:
+        with open('chef/instructions_recipe.txt', 'r') as file:
             system_content_parts.append("=== BASE DEFAULT INSTRUCTIONS ===\n" +
                                         file.read())
         # with open('reporter/chef/instructions_diet_logistics.txt','r') as file:

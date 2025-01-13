@@ -6,8 +6,7 @@ import psutil
 import nest_asyncio
 from flask import Flask
 from threading import Thread
-from telegram import Bot
-from telegram.error import TelegramError
+from telegram_bot import run_bot  # Import run_bot from your Telegram bot script
 
 # Configure logging
 logging.basicConfig(
@@ -47,36 +46,20 @@ async def log_out_bot():
         logging.error("No Telegram token found in environment variables. Exiting.")
         sys.exit(1)
 
-    try:
-        bot = Bot(token)
-        logging.info("Logging out all active bot sessions...")
-        await bot.log_out()  # Await the coroutine
-        logging.info("Successfully logged out all active bot sessions.")
-    except TelegramError as e:
-        logging.error(f"Failed to log out bot: {e}")
-
 
 def terminate_other_instances():
     """Terminate any other running instances of this bot."""
     current_pid = os.getpid()
     current_script = os.path.abspath(__file__)
-    terminated = False
-
     for proc in psutil.process_iter(['pid', 'cmdline']):
         try:
             if proc.info['cmdline'] and current_script in proc.info['cmdline'][0]:
                 if proc.pid != current_pid:
                     logging.warning(f"Terminating another instance of the bot with PID: {proc.pid}")
-                    proc.terminate()  # Send SIGTERM
-                    proc.wait(timeout=5)  # Wait for the process to terminate
-                    terminated = True
-        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess) as e:
-            logging.debug(f"Error while processing another instance: {e}")
-
-    if terminated:
-        logging.info("Terminated all other running instances of the bot.")
-    else:
-        logging.info("No other running instances found.")
+                    proc.terminate()
+                    proc.wait(timeout=5)
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+            pass
 
 
 def handle_pid_file():
@@ -85,19 +68,11 @@ def handle_pid_file():
         with open(PID_FILE, "r") as f:
             old_pid = int(f.read().strip())
             if psutil.pid_exists(old_pid):
-                logging.warning(f"Terminating stale process with PID: {old_pid}")
                 proc = psutil.Process(old_pid)
                 proc.terminate()
                 proc.wait(timeout=5)
-
     with open(PID_FILE, "w") as f:
         f.write(str(os.getpid()))
-
-
-def cleanup_pid_file():
-    """Remove the PID file on shutdown."""
-    if os.path.exists(PID_FILE):
-        os.remove(PID_FILE)
 
 
 async def monitor_logging():
@@ -108,29 +83,27 @@ async def monitor_logging():
 
 
 async def main():
-    """Main function to run the bot."""
-    # Log out active bot sessions
-    await log_out_bot()
+    """Main function to run the bot and Flask server."""
+    ### Terminate other instances
+    #terminate_other_instances()
 
-    # Terminate other instances
-    terminate_other_instances()
-
-    # Handle PID file
-    handle_pid_file()
+    ### Handle PID file
+    #handle_pid_file()
 
     # Run Flask server in a separate thread
     flask_thread = Thread(target=run_flask, daemon=True)
     flask_thread.start()
 
+    # Start the Telegram bot in parallel
+    telegram_bot_task = asyncio.create_task(run_bot())
+
     # Start the monitoring task
     monitor_task = asyncio.create_task(monitor_logging())
 
     try:
-        logging.info("Bot is running. Press Ctrl+C to stop.")
-        while True:
-            await asyncio.sleep(3600)  # Keep the loop alive indefinitely
-    except KeyboardInterrupt:
-        logging.info("Shutting down bot...")
+        await telegram_bot_task  # Wait for Telegram bot task to complete
+    except Exception as e:
+        logging.error(f"Telegram bot encountered an error: {e}")
     finally:
         monitor_task.cancel()
         try:
@@ -140,14 +113,10 @@ async def main():
 
 
 if __name__ == "__main__":
-    # Apply nest_asyncio for re-entrant event loops
     nest_asyncio.apply()
-
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
         logging.info("Shutting down bot.")
     except Exception as e:
         logging.critical(f"Critical error in main: {e}")
-    finally:
-        cleanup_pid_file()
