@@ -13,37 +13,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the repository
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # Step 2: Debug - List the root directory for verification
       - name: List repository root for debugging
         run: ls -R .
 
-      # Step 3: Debug - List the 'chef' directory for verification
       - name: List chef directory for debugging
         run: ls -R ./chef
 
-      # Step 4: Log in to Docker Hub
+      - name: Set dynamic tag
+        id: tag
+        run: echo "TAG=$(date +%Y%m%d%H%M%S)-${{ github.sha::0:7 }}" >> $GITHUB_ENV
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Step 5: Build the Docker image
       - name: Build Docker image
-        run: docker build --no-cache ./chef --file ./chef/Dockerfile --tag travelmail26/cheftest:v945
+        run: docker build --no-cache ./chef --file ./chef/Dockerfile --tag travelmail26/cheftest:${{ env.TAG }}
 
-# Step 6: Push the Docker image to Docker Hub
       - name: Push Docker image
-        run: docker push travelmail26/cheftest:v945
+        run: docker push travelmail26/cheftest:${{ env.TAG }}
 
-
-      # Step 7: Debug Secrets (optional)
       - name: Debug Secrets
         run: |
           echo "Checking secrets passed to GitHub Actions:"
@@ -56,7 +52,6 @@ jobs:
           echo "TELEGRAM_DEV_KEY=${{ secrets.TELEGRAM_DEV_KEY }}"
           echo "TELEGRAM_KEY=${{ secrets.TELEGRAM_KEY }}"
 
-      # Step 8: Create env-vars.yaml (one file to store all multiline secrets)
       - name: Create env-vars file
         run: |
           cat <<EOF > env-vars.yaml
@@ -72,24 +67,21 @@ jobs:
           TELEGRAM_KEY: "${{ secrets.TELEGRAM_KEY }}"
           EOF
 
-      # Authenticate with Google Cloud
       - name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.GCLOUD_AUTH }}
       
-      # Set up Google Cloud SDK
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
           version: '427.0.0'
           project_id: "cheftest-f174c"
 
-      # Step 10: Deploy to Google Cloud Run using the env-vars.yaml file
       - name: Deploy to Google Cloud Run
         run: |
           gcloud run deploy chef-bot \
-            --image docker.io/travelmail26/cheftest:v945 \
+            --image docker.io/travelmail26/cheftest:${{ env.TAG }} \
             --region us-central1 \
             --allow-unauthenticated \
             --env-vars-file env-vars.yaml
