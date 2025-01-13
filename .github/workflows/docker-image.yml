@@ -55,18 +55,18 @@ jobs:
       - name: Create env-vars file
         run: |
           cat <<EOF > env-vars.yaml
-          ENVIRONMENT: "${{ secrets.ENVIRONMENT }}"
-          FIREBASE_KEY: "${{ secrets.FIREBASE_KEY }}"
-          OPENAI_API_KEY: "${{ secrets.OPENAI_API_KEY }}"
-          FIREBASEJSON: "${{ secrets.FIREBASEJSON }}"
-          PERPLEXITY_KEY: "${{ secrets.PERPLEXITY_KEY }}"
-          SERVICE_ACCOUNT_FILE: |
+            ENVIRONMENT: "${{ secrets.ENVIRONMENT }}"
+            FIREBASE_KEY: "${{ secrets.FIREBASE_KEY }}"
+            OPENAI_API_KEY: "${{ secrets.OPENAI_API_KEY }}"
+            FIREBASEJSON: "${{ secrets.FIREBASEJSON }}"
+            PERPLEXITY_KEY: "${{ secrets.PERPLEXITY_KEY }}"
+            SERVICE_ACCOUNT_FILE: |
             ${{ secrets.SERVICE_ACCOUNT_FILE }}
-          SERVICE_ACCOUNT_FILE_PH: |
+            SERVICE_ACCOUNT_FILE_PH: |
             ${{ secrets.SERVICE_ACCOUNT_FILE_PH }}
-          TELEGRAM_DEV_KEY: "${{ secrets.TELEGRAM_DEV_KEY }}"
-          TELEGRAM_KEY: "${{ secrets.TELEGRAM_KEY }}"
-          EOF
+            TELEGRAM_DEV_KEY: "${{ secrets.TELEGRAM_DEV_KEY }}"
+            TELEGRAM_KEY: "${{ secrets.TELEGRAM_KEY }}"
+            EOF
 
       - name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v1
