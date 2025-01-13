@@ -2,19 +2,8 @@ import os
 import sys
 import asyncio
 import logging
-from telegram import Update
 import traceback
-
-# Configure logging
-logging.getLogger('httpx').setLevel(logging.WARNING)
-logging.getLogger('telegram').setLevel(logging.WARNING)
-logging.getLogger('httpcore').setLevel(logging.WARNING)
-logging.basicConfig(level=logging.INFO)
-
-
-logging.info("telegram_bot.py module imported.")
-
-
+from telegram import Update
 from telegram.ext import (
     Application,
     CommandHandler,
@@ -23,11 +12,11 @@ from telegram.ext import (
     ContextTypes
 )
 
-# Configure logging
-logging.basicConfig(level=logging.DEBUG)
-
 from chefwriter import AIHandler
 from firebase import firebase_get_media_url
+
+# Set up logging
+logging.basicConfig(level=logging.DEBUG)
 
 conversations = {}
 handlers_per_user = {}
@@ -57,7 +46,6 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             await file.download_to_drive(local_path)
             firebase_url = firebase_get_media_url(local_path)
 
-            # Pass some string to AI
             user_input = f"[Photo received: {firebase_url}]"
             response = user_handler.agentchat(user_input)
 
@@ -102,24 +90,18 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         logging.error(error_message)
         await update.message.reply_text("An error occurred while processing your message.")
 
-
 async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = update.effective_user.id
-
     try:
-        # Clear user data
         if user_id in handlers_per_user:
             del handlers_per_user[user_id]
         if user_id in conversations:
             del conversations[user_id]
-
-        # Inform the user
         await update.message.reply_text(
-            "Bot memory cleared for you. Restarting our conversation. Please try again.")
-    
+            "Bot memory cleared for you. Restarting our conversation. Please try again."
+        )
     except Exception as e:
         await update.message.reply_text(f"Error during restart: {str(e)}")
-
 
 async def setup_bot():
     environment = os.getenv("ENVIRONMENT", "development")
@@ -128,7 +110,7 @@ async def setup_bot():
     else:
         token = os.getenv("TELEGRAM_DEV_KEY")
 
-    print ('DEBUG: bot key from telegram', token)
+    logging.debug(f"DEBUG: bot key from telegram: {token}")
     if not token:
         raise ValueError("No Telegram token found; check environment variables.")
 
@@ -145,35 +127,30 @@ async def setup_bot():
 
     return application
 
-async def monitor_polling():
-    """Logs polling activity every 5 seconds."""
-    while True:
-        logging.info("Bot is polling for updates...")
-        await asyncio.sleep(5)  # 3.5 hours
+# ----------------------------------------------------------------------------
+# Minimal changes: we wrap the async code in a synchronous function:
+# ----------------------------------------------------------------------------
 
-async def run_bot():
+async def async_run_bot():
     """
-    This is what main.py calls to actually start the bot.
+    The real async function to set up and run polling.
     """
     try:
         app = await setup_bot()
-
-        # Create a background task for monitoring polling
-        polling_monitor_task = asyncio.create_task(monitor_polling())
-
-        # Run the bot's polling
         await app.run_polling(allowed_updates=Update.ALL_TYPES)
-
     except Exception as e:
-        logging.error(f"Error in run_bot: {e}\n{traceback.format_exc()}")
-        raise  # Re-raise to propagate the error
+        logging.error(f"Error in async_run_bot: {e}\n{traceback.format_exc()}")
+        raise
 
-    finally:
-        # Ensure the polling monitor task is cancelled on shutdown
-        polling_monitor_task.cancel()
-        try:
-            await polling_monitor_task
-        except asyncio.CancelledError:
-            logging.info("Polling monitor task cancelled.")
-
-
+def run_bot():
+    """
+    A synchronous wrapper that main.py calls directly.
+    This ensures the coroutine is properly awaited internally,
+    so Python doesn't complain about 'never awaited' warnings.
+    """
+    import asyncio
+    try:
+        asyncio.run(async_run_bot())
+    except Exception as e:
+        logging.error(f"Error in run_bot (wrapper): {e}\n{traceback.format_exc()}")
+        raise

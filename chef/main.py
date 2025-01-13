@@ -6,11 +6,7 @@ import traceback
 from flask import Flask
 from threading import Thread
 
-# Import your existing bot-startup function:
-# IMPORTANT: Ensure run_bot() (in telegram_bot.py) uses "app.run_polling()"
-# in synchronous mode, or if it's async, you do something like:
-#   def run_bot():
-#       asyncio.run(app.run_polling())
+# Import your existing bot-startup function (now synchronous in telegram_bot.py)
 from telegram_bot import run_bot  
 
 # --------------------------------------------------------------------
@@ -65,11 +61,10 @@ def main():
     logging.info("[Main] Flask server started on port 8080.")
 
     # 2. Run the Telegram bot in polling mode
-    #    This should NOT manually create/close any event loops.
-    #    python-telegram-bot will handle the loop internally.
+    #    This should block until the bot stops (synchronous).
     try:
         logging.info("[Main] Starting Telegram bot with polling...")
-        run_bot()  # This call should block until the bot stops
+        run_bot()  # <--- No 'await' needed. It's synchronous now!
         logging.info("[Main] Telegram bot has stopped.")
     except KeyboardInterrupt:
         logging.info("[Main] Shutdown requested (KeyboardInterrupt).")
