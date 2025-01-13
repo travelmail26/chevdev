@@ -17,36 +17,34 @@ logging.basicConfig(
     ]
 )
 
-import os
-import logging
+logging.info("Starting new deployment...")
 
-logging.info("Current working directory: %s", os.getcwd())
-logging.info("Files in /chef directory: %s", os.listdir('/chef'))
-
+# Log current working directory and contents of /chef
+try:
+    logging.info("Current working directory: %s", os.getcwd())
+    if os.path.exists('/chef'):
+        logging.info("Files in /chef directory: %s", os.listdir('/chef'))
+    else:
+        logging.warning("Directory '/chef' does not exist.")
+except Exception as e:
+    logging.error(f"Error while logging directory details: {e}")
 
 # Flask app for health checks
 app = Flask(__name__)
-
-
-
 
 @app.route("/health")
 def health_check():
     return {"status": "polling"}, 200
 
-
 @app.route("/")
 def home():
     return "Telegram Bot is running!"
-
 
 def run_flask():
     """Run Flask in a background thread."""
     app.run(host="0.0.0.0", port=8080, debug=False)
 
-
 PID_FILE = "bot.pid"
-
 
 async def log_out_bot():
     """Log out all active Telegram bot sessions."""
@@ -54,7 +52,6 @@ async def log_out_bot():
     if not token:
         logging.error("No Telegram token found in environment variables. Exiting.")
         sys.exit(1)
-
 
 def terminate_other_instances():
     """Terminate any other running instances of this bot."""
@@ -70,7 +67,6 @@ def terminate_other_instances():
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             pass
 
-
 def handle_pid_file():
     """Create and manage the PID file."""
     if os.path.exists(PID_FILE):
@@ -83,22 +79,14 @@ def handle_pid_file():
     with open(PID_FILE, "w") as f:
         f.write(str(os.getpid()))
 
-
 async def monitor_logging():
     """Log a message every 5 seconds to ensure the bot is running."""
     while True:
         logging.info("Bot is actively polling for updates...")
         await asyncio.sleep(5)
 
-
 async def main():
     """Main function to run the bot and Flask server."""
-    ### Terminate other instances
-    #terminate_other_instances()
-
-    ### Handle PID file
-    #handle_pid_file()
-
     # Run Flask server in a separate thread
     flask_thread = Thread(target=run_flask, daemon=True)
     flask_thread.start()
@@ -119,7 +107,6 @@ async def main():
             await monitor_task
         except asyncio.CancelledError:
             logging.info("Monitor task cancelled.")
-
 
 if __name__ == "__main__":
     nest_asyncio.apply()
