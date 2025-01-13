@@ -2,12 +2,11 @@ import logging
 import sys
 import os
 import asyncio
-import nest_asyncio
-from flask import Flask
-from threading import Thread
-from telegram_bot import run_bot
 import signal
 import traceback
+from flask import Flask
+from threading import Thread
+from telegram_bot import run_bot  # Your bot's main function
 
 # Configure logging
 logging.basicConfig(
@@ -25,82 +24,77 @@ app = Flask(__name__)
 
 @app.route("/health")
 def health_check():
+    """Health check endpoint for Google Cloud Run."""
     return {"status": "polling"}, 200
 
 @app.route("/")
 def home():
+    """Root endpoint."""
     return "Telegram Bot is running!"
 
 def run_flask():
+    """Run Flask in a background thread."""
     app.run(host="0.0.0.0", port=8080, debug=False)
 
 async def monitor_logging():
-    try:
-        while True:
-            logging.info("from main.py: Bot is actively polling for updates...")
-            await asyncio.sleep(300)
-    except asyncio.CancelledError:
-        logging.info("Monitor logging task was cancelled.")
-    except Exception as e:
-        logging.error(f"Error in monitor_logging: {e}\n{traceback.format_exc()}")
+    """Logs periodically to ensure the bot is running."""
+    while True:
+        logging.info("[Monitor] Bot is actively polling for updates...")
+        await asyncio.sleep(300)  # Log every 5 minutes
 
 async def log_active_tasks():
-    try:
-        while True:
-            active_tasks = asyncio.all_tasks()
-            task_details = [
-                {"name": task.get_name(), "status": task._state, "is_done": task.done()}
-                for task in active_tasks
-            ]
-            logging.debug(f"Active tasks: {task_details}")
-            await asyncio.sleep(60)
-    except asyncio.CancelledError:
-        logging.info("Active task logger was cancelled.")
-    except Exception as e:
-        logging.error(f"Error in log_active_tasks: {e}\n{traceback.format_exc()}")
+    """Logs active tasks periodically."""
+    while True:
+        active_tasks = asyncio.all_tasks()
+        logging.debug(f"[Task Logger] Active tasks: {[task.get_name() for task in active_tasks]}")
+        await asyncio.sleep(60)
 
 async def main():
+    """Main function to start Flask and Telegram bot."""
+    logging.info("[Main] Starting services...")
+
+    # Start Flask in a separate thread
     flask_thread = Thread(target=run_flask, daemon=True)
     flask_thread.start()
+    logging.info("[Main] Flask server started.")
 
+    # Start Telegram bot and monitoring tasks
     telegram_bot_task = asyncio.create_task(run_bot(), name="TelegramBotTask")
     monitor_task = asyncio.create_task(monitor_logging(), name="MonitorLoggingTask")
-    task_logger = asyncio.create_task(log_active_tasks(), name="ActiveTaskLogger")
+    task_logger_task = asyncio.create_task(log_active_tasks(), name="TaskLoggerTask")
 
+    # Wait for Telegram bot to complete
     try:
-        logging.info("Starting main asyncio loop...")
         await telegram_bot_task
     except Exception as e:
-        logging.error(f"Telegram bot encountered an error: {e}\n{traceback.format_exc()}")
+        logging.error(f"[Main] Telegram bot encountered an error: {e}\n{traceback.format_exc()}")
     finally:
-        logging.info("Shutting down tasks...")
+        # Cancel monitoring tasks
         monitor_task.cancel()
-        task_logger.cancel()
-        try:
-            await asyncio.gather(monitor_task, task_logger, return_exceptions=True)
-        except asyncio.CancelledError:
-            logging.info("Monitor and task logger tasks cancelled.")
+        task_logger_task.cancel()
+        await asyncio.gather(monitor_task, task_logger_task, return_exceptions=True)
+        logging.info("[Main] Monitoring tasks cancelled. Exiting gracefully.")
 
-        # Flush logs
-        logging.info("Finalizing shutdown. Flushing logs...")
-        for handler in logging.getLogger().handlers:
-            handler.flush()
-
-def handle_sigterm(signal_received, frame):
-    logging.info("Received SIGTERM. Attempting graceful shutdown...")
+def handle_sigterm():
+    """Handle SIGTERM signal for graceful shutdown."""
+    logging.info("[Signal Handler] Received SIGTERM. Shutting down gracefully...")
     for task in asyncio.all_tasks():
-        if not task.done():
-            logging.debug(f"Cancelling task: {task.get_name()}")
-            task.cancel()
+        task.cancel()
 
 if __name__ == "__main__":
-    nest_asyncio.apply()
-    signal.signal(signal.SIGTERM, handle_sigterm)
+    # Apply SIGTERM handler
+    signal.signal(signal.SIGTERM, lambda *_: asyncio.run_coroutine_threadsafe(handle_sigterm(), asyncio.get_event_loop()))
+
+    # Use an explicit event loop
+    loop = asyncio.get_event_loop()
 
     try:
-        logging.info("Starting the application...")
-        asyncio.run(main())
+        logging.info("[Main] Entering event loop...")
+        loop.run_until_complete(main())
     except KeyboardInterrupt:
-        logging.info("Shutting down bot (KeyboardInterrupt).")
+        logging.info("[Main] Shutdown requested (KeyboardInterrupt).")
     except Exception as e:
-        logging.critical(f"Critical error in main: {e}\n{traceback.format_exc()}")
+        logging.critical(f"[Main] Critical error: {e}\n{traceback.format_exc()}")
+    finally:
+        logging.info("[Main] Finalizing shutdown...")
+        loop.close()
