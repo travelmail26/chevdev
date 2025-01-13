@@ -1,7 +1,15 @@
 import logging
+import sys
+import os
+import asyncio
+import psutil
+import nest_asyncio
+from flask import Flask
+from threading import Thread
+from telegram import Bot
+from telegram.error import TelegramError
 
 # Configure logging
-import sys
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s - %(levelname)s - %(message)s",
@@ -9,25 +17,6 @@ logging.basicConfig(
         logging.StreamHandler(sys.stdout)  # Ensure logs go to stdout
     ]
 )
-
-import sys
-sys.stdout.flush()
-
-
-# Log a basic startup message
-logging.info(
-    "DEBUG: zzz main.py: Script is running in Google Cloud Run environment.")
-
-import os
-import sys
-
-import psutil
-import asyncio
-import nest_asyncio
-from flask import Flask
-from threading import Thread
-from telegram import Bot
-from telegram.error import TelegramError
 
 # Flask app for health checks
 app = Flask(__name__)
@@ -55,8 +44,7 @@ async def log_out_bot():
     """Log out all active Telegram bot sessions."""
     token = os.getenv("TELEGRAM_KEY") or os.getenv("TELEGRAM_DEV_KEY")
     if not token:
-        logging.error(
-            "No Telegram token found in environment variables. Exiting.")
+        logging.error("No Telegram token found in environment variables. Exiting.")
         sys.exit(1)
 
     try:
@@ -76,17 +64,13 @@ def terminate_other_instances():
 
     for proc in psutil.process_iter(['pid', 'cmdline']):
         try:
-            if proc.info['cmdline'] and current_script in proc.info['cmdline'][
-                    0]:
+            if proc.info['cmdline'] and current_script in proc.info['cmdline'][0]:
                 if proc.pid != current_pid:
-                    logging.warning(
-                        f"Terminating another instance of the bot with PID: {proc.pid}"
-                    )
+                    logging.warning(f"Terminating another instance of the bot with PID: {proc.pid}")
                     proc.terminate()  # Send SIGTERM
                     proc.wait(timeout=5)  # Wait for the process to terminate
                     terminated = True
-        except (psutil.NoSuchProcess, psutil.AccessDenied,
-                psutil.ZombieProcess) as e:
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess) as e:
             logging.debug(f"Error while processing another instance: {e}")
 
     if terminated:
@@ -101,8 +85,7 @@ def handle_pid_file():
         with open(PID_FILE, "r") as f:
             old_pid = int(f.read().strip())
             if psutil.pid_exists(old_pid):
-                logging.warning(
-                    f"Terminating stale process with PID: {old_pid}")
+                logging.warning(f"Terminating stale process with PID: {old_pid}")
                 proc = psutil.Process(old_pid)
                 proc.terminate()
                 proc.wait(timeout=5)
@@ -117,6 +100,13 @@ def cleanup_pid_file():
         os.remove(PID_FILE)
 
 
+async def monitor_logging():
+    """Log a message every 5 seconds to ensure the bot is running."""
+    while True:
+        logging.info("Bot is actively polling for updates...")
+        await asyncio.sleep(5)
+
+
 async def main():
     """Main function to run the bot."""
     # Log out active bot sessions
@@ -128,16 +118,25 @@ async def main():
     # Handle PID file
     handle_pid_file()
 
-    # Run Flask server
+    # Run Flask server in a separate thread
     flask_thread = Thread(target=run_flask, daemon=True)
     flask_thread.start()
+
+    # Start the monitoring task
+    monitor_task = asyncio.create_task(monitor_logging())
+
     try:
         logging.info("Bot is running. Press Ctrl+C to stop.")
         while True:
             await asyncio.sleep(3600)  # Keep the loop alive indefinitely
     except KeyboardInterrupt:
-        logging.info(
-            "Shutting down bot...")  # Placeholder for actual bot logic
+        logging.info("Shutting down bot...")
+    finally:
+        monitor_task.cancel()
+        try:
+            await monitor_task
+        except asyncio.CancelledError:
+            logging.info("Monitor task cancelled.")
 
 
 if __name__ == "__main__":
