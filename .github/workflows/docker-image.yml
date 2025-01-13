@@ -58,6 +58,7 @@ jobs:
           ENVIRONMENT: "${{ secrets.ENVIRONMENT }}"
           FIREBASE_KEY: "${{ secrets.FIREBASE_KEY }}"
           OPENAI_API_KEY: "${{ secrets.OPENAI_API_KEY }}"
+          FIREBASEJSON: "${{ secrets.FIREBASEJSON }}"
           PERPLEXITY_KEY: "${{ secrets.PERPLEXITY_KEY }}"
           SERVICE_ACCOUNT_FILE: |
             ${{ secrets.SERVICE_ACCOUNT_FILE }}
