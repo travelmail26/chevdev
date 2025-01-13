@@ -36,11 +36,11 @@ jobs:
 
       # Step 5: Build the Docker image
       - name: Build Docker image
-        run: docker build --no-cache ./chef --file ./chef/Dockerfile --tag travelmail26/cheftest:v700
+        run: docker build --no-cache ./chef --file ./chef/Dockerfile --tag travelmail26/cheftest:v720
 
 # Step 6: Push the Docker image to Docker Hub
       - name: Push Docker image
-        run: docker push travelmail26/cheftest:v700
+        run: docker push travelmail26/cheftest:v720
 
 
       # Step 7: Debug Secrets (optional)
@@ -89,7 +89,7 @@ jobs:
       - name: Deploy to Google Cloud Run
         run: |
           gcloud run deploy chef-bot \
-            --image docker.io/travelmail26/cheftest:v700 \
+            --image docker.io/travelmail26/cheftest:v720 \
             --region us-central1 \
             --allow-unauthenticated \
             --env-vars-file env-vars.yaml
