@@ -34,8 +34,8 @@ app = Flask(__name__)
 
 
 @app.route("/health")
-def health():
-    return "OK"
+def health_check():
+    return {"status": "polling"}, 200
 
 
 @app.route("/")

@@ -5,10 +5,10 @@ import logging
 from telegram import Update
 
 # Configure logging
-logging.getLogger('httpx').setLevel(logging.WARNING)
-logging.getLogger('telegram').setLevel(logging.WARNING)
-logging.getLogger('httpcore').setLevel(logging.WARNING)
-logging.basicConfig(level=logging.INFO)
+logging.getLogger('httpx').setLevel(logging.DEBUG)
+logging.getLogger('telegram').setLevel(logging.DEBUG)
+logging.getLogger('httpcore').setLevel(logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG)
 
 
 
