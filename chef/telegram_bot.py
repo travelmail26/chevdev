@@ -102,16 +102,19 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
 
 async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    user_id = update.effective_user.id
+
     try:
-        handlers_per_user.clear()
-        conversations.clear()
-        await update.message.reply_text("Bot memory cleared. Restarting...")
+        # Clear user data
+        if user_id in handlers_per_user:
+            del handlers_per_user[user_id]
+        if user_id in conversations:
+            del conversations[user_id]
 
-        # Stop the bot gracefully
-        await context.application.stop()  # Await this async function
-
-        # Restart the bot process
-        os.execv(sys.executable, [sys.executable] + sys.argv)
+        # Inform the user
+        await update.message.reply_text(
+            "Bot memory cleared for you. Restarting our conversation. Please try again.")
+    
     except Exception as e:
         await update.message.reply_text(f"Error during restart: {str(e)}")
 
