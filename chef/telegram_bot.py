@@ -5,10 +5,10 @@ import logging
 from telegram import Update
 
 # Configure logging
-logging.getLogger('httpx').setLevel(logging.DEBUG)
-logging.getLogger('telegram').setLevel(logging.DEBUG)
-logging.getLogger('httpcore').setLevel(logging.DEBUG)
-logging.basicConfig(level=logging.DEBUG)
+logging.getLogger('httpx').setLevel(logging.WARNING)
+logging.getLogger('telegram').setLevel(logging.WARNING)
+logging.getLogger('httpcore').setLevel(logging.WARNING)
+logging.basicConfig(level=logging.INFO)
 
 
 logging.info("telegram_bot.py module imported.")
@@ -144,7 +144,7 @@ async def monitor_polling():
     """Logs polling activity every 5 seconds."""
     while True:
         logging.info("Bot is polling for updates...")
-        await asyncio.sleep(5)  # Log every 5 seconds
+        await asyncio.sleep(12600)  # 3.5 hours
 
 async def run_bot():
     """

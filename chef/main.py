@@ -19,15 +19,6 @@ logging.basicConfig(
 
 logging.info("Starting new deployment...")
 
-# Log current working directory and contents of /chef
-try:
-    logging.info("Current working directory: %s", os.getcwd())
-    if os.path.exists('/chef'):
-        logging.info("Files in /chef directory: %s", os.listdir('/chef'))
-    else:
-        logging.warning("Directory '/chef' does not exist.")
-except Exception as e:
-    logging.error(f"Error while logging directory details: {e}")
 
 # Flask app for health checks
 app = Flask(__name__)
@@ -46,38 +37,7 @@ def run_flask():
 
 PID_FILE = "bot.pid"
 
-async def log_out_bot():
-    """Log out all active Telegram bot sessions."""
-    token = os.getenv("TELEGRAM_KEY") or os.getenv("TELEGRAM_DEV_KEY")
-    if not token:
-        logging.error("No Telegram token found in environment variables. Exiting.")
-        sys.exit(1)
 
-def terminate_other_instances():
-    """Terminate any other running instances of this bot."""
-    current_pid = os.getpid()
-    current_script = os.path.abspath(__file__)
-    for proc in psutil.process_iter(['pid', 'cmdline']):
-        try:
-            if proc.info['cmdline'] and current_script in proc.info['cmdline'][0]:
-                if proc.pid != current_pid:
-                    logging.warning(f"Terminating another instance of the bot with PID: {proc.pid}")
-                    proc.terminate()
-                    proc.wait(timeout=5)
-        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-            pass
-
-def handle_pid_file():
-    """Create and manage the PID file."""
-    if os.path.exists(PID_FILE):
-        with open(PID_FILE, "r") as f:
-            old_pid = int(f.read().strip())
-            if psutil.pid_exists(old_pid):
-                proc = psutil.Process(old_pid)
-                proc.terminate()
-                proc.wait(timeout=5)
-    with open(PID_FILE, "w") as f:
-        f.write(str(os.getpid()))
 
 async def monitor_logging():
     """Log a message every 5 seconds to ensure the bot is running."""
@@ -116,3 +76,51 @@ if __name__ == "__main__":
         logging.info("Shutting down bot.")
     except Exception as e:
         logging.critical(f"Critical error in main: {e}")
+
+
+
+###misc used code
+
+# Log current working directory and contents of /chef
+# try:
+#     logging.info("Current working directory: %s", os.getcwd())
+#     if os.path.exists('/chef'):
+#         logging.info("Files in /chef directory: %s", os.listdir('/chef'))
+#     else:
+#         logging.warning("Directory '/chef' does not exist.")
+# except Exception as e:
+#     logging.error(f"Error while logging directory details: {e}")
+
+
+# async def log_out_bot():
+#     """Log out all active Telegram bot sessions."""
+#     token = os.getenv("TELEGRAM_KEY") or os.getenv("TELEGRAM_DEV_KEY")
+#     if not token:
+#         logging.error("No Telegram token found in environment variables. Exiting.")
+#         sys.exit(1)
+
+# def terminate_other_instances():
+#     """Terminate any other running instances of this bot."""
+#     current_pid = os.getpid()
+#     current_script = os.path.abspath(__file__)
+#     for proc in psutil.process_iter(['pid', 'cmdline']):
+#         try:
+#             if proc.info['cmdline'] and current_script in proc.info['cmdline'][0]:
+#                 if proc.pid != current_pid:
+#                     logging.warning(f"Terminating another instance of the bot with PID: {proc.pid}")
+#                     proc.terminate()
+#                     proc.wait(timeout=5)
+#         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+#             pass
+
+# def handle_pid_file():
+#     """Create and manage the PID file."""
+#     if os.path.exists(PID_FILE):
+#         with open(PID_FILE, "r") as f:
+#             old_pid = int(f.read().strip())
+#             if psutil.pid_exists(old_pid):
+#                 proc = psutil.Process(old_pid)
+#                 proc.terminate()
+#                 proc.wait(timeout=5)
+#     with open(PID_FILE, "w") as f:
+#         f.write(str(os.getpid()))
