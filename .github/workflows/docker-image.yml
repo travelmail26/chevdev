@@ -89,7 +89,7 @@ jobs:
       - name: Deploy to Google Cloud Run
         run: |
           gcloud run deploy chef-bot \
-            --image docker.io/travelmail26/cheftest:v745 \
+            --image docker.io/travelmail26/cheftest:v945 \
             --region us-central1 \
             --allow-unauthenticated \
             --env-vars-file env-vars.yaml
