@@ -3,6 +3,7 @@ import sys
 import asyncio
 import logging
 from telegram import Update
+import traceback
 
 # Configure logging
 logging.getLogger('httpx').setLevel(logging.WARNING)
@@ -84,7 +85,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             return
 
         # Text
-        logging.debug('DEBUG: message handler triggered with message ', update.message.text)
+        logging.debug(f'DEBUG: message handler triggered with message {update.message.text}')
         text_input = update.message.text
         if not text_input:
             await update.message.reply_text("I received an empty message. Please send text or media!")
@@ -97,8 +98,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             await update.message.reply_text("I couldn't generate a response. Please try again.")
 
     except Exception as e:
+        error_message = f"Error in handle_message: {e}\n{traceback.format_exc()}"
+        logging.error(error_message)
         await update.message.reply_text("An error occurred while processing your message.")
-        print(f"Error in handle_message: {e}")
 
 
 async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -153,14 +155,19 @@ async def run_bot():
     """
     This is what main.py calls to actually start the bot.
     """
-    app = await setup_bot()
-
-    # Create a background task for monitoring polling
-    polling_monitor_task = asyncio.create_task(monitor_polling())
-
     try:
+        app = await setup_bot()
+
+        # Create a background task for monitoring polling
+        polling_monitor_task = asyncio.create_task(monitor_polling())
+
         # Run the bot's polling
         await app.run_polling(allowed_updates=Update.ALL_TYPES)
+
+    except Exception as e:
+        logging.error(f"Error in run_bot: {e}\n{traceback.format_exc()}")
+        raise  # Re-raise to propagate the error
+
     finally:
         # Ensure the polling monitor task is cancelled on shutdown
         polling_monitor_task.cancel()
@@ -168,4 +175,5 @@ async def run_bot():
             await polling_monitor_task
         except asyncio.CancelledError:
             logging.info("Polling monitor task cancelled.")
+
 

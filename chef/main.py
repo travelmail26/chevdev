@@ -7,6 +7,8 @@ import nest_asyncio
 from flask import Flask
 from threading import Thread
 from telegram_bot import run_bot  # Import run_bot from your Telegram bot script
+from concurrent.futures import ThreadPoolExecutor
+import signal
 
 # Configure logging
 logging.basicConfig(
@@ -18,7 +20,6 @@ logging.basicConfig(
 )
 
 logging.info("Starting new deployment...")
-
 
 # Flask app for health checks
 app = Flask(__name__)
@@ -37,13 +38,18 @@ def run_flask():
 
 PID_FILE = "bot.pid"
 
-
-
 async def monitor_logging():
     """Log a message periodically to ensure the bot is running."""
     while True:
         logging.info("from main.py: Bot is actively polling for updates...")
-        await asyncio.sleep(12600)
+        await asyncio.sleep(12600)  # Approximately 3.5 hours
+
+async def log_active_tasks():
+    """Log all active tasks periodically."""
+    while True:
+        active_tasks = asyncio.all_tasks()
+        logging.debug(f"Active tasks: {[task.get_name() for task in active_tasks]}")
+        await asyncio.sleep(60)
 
 async def main():
     """Main function to run the bot and Flask server."""
@@ -54,8 +60,9 @@ async def main():
     # Start the Telegram bot in parallel
     telegram_bot_task = asyncio.create_task(run_bot())
 
-    # Start the monitoring task
+    # Start monitoring tasks
     monitor_task = asyncio.create_task(monitor_logging())
+    task_logger = asyncio.create_task(log_active_tasks())
 
     try:
         await telegram_bot_task  # Wait for Telegram bot task to complete
@@ -63,64 +70,28 @@ async def main():
         logging.error(f"Telegram bot encountered an error: {e}")
     finally:
         monitor_task.cancel()
+        task_logger.cancel()
         try:
-            await monitor_task
+            await asyncio.gather(monitor_task, task_logger, return_exceptions=True)
         except asyncio.CancelledError:
-            logging.info("Monitor task cancelled.")
+            logging.info("Monitor and task logger cancelled.")
+
+def handle_sigterm():
+    """Handle SIGTERM signal for graceful shutdown."""
+    logging.info("Received SIGTERM. Shutting down gracefully...")
+    for task in asyncio.all_tasks():
+        task.cancel()
 
 if __name__ == "__main__":
+    # Ensure the event loop allows nested usage
     nest_asyncio.apply()
+
+    # Handle SIGTERM signal for Google Cloud Run
+    signal.signal(signal.SIGTERM, lambda *_: asyncio.run(handle_sigterm()))
+
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
         logging.info("Shutting down bot.")
     except Exception as e:
         logging.critical(f"Critical error in main: {e}")
-
-
-
-###misc used code
-
-# Log current working directory and contents of /chef
-# try:
-#     logging.info("Current working directory: %s", os.getcwd())
-#     if os.path.exists('/chef'):
-#         logging.info("Files in /chef directory: %s", os.listdir('/chef'))
-#     else:
-#         logging.warning("Directory '/chef' does not exist.")
-# except Exception as e:
-#     logging.error(f"Error while logging directory details: {e}")
-
-
-# async def log_out_bot():
-#     """Log out all active Telegram bot sessions."""
-#     token = os.getenv("TELEGRAM_KEY") or os.getenv("TELEGRAM_DEV_KEY")
-#     if not token:
-#         logging.error("No Telegram token found in environment variables. Exiting.")
-#         sys.exit(1)
-
-# def terminate_other_instances():
-#     """Terminate any other running instances of this bot."""
-#     current_pid = os.getpid()
-#     current_script = os.path.abspath(__file__)
-#     for proc in psutil.process_iter(['pid', 'cmdline']):
-#         try:
-#             if proc.info['cmdline'] and current_script in proc.info['cmdline'][0]:
-#                 if proc.pid != current_pid:
-#                     logging.warning(f"Terminating another instance of the bot with PID: {proc.pid}")
-#                     proc.terminate()
-#                     proc.wait(timeout=5)
-#         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-#             pass
-
-# def handle_pid_file():
-#     """Create and manage the PID file."""
-#     if os.path.exists(PID_FILE):
-#         with open(PID_FILE, "r") as f:
-#             old_pid = int(f.read().strip())
-#             if psutil.pid_exists(old_pid):
-#                 proc = psutil.Process(old_pid)
-#                 proc.terminate()
-#                 proc.wait(timeout=5)
-#     with open(PID_FILE, "w") as f:
-#         f.write(str(os.getpid()))
