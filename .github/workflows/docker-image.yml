@@ -47,12 +47,14 @@ jobs:
           FIREBASEJSON: "${{ secrets.FIREBASEJSON }}"
           PERPLEXITY_KEY: "${{ secrets.PERPLEXITY_KEY }}"
           SERVICE_ACCOUNT_FILE: |
-            ${secrets.SERVICE_ACCOUNT_FILE}
+            ${{ secrets.SERVICE_ACCOUNT_FILE }}
           SERVICE_ACCOUNT_FILE_PH: |
-            ${secrets.SERVICE_ACCOUNT_FILE_PH}
+            ${{ secrets.SERVICE_ACCOUNT_FILE_PH }}
           TELEGRAM_DEV_KEY: "${{ secrets.TELEGRAM_DEV_KEY }}"
           TELEGRAM_KEY: "${{ secrets.TELEGRAM_KEY }}"
           EOF
+        shell: bash
+
 
       # Step 7: Deploy to Google Cloud Run
       - name: Deploy to Google Cloud Run
