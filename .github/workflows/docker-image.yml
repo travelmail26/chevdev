@@ -38,12 +38,12 @@ jobs:
       - name: Build Docker image
         run: docker build --no-cache ./chef --file ./chef/Dockerfile --tag travelmail26/cheftest:v1014
 
-# Step 6: Push the Docker image to Docker Hub
+      # Step 6: Push the Docker image to Docker Hub
       - name: Push Docker image
         run: docker push travelmail26/cheftest:v1014
 
 
-      # Step 7: Debug Secrets (optional)
+      # Step 7: Debug Secrets (including FIREBASEJSON)
       - name: Debug Secrets
         run: |
           echo "Checking secrets passed to GitHub Actions:"
@@ -55,8 +55,9 @@ jobs:
           echo "SERVICE_ACCOUNT_FILE_PH=${{ secrets.SERVICE_ACCOUNT_FILE_PH }}"
           echo "TELEGRAM_DEV_KEY=${{ secrets.TELEGRAM_DEV_KEY }}"
           echo "TELEGRAM_KEY=${{ secrets.TELEGRAM_KEY }}"
+          echo "FIREBASEJSON=$(echo "${{ secrets.FIREBASEJSON }}" | tr -d '\n')"
 
-      # Step 8: Create env-vars.yaml (one file to store all multiline secrets)
+      # Step 8: Create env-vars.yaml (with FIREBASEJSON handled correctly)
       - name: Create env-vars file
         run: |
           cat <<EOF > env-vars.yaml
@@ -64,6 +65,8 @@ jobs:
           FIREBASE_KEY: "${{ secrets.FIREBASE_KEY }}"
           OPENAI_API_KEY: "${{ secrets.OPENAI_API_KEY }}"
           PERPLEXITY_KEY: "${{ secrets.PERPLEXITY_KEY }}"
+          FIREBASEJSON: |
+            ${{ secrets.FIREBASEJSON }}
           SERVICE_ACCOUNT_FILE: |
             ${{ secrets.SERVICE_ACCOUNT_FILE }}
           SERVICE_ACCOUNT_FILE_PH: |
@@ -71,6 +74,7 @@ jobs:
           TELEGRAM_DEV_KEY: "${{ secrets.TELEGRAM_DEV_KEY }}"
           TELEGRAM_KEY: "${{ secrets.TELEGRAM_KEY }}"
           EOF
+
 
       # Authenticate with Google Cloud
       - name: Authenticate with Google Cloud
