@@ -13,38 +13,56 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
+      # Step 1: Check out the repository
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      # Step 2: Set dynamic tag
-      - name: Set dynamic tag
-        id: tag
-        run: echo "TAG=$(date +%Y%m%d%H%M%S)-${GITHUB_SHA::7}" >> $GITHUB_ENV
+      # Step 2: Debug - List the root directory for verification
+      - name: List repository root for debugging
+        run: ls -R .
 
-      # Step 3: Log in to Docker Hub
+      # Step 3: Debug - List the 'chef' directory for verification
+      - name: List chef directory for debugging
+        run: ls -R ./chef
+
+      # Step 4: Log in to Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Step 4: Build the Docker image
+      # Step 5: Build the Docker image
       - name: Build Docker image
-        run: docker build --no-cache ./chef --file ./chef/Dockerfile --tag travelmail26/cheftest:${{ env.TAG }}
+        run: docker build --no-cache ./chef --file ./chef/Dockerfile --tag travelmail26/cheftest:v945
 
-      # Step 5: Push the Docker image to Docker Hub
+# Step 6: Push the Docker image to Docker Hub
       - name: Push Docker image
-        run: docker push travelmail26/cheftest:${{ env.TAG }}
+        run: docker push travelmail26/cheftest:v945
 
-      # Step 6: Create environment variables file
+
+      # Step 7: Debug Secrets (optional)
+      - name: Debug Secrets
+        run: |
+          echo "Checking secrets passed to GitHub Actions:"
+          echo "ENVIRONMENT=${{ secrets.ENVIRONMENT }}"
+          echo "FIREBASE_KEY=${{ secrets.FIREBASE_KEY }}"
+          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}"
+          echo "PERPLEXITY_KEY=${{ secrets.PERPLEXITY_KEY }}"
+          echo "SERVICE_ACCOUNT_FILE=${{ secrets.SERVICE_ACCOUNT_FILE }}"
+          echo "SERVICE_ACCOUNT_FILE_PH=${{ secrets.SERVICE_ACCOUNT_FILE_PH }}"
+          echo "TELEGRAM_DEV_KEY=${{ secrets.TELEGRAM_DEV_KEY }}"
+          echo "TELEGRAM_KEY=${{ secrets.TELEGRAM_KEY }}"
+
+      # Step 8: Create env-vars.yaml (one file to store all multiline secrets)
       - name: Create env-vars file
         run: |
           cat <<EOF > env-vars.yaml
           ENVIRONMENT: "${{ secrets.ENVIRONMENT }}"
           FIREBASE_KEY: "${{ secrets.FIREBASE_KEY }}"
           OPENAI_API_KEY: "${{ secrets.OPENAI_API_KEY }}"
-          FIREBASEJSON: "${{ secrets.FIREBASEJSON }}"
           PERPLEXITY_KEY: "${{ secrets.PERPLEXITY_KEY }}"
           SERVICE_ACCOUNT_FILE: |
             ${{ secrets.SERVICE_ACCOUNT_FILE }}
@@ -53,27 +71,25 @@ jobs:
           TELEGRAM_DEV_KEY: "${{ secrets.TELEGRAM_DEV_KEY }}"
           TELEGRAM_KEY: "${{ secrets.TELEGRAM_KEY }}"
           EOF
-        shell: bash
 
+      # Authenticate with Google Cloud
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCLOUD_AUTH }}
+      
+      # Set up Google Cloud SDK
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          version: '427.0.0'
+          project_id: "cheftest-f174c"
 
-      # Step 7: Deploy to Google Cloud Run
+      # Step 10: Deploy to Google Cloud Run using the env-vars.yaml file
       - name: Deploy to Google Cloud Run
         run: |
           gcloud run deploy chef-bot \
-            --image travelmail26/cheftest:${{ env.TAG }} \
+            --image docker.io/travelmail26/cheftest:v945 \
             --region us-central1 \
             --allow-unauthenticated \
             --env-vars-file env-vars.yaml
-        shell: bash
-        env:
-          TAG: ${{ env.TAG }}
-          CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: ${{ secrets.GCLOUD_AUTH }}
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCLOUD_AUTH }}
-          GOOGLE_GHA_CREDS_PATH: ${{ secrets.GCLOUD_AUTH }}
-          CLOUDSDK_CORE_PROJECT: cheftest-f174c
-          CLOUDSDK_PROJECT: cheftest-f174c
-          GCLOUD_PROJECT: cheftest-f174c
-          GCP_PROJECT: cheftest-f174c
-          GOOGLE_CLOUD_PROJECT: cheftest-f174c
-          CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
-          CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 1.1.1
