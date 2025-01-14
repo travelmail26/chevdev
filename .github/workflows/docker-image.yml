@@ -62,7 +62,7 @@ jobs:
             --region us-central1 \
             --allow-unauthenticated \
             --env-vars-file env-vars.yaml
-        shell: /usr/bin/bash -e
+        shell: bash
         env:
           TAG: ${{ env.TAG }}
           CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: ${{ secrets.GCLOUD_AUTH }}
