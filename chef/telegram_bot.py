@@ -2,6 +2,7 @@ import os
 import sys
 import logging
 import traceback
+from dotenv import load_dotenv, dotenv_values
 
 from telegram import Update
 from telegram.ext import (
@@ -103,13 +104,34 @@ def setup_bot() -> Application:
     We'll let python-telegram-bot handle all async details internally.
     """
     environment = os.getenv("ENVIRONMENT", "development")
-    if environment == "production":
-        token = os.getenv("TELEGRAM_KEY")
-    else:
-        token = os.getenv("TELEGRAM_DEV_KEY")
+    token = os.getenv("TELEGRAM_KEY")
 
+
+    # Check if the .env.production file exists
+    try: 
+        
+        env_production_path = os.path.join(os.path.dirname(__file__), ".env.production")
+        print ('DEBUG: testing env.production variables', env_production_path)
+        if os.path.exists(env_production_path):
+        # Load the environment variables from the .env.production file
+            env_production_path_variables = dotenv_values(env_production_path)
+            print ('DEBUG: testing env.production variables', env_production_path_variables)
+        
+        # Get the ENVIRONMENT variable
+        environment = env_production_path_variables.get('ENVIRONMENT', 'development')        
+        # Check the value of ENVIRONMENT and get the appropriate TELEGRAM_KEY
+
+
+        if environment == 'development':
+            token = os.getenv('TELEGRAM_KEY')
+        else:
+            token = os.getenv('TELEGRAM_DEV_KEY')
+    except Exception as e:
+        print(f"Error loading env.production variables: {e}")
+        logging.error(f"Error loading env.production variables: {e}")
     if not token:
         raise ValueError("No Telegram token found; check environment variables.")
+    
 
     application = Application.builder().token(token).build()
 

@@ -34,7 +34,7 @@ def get_current_time():
     return datetime.now(eastern).strftime('%Y-%m-%d %H:%M:%S %Z')
 
 
-base_path = os.getcwd()
+base_path = os.path.dirname(__file__)
 
 class AIHandler:
 
