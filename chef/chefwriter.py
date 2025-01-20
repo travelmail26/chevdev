@@ -6,6 +6,7 @@ from datetime import datetime
 import pytz
 from perplexity import perplexitycall
 from sheetscall import add_chatlog_entry, sheets_call, fetch_chatlog, task_create, fetch_preferences, fetch_recipes, update_task, fetch_sheet_data_rows
+from firestore_chef import firestore_add_doc
 #from loggerbackup import ConversationLogger
 
 #from postprocess import auto_postprocess
@@ -953,11 +954,15 @@ class AIHandler:
         # Get response from OpenAI
         response = self.openai_request()
 
-        #function: add chats to google sheets
+        #function: add chats to google sheets and firestore
         try:
-            #print (f"DEBUG: attempt chatlog entry:")
-            #self.logger.log_conversation(str(self.messages))
+            #add google sheets
             add_chatlog_entry(self.messages)
+
+            #add firestore
+            firestore_add_doc(self.messages)
+
+
 
         except:
             print("Error adding chatlog entry agentchat")

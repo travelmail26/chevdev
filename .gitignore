@@ -208,3 +208,6 @@ chef/**/secrets/
 chef/**/*_key*
 chef/**/*_secret*
 chef/**/api_key*
+
+google-cloud-sdk/
+google-cloud-sdk/**

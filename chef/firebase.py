@@ -4,6 +4,28 @@ from firebase_admin import credentials
 from firebase_admin import storage
 import os
 import json
+from google.cloud import storage as gcs_storage 
+
+def list_available_buckets():
+    """
+    List all available bucket names in the Google Cloud project.
+    """
+    print("DEBUG: Listing available buckets...")
+    
+    # Create a storage client
+    storage_client = gcs_storage.Client.from_service_account_info(cred_dict)
+
+    # List all buckets
+    buckets = storage_client.list_buckets()
+    bucket_names = [bucket.name for bucket in buckets]
+    print("Available buckets:", bucket_names)
+    return bucket_names
+
+    # List all buckets
+    buckets = client.list_buckets()
+    bucket_names = [bucket.name for bucket in buckets]
+    print("Available buckets:", bucket_names)
+    return bucket_names
 
 def firebase_get_media_url(image_path):
     print('DEBUG firebase get media url triggered')
@@ -48,5 +70,17 @@ def firebase_get_media_url(image_path):
     return url
 
 if __name__ == "__main__":
-    main()
-    SHELL_IMAGE_PATH = "saved_photos/AgACAgEAAxkBAAIJmWdN6TliC6Bs_SBWl7K-aS3Oyt4tAAIUrzEbDQhxRsQ0OPsGD-V1AQADAgADeQADNgQ.jpg"
+    # Initialize Firebase and list buckets at runtime
+    print("DEBUG: Running the script...")
+    try:
+        # Attempt to initialize Firebase if not already done
+        my_secret = os.environ['FIREBASEJSON']
+        cred_dict = json.loads(my_secret)
+        cred = credentials.Certificate(cred_dict)
+        firebase_admin.initialize_app(cred)
+    except ValueError:
+        print("DEBUG: Firebase already initialized.")
+
+    # List available buckets
+    available_buckets = list_available_buckets()
+    print("Available buckets during execution:", available_buckets)
