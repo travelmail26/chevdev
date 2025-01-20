@@ -104,7 +104,7 @@ def setup_bot() -> Application:
     We'll let python-telegram-bot handle all async details internally.
     """
     environment = os.getenv("ENVIRONMENT", "development")
-    token = os.getenv("TELEGRAM_KEY")
+    #token = os.getenv("TELEGRAM_KEY")
 
 
     # Check if the .env.production file exists
@@ -123,9 +123,10 @@ def setup_bot() -> Application:
 
 
         if environment == 'development':
-            token = os.getenv('TELEGRAM_KEY')
-        else:
+            print ('DEBUG: testing env.production variables loaded', environment)
             token = os.getenv('TELEGRAM_DEV_KEY')
+        else:
+            token = os.getenv('TELEGRAM_KEY')
     except Exception as e:
         print(f"Error loading env.production variables: {e}")
         logging.error(f"Error loading env.production variables: {e}")
