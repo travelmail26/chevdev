@@ -13,6 +13,8 @@ from telegram.ext import (
     ContextTypes
 )
 
+#webhook_url = os.getenv("TELEGRAM_WEBHOOK_URL")
+
 from chefwriter import AIHandler
 from firebase import firebase_get_media_url
 
@@ -147,15 +149,39 @@ def setup_bot() -> Application:
 
     return application
 
+
 def run_bot():
-    """
-    Synchronous function that sets up the bot & calls run_polling().
-    Blocks until the bot is shut down, returning control to main.py afterward.
-    """
     try:
         app = setup_bot()
-        # run_polling() is a synchronous call that manages the event loop internally.
-        app.run_polling(allowed_updates=Update.ALL_TYPES)
+
+        # Instead of checking environment == 'development', 
+        # assume we always do webhooks:
+        webhook_url = 'https://fuzzy-happiness-7jgw66wxqqhg77-8080.app.github.dev'
+        #webhook_url = os.getenv("TELEGRAM_WEBHOOK_URL")
+        if not webhook_url:
+            raise ValueError("TELEGRAM_WEBHOOK_URL not set!")
+        
+        # This listens on port 8080 inside the container
+        # and sets up the public webhook with the domain above
+        app.run_webhook(
+            listen="0.0.0.0",
+            port=8080,
+            url_path="webhook",
+            webhook_url=f"{webhook_url}/webhook"
+        )
     except Exception as e:
         logging.error(f"Error in run_bot: {e}\n{traceback.format_exc()}")
         raise
+
+# def run_bot():
+#     """
+#     Synchronous function that sets up the bot & calls run_polling().
+#     Blocks until the bot is shut down, returning control to main.py afterward.
+#     """
+#     try:
+#         app = setup_bot()
+#         # run_polling() is a synchronous call that manages the event loop internally.
+#         app.run_polling(allowed_updates=Update.ALL_TYPES)
+#     except Exception as e:
+#         logging.error(f"Error in run_bot: {e}\n{traceback.format_exc()}")
+#         raise

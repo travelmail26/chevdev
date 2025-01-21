@@ -34,13 +34,18 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Step 5: Build the Docker image
+      # Step 5: Set date tag for Docker image
+      - name: Generate date-based tag
+        run: echo "DATE_TAG=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+
+      # Step 6: Build the Docker image
       - name: Build Docker image
-        run: docker build --no-cache ./chef --file ./chef/Dockerfile --tag travelmail26/cheftest:v1014
+        run: |
+          docker build --no-cache ./chef --file ./chef/Dockerfile --tag travelmail26/cheftest:${{ env.DATE_TAG }}
 
       # Step 6: Push the Docker image to Docker Hub
       - name: Push Docker image
-        run: docker push travelmail26/cheftest:v1014
+        run: docker push travelmail26/cheftest:${{ env.DATE_TAG }}
 
 
       # Step 7: Debug Secrets (including FIREBASEJSON)
@@ -93,7 +98,7 @@ jobs:
       - name: Deploy to Google Cloud Run
         run: |
           gcloud run deploy chef-bot \
-            --image docker.io/travelmail26/cheftest:v1014 \
+            --image docker.io/travelmail26/cheftest:${{ env.DATE_TAG }} \
             --region us-central1 \
             --allow-unauthenticated \
             --env-vars-file env-vars.yaml
