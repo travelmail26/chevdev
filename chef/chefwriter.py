@@ -6,7 +6,7 @@ from datetime import datetime
 import pytz
 from perplexity import perplexitycall
 from sheetscall import add_chatlog_entry, sheets_call, fetch_chatlog, task_create, fetch_preferences, fetch_recipes, update_task, fetch_sheet_data_rows
-from firestore_chef import firestore_add_doc
+from firestore_chef import firestore_add_doc, firestore_get_docs_by_date_range
 #from loggerbackup import ConversationLogger
 
 #from postprocess import auto_postprocess
@@ -23,10 +23,9 @@ logger = logging.getLogger(__name__)
 
 #print("DEBUG: openai_api_key: ", openai_api_key)
 
-sheets_call_data = fetch_chatlog()
 
-extended_context = f"Here is the extended context data to prioritize for your answer: \n{sheets_call_data}"
 
+##functions##
 
 def get_current_time():
     eastern = pytz.timezone('America/New_York')
@@ -34,8 +33,37 @@ def get_current_time():
           datetime.now(eastern).strftime('%Y-%m-%d %H:%M:%S %Z'))
     return datetime.now(eastern).strftime('%Y-%m-%d %H:%M:%S %Z')
 
+def filter_system_messages(messages):
+    return [msg for msg in messages if msg.get("role") in {"tool", "assistant", "user"}]
+
+def filter_function_messages(messages):
+    filtered = []
+    for msg in messages:
+        if isinstance(msg, dict) and "chatlog" in msg:
+            # Recursively process nested chatlog
+            filtered_chatlog = filter_system_messages(msg["chatlog"])
+            # Only keep the object if chatlog has valid messages
+            if filtered_chatlog:
+                msg["chatlog"] = filtered_chatlog
+                filtered.append(msg)
+        elif msg.get("role") in {"tool", "assistant", "user"}:
+            # Keep top-level messages with allowed roles
+            filtered.append(msg)
+    return filtered
+
+
 
 base_path = os.path.dirname(__file__)
+
+def filter_user_messages(messages):
+    """
+    Filters a list of messages, keeping only those with 'assistant' or 'user' roles.
+
+    :param messages: List of dictionaries with 'role' and 'content' keys.
+    :return: Filtered list of dictionaries.
+    """
+    return [msg for msg in messages if msg.get("role") in {"assistant", "user"}]
+
 
 class AIHandler:
 
@@ -132,6 +160,35 @@ class AIHandler:
             #         "strict": False
             #     }
             # },
+
+            {
+                "type": "function",
+                "function": {
+                    "name": "firestore_get_docs_by_date_range",
+                    "description": "Triggered upon one of a few conditions. Any condition will trigger this function \
+                        One, the user says 'brainstorm' or mentions 'brainstorming'. This will load a brainstorm instruction set \
+                        and also will all this function. Trigger this anytime the brainstorm instructions are loaded\
+                        Two, the user will ask to fetch chat logs and give a beginning and end date in iso format if specified. \
+                         without a date specified, leave paramters blank",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "start_date_str": {
+                                "type": "string",
+                                "description": "beginning date and time in ISO format "
+                            },
+                            "end_date_str": {
+                                "type": "string",
+                                "description": "end date and time in ISO format"
+                            }
+                        },
+                        "required": ["query"],
+                        "additionalProperties": False
+                    },
+                    "strict": False
+                }
+            },
+        
             
             {
                 "type": "function",
@@ -349,7 +406,8 @@ class AIHandler:
             'temperature': 0.5,
             'max_tokens': 4096,
             'stream': False,
-            'tools': tools
+            'tools': tools,
+            'parallel_tool_calls' : False
         }
 
         try:
@@ -368,11 +426,16 @@ class AIHandler:
             if 'tool_calls' in assistant_message:
                 print(f"DEBUG: tool_calls in assistant_message")
                 tool_calls = assistant_message['tool_calls']
+                print(f"DEBUG: tool_calls above loop: ", tool_calls)
+
                 for tool_call in tool_calls:
+                    print (f"DEBUG: tool_call below loop: ", tool_call)
                     function_name = tool_call['function']['name']
                     function_args = json.loads(tool_call['function'].get(
                         'arguments', '{}'))
                     tool_call_id = tool_call['id']
+                    print (f"DEBUG: initial tool call id:", tool_call_id)
+
 
                     #perplexity call function
                     if function_name == 'perplexitycall':
@@ -537,6 +600,80 @@ class AIHandler:
 
 
                     ###hummus tool call
+                    elif function_name == 'firestore_get_docs_by_date_range':
+                        print("DEBUG: triggered tool firestore get docs called")
+                        
+                        # Get date range or use None if not specified
+                        start_date_str = function_args.get('start_date_str', None)
+                        end_date_str = function_args.get('end_date_str', None)
+                        
+                        try:
+                            # Call the function with or without date range
+                            if start_date_str and end_date_str:
+                                result = firestore_get_docs_by_date_range(start_date_str, end_date_str)
+                            else:
+                                print("DEBUG: No date range specified. Fetching all documents.")
+                                result = firestore_get_docs_by_date_range()
+                        except Exception as e:
+                            print(f"ERROR: fetching chat logs: {e}")
+                            logging.error(f"ERROR: fetching chat logs: {e}")
+                            return "Failed to fetch chat logs"
+
+                        print (f"DEBUG: firestore chat logs by time result: {result}")
+                        # Filter the result to exclude system messages
+                        filtered_result = filter_function_messages(result)
+                        #print(f"DEBUG: filtered_result: {filtered_result}")
+
+                        # First add the tool response message
+
+                        print (f"DEBUG: tool call id under function:", tool_call_id)
+
+                        function_call_result_message = {
+                            "role": "tool",
+                            "content": str(filtered_result),  # Unfiltered result for tool response
+                            "tool_call_id": tool_call_id
+                        }
+
+                        
+
+                        #print(f"DEBUG: filtered_result: {filtered_result}")
+
+                        # Create the database context using the filtered result
+                        database_context = {
+                            "role": "system",
+                            "content": "This is chatlog data from Firestore between a user and agent about food and cooking. \
+                                It is background on the most recent conversations with the agent. \
+                                In your initial responses after loading, think about whether the user is continuing the previous \
+                                conversation or starting a new topic: " + str(filtered_result)
+                        }
+
+
+                        # Update messages in correct sequence
+                        self.messages.append(assistant_message)
+                        self.messages.append(function_call_result_message)  # Required tool response
+                        self.messages.append(database_context)
+
+                        # Second API call
+                        completion_payload = {
+                            "model": 'gpt-4o-mini',
+                            "messages": self.messages
+                        }
+
+                        # Second API call
+                        second_response = requests.post(
+                            'https://api.openai.com/v1/chat/completions',
+                            headers=headers,
+                            json=completion_payload)
+                        second_response.raise_for_status()
+
+                        # Process final response
+                        second_response_json = second_response.json()
+                        final_assistant_message = second_response_json['choices'][0]['message']
+
+                        # Add final response to conversation
+                        self.messages.append(final_assistant_message)
+
+                        return final_assistant_message.get('content', 'No content in response.')
 
                     elif function_name == 'fetch_hummus':
                         print("DEBUG: triggered tool hummus")
@@ -861,12 +998,15 @@ class AIHandler:
                             "preferences": prefs,
                             "conditions": conditions
                         }
+
+
                         # First add the tool response message
                         function_call_result_message = {
                             "role": "tool",
                             "content": str(result_data),
                             "tool_call_id": tool_call_id
                         }
+
 
                         # Create database context message
                         database_context = {
@@ -955,18 +1095,18 @@ class AIHandler:
         response = self.openai_request()
 
         #function: add chats to google sheets and firestore
-        try:
+        # try:
             #add google sheets
-            add_chatlog_entry(self.messages)
+            #add_chatlog_entry(self.messages)
 
             #add firestore
-            firestore_add_doc(self.messages)
+            #firestore_add_doc(self.messages)
 
 
 
-        except:
-            print("Error adding chatlog entry agentchat")
-            logger.info(f"Error adding chatlog entry agentchat")
+        # except:
+        #     print("Error adding chatlog entry agentchat")
+        #     logger.info(f"Error adding chatlog entry agentchat")
 
         # try:
         #     #print (f"DEBUG: attempt chatlog entry:")

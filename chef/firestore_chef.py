@@ -94,11 +94,6 @@ def firestore_get_docs_by_date_range(start_date_str=None, end_date_str=None):
     try:
         # Parse incoming date strings into Python datetime objects
         print(f"DEBUG: firestore dates passed from parameters: start_date_str: {start_date_str}, end_date_str: {end_date_str}")
-        start_date = parse_date(start_date_str)
-        end_date = parse_date(end_date_str)
-
-        #convert to firestore timestamp
-
        
 
         # Check if Firebase is initialized
@@ -133,7 +128,7 @@ def firestore_get_docs_by_date_range(start_date_str=None, end_date_str=None):
 
         if not start_date_str and not end_date_str:
             query_parts.append('.order_by("date", direction=firestore.Query.DESCENDING)')
-            query_parts.append('.limit(1)')
+            query_parts.append('.limit(5)')
 
         # Combine all parts into a final query
         query = eval(query_base + "".join(query_parts))
@@ -157,7 +152,7 @@ def firestore_get_docs_by_date_range(start_date_str=None, end_date_str=None):
         for doc in results:
             doc_data = doc.to_dict()
             documents.append(doc_data)
-            print(f"Document ID: {doc.id}, Data: {doc_data}")
+            #print(f"Document ID: {doc.id}, Data: {doc_data}")
 
         return documents
 

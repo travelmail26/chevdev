@@ -69,7 +69,8 @@ class AIHandler:
                 "function": {
                     "name": "firestore_get_docs_by_date_range",
                     "description": "The user will ask you to fetch chat log data. \
-                        fill in beginning and end date in iso format if specified. otherwise leave blank",
+                        The user may specify a start or end date. \
+                            fill in beginning and end date in iso format if specified. otherwise leave blank",
                     "parameters": {
                         "type": "object",
                         "properties": {

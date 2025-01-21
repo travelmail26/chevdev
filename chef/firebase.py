@@ -6,6 +6,9 @@ import os
 import json
 from google.cloud import storage as gcs_storage 
 
+
+    
+
 def list_available_buckets():
     """
     List all available bucket names in the Google Cloud project.
