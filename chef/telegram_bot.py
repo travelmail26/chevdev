@@ -156,7 +156,7 @@ def run_bot():
 
         # Instead of checking environment == 'development', 
         # assume we always do webhooks:
-        webhook_url = 'https://fuzzy-happiness-7jgw66wxqqhg77-8080.app.github.dev'
+        webhook_url = 'https://chef-bot-209538059512.us-central1.run.app'
         #webhook_url = os.getenv("TELEGRAM_WEBHOOK_URL")
         if not webhook_url:
             raise ValueError("TELEGRAM_WEBHOOK_URL not set!")
