@@ -69,8 +69,8 @@ class AIHandler:
                 "function": {
                     "name": "firestore_get_docs_by_date_range",
                     "description": "The user will ask you to fetch chat log data. \
-                        The user may specify a start or end date. \
-                            fill in beginning and end date in iso format if specified. otherwise leave blank",
+                        The user may specify a start or end date or both. Only fill in the parameters given. \
+                            fill in beginning and or end date in iso format if specified. otherwise leave blank",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -127,7 +127,7 @@ class AIHandler:
                     if function_name == 'firestore_get_docs_by_date_range':
                         print("DEBUG: triggered tool firestore get docs called")
                         start_date_str = function_args.get('start_date_str')
-                        end_date_str = function_args.get('start_date_str')
+                        end_date_str = function_args.get('end_date_str')
                         result = firestore_get_docs_by_date_range(start_date_str, end_date_str)
 
                         # First add the tool response message

@@ -1095,18 +1095,18 @@ class AIHandler:
         response = self.openai_request()
 
         #function: add chats to google sheets and firestore
-        # try:
+        try:
             #add google sheets
-            #add_chatlog_entry(self.messages)
+            add_chatlog_entry(self.messages)
 
             #add firestore
-            #firestore_add_doc(self.messages)
+            firestore_add_doc(self.messages)
 
 
 
-        # except:
-        #     print("Error adding chatlog entry agentchat")
-        #     logger.info(f"Error adding chatlog entry agentchat")
+        except:
+            print("Error adding chatlog entry agentchat")
+            logger.info(f"Error adding chatlog entry agentchat")
 
         # try:
         #     #print (f"DEBUG: attempt chatlog entry:")
