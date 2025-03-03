@@ -79,10 +79,38 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             return
 
         response = user_handler.agentchat(text_input)
-        if response:
-            await update.message.reply_text(response)
-        else:
-            await update.message.reply_text("I couldn't generate a response. Please try again.")
+        buffer = ""
+        for chunk in response:
+            # Filter out invalid chunks at Telegram level
+            if chunk and isinstance(chunk, str) and chunk.strip():
+                logging.debug(f"Sending chunk to Telegram: '{chunk}'")
+                buffer += chunk
+                # Send buffer when it exceeds 30 characters
+                while len(buffer) >= 30:
+                    message = buffer[:30]  # Take first 30 characters
+                    logging.debug(f"Sending buffered message: '{message}'")
+                    await update.message.reply_text(message)
+                    buffer = buffer[30:]  # Remove sent portion
+                #await update.message.reply_text(chunk)
+            else:
+                logging.warning(f"Filtered out invalid chunk: '{chunk}'")
+
+    except Exception as e:
+        error_message = f"Error in handle_message: {e}\n{traceback.format_exc()}"
+        logging.error(error_message)
+        await update.message.reply_text("An error occurred while processing your message.")
+
+        # text_input = update.message.text or ""
+        # if not text_input.strip():
+        #     await update.message.reply_text("I received an empty message. Please send text or media!")
+        #     return
+
+
+        # response = user_handler.agentchat(text_input)
+        # if response:
+        #     await update.message.reply_text(response)
+        # else:
+        #     await update.message.reply_text("I couldn't generate a response. Please try again.")
 
     except Exception as e:
         error_message = f"Error in handle_message: {e}\n{traceback.format_exc()}"
@@ -156,7 +184,8 @@ def run_bot():
 
         # Instead of checking environment == 'development', 
         # assume we always do webhooks:
-        webhook_url = 'https://chef-bot-209538059512.us-central1.run.app'
+        #webhook_url = 'https://chef-bot-209538059512.us-central1.run.app'
+        webhook_url = 'https://fuzzy-happiness-7jgw66wxqqhg77-8080.app.github.dev'
         #webhook_url = os.getenv("TELEGRAM_WEBHOOK_URL")
         if not webhook_url:
             raise ValueError("TELEGRAM_WEBHOOK_URL not set!")

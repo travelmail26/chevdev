@@ -67,7 +67,7 @@ def filter_user_messages(messages):
 
 class AIHandler:
 
-    def __init__(self, user_id, openai_key=None):
+    def __init__(self, user_id=None, openai_key=None):
         self.openai_key = openai_key or openai_api_key
         #self.logger = ConversationLogger()
         self.user_id = user_id
@@ -105,16 +105,16 @@ class AIHandler:
             # with open('reporter/chef/instructions_diet_logistics.txt','r') as file:
             #     system_content_parts.append(
             #         "=== DIET LOGISTICS INSTRUCTIONS ===\n" + file.read())
-            with open(os.path.join(base_path, 'instructions_brainstorm.txt'), 'r') as file:
-                system_content_parts.append("=== BRAINSTORM INSTRUCTIONS ===\n" +
-                                            file.read())
+            # with open(os.path.join(base_path, 'instructions_brainstorm.txt'), 'r') as file:
+            #     system_content_parts.append("=== BRAINSTORM INSTRUCTIONS ===\n" +
+            #                                 file.read())
             # with open('reporter/chef/exploring_additional_instructions.txt',
             #           'r') as file:
             #     system_content_parts.append(
             #         "=== EXPLORING ADDITIONAL INSTRUCTIONS ===\n" + file.read())
-            with open(os.path.join(base_path, 'instructions_log.txt'), 'r') as file:
-                system_content_parts.append(
-                    "=== LOGGING ADDITIONAL INSTRUCTIONS ===\n" + file.read())
+            # with open(os.path.join(base_path, 'instructions_log.txt'), 'r') as file:
+            #     system_content_parts.append(
+            #         "=== LOGGING ADDITIONAL INSTRUCTIONS ===\n" + file.read())
             # with open('reporter/chef/instructions_mealplan.txt', 'r') as file:
             #     system_content_parts.append(
             #         "=== MEAL PLAN ADDITIONAL INSTRUCTIONS ===\n" + file.read())
@@ -129,6 +129,7 @@ class AIHandler:
         return [{"role": "system", "content": combined_content}]
 
     def openai_request(self):
+        print ('DEBUG: openai_request triggered')
         if not self.openai_key:
             return "OpenAI API key is missing."
 
@@ -405,22 +406,41 @@ class AIHandler:
             'messages': self.messages,
             'temperature': 0.5,
             'max_tokens': 4096,
-            'stream': False,
+            'stream': True,
             'tools': tools,
             'parallel_tool_calls' : False
         }
 
+        #print ('DEBUG: open data sent', data)
         try:
             # First API call
             response = requests.post(
                 'https://api.openai.com/v1/chat/completions',
                 headers=headers,
-                json=data)
+                json=data,
+                stream=True)
             response.raise_for_status()
-            response_json = response.json()
+
+            
 
             # Extract the assistant's message
-            assistant_message = response_json['choices'][0]['message']
+            #assistant_message = response_json['choices'][0]['message']
+            #print ('DEBUG: assistant_message', assistant_message)
+
+            #streaming response
+            assistant_message = {"role": "assistant", "content": ""}
+            for line in response.iter_lines():
+                #print ('DEBUG LINE ABOVE TOOLS', line)
+                if line:
+                    decoded_line = line.decode('utf-8')
+                    if decoded_line.startswith("data: ") and decoded_line != "data: [DONE]":
+                        data = json.loads(decoded_line[len("data: "):])
+                        if 'choices' in data:
+                            chunk = data['choices'][0]['delta'].get('content', '')
+                            #print ('DEBUG INITIAL CHUNK:', chunk)
+                            assistant_message['content'] += chunk
+                            #print ('DEBUG: yield chunk', chunk, 'END CHUNK')
+                            yield chunk  # Yield each chunk as it is received
 
             # TOOLS Check if the assistant wants to call a function (tool)
             if 'tool_calls' in assistant_message:
@@ -1071,9 +1091,11 @@ class AIHandler:
 
             else:
                 # If no function call, add the assistant's message to the conversation
+                # self.messages.append(assistant_message)
+                # return assistant_message.get('content',
+                #                              'No content in the response.')
                 self.messages.append(assistant_message)
-                return assistant_message.get('content',
-                                             'No content in the response.')
+                yield assistant_message.get('content', 'No content in the response.')
 
         except requests.RequestException as e:
             error_message = f"Error in OpenAI request: {str(e)}"
@@ -1092,15 +1114,27 @@ class AIHandler:
         self.messages.append({"role": "user", "content": prompt})
 
         # Get response from OpenAI
-        response = self.openai_request()
+        #response = self.openai_request()
+
+        # Get response from OpenAI generator
+        response_generator = self.openai_request()
+
+        response = ""
+        for chunk in response_generator:
+            #print('DEBUG: chunk agent response from response generator', chunk)
+            response += chunk
+            yield chunk
+
+        self.messages.append({"role": "user", "content": prompt})
 
         #function: add chats to google sheets and firestore
         try:
             #add google sheets
-            add_chatlog_entry(self.messages)
+            #add_chatlog_entry(self.messages)
 
             #add firestore
-            firestore_add_doc(self.messages)
+            #firestore_add_doc(self.messages)
+            pass
 
 
 
@@ -1113,7 +1147,7 @@ class AIHandler:
         #     auto_postprocess(self.messages)
         # except:
         #     print("Error adding summary")
-        return response
+        #return pass
 
 
 # Example usage
@@ -1127,7 +1161,13 @@ if __name__ == "__main__":
                 user_input = input("Enter your prompt (or 'quit' to exit): ")
                 if user_input.lower() == 'quit':
                     break
-                response = handler.agentchat(user_input)
+                response_generator = handler.agentchat(user_input)
+                
+                response = ""
+                for chunk in response_generator:
+                    print(chunk, end='')
+                    response += chunk
+
                 print("\nResponse:", response, "\n")
             except KeyboardInterrupt:
                 print("\nExiting...")

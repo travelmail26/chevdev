@@ -1,5 +1,8 @@
+
+
 import json
 import os
+import sys
 from sheetscall import add_chatlog_entry
 
 from openai import OpenAI
@@ -69,7 +72,7 @@ def perplexitycall(messages):
     print('DEBUG: messages sent perplexity api**', messages)
     # chat completion with streaming
     stream = client.chat.completions.create(
-        model="llama-3.1-sonar-huge-128k-online",
+        model="sonar-pro",
         messages=messages,
         stream=True)
 
@@ -79,7 +82,7 @@ def perplexitycall(messages):
         if chunk.choices[0].delta.content is not None:
             buffer += chunk.choices[0].delta.content
             content += chunk.choices[0].delta.content
-            if len(buffer) >= 300:
+            if len(buffer) >= 40:
                 print(buffer, end='', flush=True)
                 buffer = ""
 
@@ -95,7 +98,9 @@ if __name__ == "__main__":
         "role":
         "user",
         "content":
-        "i'm not sure i believe that bone broth loses flavor or nutrition when cooked at boiling temperatures. Search for stack exchange for anyone who has direct experience comparing cooking broth at simmer or boil or at much higher temperatures. Let's think step by step. Double check your answers so that youre giving the user the most accurate response. print the full url and name of the website in a citation."
+        "i'm having difficulty makgin the carrot syrup similar to chef Michael Solomonov's . \
+            I reduce the liquid of about a pound of carrots and i'm maybe left with a tablespoon of liquid. \
+                am i doing it wrong or is that what it should yeild? Find solutions"
     }]
     result = perplexitycall(test_messages)
     print(result)

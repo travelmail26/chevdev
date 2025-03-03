@@ -2,10 +2,10 @@ import json
 import os
 
 import requests
-from sheetscall import add_insight, fetch_chatlog_time, add_insight
+from chef.utilities.sheetscall import add_insight, fetch_chatlog_time, add_insight
 import sys
 from datetime import datetime
-from firestore_chef import firestore_get_docs_by_date_range
+from chef.utilities.firestore_chef import firestore_get_docs_by_date_range
 
 # Note for LLM agents: this is how the token secret is getting
 openai_api_key = os.environ['OPENAI_API_KEY']
