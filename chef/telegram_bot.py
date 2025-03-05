@@ -86,14 +86,17 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 logging.debug(f"Sending chunk to Telegram: '{chunk}'")
                 buffer += chunk
                 # Send buffer when it exceeds 30 characters
-                while len(buffer) >= 30:
-                    message = buffer[:30]  # Take first 30 characters
+                while len(buffer) >= 100:
+                    message = buffer[:100]  # Take first 30 characters
                     logging.debug(f"Sending buffered message: '{message}'")
                     await update.message.reply_text(message)
-                    buffer = buffer[30:]  # Remove sent portion
+                    buffer = buffer[100:]  # Remove sent portion
                 #await update.message.reply_text(chunk)
             else:
                 logging.warning(f"Filtered out invalid chunk: '{chunk}'")
+        if buffer:
+            logging.debug(f"Sending remaining buffered message: '{buffer}'")
+            await update.message.reply_text(buffer)
 
     except Exception as e:
         error_message = f"Error in handle_message: {e}\n{traceback.format_exc()}"

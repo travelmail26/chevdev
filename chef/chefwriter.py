@@ -2,6 +2,8 @@ import json
 import os
 
 import requests
+import traceback
+
 from datetime import datetime
 import pytz
 from perplexity import perplexitycall
@@ -424,42 +426,50 @@ class AIHandler:
             
 
             # Extract the assistant's message
-            #assistant_message = response_json['choices'][0]['message']
-            #print ('DEBUG: assistant_message', assistant_message)
-
-            #streaming response
+ 
             assistant_message = {"role": "assistant", "content": ""}
+            tool_calls = []
+
+            tool_call_check = False
+            #determine tool calls
+
             for line in response.iter_lines():
-                #print ('DEBUG LINE ABOVE TOOLS', line)
                 if line:
                     decoded_line = line.decode('utf-8')
                     if decoded_line.startswith("data: ") and decoded_line != "data: [DONE]":
                         data = json.loads(decoded_line[len("data: "):])
-                        if 'choices' in data:
-                            chunk = data['choices'][0]['delta'].get('content', '')
-                            #print ('DEBUG INITIAL CHUNK:', chunk)
-                            assistant_message['content'] += chunk
-                            #print ('DEBUG: yield chunk', chunk, 'END CHUNK')
-                            yield chunk  # Yield each chunk as it is received
+                        print('DEBUG: data:', data)
+                        if 'choices' in data and 'delta' in data['choices'][0]:
+                            delta = data['choices'][0]['delta']
+                            if 'tool_calls' in delta:
+                                tool_call_check = True
+                            
+
 
             # TOOLS Check if the assistant wants to call a function (tool)
-            if 'tool_calls' in assistant_message:
-                print(f"DEBUG: tool_calls in assistant_message")
-                tool_calls = assistant_message['tool_calls']
-                print(f"DEBUG: tool_calls above loop: ", tool_calls)
+            
+            if tool_call_check = True:
+                print(f"DEBUG: tool_calls detected: {tool_calls}")
+                assistant_message['tool_calls'] = tool_calls
+                self.messages.append(assistant_message)
 
                 for tool_call in tool_calls:
                     print (f"DEBUG: tool_call below loop: ", tool_call)
                     function_name = tool_call['function']['name']
-                    function_args = json.loads(tool_call['function'].get(
-                        'arguments', '{}'))
+                    arguments = tool_call['function'].get('arguments', '{}')
+                    if arguments:
+                        function_args = json.loads(arguments)
+                    else:
+                        function_args = {}
                     tool_call_id = tool_call['id']
                     print (f"DEBUG: initial tool call id:", tool_call_id)
 
 
                     #perplexity call function
                     if function_name == 'perplexitycall':
+                        print("DEBUG: triggered tool perplexitycall")
                         query = function_args.get('query')
+                        print ('DEBUG: passed to perplexity query:', query)
                         if query:
                             print("Agent is searching the internet for an answer...")
                             # Prepare the conversation history for perplexitycall
@@ -1089,13 +1099,27 @@ class AIHandler:
                     else:
                         return f"Unknown function called: {function_name}"
 
+
+            #if not tool call
             else:
+                try: 
+                    if 'content' in delta:
+                        chunk = delta['content']
+                        if chunk is not None:
+                            assistant_message['content'] += chunk
+                            yield chunk
+                except:
+                    print ('DEBUG:')
+
+
                 # If no function call, add the assistant's message to the conversation
                 # self.messages.append(assistant_message)
-                # return assistant_message.get('content',
-                #                              'No content in the response.')
-                self.messages.append(assistant_message)
-                yield assistant_message.get('content', 'No content in the response.')
+                return assistant_message.get('content',
+                                              'No content in the response.')
+                #self.messages.append(assistant_message)
+                #yield assistant_message['content']
+                #yield assistant_message.get('content', 'No content in the response.')
+                pass
 
         except requests.RequestException as e:
             error_message = f"Error in OpenAI request: {str(e)}"
@@ -1109,26 +1133,29 @@ class AIHandler:
         print('DEBUG: agent chat triggered')
         print(f"DEBUG: user_id {self.user_id}")
 
-        # Add user input to messages
+        if prompt:
+            self.messages.append({"role": "user", "content": prompt})
 
-        self.messages.append({"role": "user", "content": prompt})
-
-        # Get response from OpenAI
-        #response = self.openai_request()
-
-        # Get response from OpenAI generator
+    # Get response from OpenAI generator
         response_generator = self.openai_request()
 
-        response = ""
+        # Get response from OpenAI generator
+        full_response = ""
         for chunk in response_generator:
-            #print('DEBUG: chunk agent response from response generator', chunk)
-            response += chunk
-            yield chunk
+            if chunk:  # Ensure chunk is not empty
+                #print(f'DEBUG: yielding chunk from agentchat: {chunk}')
+                full_response += chunk  # Accumulate the content
+                yield chunk  # Yield raw chunk for Telegram streaming
 
-        self.messages.append({"role": "user", "content": prompt})
+        # After streaming, append the full assistant response to messages
+        if full_response.strip():  # Only append if there's content
+            self.messages.append({"role": "assistant", "content": full_response})
+            print(f'DEBUG: Appended assistant message: {full_response}')
+
 
         #function: add chats to google sheets and firestore
         try:
+            #self.messages.append({"role": "user", "content": prompt})
             #add google sheets
             #add_chatlog_entry(self.messages)
 
@@ -1173,4 +1200,5 @@ if __name__ == "__main__":
                 print("\nExiting...")
                 break
             except Exception as e:
-                print(f"Error: {e}")
+                print(f"Error from terminal: {e}")
+                traceback.print_exc()
