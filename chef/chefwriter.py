@@ -429,26 +429,31 @@ class AIHandler:
  
             assistant_message = {"role": "assistant", "content": ""}
             tool_calls = []
+            has_tool_call = False
 
-            tool_call_check = False
-            #determine tool calls
-
+            # Accumulate streaming response
             for line in response.iter_lines():
                 if line:
                     decoded_line = line.decode('utf-8')
                     if decoded_line.startswith("data: ") and decoded_line != "data: [DONE]":
                         data = json.loads(decoded_line[len("data: "):])
-                        print('DEBUG: data:', data)
                         if 'choices' in data and 'delta' in data['choices'][0]:
                             delta = data['choices'][0]['delta']
                             if 'tool_calls' in delta:
-                                tool_call_check = True
+                                has_tool_call = True
+                                for tool_call in delta['tool_calls']:
+                                    tool_calls.append(tool_call)
+                            elif not has_tool_call and 'content' in delta:
+                                chunk = delta['content']
+                                if chunk is not None:
+                                    assistant_message['content'] += chunk
+                                    yield chunk
                             
 
 
             # TOOLS Check if the assistant wants to call a function (tool)
             
-            if tool_call_check = True:
+            if has_tool_call:
                 print(f"DEBUG: tool_calls detected: {tool_calls}")
                 assistant_message['tool_calls'] = tool_calls
                 self.messages.append(assistant_message)
@@ -1092,26 +1097,12 @@ class AIHandler:
 
                         # Add final response to conversation
                         self.messages.append(final_assistant_message)
-
-                        return final_assistant_message.get(
-                            'content', 'No content in response.')
+                        yield final_assistant_message.get('content', 'No content in the response.')
 
                     else:
                         return f"Unknown function called: {function_name}"
 
-
-            #if not tool call
             else:
-                try: 
-                    if 'content' in delta:
-                        chunk = delta['content']
-                        if chunk is not None:
-                            assistant_message['content'] += chunk
-                            yield chunk
-                except:
-                    print ('DEBUG:')
-
-
                 # If no function call, add the assistant's message to the conversation
                 # self.messages.append(assistant_message)
                 return assistant_message.get('content',
