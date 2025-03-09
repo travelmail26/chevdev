@@ -455,652 +455,670 @@ class AIHandler:
             
             if has_tool_call:
                 print(f"DEBUG: tool_calls detected: {tool_calls}")
-                assistant_message['tool_calls'] = tool_calls
+                # Construct complete tool call from chunks
+                complete_tool_call = {
+                    "id": tool_calls[0]['id'],
+                    "type": "function",
+                    "function": {
+                        "name": tool_calls[0]['function']['name'],
+                        "arguments": "".join(tc['function'].get('arguments', '') for tc in tool_calls)
+                    }
+                }
+                assistant_message['tool_calls'] = [complete_tool_call]
                 self.messages.append(assistant_message)
 
-                for tool_call in tool_calls:
-                    print (f"DEBUG: tool_call below loop: ", tool_call)
-                    function_name = tool_call['function']['name']
-                    arguments = tool_call['function'].get('arguments', '{}')
-                    if arguments:
-                        function_args = json.loads(arguments)
-                    else:
-                        function_args = {}
-                    tool_call_id = tool_call['id']
-                    print (f"DEBUG: initial tool call id:", tool_call_id)
+                function_name = complete_tool_call['function']['name']
+                arguments = complete_tool_call['function']['arguments']
+                function_args = json.loads(arguments) if arguments else {}
+                tool_call_id = complete_tool_call['id']  # Define tool_call_id here
+                print(f"DEBUG: complete tool call: {function_name}, id: {tool_call_id}, args: {arguments}")
 
 
-                    #perplexity call function
-                    if function_name == 'perplexitycall':
-                        print("DEBUG: triggered tool perplexitycall")
-                        query = function_args.get('query')
-                        print ('DEBUG: passed to perplexity query:', query)
-                        if query:
-                            print("Agent is searching the internet for an answer...")
-                            # Prepare the conversation history for perplexitycall
-                            structured_message = []
+                #perplexity call function
+                if function_name == 'perplexitycall':
+                    print("DEBUG: triggered tool perplexitycall")
+                    query = function_args.get('query')
+                    print ('DEBUG: passed to perplexity query:', query)
+                    if query:
+                        print("Agent is searching the internet for an answer...")
+                        # Prepare the conversation history for perplexitycall
+                        structured_message = []
 
-                            # Include user and assistant messages from the conversation
-                            for msg in self.messages:
-                                if msg['role'] in ['user', 'assistant']:
-                                    if msg['content'] is None:
-                                        msg['content'] = 'empty'
-                                    structured_message.append(msg)
+                        # Include user and assistant messages from the conversation
+                        for msg in self.messages:
+                            if msg['role'] in ['user', 'assistant']:
+                                if msg['content'] is None:
+                                    msg['content'] = 'empty'
+                                structured_message.append(msg)
 
-                            # No need to append the query again if it's already in self.messages
-                            def filter_messages(messages):
-                                filtered = []
-                                for i, msg in enumerate(messages):
-                                    if msg['role'] == 'assistant' and 'tool_calls' in msg:
-                                        continue  # Skip this message
-                                    if i > 0 and msg['role'] == filtered[-1][
-                                            'role']:
-                                        # Combine with previous message of same role
-                                        filtered[-1][
-                                            'content'] += "\n" + msg['content']
-                                    else:
-                                        filtered.append(msg)
-                                return filtered
+                        # No need to append the query again if it's already in self.messages
+                        def filter_messages(messages):
+                            filtered = []
+                            for i, msg in enumerate(messages):
+                                if msg['role'] == 'assistant' and 'tool_calls' in msg:
+                                    continue  # Skip this message
+                                if i > 0 and msg['role'] == filtered[-1][
+                                        'role']:
+                                    # Combine with previous message of same role
+                                    filtered[-1][
+                                        'content'] += "\n" + msg['content']
+                                else:
+                                    filtered.append(msg)
+                            return filtered
 
-                            # Use this function before sending messages to Perplexity
-                            perplexity_messages_filtered = filter_messages(
-                                structured_message)
-                            # Call Perplexity with the conversation history
-                            perplexity_response_content = perplexitycall(
-                                perplexity_messages_filtered)
-
-                            # Ensure response_content is a string
-                            if isinstance(perplexity_response_content, dict):
-                                perplexity_response_content = json.dumps(perplexity_response_content)
-
-                            #print ('DEBUG: perplexity_response_content', perplexity_response_content)
-                            # Properly format and send the function result back to the model
-                            function_call_result_message = {
-                                "role": "tool",
-                                "content": perplexity_response_content,
-                                "tool_call_id": tool_call_id
-                            }
-
-                            # Add the assistant's message and function result to the conversation
-                            self.messages.append(assistant_message)
-                            # print('DEBUG: assistant_message: ',
-                            #       assistant_message)
-                            self.messages.append(function_call_result_message)
-                            # print('DEBUG: function_call_result_message: ',
-                            #       function_call_result_message)
-
-                            #system message not to truncate perplexity output
-                            self.messages.append({
-                                "role": "system",
-                                "content": "Do not truncate or summarize this function call result. Return the text as is. It will include both text and citations. It is from another agent, perplexity. Do not make an exceptions to this system instruction. In your response, start with 'result from perplexity:' and then return the exact result, which may urls, citations or special characters."
-                            })
-                            # Prepare the payload for the second API call
-                            completion_payload = {
-                                "model": 'gpt-4o-mini',
-                                "messages": self.messages
-                            }
-
-                            # Make the second API call
-                            second_response = requests.post(
-                                'https://api.openai.com/v1/chat/completions',
-                                headers=headers,
-                                json=completion_payload)
-                            second_response.raise_for_status()
-
-                            # Process the final response after the function call
-                            second_response_json = second_response.json()
-                            final_assistant_message = second_response_json[
-                                'choices'][0]['message']
-
-                            # Add the assistant's final response to the conversation
-                            self.messages.append(final_assistant_message)
-
-                            # Return the assistant's final response content
-                            return final_assistant_message.get(
-                                'content', 'No content in the response.')
-                        else:
-                            return "Error: No query provided for browsing."
-
-                    #search google recipes
-
-                    # elif function_name == 'search_recipes_serpapi':
-                    #     print("DEBUG: triggered tool search recipes")
-
-                    #     query = function_args.get('query')
-                    #     try:
-                    #         result_data = search_recipes_serpapi(query)
-                    #     except Exception as e:
-                    #         print(f"ERROR: fetching recipes: {e}")
-                    #         return "Failed to fetch recipes"
-
-                    #     # First add the tool response message
-                    #     function_call_result_message = {
-                    #         "role": "tool",
-                    #         "content": str(result_data),
-                    #         "tool_call_id": tool_call_id
-                    #     }
-
-                    #     # Create database context message
-                    #     database_recipe_context = {
-                    #         "role":
-                    #         "system",
-                    #         "content":
-                    #         f"""This is a search result of recipes. THe user requested search results and this was the result
-
-                    #         *RECIPE CONTENT FOLLOWS*:
-                    #         {str(result_data)} ~~*END RECIPE API CALL CONTENT*~~
-
-                    #         """
-                    #     }
-
-                    #     # Update messages in correct sequence
-                    #     self.messages.append(assistant_message)
-                    #     self.messages.append(function_call_result_message
-                    #                          )  # Required tool response
-                    #     self.messages.append(database_recipe_context)
-
-                    #     # Second API call
-                    #     completion_payload = {
-                    #         "model": 'gpt-4o-mini',
-                    #         "messages": self.messages
-                    #     }
-
-                    #     # DEBUG: Print a slice of the API call payload
-                    #     print(
-                    #         f"DEBUG: first few recipe messages: {self.messages[:1]}"
-                    #     )
-
-                    #     # Second API call
-                    #     try:
-                    #         second_response = requests.post(
-                    #             'https://api.openai.com/v1/chat/completions',
-                    #             headers=headers,
-                    #             json=completion_payload)
-                    #         second_response.raise_for_status()
-                    #     except requests.exceptions.RequestException as e:
-                    #         print(f"ERROR: API call failed: {e}")
-                    #         return "Failed to fetch completion"
-
-                    #     # Process final response
-                    #     second_response_json = second_response.json()
-                    #     final_assistant_message = second_response_json[
-                    #         'choices'][0]['message']
-
-                    #     # Add final response to conversation
-                    #     self.messages.append(final_assistant_message)
-
-                    #     return final_assistant_message.get(
-                    #         'content', 'No content in response.')
-
-
-
-                    ###hummus tool call
-                    elif function_name == 'firestore_get_docs_by_date_range':
-                        print("DEBUG: triggered tool firestore get docs called")
+                        # Use this function before sending messages to Perplexity
+                        perplexity_messages_filtered = filter_messages(
+                            structured_message)
+                        # Call Perplexity with the conversation history
+                        perplexity_response_content = perplexitycall(
+                            perplexity_messages_filtered)
                         
-                        # Get date range or use None if not specified
-                        start_date_str = function_args.get('start_date_str', None)
-                        end_date_str = function_args.get('end_date_str', None)
-                        
-                        try:
-                            # Call the function with or without date range
-                            if start_date_str and end_date_str:
-                                result = firestore_get_docs_by_date_range(start_date_str, end_date_str)
-                            else:
-                                print("DEBUG: No date range specified. Fetching all documents.")
-                                result = firestore_get_docs_by_date_range()
-                        except Exception as e:
-                            print(f"ERROR: fetching chat logs: {e}")
-                            logging.error(f"ERROR: fetching chat logs: {e}")
-                            return "Failed to fetch chat logs"
 
-                        print (f"DEBUG: firestore chat logs by time result: {result}")
-                        # Filter the result to exclude system messages
-                        filtered_result = filter_function_messages(result)
-                        #print(f"DEBUG: filtered_result: {filtered_result}")
+                        # Ensure response_content is a string
+                        if isinstance(perplexity_response_content, dict):
+                            perplexity_response_content = json.dumps(perplexity_response_content)
 
-                        # First add the tool response message
-
-                        print (f"DEBUG: tool call id under function:", tool_call_id)
-
+                        #print ('DEBUG: perplexity_response_content', perplexity_response_content)
+                        # Properly format and send the function result back to the model
                         function_call_result_message = {
                             "role": "tool",
-                            "content": str(filtered_result),  # Unfiltered result for tool response
+                            "content": perplexity_response_content,
                             "tool_call_id": tool_call_id
                         }
 
-                        
 
-                        #print(f"DEBUG: filtered_result: {filtered_result}")
+                        # Add the assistant's message and function result to the conversation
+                        self.messages.append(assistant_message)
+                        # print('DEBUG: assistant_message: ',
+                        #       assistant_message)
+                        self.messages.append(function_call_result_message)
+                        # print('DEBUG: function_call_result_message: ',
+                        #       function_call_result_message)
 
-                        # Create the database context using the filtered result
-                        database_context = {
+                        #system message not to truncate perplexity output
+                        self.messages.append({
                             "role": "system",
-                            "content": "This is chatlog data from Firestore between a user and agent about food and cooking. \
-                                It is background on the most recent conversations with the agent. \
-                                In your initial responses after loading, think about whether the user is continuing the previous \
-                                conversation or starting a new topic: " + str(filtered_result)
-                        }
-
-
-                        # Update messages in correct sequence
-                        self.messages.append(assistant_message)
-                        self.messages.append(function_call_result_message)  # Required tool response
-                        self.messages.append(database_context)
-
-                        # Second API call
+                            "content": "Do not truncate or summarize this function call result. Return the text as is. It will include both text and citations. It is from another agent, perplexity. Do not make an exceptions to this system instruction. In your response, start with 'result from perplexity:' and then return the exact result, which may urls, citations or special characters."
+                        })
+                        # Prepare the payload for the second API call
                         completion_payload = {
                             "model": 'gpt-4o-mini',
                             "messages": self.messages
                         }
-
-                        # Second API call
-                        second_response = requests.post(
-                            'https://api.openai.com/v1/chat/completions',
-                            headers=headers,
-                            json=completion_payload)
-                        second_response.raise_for_status()
-
-                        # Process final response
-                        second_response_json = second_response.json()
-                        final_assistant_message = second_response_json['choices'][0]['message']
-
-                        # Add final response to conversation
-                        self.messages.append(final_assistant_message)
-
-                        return final_assistant_message.get('content', 'No content in response.')
-
-                    elif function_name == 'fetch_hummus':
-                        print("DEBUG: triggered tool hummus")
                         try:
-                            result_data = fetch_sheet_data_rows(
-                                'recipe_hummus')
-                        except Exception as e:
-                            print(f"ERROR: fetching hummus recipes: {e}")
-                            return "Failed to fetch hummus recipes"
-    
-                        function_call_result_message = {
-                            "role": "tool",
-                            "content": str(result_data),
-                            "tool_call_id": tool_call_id
-                        }
-    
-                        database_hummus_context = {
-                            "role":
-                            "system",
-                            "content":
-                            f"""Here is the hummus recipes from our database
-    
-                            *HUMMUS RECIPES FOLLOW*:
-                            {str(result_data)} ~~*END HUMMUS RECIPES*~~
-                            """
-                        }
-    
-                        self.messages.append(assistant_message)
-                        self.messages.append(function_call_result_message)
-                        self.messages.append(database_hummus_context)
-    
-                        completion_payload = {
-                            "model": 'gpt-4o-mini',
-                            "messages": self.messages
-                        }
-    
-                        try:
+                            print("DEBUG: About to send API request", flush=True)
                             second_response = requests.post(
                                 'https://api.openai.com/v1/chat/completions',
                                 headers=headers,
-                                json=completion_payload)
-                            second_response.raise_for_status()
+                                timeout=5,
+                                json=completion_payload
+                            )
+                            print("DEBUG: API request completed", flush=True)
+                            second_response.raise_for_status()  # Raises an exception for bad status codes
+                            print("DEBUG: API status is OK", flush=True)
+                        except requests.exceptions.Timeout:
+                            print("DEBUG: Request timed out after 5 seconds", flush=True)
                         except requests.exceptions.RequestException as e:
-                            print(f"ERROR: API call failed: {e}")
-                            return "Failed to fetch completion"
-    
-                        second_response_json = second_response.json()
-                        final_assistant_message = second_response_json[
-                            'choices'][0]['message']
-                        self.messages.append(final_assistant_message)
-                        return final_assistant_message.get(
-                            'content', 'No content in response.')
-                    
-                    #recipes fetch
-                    elif function_name == 'fetch_recipes':
-                        print("DEBUG: triggered tool recipes")
-
-                        try:
-                            result_data = fetch_recipes()
+                            print(f"DEBUG: Request failed: {e}", flush=True)
                         except Exception as e:
-                            print(f"ERROR: fetching recipes: {e}")
-                            return "Failed to fetch recipes"
+                            print(f"DEBUG: Unexpected error: {e}", flush=True)
 
-                        # First add the tool response message
-                        function_call_result_message = {
-                            "role": "tool",
-                            "content": str(result_data),
-                            "tool_call_id": tool_call_id
-                        }
-
-                        # Create database context message
-                        database_recipe_context = {
-                            "role":
-                            "system",
-                            "content":
-                            f"""This is a database of recipes. Prioritize them when making recommendations. After the function, just tell me "recipes loaded into memory"
-
-                            *RECIPE CONTENT FOLLOWS*:
-                            {str(result_data)} ~~*END RECIPE DATABASE CONTENT*~~
-
-                            """
-                        }
-
-                        # Update messages in correct sequence
-                        self.messages.append(assistant_message)
-                        self.messages.append(function_call_result_message
-                                             )  # Required tool response
-                        self.messages.append(database_recipe_context)
-
-                        # Second API call
-                        completion_payload = {
-                            "model": 'gpt-4o-mini',
-                            "messages": self.messages
-                        }
-
-                        # DEBUG: Print a slice of the API call payload
-                        print(
-                            f"DEBUG: first few recipe messages: {self.messages[:1]}"
-                        )
-
-                        # Second API call
-                        try:
-                            second_response = requests.post(
-                                'https://api.openai.com/v1/chat/completions',
-                                headers=headers,
-                                json=completion_payload)
-                            second_response.raise_for_status()
-                        except requests.exceptions.RequestException as e:
-                            print(f"ERROR: API call failed: {e}")
-                            return "Failed to fetch completion"
-
-                        # Process final response
+                        # Process the final response after the function call
                         second_response_json = second_response.json()
                         final_assistant_message = second_response_json[
                             'choices'][0]['message']
 
-                        # Add final response to conversation
+                        print ('DEBUG: second api return from perplexity tool', final_assistant_message)
+
+                        # Add the assistant's final response to the conversation
                         self.messages.append(final_assistant_message)
 
+                        # Return the assistant's final response content
                         return final_assistant_message.get(
-                            'content', 'No content in response.')
-
-                    #alarm
-
-                    elif function_name == 'append_alarm':
-                        print("DEBUG: alarm tool")
-
-                        # Parse arguments from the function call
-                        function_args = json.loads(
-                            tool_call['function']['arguments'])
-                        trigger_time = function_args.get('trigger_time')
-                        message = function_args.get('message')
-
-                        try:
-                            result_data = append_alarm(
-                                trigger_time=trigger_time, message=message)
-                        except Exception as e:
-                            print(f"ERROR: triggering alarm: {e}")
-                            return "Failed to trigger alarm"
-                        # First add the tool response message
-                        function_call_result_message = {
-                            "role": "tool",
-                            "content": str(result_data),
-                            "tool_call_id": tool_call_id
-                        }
-
-                        # Create database context message
-                        database_recipe_context = {
-                            "role":
-                            "system",
-                            "content":
-                            f"""alarm notifiation message: {str(result_data)}"""
-                        }
-
-                        # Update messages in correct sequence
-                        self.messages.append(assistant_message)
-                        self.messages.append(function_call_result_message
-                                             )  # Required tool response
-                        self.messages.append(database_recipe_context)
-
-                        # Second API call
-                        completion_payload = {
-                            "model": 'gpt-4o-mini',
-                            "messages": self.messages
-                        }
-
-                        # DEBUG: Print a slice of the API call payload
-                        print(f"DEBUG: alarm after second api call")
-
-                        # Second API call
-                        try:
-                            second_response = requests.post(
-                                'https://api.openai.com/v1/chat/completions',
-                                headers=headers,
-                                json=completion_payload)
-                            second_response.raise_for_status()
-                        except requests.exceptions.RequestException as e:
-                            print(f"ERROR: API call failed: {e}")
-                            return "Failed to alarm completion"
-
-                        # Process final response
-                        second_response_json = second_response.json()
-                        final_assistant_message = second_response_json[
-                            'choices'][0]['message']
-
-                        # Add final response to conversation
-                        self.messages.append(final_assistant_message)
-
-                        return final_assistant_message.get(
-                            'content', 'No content in response.')
-
-                    #update task
-                    elif function_name == 'update_task':
-                        print("DEBUG: triggered tool function update task")
-
-                        # Extract parameters from function_args and ensure updates is a dictionary
-                        task_id = function_args.get('task_id')
-                        updates = {}
-
-                        # Extract each possible update field
-                        for key, value in function_args['updates'].items():
-                            if key in [
-                                    'date', 'title', 'description',
-                                    'completed', 'notes'
-                            ]:
-                                updates[key] = value
-
-                        # Call update_task function
-                        result = update_task(task_id, updates)
-
-                        # Format the response
-                        function_call_result_message = {
-                            "role": "tool",
-                            "content": str(result),
-                            "tool_call_id": tool_call_id
-                        }
-
-                        # Add messages to conversation
-                        self.messages.append(assistant_message)
-                        self.messages.append(function_call_result_message)
-
-                        return "Task updated successfully" if result else "Failed to update task"
-
-                    # Handle the task_create function call
-                    elif function_name == 'task_create':
-                        print(
-                            f"DEBUG: triggered tool function called task creation"
-                        )
-                        # Extract parameters from function_args
-                        id = function_args.get('id')
-                        date = function_args.get('date')
-                        title = function_args.get('title')
-                        description = function_args.get('description')
-                        notes = function_args.get('notes')
-
-                        # Call task_create function
-                        result = task_create(id, date, title, description,
-                                             notes)
-
-                        # Format the response
-                        function_call_result_message = {
-                            "role": "tool",
-                            "content": str(result),
-                            "tool_call_id": tool_call_id
-                        }
-
-                        # Add messages to conversation
-                        self.messages.append(assistant_message)
-                        self.messages.append(function_call_result_message)
-
-                        return "Task created successfully" if result else "Failed to create task"
-
-                # When sheets_call is triggered in tool_calls
-                    elif function_name == 'sheets_call':
-                        print("DEBUG: triggered tool sheetscall")
-                        tab = function_args.get('tab')
-                        result = sheets_call(tab)
-
-                        # First add the tool response message
-                        function_call_result_message = {
-                            "role": "tool",
-                            "content": str(result),
-                            "tool_call_id": tool_call_id
-                        }
-
-                        # Create database context message
-                        database_context = {
-                            "role":
-                            "system",
-                            "content":
-                            f"""Review the following cooking task database.
-                            For each task you should:
-                            1. Check if it was attempted
-                            2. Ask specific questions about:
-                               - What worked/didn't work
-                               - Any modifications made
-                               - Taste and texture results
-                               - Why it wasn't attempted (if not done)
-                            Keep questions focused and brief.
-            
-                            DATABASE CONTENT FOLLOWS: {str(result)} ~~END DATABASE CONTENT~~
-                            """
-                        }
-
-                        # Update messages in correct sequence
-                        self.messages.append(assistant_message)
-                        self.messages.append(function_call_result_message
-                                             )  # Required tool response
-                        self.messages.append(database_context)
-
-                        # Second API call
-                        completion_payload = {
-                            "model": 'gpt-4o-mini',
-                            "messages": self.messages
-                        }
-
-                        # Second API call
-                        second_response = requests.post(
-                            'https://api.openai.com/v1/chat/completions',
-                            headers=headers,
-                            json=completion_payload)
-                        second_response.raise_for_status()
-
-                        # Process final response
-                        second_response_json = second_response.json()
-                        final_assistant_message = second_response_json[
-                            'choices'][0]['message']
-
-                        # Add final response to conversation
-                        self.messages.append(final_assistant_message)
-
-                        return final_assistant_message.get(
-                            'content', 'No content in response.')
-
-                    #user preferences function call
-                    elif function_name == 'fetch_preferences':
-                        print("DEBUG: triggered tool preferences")
-                        tab = function_args.get('tab')
-                        prefs, conditions = fetch_preferences()
-
-                        result_data = {
-                            "preferences": prefs,
-                            "conditions": conditions
-                        }
-
-
-                        # First add the tool response message
-                        function_call_result_message = {
-                            "role": "tool",
-                            "content": str(result_data),
-                            "tool_call_id": tool_call_id
-                        }
-
-
-                        # Create database context message
-                        database_context = {
-                            "role":
-                            "system",
-                            "content":
-                            f"""This is food preferences and conditions for user Greg.
-                            --when giving recommendation, prioritize preferences and conditions
-                            --Some preferences have an associated 'constraints'. Only use these rules if the constraints are present. When in doubt, as about any conditions present. User will likely tell you if conditions are present. 
-                            --The conditions list has additional context on logistical rules related to preferences. They be related to time equipment that may effect how a user will be able to cook a certain meal
-                            --Once you have preferences and or conditions, tell the user you have uploaded the preferences into your system.
-                            --Preferences are pairwise comparisons. Rank preferences based on all pairwise comparisons before giving answers
-                            --"Reasoning" column is context. Weight your attention based on this column appropriateness.
-                            --"Example" column is additional logic context with specific templates. They are just logic templates and your answers should be agnostic to the food or processes described in the examples. Weight your attention based on this column appropriateness.
-    
-                            *PREFERENCES AND CONDITIONS DATABASE CONTENT FOLLOWS*:
-                            {str(prefs)} ~~*END PREFERENCES CONTENT*~~
-                            
-                            *CONDITIONS DATABASE CONTENT FOLLOWS*:
-                            {str(conditions)} ~~*END CONDITIONS DATABASE CONTENT*~~
-                            
-                            
-                            """
-                        }
-
-                        # Update messages in correct sequence
-                        self.messages.append(assistant_message)
-                        self.messages.append(function_call_result_message
-                                             )  # Required tool response
-                        self.messages.append(database_context)
-
-                        # Second API call
-                        completion_payload = {
-                            "model": 'gpt-4o-mini',
-                            "messages": self.messages
-                        }
-
-                        # DEBUG: Print a slice of the API call payload
-                        print(
-                            f"DEBUG: first few messages: {self.messages[:10]}")
-
-                        # Second API call
-                        second_response = requests.post(
-                            'https://api.openai.com/v1/chat/completions',
-                            headers=headers,
-                            json=completion_payload)
-                        second_response.raise_for_status()
-
-                        # Process final response
-                        second_response_json = second_response.json()
-                        final_assistant_message = second_response_json[
-                            'choices'][0]['message']
-
-                        # Add final response to conversation
-                        self.messages.append(final_assistant_message)
-                        yield final_assistant_message.get('content', 'No content in the response.')
-
+                            'content', 'No content in the response.')
                     else:
-                        return f"Unknown function called: {function_name}"
+                        return "Error: No query provided for browsing."
+
+                #search google recipes
+
+                # elif function_name == 'search_recipes_serpapi':
+                #     print("DEBUG: triggered tool search recipes")
+
+                #     query = function_args.get('query')
+                #     try:
+                #         result_data = search_recipes_serpapi(query)
+                #     except Exception as e:
+                #         print(f"ERROR: fetching recipes: {e}")
+                #         return "Failed to fetch recipes"
+
+                #     # First add the tool response message
+                #     function_call_result_message = {
+                #         "role": "tool",
+                #         "content": str(result_data),
+                #         "tool_call_id": tool_call_id
+                #     }
+
+                #     # Create database context message
+                #     database_recipe_context = {
+                #         "role":
+                #         "system",
+                #         "content":
+                #         f"""This is a search result of recipes. THe user requested search results and this was the result
+
+                #         *RECIPE CONTENT FOLLOWS*:
+                #         {str(result_data)} ~~*END RECIPE API CALL CONTENT*~~
+
+                #         """
+                #     }
+
+                #     # Update messages in correct sequence
+                #     self.messages.append(assistant_message)
+                #     self.messages.append(function_call_result_message
+                #                          )  # Required tool response
+                #     self.messages.append(database_recipe_context)
+
+                #     # Second API call
+                #     completion_payload = {
+                #         "model": 'gpt-4o-mini',
+                #         "messages": self.messages
+                #     }
+
+                #     # DEBUG: Print a slice of the API call payload
+                #     print(
+                #         f"DEBUG: first few recipe messages: {self.messages[:1]}"
+                #     )
+
+                #     # Second API call
+                #     try:
+                #         second_response = requests.post(
+                #             'https://api.openai.com/v1/chat/completions',
+                #             headers=headers,
+                #             json=completion_payload)
+                #         second_response.raise_for_status()
+                #     except requests.exceptions.RequestException as e:
+                #         print(f"ERROR: API call failed: {e}")
+                #         return "Failed to fetch completion"
+
+                #     # Process final response
+                #     second_response_json = second_response.json()
+                #     final_assistant_message = second_response_json[
+                #         'choices'][0]['message']
+
+                #     # Add final response to conversation
+                #     self.messages.append(final_assistant_message)
+
+                #     return final_assistant_message.get(
+                #         'content', 'No content in response.')
+
+
+
+                ###hummus tool call
+                elif function_name == 'firestore_get_docs_by_date_range':
+                    print("DEBUG: triggered tool firestore get docs called")
+                    
+                    # Get date range or use None if not specified
+                    start_date_str = function_args.get('start_date_str', None)
+                    end_date_str = function_args.get('end_date_str', None)
+                    
+                    try:
+                        # Call the function with or without date range
+                        if start_date_str and end_date_str:
+                            result = firestore_get_docs_by_date_range(start_date_str, end_date_str)
+                        else:
+                            print("DEBUG: No date range specified. Fetching all documents.")
+                            result = firestore_get_docs_by_date_range()
+                    except Exception as e:
+                        print(f"ERROR: fetching chat logs: {e}")
+                        logging.error(f"ERROR: fetching chat logs: {e}")
+                        return "Failed to fetch chat logs"
+
+                    print (f"DEBUG: firestore chat logs by time result: {result}")
+                    # Filter the result to exclude system messages
+                    filtered_result = filter_function_messages(result)
+                    #print(f"DEBUG: filtered_result: {filtered_result}")
+
+                    # First add the tool response message
+
+                    print (f"DEBUG: tool call id under function:", tool_call_id)
+
+                    function_call_result_message = {
+                        "role": "tool",
+                        "content": str(filtered_result),  # Unfiltered result for tool response
+                        "tool_call_id": tool_call_id
+                    }
+
+                    
+
+                    #print(f"DEBUG: filtered_result: {filtered_result}")
+
+                    # Create the database context using the filtered result
+                    database_context = {
+                        "role": "system",
+                        "content": "This is chatlog data from Firestore between a user and agent about food and cooking. \
+                            It is background on the most recent conversations with the agent. \
+                            In your initial responses after loading, think about whether the user is continuing the previous \
+                            conversation or starting a new topic: " + str(filtered_result)
+                    }
+
+
+                    # Update messages in correct sequence
+                    self.messages.append(assistant_message)
+                    self.messages.append(function_call_result_message)  # Required tool response
+                    self.messages.append(database_context)
+
+                    # Second API call
+                    completion_payload = {
+                        "model": 'gpt-4o-mini',
+                        "messages": self.messages
+                    }
+
+                    # Second API call
+                    second_response = requests.post(
+                        'https://api.openai.com/v1/chat/completions',
+                        headers=headers,
+                        json=completion_payload)
+                    second_response.raise_for_status()
+
+                    # Process final response
+                    second_response_json = second_response.json()
+                    final_assistant_message = second_response_json['choices'][0]['message']
+
+                    # Add final response to conversation
+                    self.messages.append(final_assistant_message)
+
+                    return final_assistant_message.get('content', 'No content in response.')
+
+                elif function_name == 'fetch_hummus':
+                    print("DEBUG: triggered tool hummus")
+                    try:
+                        result_data = fetch_sheet_data_rows(
+                            'recipe_hummus')
+                    except Exception as e:
+                        print(f"ERROR: fetching hummus recipes: {e}")
+                        return "Failed to fetch hummus recipes"
+
+                    function_call_result_message = {
+                        "role": "tool",
+                        "content": str(result_data),
+                        "tool_call_id": tool_call_id
+                    }
+
+                    database_hummus_context = {
+                        "role":
+                        "system",
+                        "content":
+                        f"""Here is the hummus recipes from our database
+
+                        *HUMMUS RECIPES FOLLOW*:
+                        {str(result_data)} ~~*END HUMMUS RECIPES*~~
+                        """
+                    }
+
+                    self.messages.append(assistant_message)
+                    self.messages.append(function_call_result_message)
+                    self.messages.append(database_hummus_context)
+
+                    completion_payload = {
+                        "model": 'gpt-4o-mini',
+                        "messages": self.messages
+                    }
+
+                    try:
+                        second_response = requests.post(
+                            'https://api.openai.com/v1/chat/completions',
+                            headers=headers,
+                            json=completion_payload)
+                        second_response.raise_for_status()
+                    except requests.exceptions.RequestException as e:
+                        print(f"ERROR: API call failed: {e}")
+                        return "Failed to fetch completion"
+
+                    second_response_json = second_response.json()
+                    final_assistant_message = second_response_json[
+                        'choices'][0]['message']
+                    self.messages.append(final_assistant_message)
+                    return final_assistant_message.get(
+                        'content', 'No content in response.')
+                
+                #recipes fetch
+                elif function_name == 'fetch_recipes':
+                    print("DEBUG: triggered tool recipes")
+
+                    try:
+                        result_data = fetch_recipes()
+                    except Exception as e:
+                        print(f"ERROR: fetching recipes: {e}")
+                        return "Failed to fetch recipes"
+
+                    # First add the tool response message
+                    function_call_result_message = {
+                        "role": "tool",
+                        "content": str(result_data),
+                        "tool_call_id": tool_call_id
+                    }
+
+                    # Create database context message
+                    database_recipe_context = {
+                        "role":
+                        "system",
+                        "content":
+                        f"""This is a database of recipes. Prioritize them when making recommendations. After the function, just tell me "recipes loaded into memory"
+
+                        *RECIPE CONTENT FOLLOWS*:
+                        {str(result_data)} ~~*END RECIPE DATABASE CONTENT*~~
+
+                        """
+                    }
+
+                    # Update messages in correct sequence
+                    self.messages.append(assistant_message)
+                    self.messages.append(function_call_result_message
+                                            )  # Required tool response
+                    self.messages.append(database_recipe_context)
+
+                    # Second API call
+                    completion_payload = {
+                        "model": 'gpt-4o-mini',
+                        "messages": self.messages
+                    }
+
+                    # DEBUG: Print a slice of the API call payload
+                    print(
+                        f"DEBUG: first few recipe messages: {self.messages[:1]}"
+                    )
+
+                    # Second API call
+                    try:
+                        second_response = requests.post(
+                            'https://api.openai.com/v1/chat/completions',
+                            headers=headers,
+                            json=completion_payload)
+                        second_response.raise_for_status()
+                    except requests.exceptions.RequestException as e:
+                        print(f"ERROR: API call failed: {e}")
+                        return "Failed to fetch completion"
+
+                    # Process final response
+                    second_response_json = second_response.json()
+                    final_assistant_message = second_response_json[
+                        'choices'][0]['message']
+
+                    # Add final response to conversation
+                    self.messages.append(final_assistant_message)
+
+                    return final_assistant_message.get(
+                        'content', 'No content in response.')
+
+                #alarm
+
+                elif function_name == 'append_alarm':
+                    print("DEBUG: alarm tool")
+
+                    # Parse arguments from the function call
+                    function_args = json.loads(
+                        tool_call['function']['arguments'])
+                    trigger_time = function_args.get('trigger_time')
+                    message = function_args.get('message')
+
+                    try:
+                        result_data = append_alarm(
+                            trigger_time=trigger_time, message=message)
+                    except Exception as e:
+                        print(f"ERROR: triggering alarm: {e}")
+                        return "Failed to trigger alarm"
+                    # First add the tool response message
+                    function_call_result_message = {
+                        "role": "tool",
+                        "content": str(result_data),
+                        "tool_call_id": tool_call_id
+                    }
+
+                    # Create database context message
+                    database_recipe_context = {
+                        "role":
+                        "system",
+                        "content":
+                        f"""alarm notifiation message: {str(result_data)}"""
+                    }
+
+                    # Update messages in correct sequence
+                    self.messages.append(assistant_message)
+                    self.messages.append(function_call_result_message
+                                            )  # Required tool response
+                    self.messages.append(database_recipe_context)
+
+                    # Second API call
+                    completion_payload = {
+                        "model": 'gpt-4o-mini',
+                        "messages": self.messages
+                    }
+
+                    # DEBUG: Print a slice of the API call payload
+                    print(f"DEBUG: alarm after second api call")
+
+                    # Second API call
+                    try:
+                        second_response = requests.post(
+                            'https://api.openai.com/v1/chat/completions',
+                            headers=headers,
+                            json=completion_payload)
+                        second_response.raise_for_status()
+                    except requests.exceptions.RequestException as e:
+                        print(f"ERROR: API call failed: {e}")
+                        return "Failed to alarm completion"
+
+                    # Process final response
+                    second_response_json = second_response.json()
+                    final_assistant_message = second_response_json[
+                        'choices'][0]['message']
+
+                    # Add final response to conversation
+                    self.messages.append(final_assistant_message)
+
+                    return final_assistant_message.get(
+                        'content', 'No content in response.')
+
+                #update task
+                elif function_name == 'update_task':
+                    print("DEBUG: triggered tool function update task")
+
+                    # Extract parameters from function_args and ensure updates is a dictionary
+                    task_id = function_args.get('task_id')
+                    updates = {}
+
+                    # Extract each possible update field
+                    for key, value in function_args['updates'].items():
+                        if key in [
+                                'date', 'title', 'description',
+                                'completed', 'notes'
+                        ]:
+                            updates[key] = value
+
+                    # Call update_task function
+                    result = update_task(task_id, updates)
+
+                    # Format the response
+                    function_call_result_message = {
+                        "role": "tool",
+                        "content": str(result),
+                        "tool_call_id": tool_call_id
+                    }
+
+                    # Add messages to conversation
+                    self.messages.append(assistant_message)
+                    self.messages.append(function_call_result_message)
+
+                    return "Task updated successfully" if result else "Failed to update task"
+
+                # Handle the task_create function call
+                elif function_name == 'task_create':
+                    print(
+                        f"DEBUG: triggered tool function called task creation"
+                    )
+                    # Extract parameters from function_args
+                    id = function_args.get('id')
+                    date = function_args.get('date')
+                    title = function_args.get('title')
+                    description = function_args.get('description')
+                    notes = function_args.get('notes')
+
+                    # Call task_create function
+                    result = task_create(id, date, title, description,
+                                            notes)
+
+                    # Format the response
+                    function_call_result_message = {
+                        "role": "tool",
+                        "content": str(result),
+                        "tool_call_id": tool_call_id
+                    }
+
+                    # Add messages to conversation
+                    self.messages.append(assistant_message)
+                    self.messages.append(function_call_result_message)
+
+                    return "Task created successfully" if result else "Failed to create task"
+
+            # When sheets_call is triggered in tool_calls
+                elif function_name == 'sheets_call':
+                    print("DEBUG: triggered tool sheetscall")
+                    tab = function_args.get('tab')
+                    result = sheets_call(tab)
+
+                    # First add the tool response message
+                    function_call_result_message = {
+                        "role": "tool",
+                        "content": str(result),
+                        "tool_call_id": tool_call_id
+                    }
+
+                    # Create database context message
+                    database_context = {
+                        "role":
+                        "system",
+                        "content":
+                        f"""Review the following cooking task database.
+                        For each task you should:
+                        1. Check if it was attempted
+                        2. Ask specific questions about:
+                            - What worked/didn't work
+                            - Any modifications made
+                            - Taste and texture results
+                            - Why it wasn't attempted (if not done)
+                        Keep questions focused and brief.
+        
+                        DATABASE CONTENT FOLLOWS: {str(result)} ~~END DATABASE CONTENT~~
+                        """
+                    }
+
+                    # Update messages in correct sequence
+                    self.messages.append(assistant_message)
+                    self.messages.append(function_call_result_message
+                                            )  # Required tool response
+                    self.messages.append(database_context)
+
+                    # Second API call
+                    completion_payload = {
+                        "model": 'gpt-4o-mini',
+                        "messages": self.messages
+                    }
+
+                    # Second API call
+                    second_response = requests.post(
+                        'https://api.openai.com/v1/chat/completions',
+                        headers=headers,
+                        json=completion_payload)
+                    second_response.raise_for_status()
+
+                    # Process final response
+                    second_response_json = second_response.json()
+                    final_assistant_message = second_response_json[
+                        'choices'][0]['message']
+
+                    # Add final response to conversation
+                    self.messages.append(final_assistant_message)
+
+                    return final_assistant_message.get(
+                        'content', 'No content in response.')
+
+                #user preferences function call
+                elif function_name == 'fetch_preferences':
+                    print("DEBUG: triggered tool preferences")
+                    tab = function_args.get('tab')
+                    prefs, conditions = fetch_preferences()
+
+                    result_data = {
+                        "preferences": prefs,
+                        "conditions": conditions
+                    }
+
+
+                    # First add the tool response message
+                    function_call_result_message = {
+                        "role": "tool",
+                        "content": str(result_data),
+                        "tool_call_id": tool_call_id
+                    }
+
+
+                    # Create database context message
+                    database_context = {
+                        "role":
+                        "system",
+                        "content":
+                        f"""This is food preferences and conditions for user Greg.
+                        --when giving recommendation, prioritize preferences and conditions
+                        --Some preferences have an associated 'constraints'. Only use these rules if the constraints are present. When in doubt, as about any conditions present. User will likely tell you if conditions are present. 
+                        --The conditions list has additional context on logistical rules related to preferences. They be related to time equipment that may effect how a user will be able to cook a certain meal
+                        --Once you have preferences and or conditions, tell the user you have uploaded the preferences into your system.
+                        --Preferences are pairwise comparisons. Rank preferences based on all pairwise comparisons before giving answers
+                        --"Reasoning" column is context. Weight your attention based on this column appropriateness.
+                        --"Example" column is additional logic context with specific templates. They are just logic templates and your answers should be agnostic to the food or processes described in the examples. Weight your attention based on this column appropriateness.
+
+                        *PREFERENCES AND CONDITIONS DATABASE CONTENT FOLLOWS*:
+                        {str(prefs)} ~~*END PREFERENCES CONTENT*~~
+                        
+                        *CONDITIONS DATABASE CONTENT FOLLOWS*:
+                        {str(conditions)} ~~*END CONDITIONS DATABASE CONTENT*~~
+                        
+                        
+                        """
+                    }
+
+                    # Update messages in correct sequence
+                    self.messages.append(assistant_message)
+                    self.messages.append(function_call_result_message
+                                            )  # Required tool response
+                    self.messages.append(database_context)
+
+                    # Second API call
+                    completion_payload = {
+                        "model": 'gpt-4o-mini',
+                        "messages": self.messages
+                    }
+
+                    # DEBUG: Print a slice of the API call payload
+                    print(
+                        f"DEBUG: first few messages: {self.messages[:10]}")
+
+                    # Second API call
+                    second_response = requests.post(
+                        'https://api.openai.com/v1/chat/completions',
+                        headers=headers,
+                        json=completion_payload)
+                    second_response.raise_for_status()
+
+                    # Process final response
+                    second_response_json = second_response.json()
+                    final_assistant_message = second_response_json[
+                        'choices'][0]['message']
+
+                    # Add final response to conversation
+                    self.messages.append(final_assistant_message)
+                    yield final_assistant_message.get('content', 'No content in the response.')
+
+                else:
+                    return f"Unknown function called: {function_name}"
 
             else:
                 # If no function call, add the assistant's message to the conversation
@@ -1129,12 +1147,13 @@ class AIHandler:
 
     # Get response from OpenAI generator
         response_generator = self.openai_request()
+        print ('DEBUG: response generator agent chat', response_generator)
 
         # Get response from OpenAI generator
         full_response = ""
         for chunk in response_generator:
             if chunk:  # Ensure chunk is not empty
-                #print(f'DEBUG: yielding chunk from agentchat: {chunk}')
+                print(f'DEBUG: yielding chunk from agentchat: {chunk}')
                 full_response += chunk  # Accumulate the content
                 yield chunk  # Yield raw chunk for Telegram streaming
 
