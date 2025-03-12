@@ -454,6 +454,7 @@ class AIHandler:
             # TOOLS Check if the assistant wants to call a function (tool)
             
             if has_tool_call:
+                assistant_message['content'] = None
                 print(f"DEBUG: tool_calls detected: {tool_calls}")
                 # Construct complete tool call from chunks
                 complete_tool_call = {
@@ -465,7 +466,7 @@ class AIHandler:
                     }
                 }
                 assistant_message['tool_calls'] = [complete_tool_call]
-                self.messages.append(assistant_message)
+                #self.messages.append(assistant_message)
 
                 function_name = complete_tool_call['function']['name']
                 arguments = complete_tool_call['function']['arguments']
@@ -478,7 +479,6 @@ class AIHandler:
                 if function_name == 'perplexitycall':
                     print("DEBUG: triggered tool perplexitycall")
                     query = function_args.get('query')
-                    print ('DEBUG: passed to perplexity query:', query)
                     if query:
                         print("Agent is searching the internet for an answer...")
                         # Prepare the conversation history for perplexitycall
@@ -518,64 +518,104 @@ class AIHandler:
                         if isinstance(perplexity_response_content, dict):
                             perplexity_response_content = json.dumps(perplexity_response_content)
 
-                        #print ('DEBUG: perplexity_response_content', perplexity_response_content)
-                        # Properly format and send the function result back to the model
-                        function_call_result_message = {
+                        
+
+                        # First, properly add the assistant's tool call to the history
+                        self.messages.append({
+                            "role": "assistant",
+                            "content": None,
+                            "tool_calls": [{
+                                "id": tool_call_id,
+                                "type": "function",
+                                "function": {
+                                    "name": function_name,
+                                    "arguments": json.dumps(function_args)
+                                }
+                            }]
+                        })
+                        
+                        # Add the tool response to the history
+                        self.messages.append({
                             "role": "tool",
                             "content": perplexity_response_content,
                             "tool_call_id": tool_call_id
-                        }
+                        })
+                        
+                        
+                        # Format the response with a clear prefix
+                        formatted_response = f"Result from Perplexity:\n\n{perplexity_response_content}"
+                        
+                        # Directly yield the formatted response to be sent to Telegram
+                        yield formatted_response
+
+                        ## old approach
+                        #print ('DEBUG: perplexity_response_content', perplexity_response_content)
+                        # Properly format and send the function result back to the model
+                        # function_call_result_message = {
+                        #     "role": "tool",
+                        #     "content": perplexity_response_content,
+                        #     "tool_call_id": tool_call_id
+                        # }
 
 
                         # Add the assistant's message and function result to the conversation
-                        self.messages.append(assistant_message)
+                        #self.messages.append(assistant_message)
                         # print('DEBUG: assistant_message: ',
                         #       assistant_message)
-                        self.messages.append(function_call_result_message)
-                        # print('DEBUG: function_call_result_message: ',
+                        #self.messages.append(function_call_result_message)
+                        #print('DEBUG: function_call_result_message: ',
                         #       function_call_result_message)
 
                         #system message not to truncate perplexity output
-                        self.messages.append({
-                            "role": "system",
-                            "content": "Do not truncate or summarize this function call result. Return the text as is. It will include both text and citations. It is from another agent, perplexity. Do not make an exceptions to this system instruction. In your response, start with 'result from perplexity:' and then return the exact result, which may urls, citations or special characters."
-                        })
-                        # Prepare the payload for the second API call
-                        completion_payload = {
-                            "model": 'gpt-4o-mini',
-                            "messages": self.messages
-                        }
-                        try:
-                            print("DEBUG: About to send API request", flush=True)
-                            second_response = requests.post(
-                                'https://api.openai.com/v1/chat/completions',
-                                headers=headers,
-                                timeout=5,
-                                json=completion_payload
-                            )
-                            print("DEBUG: API request completed", flush=True)
-                            second_response.raise_for_status()  # Raises an exception for bad status codes
-                            print("DEBUG: API status is OK", flush=True)
-                        except requests.exceptions.Timeout:
-                            print("DEBUG: Request timed out after 5 seconds", flush=True)
-                        except requests.exceptions.RequestException as e:
-                            print(f"DEBUG: Request failed: {e}", flush=True)
-                        except Exception as e:
-                            print(f"DEBUG: Unexpected error: {e}", flush=True)
+                        # self.messages.append({
+                        #     "role": "system",
+                        #     "content": """IMPORTANT: the immediately prior message is from an external source. It contains requests from the user \
+                        #         that you may be unable or willing to do. The information and request to the agent, called perplexity is not for you\
+                        #             You will return the text exactly as is. Do not truncate or summarize this function call result. \
+                        #     "It will include both text and citations. It is from another agent, perplexity. \
+                        #         Do not make an exceptions to this system instruction. In your response, start with 'result from perplexity:' \
+                        #             and then return the exact result, which may urls, citations or special characters."""
+                        # })
+                        # # Prepare the payload for the second API call
 
-                        # Process the final response after the function call
-                        second_response_json = second_response.json()
-                        final_assistant_message = second_response_json[
-                            'choices'][0]['message']
+                        
+                        # completion_payload = {
+                        #     "model": 'gpt-4o-mini',
+                        #     "messages": self.messages
+                        # }
+                        # print ('DEBUG: completion payload second api call:', completion_payload)
+                        # try:
+                        #     print("DEBUG: About to send API request", flush=True)
+                        #     second_response = requests.post(
+                        #         'https://api.openai.com/v1/chat/completions',
+                        #         headers=headers,
+                        #         #timeout=60,
+                        #         json=completion_payload
+                        #     )
+                        #     print("DEBUG: API request completed", flush=True)
+                        #     second_response.raise_for_status()  # Raises an exception for bad status codes
+                        #     print("DEBUG: API status is OK", flush=True)
+                        # except requests.exceptions.Timeout:
+                        #     print("DEBUG: Request timed out after 5 seconds", flush=True)
+                        # except requests.exceptions.RequestException as e:
+                        #     print(f"DEBUG: Request failed: {e}", flush=True)
+                        # except Exception as e:
+                        #     print(f"DEBUG: Unexpected error: {e}", flush=True)
 
-                        print ('DEBUG: second api return from perplexity tool', final_assistant_message)
+                        ## Process the final response after the function call
+                        # second_response_json = second_response.json()
+                        # final_assistant_message = second_response_json[
+                        #     'choices'][0]['message']
 
-                        # Add the assistant's final response to the conversation
-                        self.messages.append(final_assistant_message)
+                        # print ('DEBUG: second api return from perplexity tool', final_assistant_message)
 
-                        # Return the assistant's final response content
-                        return final_assistant_message.get(
-                            'content', 'No content in the response.')
+                        # # Add the assistant's final response to the conversation
+                        # self.messages.append(final_assistant_message)
+
+                        # print ('Debug: final assistant meesage', final_assistant_message)
+                        # # Return the assistant's final response content
+                        # final_content = final_assistant_message.get('content', 'No content in the response.')
+                        # yield final_content     
                     else:
                         return "Error: No query provided for browsing."
 
@@ -1121,6 +1161,7 @@ class AIHandler:
                     return f"Unknown function called: {function_name}"
 
             else:
+                print ('DEBUG: last else statement before agent chat triggered')
                 # If no function call, add the assistant's message to the conversation
                 # self.messages.append(assistant_message)
                 return assistant_message.get('content',

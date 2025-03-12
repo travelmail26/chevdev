@@ -71,6 +71,12 @@ def perplexitycall(messages):
             decoded_line = line.decode('utf-8')
             if decoded_line.startswith("data: ") and decoded_line != "data: [DONE]":
                 data = json.loads(decoded_line[len("data: "):])
+
+                # Capture citations if present
+                if 'citations' in data:
+                    citations = data['citations']
+                    #print('**DEBUG: Citations found:**', citations)
+
                 #print ('DEBUG: perplexity data', data)
                 if 'choices' in data and 'delta' in data['choices'][0]:
                     delta = data['choices'][0]['delta']
@@ -81,11 +87,16 @@ def perplexitycall(messages):
                             #print(buffer, end='', flush=True)
                             buffer = ""
             elif decoded_line == "data: [DONE]":
-                print("**DEBUG: Stream ended with [DONE]**")
+                #print("**DEBUG: Stream ended with [DONE]**")
                 break
 
-    if buffer:
-        print(buffer, end='', flush=True)
+    # if buffer:
+    #     print(buffer, end='', flush=True)
+
+    if citations:
+        content += "\n\n**Sources:**\n"
+        for i, citation in enumerate(citations, 1):
+            content += f"[{i}] {citation}\n"
 
     print('**DEBUG: perplexity.py full content of perplexity call**', content)
     return content
