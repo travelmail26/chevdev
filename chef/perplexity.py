@@ -44,11 +44,14 @@ def perplexitycall(messages):
     messages.insert(
         0, {
             "role": "system",
-            "content": "Return the full citations and bibliography for each result. Always paste the full URL link in every citation."
+            "content": """--Return the full citations and bibliography for each result. \
+                                --Always paste the full URL link in every citation. \ 
+                                 --Provide at last one direct quote when citing a source \
+                                    --Do not suggest nutritional advice on your own. 
+                                    -- You do not know what is health or if I should consult someone. You will not suggest it independent of a source"""
         }
     )
 
-    print('**DEBUG: updated messages sent to perplexity api**', messages)
 
     data = {
         "model": "sonar-pro",
