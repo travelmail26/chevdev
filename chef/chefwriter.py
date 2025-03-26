@@ -1194,7 +1194,7 @@ class AIHandler:
         full_response = ""
         for chunk in response_generator:
             if chunk:  # Ensure chunk is not empty
-                print(f'DEBUG: yielding chunk from agentchat: {chunk}')
+                #print(f'DEBUG: yielding chunk from agentchat: {chunk}')
                 full_response += chunk  # Accumulate the content
                 yield chunk  # Yield raw chunk for Telegram streaming
 

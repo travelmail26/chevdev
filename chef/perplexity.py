@@ -44,18 +44,21 @@ def perplexitycall(messages):
     messages.insert(
         0, {
             "role": "system",
-            "content": """--Return the full citations and bibliography for each result. \
-                                --Always paste the full URL link in every citation. \ 
-                                 --Provide at last one direct quote when citing a source \
-                                    --Do not suggest nutritional advice on your own. 
-                                    -- You do not know what is health or if I should consult someone. You will not suggest it independent of a source"""
+            # "content": """--Return the full citations and bibliography for each result. \
+            #                     --Always paste the full URL link in every citation. \ 
+            #                      --Provide at last one direct quote when citing a source \
+            #                         --Do not suggest nutritional advice on your own. 
+            #                         -- You do not know what is or is not healthy, nor if I should consult someone.  \
+            #                           --  You will not suggest consulting an a health expert or medical professional unless it is explicitly found in your search results"""
+            "content": """NEVER say you do not have access to search or browse a specific webiste. You will search for what the user asks."""
         }
     )
 
 
     data = {
-        "model": "sonar-pro",
+        "model": "sonar",
         "messages": messages,
+        "search_domain_filter": ["reddit.com"],
         "stream": True
     }
 
@@ -110,9 +113,7 @@ if __name__ == "__main__":
         "role":
         "user",
         "content":
-        "i'm having difficulty makgin the carrot syrup similar to chef Michael Solomonov's . \
-            I reduce the liquid of about a pound of carrots and i'm maybe left with a tablespoon of liquid. \
-                am i doing it wrong or is that what it should yeild? Find solutions"
+        "search for cookie recipes on reddit and what mistakes people make"
     }]
     result = perplexitycall(test_messages)
     print(result)
