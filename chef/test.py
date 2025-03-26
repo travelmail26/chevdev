@@ -2,63 +2,65 @@
 import os
 
 
-import logging
+print (os.environ.get('OPENAI_API_KEY_2'))
 
-import requests
+# import logging
 
-# Target video
-VIDEO_ID = "mQvQaDuqIvM"
+# import requests
 
-# Setup session
-session = requests.Session()
-session.headers.update({
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/98.0.4758.102 Safari/537.36',
-})
+# # Target video
+# VIDEO_ID = "mQvQaDuqIvM"
 
-def debug_transcript_api():
-    # Try different API endpoints and parameters
-    apis = [
-        # Standard timedtext API
-        f"https://www.youtube.com/api/timedtext?v={VIDEO_ID}&lang=en",
+# # Setup session
+# session = requests.Session()
+# session.headers.update({
+#     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/98.0.4758.102 Safari/537.36',
+# })
+
+# def debug_transcript_api():
+#     # Try different API endpoints and parameters
+#     apis = [
+#         # Standard timedtext API
+#         f"https://www.youtube.com/api/timedtext?v={VIDEO_ID}&lang=en",
         
-        # List available captions
-        f"https://www.youtube.com/api/timedtext?v={VIDEO_ID}&type=list",
+#         # List available captions
+#         f"https://www.youtube.com/api/timedtext?v={VIDEO_ID}&type=list",
         
-        # Try auto-generated captions
-        f"https://www.youtube.com/api/timedtext?v={VIDEO_ID}&lang=en&kind=asr",
+#         # Try auto-generated captions
+#         f"https://www.youtube.com/api/timedtext?v={VIDEO_ID}&lang=en&kind=asr",
         
-        # Try with different language
-        f"https://www.youtube.com/api/timedtext?v={VIDEO_ID}&lang=en-US"
-    ]
+#         # Try with different language
+#         f"https://www.youtube.com/api/timedtext?v={VIDEO_ID}&lang=en-US"
+#     ]
     
-    for i, api_url in enumerate(apis):
-        print(f"\n--- Test {i+1}: {api_url} ---")
-        response = session.get(api_url)
+#     for i, api_url in enumerate(apis):
+#         print(f"\n--- Test {i+1}: {api_url} ---")
+#         response = session.get(api_url)
         
-        print(f"Status: {response.status_code}")
-        print(f"Content-Type: {response.headers.get('Content-Type', 'unknown')}")
-        print(f"Content length: {len(response.text)} bytes")
+#         print(f"Status: {response.status_code}")
+#         print(f"Content-Type: {response.headers.get('Content-Type', 'unknown')}")
+#         print(f"Content length: {len(response.text)} bytes")
         
-        # Print full response content for detailed inspection
-        print(f"Response content: {repr(response.text[:200])}...")
+#         # Print full response content for detailed inspection
+#         print(f"Response content: {repr(response.text[:200])}...")
         
-        # Save response to file
-        with open(f"response_{i+1}.txt", "w", encoding="utf-8") as f:
-            f.write(response.text)
+#         # Save response to file
+#         with open(f"response_{i+1}.txt", "w", encoding="utf-8") as f:
+#             f.write(response.text)
 
-if __name__ == "__main__":
-    print(f"Debugging transcript APIs for video: {VIDEO_ID}\n")
-    debug_transcript_api()
+# if __name__ == "__main__":
+#     print(f"Debugging transcript APIs for video: {VIDEO_ID}\n")
+#     debug_transcript_api()
     
-    # Also check if video exists
-    print("\n--- Checking if video exists ---")
-    video_info_url = f"https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={VIDEO_ID}&format=json"
-    response = session.get(video_info_url)
+#     # Also check if video exists
+#     print("\n--- Checking if video exists ---")
+#     video_info_url = f"https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={VIDEO_ID}&format=json"
+#     response = session.get(video_info_url)
     
-    if response.status_code == 200:
-        print(f"Video exists: {response.json().get('title', 'Unknown title')}")
-    else:
-        print(f"Video might not exist or be private: Status {response.status_code}")
+#     if response.status_code == 200:
+#         print(f"Video exists: {response.json().get('title', 'Unknown title')}")
+#     else:
+#         print(f"Video might not exist or be private: Status {response.status_code}")
 
 # from google.oauth2.credentials import Credentials
 # from googleapiclient.discovery import build

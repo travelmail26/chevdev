@@ -2,10 +2,11 @@ import praw
 import sys
 from urllib.parse import urlparse
 from datetime import datetime
+import os
 
 # Reddit API credentials
 client_id = "Dt--G6c6Plu1o5bqwZ4AdQ"
-client_secret = "3vE8npcUzGVOGUceFpiLz3337394Ig"
+client_secret = os.environ.get('REDDIT_CLIENT_SECRET')
 user_agent = "scrapetest/1.0 by International_Carob9"
 
 # Initialize Reddit instance
