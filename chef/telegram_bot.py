@@ -23,12 +23,19 @@ logging.basicConfig(level=logging.DEBUG)
 
 logging.debug("telegram_bot.py module loaded.")
 
+# Global variables
+application = None
 conversations = {}
 handlers_per_user = {}
+user_id = None
+user_handler = None
 
-def get_user_handler(user_id):
+
+
+
+def get_user_handler(user_id, application_data):
     if user_id not in handlers_per_user:
-        handlers_per_user[user_id] = AIHandler(user_id)
+        handlers_per_user[user_id] = AIHandler(user_id, application_data)
     return handlers_per_user[user_id]
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -37,8 +44,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         user_id = update.message.from_user.id
-        user_handler = get_user_handler(user_id)
-
+        application_data = context.application
+        user_handler = get_user_handler(user_id, application_data)
+        
         if update.message.photo:
             photo = update.message.photo[-1]
             file = await context.bot.get_file(photo.file_id)
@@ -169,6 +177,9 @@ def setup_bot() -> Application:
 
     application = Application.builder().token(token).build()
 
+    print ('DEBUG: telegram application', application)
+    
+
     # Register command handlers
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("restart", restart))
@@ -205,6 +216,54 @@ def run_bot():
         logging.error(f"Error in run_bot: {e}\n{traceback.format_exc()}")
         raise
 
+
+
+
+
+##test code
+
+
+async def send_message_job(context: ContextTypes.DEFAULT_TYPE):
+    """
+    Job function to send a message to a specific user.
+    Expects context.job.context to be a dict with 'user_id' and 'message'.
+    """
+    job_context = context.job.context
+    user_id = job_context['user_id']
+    message = job_context['message']
+    
+    if user_id in handlers_per_user:
+        # Optionally use the AIHandler instance if needed
+        handler = handlers_per_user[user_id]
+        # Example: message = handler.agentchat("Custom input")  # If you want AI logic
+        await context.bot.send_message(chat_id=user_id, text=message)
+    else:
+        logging.warning(f"No AIHandler instance found for user_id: {user_id}")
+
+# Helper function to schedule the message
+def schedule_message(user_id, message):
+    """
+    Schedules a job to send a message to the specified user.
+    """
+    if not application:
+        logging.error("Telegram bot application is not initialized.")
+        return
+    if user_id not in handlers_per_user:
+        logging.warning(f"No AIHandler instance exists for user_id: {user_id}")
+        return
+    # Schedule the job to run immediately
+    application.job_queue.run_once(
+        send_message_job,
+        when=0,  # 0 means run ASAP
+        context={'user_id': user_id, 'message': message}
+    )
+
+
+
+
+
+
+#MISC CODE
 # def run_bot():
 #     """
 #     Synchronous function that sets up the bot & calls run_polling().

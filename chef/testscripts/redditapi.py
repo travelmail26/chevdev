@@ -2,7 +2,9 @@ import praw
 import sys
 from urllib.parse import urlparse
 from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor
 import os
+import json
 
 # Reddit API credentials
 client_id = "Dt--G6c6Plu1o5bqwZ4AdQ"
@@ -16,89 +18,69 @@ reddit = praw.Reddit(
     user_agent=user_agent
 )
 
-def scrape_reddit_url(url):
+URLS = ['https://www.reddit.com/r/Baking/comments/11v4d9f/help_me_fix_my_chocolate_chip_cookie_fail/']
+
+def comment_to_dict(comment):
+    """Convert a comment and its replies to a dictionary recursively."""
+    return {
+        "author": str(comment.author),
+        "score": comment.score,
+        "created": datetime.fromtimestamp(comment.created_utc).isoformat(),
+        "body": comment.body,
+        "replies": [comment_to_dict(reply) for reply in comment.replies]
+    }
+
+def scrape_single_url(url):
+    """Scrape a single Reddit URL and return data as a dictionary."""
     try:
-        # Parse the URL to get the submission ID
+        # Parse URL to extract submission ID
         parsed_url = urlparse(url)
         path_parts = parsed_url.path.split('/')
-        
-        # Check if it's a valid Reddit URL
         if 'reddit.com' not in parsed_url.netloc.lower():
-            print("Error: Please enter a valid Reddit URL")
-            return
-        
-        # Find submission ID in URL
+            raise ValueError("Invalid Reddit URL")
         submission_id = None
         for i, part in enumerate(path_parts):
             if part == 'comments' and i + 1 < len(path_parts):
                 submission_id = path_parts[i + 1]
                 break
-        
         if not submission_id:
-            print("Error: Could not find submission ID in URL")
-            return
+            raise ValueError("Could not find submission ID in URL")
 
-        # Get submission data
+        # Fetch submission data
         submission = reddit.submission(id=submission_id)
-        
-        # Print post information
-        print("\nScraped Reddit Post Information:")
-        print("=" * 50)
-        print(f"Title: {submission.title}")
-        print(f"Author: {submission.author}")
-        print(f"Subreddit: r/{submission.subreddit}")
-        print(f"Score: {submission.score}")
-        print(f"Number of Comments: {submission.num_comments}")
-        print(f"Created: {datetime.fromtimestamp(submission.created_utc)}")
-        print(f"URL: {submission.url}")
-        
-        # Print full post content if it's a text post
-        if submission.is_self and submission.selftext:
-            print("\nFull Post Content:")
-            print("-" * 50)
-            print(submission.selftext)
-        
-        # Get all comments
-        print("\nComments:")
-        print("=" * 50)
-        
-        # Replace MoreComments objects with actual comments
-        submission.comments.replace_more(limit=None)
-        
-        # Counter for comments
-        comment_count = 0
-        
-        # Iterate through all comments
-        for comment in submission.comments.list():
-            comment_count += 1
-            print(f"\nComment #{comment_count}")
-            print("-" * 50)
-            print(f"Author: {comment.author}")
-            print(f"Score: {comment.score}")
-            print(f"Created: {datetime.fromtimestamp(comment.created_utc)}")
-            print(f"Depth: {comment.depth}")
-            print("Body:")
-            print(comment.body)
-        
-        print(f"\nTotal comments found: {comment_count}")
-        
+        submission.comments.replace_more(limit=None)  # Fetch all comments
+
+        # Structure post and comment data
+        post_data = {
+            "post": {
+                "title": submission.title,
+                "author": str(submission.author),
+                "subreddit": str(submission.subreddit),
+                "score": submission.score,
+                "created": datetime.fromtimestamp(submission.created_utc).isoformat(),
+                "url": submission.url,
+                "selftext": submission.selftext if submission.is_self else None
+            },
+            "comments": [comment_to_dict(comment) for comment in submission.comments]
+        }
+        return post_data
     except Exception as e:
-        print(f"An error occurred: {str(e)}")
+        return {"error": str(e), "url": url}
+
+def scrape_reddit_urls(urls):
+    """Scrape multiple URLs in parallel and return results."""
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        results = list(executor.map(scrape_single_url, urls))
+    return results
 
 def main():
-    print("Reddit URL Scraper - Full Post and Comments")
-    print("For personal use only")
-    print("Developer: International_Carob9")
-    print("=" * 50)
+    # Scrape the predefined URLs
+    results = scrape_reddit_urls(URLS)
     
-    while True:
-        url = input("\nEnter a Reddit URL (or 'quit' to exit): ")
-        
-        if url.lower() == 'quit':
-            print("Exiting program...")
-            break
-            
-        scrape_reddit_url(url)
+    # Output results as JSON
+    print(len(json.dumps(results, indent=2)))
+    # Alternatively, return results for use in another script
+    # return results
 
 if __name__ == "__main__":
     main()

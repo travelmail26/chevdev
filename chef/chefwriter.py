@@ -9,6 +9,7 @@ import pytz
 from perplexity import perplexitycall
 from sheetscall import add_chatlog_entry, sheets_call, fetch_chatlog, task_create, fetch_preferences, fetch_recipes, update_task, fetch_sheet_data_rows
 from firestore_chef import firestore_add_doc, firestore_get_docs_by_date_range
+#from testscripts.telegram_utilities import send_telegram_message
 #from loggerbackup import ConversationLogger
 
 #from postprocess import auto_postprocess
@@ -69,16 +70,23 @@ def filter_user_messages(messages):
 
 class AIHandler:
 
-    def __init__(self, user_id=None, openai_key=None):
+    def __init__(self, user_id=None, openai_key=None, application=None):
         self.openai_key = openai_key or openai_api_key
         #self.logger = ConversationLogger()
         self.user_id = user_id
         self.messages = self.initialize_messages()
+        self.application = application
+
+        print ('DEBUG: AIHandler user_id', self.user_id)
+        print ('DEBUG: AIHandler openai_key', self.application)
 
         self.conversation_info = {
             "messages": self.messages,
             "user_id": self.user_id
         }
+        print('DEBUG: AIHandler application', self.application)
+        #status test direct message
+        #send_telegram_message(self.user_id, "test message from send telegram", self.application )
 
     def initialize_messages(self):
         current_time = datetime.now().isoformat()
@@ -129,6 +137,8 @@ class AIHandler:
 
         # Return the full message content as a single system message
         return [{"role": "system", "content": combined_content}]
+    
+
 
     def openai_request(self):
         print ('DEBUG: openai_request triggered')
@@ -510,8 +520,8 @@ class AIHandler:
                         perplexity_messages_filtered = filter_messages(
                             structured_message)
                         # Call Perplexity with the conversation history
-                        perplexity_response_content = perplexitycall(
-                            perplexity_messages_filtered)
+                        for chunk in perplexitycall(perplexity_messages_filtered):
+                            yield chunk  # Send each chunk immediately
                         
 
                         # Ensure response_content is a string
@@ -1182,6 +1192,8 @@ class AIHandler:
     def agentchat(self, prompt=None):
         print('DEBUG: agent chat triggered')
         print(f"DEBUG: user_id {self.user_id}")
+        print ("DEBUG: field input yield:", input)
+        yield input
 
         if prompt:
             self.messages.append({"role": "user", "content": prompt})

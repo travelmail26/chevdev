@@ -5,6 +5,7 @@ import sys
 from sheetscall import add_chatlog_entry
 import requests
 
+
 from openai import OpenAI
 
 try:
@@ -34,6 +35,9 @@ messages = [{
 def perplexitycall(messages):
     print('**DEBUG: perplexitycall triggered**')
 
+    yield "Perplexity is searching the internet..."
+    
+
     headers = {
         "Authorization": f"Bearer {YOUR_API_KEY}",
         "Content-Type": "application/json"
@@ -58,9 +62,10 @@ def perplexitycall(messages):
     data = {
         "model": "sonar",
         "messages": messages,
-        "search_domain_filter": ["reddit.com"],
+        #"search_domain_filter": ["reddit.com"],
         "stream": True
     }
+
 
     response = requests.post(
         "https://api.perplexity.ai/chat/completions",
@@ -70,8 +75,14 @@ def perplexitycall(messages):
     )
     response.raise_for_status()
 
+    print('**DEBUG: response from perplexity api**', response)
+
     content = ""
     buffer = ""
+
+    for line in response.iter_lines():
+        print ('**DEBUG: line**', line)
+
     for line in response.iter_lines():
         if line:
             decoded_line = line.decode('utf-8')
