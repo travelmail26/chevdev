@@ -5,10 +5,10 @@ import sys
 import os
 import signal
 import traceback
-from flask import Flask
+#from flask import Flask
 from threading import Thread
 
-from telegram_bot import run_bot
+from telegram_bot import run_bot_webhook_set
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -16,16 +16,13 @@ logging.basicConfig(
     handlers=[logging.StreamHandler(sys.stdout)]
 )
 
-app = Flask(__name__)
+logging.basicConfig(level=logging.DEBUG)
 
-# Optional health endpoint (only truly useful if you keep Flask running)
-@app.route("/health")
-def health_check():
-    return {"status": "running"}, 200
+# Get the httpx logger
+httpx_logger = logging.getLogger("httpx")
 
-def handle_sigterm(*_):
-    logging.info("Received SIGTERM, shutting down gracefully...")
-    sys.exit(0)
+# Set the logging level to WARNING or higher
+httpx_logger.setLevel(logging.WARNING)
 
 def main():
     logging.info("[Main] Starting up...")
@@ -34,7 +31,7 @@ def main():
     # If environment=development => polling
     # If environment=production  => webhook
     try:
-        run_bot()
+        run_bot_webhook_set()
     except KeyboardInterrupt:
         logging.info("[Main] Shutdown requested (KeyboardInterrupt).")
     except Exception as e:
@@ -43,7 +40,7 @@ def main():
         logging.info("[Main] Exiting gracefully...")
 
 if __name__ == "__main__":
-    signal.signal(signal.SIGTERM, handle_sigterm)
+    #signal.signal(signal.SIGTERM, handle_sigterm)
     main()
 
 
@@ -129,3 +126,14 @@ if __name__ == "__main__":
 # if __name__ == "__main__":
 #     signal.signal(signal.SIGTERM, handle_sigterm)
 #     main()
+# def handle_sigterm(*_):
+#     logging.info("Received SIGTERM, shutting down gracefully...")
+#     sys.exit(0)
+
+
+# app = Flask(__name__)
+
+# Optional health endpoint (only truly useful if you keep Flask running)
+# @app.route("/health")
+# def health_check():
+#     return {"status": "running"}, 200

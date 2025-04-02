@@ -13,15 +13,15 @@ from telegram.ext import (
     ContextTypes
 )
 
-#webhook_url = os.getenv("TELEGRAM_WEBHOOK_URL")
-
-from chefwriter import AIHandler
-from firebase import firebase_get_media_url
-
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
 
-logging.debug("telegram_bot.py module loaded.")
+# Get the httpx logger
+httpx_logger = logging.getLogger("httpx")
+
+# Set the logging level to WARNING or higher
+httpx_logger.setLevel(logging.WARNING)
+
 
 # Global variables
 application = None
@@ -43,10 +43,22 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
+
+        print ('DEBUG: handle_message update', update)
+        print ('DEBUG: handle_message context', context)
+        
         user_id = update.message.from_user.id
         application_data = context.application
         user_handler = get_user_handler(user_id, application_data)
         
+        session_info = {
+            'user_id': update.message.from_user.id,
+            'chat_id': update.message.chat_id,
+            'message_id': update.message.message_id,
+            'timestamp': update.message.date.timestamp(),
+            'buffer_position': 0  # Track position in stream
+        }
+
         if update.message.photo:
             photo = update.message.photo[-1]
             file = await context.bot.get_file(photo.file_id)
@@ -139,32 +151,23 @@ async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         await update.message.reply_text(f"Error during restart: {str(e)}")
 
+#setup bot loads message handler commands into application
 def setup_bot() -> Application:
-    """
-    Build and return the Application *synchronously*.
-    We'll let python-telegram-bot handle all async details internally.
-    """
+
     environment = os.getenv("ENVIRONMENT", "development")
-    #token = os.getenv("TELEGRAM_KEY")
 
 
     # Check if the .env.production file exists
     try: 
-        
         env_production_path = os.path.join(os.path.dirname(__file__), ".env.production")
-        print ('DEBUG: testing env.production variables', env_production_path)
         if os.path.exists(env_production_path):
         # Load the environment variables from the .env.production file
             env_production_path_variables = dotenv_values(env_production_path)
             print ('DEBUG: testing env.production variables', env_production_path_variables)
-        
         # Get the ENVIRONMENT variable
         environment = env_production_path_variables.get('ENVIRONMENT', 'development')        
         # Check the value of ENVIRONMENT and get the appropriate TELEGRAM_KEY
-
-
         if environment == 'development':
-            print ('DEBUG: testing env.production variables loaded', environment)
             token = os.getenv('TELEGRAM_DEV_KEY')
         else:
             token = os.getenv('TELEGRAM_KEY')
@@ -192,12 +195,11 @@ def setup_bot() -> Application:
     return application
 
 
-def run_bot():
+def run_bot_webhook_set():
     try:
         app = setup_bot()
 
         # Instead of checking environment == 'development', 
-        # assume we always do webhooks:
         #webhook_url = 'https://chef-bot-209538059512.us-central1.run.app'
         webhook_url = 'https://fuzzy-happiness-7jgw66wxqqhg77-8080.app.github.dev'
         #webhook_url = os.getenv("TELEGRAM_WEBHOOK_URL")
