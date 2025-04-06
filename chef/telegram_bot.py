@@ -14,13 +14,20 @@ from telegram.ext import (
 )
 
 # Set up logging
-logging.basicConfig(level=logging.DEBUG)
-
-# Get the httpx logger
-httpx_logger = logging.getLogger("httpx")
+logging.basicConfig(level=logging.INFO)
 
 # Set the logging level to WARNING or higher
-httpx_logger.setLevel(logging.WARNING)
+
+# Get the httpx logger
+# Silence all debug logs from external libraries
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("urllib3").setLevel(logging.WARNING)
+logging.getLogger("asyncio").setLevel(logging.WARNING)
+logging.getLogger("httpcore").setLevel(logging.WARNING)
+logging.getLogger("telegram").setLevel(logging.WARNING)
+logging.getLogger("telegram.ext").setLevel(logging.WARNING)
+
+
 
 
 # Global variables
@@ -29,8 +36,6 @@ conversations = {}
 handlers_per_user = {}
 user_id = None
 user_handler = None
-
-
 
 
 def get_user_handler(user_id, application_data):
@@ -45,7 +50,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
 
         print ('DEBUG: handle_message update', update)
-        print ('DEBUG: handle_message context', context)
+        print ('DEBUG: handle_message context', context.__dict__)
+        print ('DEBUG: handle_message directory', dir(context))
         
         user_id = update.message.from_user.id
         application_data = context.application
@@ -155,17 +161,18 @@ async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
 def setup_bot() -> Application:
 
     environment = os.getenv("ENVIRONMENT", "development")
+    print ('DEBUG: setup bot triggered', environment)
 
 
     # Check if the .env.production file exists
     try: 
-        env_production_path = os.path.join(os.path.dirname(__file__), ".env.production")
-        if os.path.exists(env_production_path):
+        #env_production_path = os.path.join(os.path.dirname(__file__), ".env.production")
+        #if os.path.exists(env_production_path):
         # Load the environment variables from the .env.production file
-            env_production_path_variables = dotenv_values(env_production_path)
-            print ('DEBUG: testing env.production variables', env_production_path_variables)
+        #    env_production_path_variables = dotenv_values(env_production_path)
+        #    print ('DEBUG: testing env.production variables', env_production_path_variables)
         # Get the ENVIRONMENT variable
-        environment = env_production_path_variables.get('ENVIRONMENT', 'development')        
+        #environment = env_production_path_variables.get('ENVIRONMENT', 'development')        
         # Check the value of ENVIRONMENT and get the appropriate TELEGRAM_KEY
         if environment == 'development':
             token = os.getenv('TELEGRAM_DEV_KEY')

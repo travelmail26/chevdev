@@ -8,6 +8,8 @@ import traceback
 #from flask import Flask
 from threading import Thread
 
+from orchastrator import 
+
 from telegram_bot import run_bot_webhook_set
 
 logging.basicConfig(
@@ -26,6 +28,8 @@ httpx_logger.setLevel(logging.WARNING)
 
 def main():
     logging.info("[Main] Starting up...")
+
+
 
     # We rely on run_bot() for everything. 
     # If environment=development => polling

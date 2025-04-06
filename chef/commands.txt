@@ -4,3 +4,14 @@
 git fetch origin main
 git branch -f main dev
 git push origin main --force
+
+# cheftestdev
+https://web.telegram.org/a/#7912564126
+
+#application contains token telegram application: Application[bot=ExtBot[token=<tokenstring>]]
+
+
+
+
+
+DEBUG: handle_message update Update(message=Message(channel_chat_created=False, chat=Chat(first_name='Greg', id=1275063227, last_name='Ferenstein', type=<ChatType.PRIVATE>, username='ferenstein'), date=datetime.datetime(2025, 4, 2, 19, 27, 14, tzinfo=<UTC>), delete_chat_photo=False, from_user=User(first_name='Greg', id=1275063227, is_bot=False, language_code='en', last_name='Ferenstein', username='ferenstein'), group_chat_created=False, message_id=1473, supergroup_chat_created=False, text='hi'), update_id=877105138)
