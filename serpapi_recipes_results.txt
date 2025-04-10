@@ -1,0 +1,113 @@
+{
+  "search_metadata": {
+    "id": "67f6c45e12dcaa158d75ef17",
+    "status": "Success",
+    "json_endpoint": "https://serpapi.com/searches/b8708c791c7ea22f/67f6c45e12dcaa158d75ef17.json",
+    "created_at": "2025-04-09 19:02:54 UTC",
+    "processed_at": "2025-04-09 19:02:54 UTC",
+    "google_url": "https://www.google.com/search?q=tomato+sauce+instant+pot+site%3Areddit.com&oq=tomato+sauce+instant+pot+site%3Areddit.com&hl=en&gl=us&num=2&sourceid=chrome&ie=UTF-8",
+    "raw_html_file": "https://serpapi.com/searches/b8708c791c7ea22f/67f6c45e12dcaa158d75ef17.html",
+    "total_time_taken": 1.46
+  },
+  "search_parameters": {
+    "engine": "google",
+    "q": "tomato sauce instant pot site:reddit.com",
+    "google_domain": "google.com",
+    "hl": "en",
+    "gl": "us",
+    "num": "2",
+    "device": "desktop"
+  },
+  "search_information": {
+    "query_displayed": "tomato sauce instant pot site:reddit.com",
+    "total_results": 58300,
+    "time_taken_displayed": 0.69,
+    "organic_results_state": "Results for exact spelling"
+  },
+  "organic_results": [
+    {
+      "position": 1,
+      "title": "I get a burn notice every time I try to make a tomato sauce ...",
+      "link": "https://www.reddit.com/r/instantpot/comments/pjmdul/i_get_a_burn_notice_every_time_i_try_to_make_a/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/instantpot/comments/pjmdul/i_get_a_burn_notice_every_time_i_try_to_make_a/&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQFnoECCIQAQ",
+      "displayed_link": "40+ comments · 3 years ago",
+      "favicon": "https://serpapi.com/searches/67f6c45e12dcaa158d75ef17/images/39cd60d74fbb5082d11bb88e649145a11527a91f264a0843ec1bea3061bc1d40.png",
+      "snippet": "You cannot substitute tomato products for water in pressure cooking. You must use water or stock. You can season the water and add bouillon to ...",
+      "snippet_highlighted_words": [
+        "You cannot substitute tomato products for water in pressure cooking"
+      ],
+      "source": "Reddit · r/instantpot"
+    },
+    {
+      "position": 2,
+      "title": "How would you make this marinara in an instant pot? ...",
+      "link": "https://www.reddit.com/r/instantpot/comments/1b1v9b1/how_would_you_make_this_marinara_in_an_instant/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/instantpot/comments/1b1v9b1/how_would_you_make_this_marinara_in_an_instant/&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQFnoECCYQAQ",
+      "displayed_link": "9 comments · 1 year ago",
+      "thumbnail": "https://serpapi.com/searches/67f6c45e12dcaa158d75ef17/images/39cd60d74fbb5082d11bb88e649145a1a7daf92ab42030febcdc4005cf65173c.jpeg",
+      "favicon": "https://serpapi.com/searches/67f6c45e12dcaa158d75ef17/images/39cd60d74fbb5082d11bb88e649145a1d9cd4a380c3dfa4ba63e83b5fc8d6d32.png",
+      "snippet": "Add the tomatoes and liquids, deglaze, and then cancel and set to pressure cook fort 10 minutes. Add parmesan cheese, stir it in. Done.",
+      "snippet_highlighted_words": [
+        "tomatoes"
+      ],
+      "source": "Reddit · r/instantpot"
+    }
+  ],
+  "related_searches": [
+    {
+      "block_position": 1,
+      "query": "Simple tomato sauce instant pot",
+      "link": "https://www.google.com/search?num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&q=Simple+tomato+sauce+instant+pot&sa=X&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ1QJ6BAgXEAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=Simple+tomato+sauce+instant+pot"
+    },
+    {
+      "block_position": 1,
+      "query": "Creamy tomato sauce instant pot",
+      "link": "https://www.google.com/search?num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&q=Creamy+tomato+sauce+instant+pot&sa=X&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ1QJ6BAgYEAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=Creamy+tomato+sauce+instant+pot"
+    },
+    {
+      "block_position": 1,
+      "query": "Italian tomato sauce instant pot",
+      "link": "https://www.google.com/search?num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&q=Italian+tomato+sauce+instant+pot&sa=X&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ1QJ6BAgZEAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=Italian+tomato+sauce+instant+pot"
+    },
+    {
+      "block_position": 1,
+      "query": "Best tomato sauce instant pot",
+      "link": "https://www.google.com/search?num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&q=Best+tomato+sauce+instant+pot&sa=X&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ1QJ6BAgWEAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=Best+tomato+sauce+instant+pot"
+    }
+  ],
+  "pagination": {
+    "current": 1,
+    "next": "https://www.google.com/search?q=tomato+sauce+instant+pot+site:reddit.com&num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&ei=X8T2Z9uLBqbcp84Pg9PRuQ4&start=2&sa=N&sstk=Af40H4XNFT3_zjtKrBnHI2I_Qcj7TTOXVTzqGytVrc7Sz8cDUItbz6V5l-N-JAq14gVTcS1rr9ER9Udj9I7ZBOkhicdKVA2aF2lACw&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ8NMDegQIChAW",
+    "other_pages": {
+      "2": "https://www.google.com/search?q=tomato+sauce+instant+pot+site:reddit.com&num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&ei=X8T2Z9uLBqbcp84Pg9PRuQ4&start=2&sa=N&sstk=Af40H4XNFT3_zjtKrBnHI2I_Qcj7TTOXVTzqGytVrc7Sz8cDUItbz6V5l-N-JAq14gVTcS1rr9ER9Udj9I7ZBOkhicdKVA2aF2lACw&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ8tMDegQIChAE",
+      "3": "https://www.google.com/search?q=tomato+sauce+instant+pot+site:reddit.com&num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&ei=X8T2Z9uLBqbcp84Pg9PRuQ4&start=4&sa=N&sstk=Af40H4XNFT3_zjtKrBnHI2I_Qcj7TTOXVTzqGytVrc7Sz8cDUItbz6V5l-N-JAq14gVTcS1rr9ER9Udj9I7ZBOkhicdKVA2aF2lACw&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ8tMDegQIChAG",
+      "4": "https://www.google.com/search?q=tomato+sauce+instant+pot+site:reddit.com&num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&ei=X8T2Z9uLBqbcp84Pg9PRuQ4&start=6&sa=N&sstk=Af40H4XNFT3_zjtKrBnHI2I_Qcj7TTOXVTzqGytVrc7Sz8cDUItbz6V5l-N-JAq14gVTcS1rr9ER9Udj9I7ZBOkhicdKVA2aF2lACw&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ8tMDegQIChAI",
+      "5": "https://www.google.com/search?q=tomato+sauce+instant+pot+site:reddit.com&num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&ei=X8T2Z9uLBqbcp84Pg9PRuQ4&start=8&sa=N&sstk=Af40H4XNFT3_zjtKrBnHI2I_Qcj7TTOXVTzqGytVrc7Sz8cDUItbz6V5l-N-JAq14gVTcS1rr9ER9Udj9I7ZBOkhicdKVA2aF2lACw&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ8tMDegQIChAK",
+      "6": "https://www.google.com/search?q=tomato+sauce+instant+pot+site:reddit.com&num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&ei=X8T2Z9uLBqbcp84Pg9PRuQ4&start=10&sa=N&sstk=Af40H4XNFT3_zjtKrBnHI2I_Qcj7TTOXVTzqGytVrc7Sz8cDUItbz6V5l-N-JAq14gVTcS1rr9ER9Udj9I7ZBOkhicdKVA2aF2lACw&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ8tMDegQIChAM",
+      "7": "https://www.google.com/search?q=tomato+sauce+instant+pot+site:reddit.com&num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&ei=X8T2Z9uLBqbcp84Pg9PRuQ4&start=12&sa=N&sstk=Af40H4XNFT3_zjtKrBnHI2I_Qcj7TTOXVTzqGytVrc7Sz8cDUItbz6V5l-N-JAq14gVTcS1rr9ER9Udj9I7ZBOkhicdKVA2aF2lACw&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ8tMDegQIChAO",
+      "8": "https://www.google.com/search?q=tomato+sauce+instant+pot+site:reddit.com&num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&ei=X8T2Z9uLBqbcp84Pg9PRuQ4&start=14&sa=N&sstk=Af40H4XNFT3_zjtKrBnHI2I_Qcj7TTOXVTzqGytVrc7Sz8cDUItbz6V5l-N-JAq14gVTcS1rr9ER9Udj9I7ZBOkhicdKVA2aF2lACw&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ8tMDegQIChAQ",
+      "9": "https://www.google.com/search?q=tomato+sauce+instant+pot+site:reddit.com&num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&ei=X8T2Z9uLBqbcp84Pg9PRuQ4&start=16&sa=N&sstk=Af40H4XNFT3_zjtKrBnHI2I_Qcj7TTOXVTzqGytVrc7Sz8cDUItbz6V5l-N-JAq14gVTcS1rr9ER9Udj9I7ZBOkhicdKVA2aF2lACw&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ8tMDegQIChAS",
+      "10": "https://www.google.com/search?q=tomato+sauce+instant+pot+site:reddit.com&num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&ei=X8T2Z9uLBqbcp84Pg9PRuQ4&start=18&sa=N&sstk=Af40H4XNFT3_zjtKrBnHI2I_Qcj7TTOXVTzqGytVrc7Sz8cDUItbz6V5l-N-JAq14gVTcS1rr9ER9Udj9I7ZBOkhicdKVA2aF2lACw&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ8tMDegQIChAU"
+    }
+  },
+  "serpapi_pagination": {
+    "current": 1,
+    "next_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=2",
+    "next": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=2",
+    "other_pages": {
+      "2": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=2",
+      "3": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=4",
+      "4": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=6",
+      "5": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=8",
+      "6": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=10",
+      "7": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=12",
+      "8": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=14",
+      "9": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=16",
+      "10": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=18"
+    }
+  }
+}

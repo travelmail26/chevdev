@@ -1,0 +1,20 @@
+{
+  "name": "chef",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "start": "node dist/mcp/gemini-server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@types/node": "^20.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.5"
+  }
+}

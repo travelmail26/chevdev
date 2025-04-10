@@ -30,8 +30,6 @@ messages = [{
 
 
 
-
-
 def perplexitycall(messages):
     print('**DEBUG: perplexitycall triggered**')
 
@@ -60,9 +58,9 @@ def perplexitycall(messages):
 
 
     data = {
-        "model": "sonar",
+        "model": "sonar-pro",
         "messages": messages,
-        #"search_domain_filter": ["reddit.com"],
+        "search_domain_filter": ["reddit.com"],
         "stream": True
     }
 
@@ -74,14 +72,8 @@ def perplexitycall(messages):
         stream=True
     )
     response.raise_for_status()
-
-    print('**DEBUG: response from perplexity api**', response)
-
     content = ""
     buffer = ""
-
-    for line in response.iter_lines():
-        print ('**DEBUG: line**', line)
 
     for line in response.iter_lines():
         if line:
@@ -92,31 +84,25 @@ def perplexitycall(messages):
                 # Capture citations if present
                 if 'citations' in data:
                     citations = data['citations']
-                    #print('**DEBUG: Citations found:**', citations)
 
-                #print ('DEBUG: perplexity data', data)
                 if 'choices' in data and 'delta' in data['choices'][0]:
                     delta = data['choices'][0]['delta']
                     if 'content' in delta and delta['content'] is not None:
                         buffer += delta['content']
                         content += delta['content']
                         if len(buffer) >= 40:
-                            #print(buffer, end='', flush=True)
                             buffer = ""
             elif decoded_line == "data: [DONE]":
-                #print("**DEBUG: Stream ended with [DONE]**")
                 break
 
-    # if buffer:
-    #     print(buffer, end='', flush=True)
+
 
     if citations:
         content += "\n\n**Sources:**\n"
         for i, citation in enumerate(citations, 1):
             content += f"[{i}] {citation}\n"
 
-    print('**DEBUG: perplexity.py full content of perplexity call**', content)
-    return content
+    yield content
 
 
 if __name__ == "__main__":
@@ -124,10 +110,11 @@ if __name__ == "__main__":
         "role":
         "user",
         "content":
-        "search for cookie recipes on reddit and what mistakes people make"
+        "search for cookie recipes"
     }]
-    result = perplexitycall(test_messages)
-    print(result)
+    result = list(perplexitycall(test_messages))
+    for item in result:
+        print(item)
 
 
 

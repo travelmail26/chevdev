@@ -1,0 +1,522 @@
+{
+  "search_metadata": {
+    "id": "67f3c3e8f6e08ed2abda2d47",
+    "status": "Success",
+    "json_endpoint": "https://serpapi.com/searches/7fbff386b5c2d9a4/67f3c3e8f6e08ed2abda2d47.json",
+    "created_at": "2025-04-07 12:24:08 UTC",
+    "processed_at": "2025-04-07 12:24:08 UTC",
+    "google_url": "https://www.google.com/search?q=site%3Areddit.com+cookie+recipe+common+mistakes&oq=site%3Areddit.com+cookie+recipe+common+mistakes&hl=en&gl=us&num=30&sourceid=chrome&ie=UTF-8",
+    "raw_html_file": "https://serpapi.com/searches/7fbff386b5c2d9a4/67f3c3e8f6e08ed2abda2d47.html",
+    "total_time_taken": 2.69
+  },
+  "search_parameters": {
+    "engine": "google",
+    "q": "site:reddit.com cookie recipe common mistakes",
+    "google_domain": "google.com",
+    "hl": "en",
+    "gl": "us",
+    "num": "30",
+    "device": "desktop"
+  },
+  "search_information": {
+    "query_displayed": "site:reddit.com cookie recipe common mistakes",
+    "total_results": 20200,
+    "time_taken_displayed": 0.59,
+    "organic_results_state": "Results for exact spelling"
+  },
+  "organic_results": [
+    {
+      "position": 1,
+      "title": "Common Cookie Mistakes : r/AskBaking",
+      "link": "https://www.reddit.com/r/AskBaking/comments/195hed2/common_cookie_mistakes/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/AskBaking/comments/195hed2/common_cookie_mistakes/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECBgQAQ",
+      "displayed_link": "9 comments · 1 year ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f909388c9d5d8d5ab1bcf40aeb638e0a96a7d7.png",
+      "snippet": "Comical mistakes that are obvious- Not mixing enough (flour streaks/ egg bits/ butter chunks/egg shells). Dumping dry ingredients into a mixer all at once= ...",
+      "snippet_highlighted_words": [
+        "mistakes"
+      ],
+      "source": "Reddit · r/AskBaking"
+    },
+    {
+      "position": 2,
+      "title": "First time baking cookies, what did I do wrong? : r/AskBaking",
+      "link": "https://www.reddit.com/r/AskBaking/comments/1ch1f2g/first_time_baking_cookies_what_did_i_do_wrong/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/AskBaking/comments/1ch1f2g/first_time_baking_cookies_what_did_i_do_wrong/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECBoQAQ",
+      "displayed_link": "200+ comments · 11 months ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f9093866ca1c40bd85b0ba01607a74999346df.png",
+      "snippet": "My biggest mistakes are always when I am trying to double or half a recipe and I seem to always forget to NOT Over mix. I usually mix the wet ...",
+      "snippet_highlighted_words": [
+        "biggest mistakes",
+        "recipe"
+      ],
+      "source": "Reddit · r/AskBaking"
+    },
+    {
+      "position": 3,
+      "title": "What am I doing wrong with my chocolate chip cookies?",
+      "link": "https://www.reddit.com/r/AskBaking/comments/1f6b7i7/what_am_i_doing_wrong_with_my_chocolate_chip/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/AskBaking/comments/1f6b7i7/what_am_i_doing_wrong_with_my_chocolate_chip/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECB0QAQ",
+      "displayed_link": "60+ comments · 7 months ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f90938e7876753289b0933b610baf0b1b5ed4a.png",
+      "snippet": "If your doughs are ALWAYS too wet and sticky despite the recipes, then the cause of your troubles is consistent and, unfortunately, something on ...",
+      "snippet_highlighted_words": [
+        "recipes"
+      ],
+      "source": "Reddit · r/AskBaking"
+    },
+    {
+      "position": 4,
+      "title": "What is wrong with these cookies? : r/AskBaking",
+      "link": "https://www.reddit.com/r/AskBaking/comments/1fzi606/what_is_wrong_with_these_cookies/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/AskBaking/comments/1fzi606/what_is_wrong_with_these_cookies/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECBsQAQ",
+      "displayed_link": "100+ comments · 6 months ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f90938c9bd3b3d1f49645fece6e3ec567bb021.png",
+      "snippet": "Usually, a greasy cookie indicates too high a ratio of butter:flour, but if you followed the Toll House recipe this shouldn't be an issue. If ...",
+      "snippet_highlighted_words": [
+        "cookie",
+        "recipe"
+      ],
+      "source": "Reddit · r/AskBaking"
+    },
+    {
+      "position": 5,
+      "title": "When your baking mistake fixes the recipe",
+      "link": "https://www.reddit.com/r/Baking/comments/1j8a5nl/when_your_baking_mistake_fixes_the_recipe/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Baking/comments/1j8a5nl/when_your_baking_mistake_fixes_the_recipe/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECBwQAQ",
+      "displayed_link": "100+ comments · 3 weeks ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f909388fd21b5529a1ce6b2c8cd43feee94778.png",
+      "snippet": "So I've been adding jam to the middle of my Mamaw's sugar cookie recipe for years now, even though it completely ruins the integrity of the ...",
+      "snippet_highlighted_words": [
+        "cookie recipe"
+      ],
+      "source": "Reddit · r/Baking"
+    },
+    {
+      "position": 6,
+      "title": "Most common mistakes people make when baking?",
+      "link": "https://www.reddit.com/r/AskBaking/comments/1dfkc29/most_common_mistakes_people_make_when_baking/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/AskBaking/comments/1dfkc29/most_common_mistakes_people_make_when_baking/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECBYQAQ",
+      "displayed_link": "50+ comments · 9 months ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f9093898d77a0b8e284562d1c572d3c4c8ae27.png",
+      "snippet": "Over mixing quickbreads, batters, and cookies once flour is added. Adding flour to a super hydrated dough because “it's sticky” and they don't ...",
+      "snippet_highlighted_words": [
+        "cookies"
+      ],
+      "source": "Reddit · r/AskBaking"
+    },
+    {
+      "position": 7,
+      "title": "First time making cookies what did I do wrong ? I'm thinking ...",
+      "link": "https://www.reddit.com/r/AskBaking/comments/1hph1zg/first_time_making_cookies_what_did_i_do_wrong_im/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/AskBaking/comments/1hph1zg/first_time_making_cookies_what_did_i_do_wrong_im/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECBkQAQ",
+      "displayed_link": "40+ comments · 3 months ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f90938d8243d3c63470aaa0764078e44938067.png",
+      "snippet": "I'd guess too much butter. Did you follow a recipe to the T? Which recipe? They look like good dunking cookies if they taste good.",
+      "snippet_highlighted_words": [
+        "recipe",
+        "recipe",
+        "cookies"
+      ],
+      "missing": [
+        "common"
+      ],
+      "must_include": {
+        "word": "common",
+        "link": "https://www.google.com/search?num=30&sca_esv=f63688edbc6800bd&hl=en&gl=us&q=site:reddit.com+cookie+recipe+%22common%22+mistakes&sa=X&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQ5t4CegQIJhAB"
+      },
+      "source": "Reddit · r/AskBaking"
+    },
+    {
+      "position": 8,
+      "title": "After years of trial and error, trying different recipes ...",
+      "link": "https://www.reddit.com/r/Baking/comments/604im9/after_years_of_trial_and_error_trying_different/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Baking/comments/604im9/after_years_of_trial_and_error_trying_different/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECDEQAQ",
+      "displayed_link": "90+ comments · 8 years ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f90938ccb2edff19d8b1d72373a3df9b2e28f5.png",
+      "snippet": "Freeze your dough balls for about 30 minutes and from there you can transfer them into a gallon size Zip-Lock bag or a container with a seal- ...",
+      "source": "Reddit · r/Baking"
+    },
+    {
+      "position": 9,
+      "title": "First time baker what went wrong with my cookies : r/Baking",
+      "link": "https://www.reddit.com/r/Baking/comments/18geenl/first_time_baker_what_went_wrong_with_my_cookies/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Baking/comments/18geenl/first_time_baker_what_went_wrong_with_my_cookies/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECFMQAQ",
+      "displayed_link": "50+ comments · 1 year ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f90938ec0e5788591741576971c00c8c62b343.png",
+      "snippet": "If you are a new baker, you should follow the ingredients list of a recipe instead of winging things like browning butter, changing up of eggs.",
+      "snippet_highlighted_words": [
+        "recipe"
+      ],
+      "source": "Reddit · r/Baking"
+    },
+    {
+      "position": 10,
+      "title": "What did I do wrong? : r/Baking",
+      "link": "https://www.reddit.com/r/Baking/comments/1607phq/what_did_i_do_wrong/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Baking/comments/1607phq/what_did_i_do_wrong/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECDYQAQ",
+      "displayed_link": "140+ comments · 1 year ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f90938cb90e1cc6876bf5401f98e47da5e3274.png",
+      "snippet": "Butter is too soft. Leave the scooped cookie dough on tray refrigeratedcovernight. When baking cookies you'll notice your cookies will taste ...",
+      "snippet_highlighted_words": [
+        "cookie",
+        "cookies",
+        "cookies"
+      ],
+      "source": "Reddit · r/Baking"
+    },
+    {
+      "position": 11,
+      "title": "What did I do wrong when baking chocolate chip cookies?",
+      "link": "https://www.reddit.com/r/AskBaking/comments/1glvbku/what_did_i_do_wrong_when_baking_chocolate_chip/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/AskBaking/comments/1glvbku/what_did_i_do_wrong_when_baking_chocolate_chip/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECFwQAQ",
+      "displayed_link": "90+ comments · 5 months ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f90938bbc737001c4ea6115fe1d686d051e720.png",
+      "snippet": "Also use a different cookie recipe. Never a good idea to melt the butter… whip butter at room temperature for better texture. Also I've never ...",
+      "snippet_highlighted_words": [
+        "cookie recipe"
+      ],
+      "source": "Reddit · r/AskBaking"
+    },
+    {
+      "position": 12,
+      "title": "What are common mistakes a new baker makes? : r/Baking",
+      "link": "https://www.reddit.com/r/Baking/comments/10ne9c6/what_are_common_mistakes_a_new_baker_makes/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Baking/comments/10ne9c6/what_are_common_mistakes_a_new_baker_makes/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECGAQAQ",
+      "displayed_link": "70+ comments · 2 years ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f90938a319b627ace85196aebf8ae0dad462d9.png",
+      "snippet": "Make sure to measure carefully and that your ingredients are fresh. Also follow the recipe as closely as possible only mixing for the ...",
+      "snippet_highlighted_words": [
+        "recipe"
+      ],
+      "source": "Reddit · r/Baking"
+    },
+    {
+      "position": 13,
+      "title": "I was not meant to bake cookies yesterday. 😕. Anybody ...",
+      "link": "https://www.reddit.com/r/Baking/comments/178i391/i_was_not_meant_to_bake_cookies_yesterday_anybody/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Baking/comments/178i391/i_was_not_meant_to_bake_cookies_yesterday_anybody/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECHQQAQ",
+      "displayed_link": "5 comments · 1 year ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f9093842568e9651011baa769c00c3f5058bc8.png",
+      "snippet": "Mistake #3. When I added the pecans the sugar turned grainy. I added extra water. In my desperation I added some heavy whipping cream too. So I ...",
+      "snippet_highlighted_words": [
+        "Mistake"
+      ],
+      "source": "Reddit · r/Baking"
+    },
+    {
+      "position": 14,
+      "title": "All the ways to f*ck up a chocolate chip cookie...",
+      "link": "https://www.reddit.com/r/coolguides/comments/7ar8an/all_the_ways_to_fck_up_a_chocolate_chip_cookie/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/coolguides/comments/7ar8an/all_the_ways_to_fck_up_a_chocolate_chip_cookie/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECDAQAQ",
+      "displayed_link": "1.6K+ comments · 7 years ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f9093890959d31715ecd86ff6305b75c0ffe10.png",
+      "snippet": "My friend, you want to buy chocolate chips with the “Tollhouse” recipe right on the bag. ... Your point about no right/wrong is the biggest ...",
+      "snippet_highlighted_words": [
+        "recipe",
+        "wrong",
+        "biggest"
+      ],
+      "missing": [
+        "common"
+      ],
+      "must_include": {
+        "word": "common",
+        "link": "https://www.google.com/search?num=30&sca_esv=f63688edbc6800bd&hl=en&gl=us&q=site:reddit.com+cookie+recipe+%22common%22+mistakes&sa=X&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQ5t4CegQIQBAB"
+      },
+      "source": "Reddit · r/coolguides"
+    },
+    {
+      "position": 15,
+      "title": "Chocolate Chip Cookie problems! : r/AskBaking",
+      "link": "https://www.reddit.com/r/AskBaking/comments/mz8gwh/chocolate_chip_cookie_problems/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/AskBaking/comments/mz8gwh/chocolate_chip_cookie_problems/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECE4QAQ",
+      "displayed_link": "80+ comments · 3 years ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f90938722a90f0348ac9c223cd6c1aea10e6f9.png",
+      "snippet": "Try tweaking the butter to flour ratios halfway towards the original recipe. Check dough consistency in different batches from cold to room ...",
+      "snippet_highlighted_words": [
+        "recipe"
+      ],
+      "source": "Reddit · r/AskBaking"
+    },
+    {
+      "position": 16,
+      "title": "Levain cookie failed on first attempt : r/AskBaking",
+      "link": "https://www.reddit.com/r/AskBaking/comments/1az3k2c/levain_cookie_failed_on_first_attempt/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/AskBaking/comments/1az3k2c/levain_cookie_failed_on_first_attempt/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECE8QAQ",
+      "displayed_link": "180+ comments · 1 year ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f9093822d614c16accea29ac73353f23f91d3e.png",
+      "snippet": "... wrong rack which could have also resulted in a burnt bottom ... cookie recipes. Reply reply. ApoplecticMuffin. •. Levain cookies are ...",
+      "snippet_highlighted_words": [
+        "wrong",
+        "cookie recipes",
+        "cookies"
+      ],
+      "missing": [
+        "common",
+        "mistakes"
+      ],
+      "source": "Reddit · r/AskBaking"
+    },
+    {
+      "position": 17,
+      "title": "Troubleshooting chocolate chip cookie recipe : r/AskBaking",
+      "link": "https://www.reddit.com/r/AskBaking/comments/xidq9r/troubleshooting_chocolate_chip_cookie_recipe/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/AskBaking/comments/xidq9r/troubleshooting_chocolate_chip_cookie_recipe/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECFIQAQ",
+      "displayed_link": "10+ comments · 2 years ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f90938a8f84025388d389425e58912b46753c2.png",
+      "snippet": "I've personally noticed cookies not coming out the same when using a different brand of flour. How well are you scraping down the bowl as you ...",
+      "snippet_highlighted_words": [
+        "cookies"
+      ],
+      "source": "Reddit · r/AskBaking"
+    },
+    {
+      "position": 18,
+      "title": "I have no idea what what went wrong 🥲 : r/Baking",
+      "link": "https://www.reddit.com/r/Baking/comments/1hc1h9c/i_have_no_idea_what_what_went_wrong/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Baking/comments/1hc1h9c/i_have_no_idea_what_what_went_wrong/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECHEQAQ",
+      "displayed_link": "160+ comments · 3 months ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f9093820478d29867c8eb311bf5933f7cafe27.png",
+      "snippet": "Weigh the flour. Adding too much flour is a common mistake and yields dry, floury cookies. The easiest way to use the correct amount of flour is ...",
+      "snippet_highlighted_words": [
+        "common mistake",
+        "cookies"
+      ],
+      "source": "Reddit · r/Baking"
+    },
+    {
+      "position": 19,
+      "title": "Help!! What's wrong with my cookies?? : r/AskBaking",
+      "link": "https://www.reddit.com/r/AskBaking/comments/185e0v0/help_whats_wrong_with_my_cookies/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/AskBaking/comments/185e0v0/help_whats_wrong_with_my_cookies/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECHIQAQ",
+      "displayed_link": "30+ comments · 1 year ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f90938fbbcb10c2855b0329783ce23aed0432d.png",
+      "snippet": "That recipe is bonkers. The main issue is the baking powder. If you want your cookies to be less cakey, use baking soda instead. I would also ...",
+      "snippet_highlighted_words": [
+        "recipe",
+        "cookies"
+      ],
+      "source": "Reddit · r/AskBaking"
+    },
+    {
+      "position": 20,
+      "title": "What did I do wrong? My cookies look like biscuits : r/Baking",
+      "link": "https://www.reddit.com/r/Baking/comments/1b9w790/what_did_i_do_wrong_my_cookies_look_like_biscuits/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Baking/comments/1b9w790/what_did_i_do_wrong_my_cookies_look_like_biscuits/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoFCIIBEAE",
+      "displayed_link": "90+ comments · 1 year ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f909388ddac66d2ea146bc061516e9036e1d9b.png",
+      "snippet": "Too much flour and cornstarch. It keeps the cookie from spreading and turns them into hockey pucks about 2 hours after they baked. I'm ...",
+      "snippet_highlighted_words": [
+        "cookie"
+      ],
+      "source": "Reddit · r/Baking"
+    },
+    {
+      "position": 21,
+      "title": "How did I mess cookies up this bad. : r/Baking",
+      "link": "https://www.reddit.com/r/Baking/comments/zkjste/how_did_i_mess_cookies_up_this_bad/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Baking/comments/zkjste/how_did_i_mess_cookies_up_this_bad/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoFCIUBEAE",
+      "displayed_link": "230+ comments · 2 years ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f909384a3fc3917f3258603cb685f5f5d0c38a.png",
+      "snippet": "It looks like you either overbeat your sugar/butter, causing what's called runout, where your cookies spread out like they did in this pic. It ...",
+      "snippet_highlighted_words": [
+        "cookies"
+      ],
+      "source": "Reddit · r/Baking"
+    },
+    {
+      "position": 22,
+      "title": "I swear, I follow the recipe exactly and this always happens",
+      "link": "https://www.reddit.com/r/Baking/comments/z74dh0/i_swear_i_follow_the_recipe_exactly_and_this/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Baking/comments/z74dh0/i_swear_i_follow_the_recipe_exactly_and_this/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECC8QAQ",
+      "displayed_link": "140+ comments · 2 years ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f90938e27775da0494bc0c009f97f249e696b5.png",
+      "snippet": "Dough wasn't cold enough. Also ALWAYS cool the cookie sheets in between using them. I bake large batches, so I let the cookies finish baking on ...",
+      "snippet_highlighted_words": [
+        "cookie",
+        "cookies"
+      ],
+      "source": "Reddit · r/Baking"
+    },
+    {
+      "position": 23,
+      "title": "My cookies are too flat and too thin. How can I fix this?",
+      "link": "https://www.reddit.com/r/AskBaking/comments/s3abrw/my_cookies_are_too_flat_and_too_thin_how_can_i/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/AskBaking/comments/s3abrw/my_cookies_are_too_flat_and_too_thin_how_can_i/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECFEQAQ",
+      "displayed_link": "20+ comments · 3 years ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f90938539f783867b60efdf8fdd3f2ec4045c0.png",
+      "snippet": "You should chill your dough for about 30 min before baking. It could also mean you measured your flour too lightly, but that's a less common ...",
+      "snippet_highlighted_words": [
+        "common"
+      ],
+      "source": "Reddit · r/AskBaking"
+    },
+    {
+      "position": 24,
+      "title": "Why do my cookies keep coming out thick and cakey?",
+      "link": "https://www.reddit.com/r/Baking/comments/12sgu1c/why_do_my_cookies_keep_coming_out_thick_and_cakey/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Baking/comments/12sgu1c/why_do_my_cookies_keep_coming_out_thick_and_cakey/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECF8QAQ",
+      "displayed_link": "50+ comments · 1 year ago",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP4enAPP05hORwGTtqoZMqFIsWQ_hLJe7w6dH6SM3MBjgt22JnwbMnHas&usqp=CAE&s",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f9093838d698c741798b02ecf97b68cede1f63.png",
+      "snippet": "Don't mix all the flour if your recipe calls for. It may say you need x amount plus a little more That little more is to roll your dough. I don' ...",
+      "snippet_highlighted_words": [
+        "recipe"
+      ],
+      "source": "Reddit · r/Baking"
+    },
+    {
+      "position": 25,
+      "title": "How cookies look with different ingredients (x-post from r/ ...",
+      "link": "https://www.reddit.com/r/Baking/comments/1u9lvv/how_cookies_look_with_different_ingredients_xpost/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Baking/comments/1u9lvv/how_cookies_look_with_different_ingredients_xpost/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECFgQAQ",
+      "displayed_link": "90+ comments · 11 years ago",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjh8tTJiqUc6vUlAARmFjX5eyGRJ_G_iy2LsApAa148NP2hewegzxlN2A&usqp=CAE&s",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f9093835c6c5474e49c90c52a8673748e413ce.png",
+      "snippet": "I love baking cookies, but flat cookies are my most common mistake. ... Anyway, have a cookie recipe that Ive been working via trial and error.",
+      "snippet_highlighted_words": [
+        "cookies",
+        "cookies",
+        "common mistake",
+        "cookie recipe",
+        "error"
+      ],
+      "source": "Reddit · r/Baking"
+    },
+    {
+      "position": 26,
+      "title": "Help!! what went wrong?? I followed the recipe and this ...",
+      "link": "https://www.reddit.com/r/Cookies/comments/119gomd/help_what_went_wrong_i_followed_the_recipe_and/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Cookies/comments/119gomd/help_what_went_wrong_i_followed_the_recipe_and/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECDQQAQ",
+      "displayed_link": "6 comments · 2 years ago",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREGLipW112A2VoZUwxWi1DjWmw3Bgwzh4PkyXxpP1n2h_bi9rOg3qYGqo&usqp=CAE&s",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f9093819e228643a4487a6118c08411ff9b653.png",
+      "snippet": "In what way do they feel under baked? It looks like not enough flour to me, or too much sugar and butter. Some cookie recipes go for this ...",
+      "snippet_highlighted_words": [
+        "cookie recipes"
+      ],
+      "source": "Reddit · r/Cookies"
+    },
+    {
+      "position": 27,
+      "title": "Troubleshoot Chocolate chip cookies (picture included)",
+      "link": "https://www.reddit.com/r/BakingNoobs/comments/zqylpn/troubleshoot_chocolate_chip_cookies_picture/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/BakingNoobs/comments/zqylpn/troubleshoot_chocolate_chip_cookies_picture/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECDMQAQ",
+      "displayed_link": "10+ comments · 2 years ago",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIG2jRhossLreEc3k52Ja6epYNx42fbjWZdwH3vPrgrKIA4PlI5tr7rfQ&usqp=CAE&s",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f9093857551ec3ff96a77645accfecf660a572.png",
+      "snippet": "You are godsend! Thank you so much!! ... The recipe looks ok. Usually cookie problems are down to the oven being hotter than you believe it is.",
+      "snippet_highlighted_words": [
+        "recipe",
+        "cookie"
+      ],
+      "source": "Reddit · r/BakingNoobs"
+    },
+    {
+      "position": 28,
+      "title": "Chocolate chip cookies always turn out bad? Help! : r/Baking",
+      "link": "https://www.reddit.com/r/Baking/comments/15mqzl7/chocolate_chip_cookies_always_turn_out_bad_help/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Baking/comments/15mqzl7/chocolate_chip_cookies_always_turn_out_bad_help/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECC0QAQ",
+      "displayed_link": "310+ comments · 1 year ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f909385529a53d210d336dd8b508cf783af5c2.png",
+      "snippet": "Do you chill the cookie batter before baking? This will also help the cookies not spread so much in the oven. Baking melted butter is a recipe ...",
+      "snippet_highlighted_words": [
+        "cookie",
+        "cookies",
+        "recipe"
+      ],
+      "source": "Reddit · r/Baking"
+    },
+    {
+      "position": 29,
+      "title": "My Chocolate Chip cookies ALWAYS come out flat",
+      "link": "https://www.reddit.com/r/AskBaking/comments/1hi4qeg/my_chocolate_chip_cookies_always_come_out_flat/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/AskBaking/comments/1hi4qeg/my_chocolate_chip_cookies_always_come_out_flat/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECC4QAQ",
+      "displayed_link": "70+ comments · 3 months ago",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f9093869c0c3f4451a1e471bbc6e3c33f34297.png",
+      "snippet": "I was going to say too much butter, but the recipe I use (also melted butter) has a higher ratio of butter to flour so can't be that. Maybe ...",
+      "snippet_highlighted_words": [
+        "recipe"
+      ],
+      "source": "Reddit · r/AskBaking"
+    },
+    {
+      "position": 30,
+      "title": "Where did I go wrong 😂 (baking cookies)",
+      "link": "https://www.reddit.com/r/Baking/comments/1hvghe8/where_did_i_go_wrong_baking_cookies/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Baking/comments/1hvghe8/where_did_i_go_wrong_baking_cookies/&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQFnoECDcQAQ",
+      "displayed_link": "20+ comments · 3 months ago",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxTPLq6GsffzjoaiLZgkJaGCoeHW2GgUju3D_WuYrFmCiDRIJahKmgbuU&usqp=CAE&s",
+      "favicon": "https://serpapi.com/searches/67f3c3e8f6e08ed2abda2d47/images/b72cc5616b846f2dd68b42f150f90938b17b2e07e92687b5af70cda81464c8e6.png",
+      "snippet": "I wonder if your butter was over softened or maybe melted. Oftentimes when I mix cookies with softened butter, the batter gets too softened so I have put the ...",
+      "snippet_highlighted_words": [
+        "cookies"
+      ],
+      "source": "Reddit · r/Baking"
+    }
+  ],
+  "related_searches": [
+    {
+      "block_position": 1,
+      "query": "Cookie recipe common mistakes reddit",
+      "link": "https://www.google.com/search?num=30&sca_esv=f63688edbc6800bd&hl=en&gl=us&q=Cookie+recipe+common+mistakes+reddit&sa=X&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQ1QJ6BAh5EAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Cookie+recipe+common+mistakes+reddit"
+    },
+    {
+      "block_position": 1,
+      "query": "Sugar cookie recipe common mistakes",
+      "link": "https://www.google.com/search?num=30&sca_esv=f63688edbc6800bd&hl=en&gl=us&q=Sugar+cookie+recipe+common+mistakes&sa=X&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQ1QJ6BAh_EAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Sugar+cookie+recipe+common+mistakes"
+    },
+    {
+      "block_position": 1,
+      "query": "Easy cookie recipe common mistakes",
+      "link": "https://www.google.com/search?num=30&sca_esv=f63688edbc6800bd&hl=en&gl=us&q=Easy+cookie+recipe+common+mistakes&sa=X&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQ1QJ6BAh9EAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Easy+cookie+recipe+common+mistakes"
+    },
+    {
+      "block_position": 1,
+      "query": "Chocolate chip cookie recipe common mistakes",
+      "link": "https://www.google.com/search?num=30&sca_esv=f63688edbc6800bd&hl=en&gl=us&q=Chocolate+chip+cookie+recipe+common+mistakes&sa=X&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQ1QJ6BAh6EAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Chocolate+chip+cookie+recipe+common+mistakes"
+    },
+    {
+      "block_position": 1,
+      "query": "Soft cookie recipe common mistakes",
+      "link": "https://www.google.com/search?num=30&sca_esv=f63688edbc6800bd&hl=en&gl=us&q=Soft+cookie+recipe+common+mistakes&sa=X&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQ1QJ6BAh7EAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Soft+cookie+recipe+common+mistakes"
+    }
+  ],
+  "pagination": {
+    "current": 1,
+    "next": "https://www.google.com/search?q=site:reddit.com+cookie+recipe+common+mistakes&num=30&sca_esv=f63688edbc6800bd&hl=en&gl=us&ei=6sPzZ6PTD-_KkPIP0IPFuQY&start=30&sa=N&sstk=Af40H4XSDZjcE9bw7ESEejZ61T1tu7NPx7o2oK4f08FWVXmGDL966OGbjVm7w61QL5_X809NaT5Bn0iScuozAyijA9oDoLjLNdRLzw&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQ8NMDegQICBAW",
+    "other_pages": {
+      "2": "https://www.google.com/search?q=site:reddit.com+cookie+recipe+common+mistakes&num=30&sca_esv=f63688edbc6800bd&hl=en&gl=us&ei=6sPzZ6PTD-_KkPIP0IPFuQY&start=30&sa=N&sstk=Af40H4XSDZjcE9bw7ESEejZ61T1tu7NPx7o2oK4f08FWVXmGDL966OGbjVm7w61QL5_X809NaT5Bn0iScuozAyijA9oDoLjLNdRLzw&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQ8tMDegQICBAE",
+      "3": "https://www.google.com/search?q=site:reddit.com+cookie+recipe+common+mistakes&num=30&sca_esv=f63688edbc6800bd&hl=en&gl=us&ei=6sPzZ6PTD-_KkPIP0IPFuQY&start=60&sa=N&sstk=Af40H4XSDZjcE9bw7ESEejZ61T1tu7NPx7o2oK4f08FWVXmGDL966OGbjVm7w61QL5_X809NaT5Bn0iScuozAyijA9oDoLjLNdRLzw&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQ8tMDegQICBAG",
+      "4": "https://www.google.com/search?q=site:reddit.com+cookie+recipe+common+mistakes&num=30&sca_esv=f63688edbc6800bd&hl=en&gl=us&ei=6sPzZ6PTD-_KkPIP0IPFuQY&start=90&sa=N&sstk=Af40H4XSDZjcE9bw7ESEejZ61T1tu7NPx7o2oK4f08FWVXmGDL966OGbjVm7w61QL5_X809NaT5Bn0iScuozAyijA9oDoLjLNdRLzw&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQ8tMDegQICBAI",
+      "5": "https://www.google.com/search?q=site:reddit.com+cookie+recipe+common+mistakes&num=30&sca_esv=f63688edbc6800bd&hl=en&gl=us&ei=6sPzZ6PTD-_KkPIP0IPFuQY&start=120&sa=N&sstk=Af40H4XSDZjcE9bw7ESEejZ61T1tu7NPx7o2oK4f08FWVXmGDL966OGbjVm7w61QL5_X809NaT5Bn0iScuozAyijA9oDoLjLNdRLzw&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQ8tMDegQICBAK",
+      "6": "https://www.google.com/search?q=site:reddit.com+cookie+recipe+common+mistakes&num=30&sca_esv=f63688edbc6800bd&hl=en&gl=us&ei=6sPzZ6PTD-_KkPIP0IPFuQY&start=150&sa=N&sstk=Af40H4XSDZjcE9bw7ESEejZ61T1tu7NPx7o2oK4f08FWVXmGDL966OGbjVm7w61QL5_X809NaT5Bn0iScuozAyijA9oDoLjLNdRLzw&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQ8tMDegQICBAM",
+      "7": "https://www.google.com/search?q=site:reddit.com+cookie+recipe+common+mistakes&num=30&sca_esv=f63688edbc6800bd&hl=en&gl=us&ei=6sPzZ6PTD-_KkPIP0IPFuQY&start=180&sa=N&sstk=Af40H4XSDZjcE9bw7ESEejZ61T1tu7NPx7o2oK4f08FWVXmGDL966OGbjVm7w61QL5_X809NaT5Bn0iScuozAyijA9oDoLjLNdRLzw&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQ8tMDegQICBAO",
+      "8": "https://www.google.com/search?q=site:reddit.com+cookie+recipe+common+mistakes&num=30&sca_esv=f63688edbc6800bd&hl=en&gl=us&ei=6sPzZ6PTD-_KkPIP0IPFuQY&start=210&sa=N&sstk=Af40H4XSDZjcE9bw7ESEejZ61T1tu7NPx7o2oK4f08FWVXmGDL966OGbjVm7w61QL5_X809NaT5Bn0iScuozAyijA9oDoLjLNdRLzw&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQ8tMDegQICBAQ",
+      "9": "https://www.google.com/search?q=site:reddit.com+cookie+recipe+common+mistakes&num=30&sca_esv=f63688edbc6800bd&hl=en&gl=us&ei=6sPzZ6PTD-_KkPIP0IPFuQY&start=240&sa=N&sstk=Af40H4XSDZjcE9bw7ESEejZ61T1tu7NPx7o2oK4f08FWVXmGDL966OGbjVm7w61QL5_X809NaT5Bn0iScuozAyijA9oDoLjLNdRLzw&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQ8tMDegQICBAS",
+      "10": "https://www.google.com/search?q=site:reddit.com+cookie+recipe+common+mistakes&num=30&sca_esv=f63688edbc6800bd&hl=en&gl=us&ei=6sPzZ6PTD-_KkPIP0IPFuQY&start=270&sa=N&sstk=Af40H4XSDZjcE9bw7ESEejZ61T1tu7NPx7o2oK4f08FWVXmGDL966OGbjVm7w61QL5_X809NaT5Bn0iScuozAyijA9oDoLjLNdRLzw&ved=2ahUKEwij8LSB9cWMAxVvJUQIHdBBMWcQ8tMDegQICBAU"
+    }
+  },
+  "serpapi_pagination": {
+    "current": 1,
+    "next_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+cookie+recipe+common+mistakes&start=30",
+    "next": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+cookie+recipe+common+mistakes&start=30",
+    "other_pages": {
+      "2": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+cookie+recipe+common+mistakes&start=30",
+      "3": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+cookie+recipe+common+mistakes&start=60",
+      "4": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+cookie+recipe+common+mistakes&start=90",
+      "5": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+cookie+recipe+common+mistakes&start=120",
+      "6": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+cookie+recipe+common+mistakes&start=150",
+      "7": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+cookie+recipe+common+mistakes&start=180",
+      "8": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+cookie+recipe+common+mistakes&start=210",
+      "9": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+cookie+recipe+common+mistakes&start=240",
+      "10": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+cookie+recipe+common+mistakes&start=270"
+    }
+  }
+}

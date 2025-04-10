@@ -9,6 +9,7 @@ import pytz
 from perplexity import perplexitycall
 from sheetscall import add_chatlog_entry, sheets_call, fetch_chatlog, task_create, fetch_preferences, fetch_recipes, update_task, fetch_sheet_data_rows
 from firestore_chef import firestore_add_doc, firestore_get_docs_by_date_range
+from testscripts.serpapirecipes import search_serpapi
 #from testscripts.telegram_utilities import send_telegram_message
 #from loggerbackup import ConversationLogger
 
@@ -152,28 +153,35 @@ class AIHandler:
 
         #TOOLS
         tools = [
-
-            # Add this in the tools definition section
-            # {
-            #     "type": "function",
-            #     "function": {
-            #         "name": "search_recipes_serpapi",
-            #         "description": "Search for recipes. The user will explicit calls ' google search recipes for <query>''. DO NOT MISTAKE this for the browsing function call.'",
-            #         "parameters": {
-            #             "type": "object",
-            #             "properties": {
-            #                 "query": {
-            #                     "type": "string",
-            #                     "description": "Search term for recipes"
-            #                 }
-            #             },
-            #             "required": ["query"],
-            #             "additionalProperties": False
-            #         },
-            #         "strict": False
-            #     }
-            # },
-
+        
+            #serpapi google search
+            {
+            "type": "function",
+            "function": {
+                "name": "search_serpapi",
+                "description": "Triggered upon one of a few conditions. Any condition will trigger this function \
+                One, the user says 'google search' or mentions 'search the google'. \
+                Two, will specify a specific website, such as reddit or linkedin. \
+                for instance, if the user writes 'google search reddit for cookie recipes', \
+                    fill in the site parameter with 'reddit.com' and the query with verbatim 'cookie recipes' ",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "site": {
+                                "type": "string",
+                                "description": "Specific site to search"
+                            },
+                            "query": {
+                                "type": "string",
+                                "description": "verbatim search query, usually specified after 'for'"
+                            }
+                        },
+                        "required": ["query"],
+                        "additionalProperties": False
+                    },
+                    "strict": False
+                }
+        },
             {
                 "type": "function",
                 "function": {
@@ -631,74 +639,76 @@ class AIHandler:
 
                 #search google recipes
 
-                # elif function_name == 'search_recipes_serpapi':
-                #     print("DEBUG: triggered tool search recipes")
+                elif function_name == 'search_serpapi':
+                    print("DEBUG: triggered tool search recipes")
 
-                #     query = function_args.get('query')
-                #     try:
-                #         result_data = search_recipes_serpapi(query)
-                #     except Exception as e:
-                #         print(f"ERROR: fetching recipes: {e}")
-                #         return "Failed to fetch recipes"
+                    query = function_args.get('query')
+                    site = function_args.get('site')
+                    print(f"DEBUG: search_serpapi function called with query: {query} and site: {site}")
+                    try:
+                        result_data = search_serpapi(query, site)
+                    except Exception as e:
+                        print(f"ERROR: fetching recipes: {e}")
+                        return "Failed to fetch recipes"
 
-                #     # First add the tool response message
-                #     function_call_result_message = {
-                #         "role": "tool",
-                #         "content": str(result_data),
-                #         "tool_call_id": tool_call_id
-                #     }
+                    # First add the tool response message
+                    function_call_result_message = {
+                        "role": "tool",
+                        "content": str(result_data),
+                        "tool_call_id": tool_call_id
+                    }
 
-                #     # Create database context message
-                #     database_recipe_context = {
-                #         "role":
-                #         "system",
-                #         "content":
-                #         f"""This is a search result of recipes. THe user requested search results and this was the result
+                    # Create database context message
+                    database_recipe_context = {
+                        "role":
+                        "system",
+                        "content":
+                        f"""This is a search result of recipes. THe user requested search results and this was the result
 
-                #         *RECIPE CONTENT FOLLOWS*:
-                #         {str(result_data)} ~~*END RECIPE API CALL CONTENT*~~
+                        *RECIPE CONTENT FOLLOWS*:
+                        {str(result_data)} ~~*END RECIPE API CALL CONTENT*~~
 
-                #         """
-                #     }
+                        """
+                    }
 
-                #     # Update messages in correct sequence
-                #     self.messages.append(assistant_message)
-                #     self.messages.append(function_call_result_message
-                #                          )  # Required tool response
-                #     self.messages.append(database_recipe_context)
+                    # Update messages in correct sequence
+                    self.messages.append(assistant_message)
+                    self.messages.append(function_call_result_message
+                                         )  # Required tool response
+                    self.messages.append(database_recipe_context)
 
-                #     # Second API call
-                #     completion_payload = {
-                #         "model": 'gpt-4o-mini',
-                #         "messages": self.messages
-                #     }
+                    # Second API call
+                    completion_payload = {
+                        "model": 'gpt-4o-mini',
+                        "messages": self.messages
+                    }
 
-                #     # DEBUG: Print a slice of the API call payload
-                #     print(
-                #         f"DEBUG: first few recipe messages: {self.messages[:1]}"
-                #     )
+                    # DEBUG: Print a slice of the API call payload
+                    print(
+                        f"DEBUG: first few recipe messages: {self.messages[:1]}"
+                    )
 
-                #     # Second API call
-                #     try:
-                #         second_response = requests.post(
-                #             'https://api.openai.com/v1/chat/completions',
-                #             headers=headers,
-                #             json=completion_payload)
-                #         second_response.raise_for_status()
-                #     except requests.exceptions.RequestException as e:
-                #         print(f"ERROR: API call failed: {e}")
-                #         return "Failed to fetch completion"
+                    # Second API call
+                    try:
+                        second_response = requests.post(
+                            'https://api.openai.com/v1/chat/completions',
+                            headers=headers,
+                            json=completion_payload)
+                        second_response.raise_for_status()
+                    except requests.exceptions.RequestException as e:
+                        print(f"ERROR: API call failed: {e}")
+                        return "Failed to fetch completion"
 
-                #     # Process final response
-                #     second_response_json = second_response.json()
-                #     final_assistant_message = second_response_json[
-                #         'choices'][0]['message']
+                    # Process final response
+                    second_response_json = second_response.json()
+                    final_assistant_message = second_response_json[
+                        'choices'][0]['message']
 
-                #     # Add final response to conversation
-                #     self.messages.append(final_assistant_message)
+                    # Add final response to conversation
+                    self.messages.append(final_assistant_message)
 
-                #     return final_assistant_message.get(
-                #         'content', 'No content in response.')
+                    return final_assistant_message.get(
+                        'content', 'No content in response.')
 
 
 
@@ -1192,8 +1202,6 @@ class AIHandler:
     def agentchat(self, prompt=None):
         print('DEBUG: agent chat triggered')
         print(f"DEBUG: user_id {self.user_id}")
-        print ("DEBUG: field input yield:", input)
-        yield input
 
         if prompt:
             self.messages.append({"role": "user", "content": prompt})
