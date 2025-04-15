@@ -1,113 +1,477 @@
 {
   "search_metadata": {
-    "id": "67f6c45e12dcaa158d75ef17",
+    "id": "67fe8a8efc67056a6401bc9f",
     "status": "Success",
-    "json_endpoint": "https://serpapi.com/searches/b8708c791c7ea22f/67f6c45e12dcaa158d75ef17.json",
-    "created_at": "2025-04-09 19:02:54 UTC",
-    "processed_at": "2025-04-09 19:02:54 UTC",
-    "google_url": "https://www.google.com/search?q=tomato+sauce+instant+pot+site%3Areddit.com&oq=tomato+sauce+instant+pot+site%3Areddit.com&hl=en&gl=us&num=2&sourceid=chrome&ie=UTF-8",
-    "raw_html_file": "https://serpapi.com/searches/b8708c791c7ea22f/67f6c45e12dcaa158d75ef17.html",
-    "total_time_taken": 1.46
+    "json_endpoint": "https://serpapi.com/searches/56a6e0c325518b9c/67fe8a8efc67056a6401bc9f.json",
+    "created_at": "2025-04-15 16:34:22 UTC",
+    "processed_at": "2025-04-15 16:34:22 UTC",
+    "google_url": "https://www.google.com/search?q=site%3Areddit.com+semifreddo+recipe+Reddit&oq=site%3Areddit.com+semifreddo+recipe+Reddit&hl=en&gl=us&num=30&sourceid=chrome&ie=UTF-8",
+    "raw_html_file": "https://serpapi.com/searches/56a6e0c325518b9c/67fe8a8efc67056a6401bc9f.html",
+    "total_time_taken": 6.49
   },
   "search_parameters": {
     "engine": "google",
-    "q": "tomato sauce instant pot site:reddit.com",
+    "q": "site:reddit.com semifreddo recipe Reddit",
     "google_domain": "google.com",
     "hl": "en",
     "gl": "us",
-    "num": "2",
+    "num": "30",
     "device": "desktop"
   },
   "search_information": {
-    "query_displayed": "tomato sauce instant pot site:reddit.com",
-    "total_results": 58300,
-    "time_taken_displayed": 0.69,
+    "query_displayed": "site:reddit.com semifreddo recipe Reddit",
+    "total_results": 2590,
+    "time_taken_displayed": 0.46,
     "organic_results_state": "Results for exact spelling"
   },
   "organic_results": [
     {
       "position": 1,
-      "title": "I get a burn notice every time I try to make a tomato sauce ...",
-      "link": "https://www.reddit.com/r/instantpot/comments/pjmdul/i_get_a_burn_notice_every_time_i_try_to_make_a/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/instantpot/comments/pjmdul/i_get_a_burn_notice_every_time_i_try_to_make_a/&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQFnoECCIQAQ",
-      "displayed_link": "40+ comments · 3 years ago",
-      "favicon": "https://serpapi.com/searches/67f6c45e12dcaa158d75ef17/images/39cd60d74fbb5082d11bb88e649145a11527a91f264a0843ec1bea3061bc1d40.png",
-      "snippet": "You cannot substitute tomato products for water in pressure cooking. You must use water or stock. You can season the water and add bouillon to ...",
+      "title": "Semifreddo Advice : r/AskCulinary",
+      "link": "https://www.reddit.com/r/AskCulinary/comments/qirwdi/semifreddo_advice/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/AskCulinary/comments/qirwdi/semifreddo_advice/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECBoQAQ",
+      "displayed_link": "6 comments · 3 years ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770f6485d6b787d17a315ebd86f46341f811.png",
+      "snippet": "a base recipe of semifreddo is sabayon folded into whipped cream and frozen. you could easily flavour this with anything, the zest would be ...",
       "snippet_highlighted_words": [
-        "You cannot substitute tomato products for water in pressure cooking"
+        "sabayon folded into whipped cream and frozen"
       ],
-      "source": "Reddit · r/instantpot"
+      "source": "Reddit · r/AskCulinary"
     },
     {
       "position": 2,
-      "title": "How would you make this marinara in an instant pot? ...",
-      "link": "https://www.reddit.com/r/instantpot/comments/1b1v9b1/how_would_you_make_this_marinara_in_an_instant/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/instantpot/comments/1b1v9b1/how_would_you_make_this_marinara_in_an_instant/&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQFnoECCYQAQ",
-      "displayed_link": "9 comments · 1 year ago",
-      "thumbnail": "https://serpapi.com/searches/67f6c45e12dcaa158d75ef17/images/39cd60d74fbb5082d11bb88e649145a1a7daf92ab42030febcdc4005cf65173c.jpeg",
-      "favicon": "https://serpapi.com/searches/67f6c45e12dcaa158d75ef17/images/39cd60d74fbb5082d11bb88e649145a1d9cd4a380c3dfa4ba63e83b5fc8d6d32.png",
-      "snippet": "Add the tomatoes and liquids, deglaze, and then cancel and set to pressure cook fort 10 minutes. Add parmesan cheese, stir it in. Done.",
+      "title": "Semifreddo - A popular Italian Icecream-like Dessert",
+      "link": "https://www.reddit.com/r/ItalianFood/comments/v06ory/semifreddo_a_popular_italian_icecreamlike_dessert/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/ItalianFood/comments/v06ory/semifreddo_a_popular_italian_icecreamlike_dessert/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECBUQAQ",
+      "displayed_link": "5 comments · 2 years ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770f83d7e77304171bb9ade9b0422ea512ba.png",
+      "snippet": "Originally semifreddo was made with raw eggs, which most people don't find very safe (there are safe way to pasteurise it, just time consuming).",
       "snippet_highlighted_words": [
-        "tomatoes"
+        "made with raw eggs"
       ],
-      "source": "Reddit · r/instantpot"
+      "source": "Reddit · r/ItalianFood"
+    },
+    {
+      "position": 3,
+      "title": "Semifreddo : r/Cooking",
+      "link": "https://www.reddit.com/r/Cooking/comments/184zta7/semifreddo/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Cooking/comments/184zta7/semifreddo/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECBYQAQ",
+      "displayed_link": "3 comments · 1 year ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770f347cbc8f0bebd791c2895e4cd39befa2.png",
+      "snippet": "Wanting to make a semifreddo for Xmas, this one specifically. https://www.bbcgoodfood.com/recipes/chocolate-pistachio-nougat-semifreddo.",
+      "snippet_highlighted_words": [
+        "Wanting to make a semifreddo for Xmas"
+      ],
+      "source": "Reddit · r/Cooking"
+    },
+    {
+      "position": 4,
+      "title": "Lemon semifreddo. Sponge cake, olive oil lemon curd, ...",
+      "link": "https://www.reddit.com/r/DessertPorn/comments/cto1h6/lemon_semifreddo_sponge_cake_olive_oil_lemon_curd/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/DessertPorn/comments/cto1h6/lemon_semifreddo_sponge_cake_olive_oil_lemon_curd/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECBgQAQ",
+      "displayed_link": "8 comments · 5 years ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770f4f171d1042d9b319204af47eeece70b7.png",
+      "snippet": "Was very good. Sold well. However I pieced roughly six recipes together and it is in the restaurants recipe book.",
+      "snippet_highlighted_words": [
+        "Was very good"
+      ],
+      "source": "Reddit · r/DessertPorn"
+    },
+    {
+      "position": 5,
+      "title": "[Homemade] Lemon Semifreddo : r/dessert",
+      "link": "https://www.reddit.com/r/dessert/comments/8kgk70/homemade_lemon_semifreddo/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/dessert/comments/8kgk70/homemade_lemon_semifreddo/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECCYQAQ",
+      "displayed_link": "3 comments · 6 years ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770fcc8c6ce353e45ce8bec544d68b259f7a.png",
+      "snippet": "Ingredients: Lemon and Almond Sponge. 6 Eggs (yolks and whites separated). 200g Sugar. 1 Lemon (juiced and zest finely grated).",
+      "snippet_highlighted_words": [
+        "Ingredients: Lemon and Almond Sponge"
+      ],
+      "source": "Reddit · r/dessert"
+    },
+    {
+      "position": 6,
+      "title": "[Homemade] A strawberry and chocolate semifreddo made ...",
+      "link": "https://www.reddit.com/r/food/comments/uvig5h/homemade_a_strawberry_and_chocolate_semifreddo/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/food/comments/uvig5h/homemade_a_strawberry_and_chocolate_semifreddo/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECBQQAQ",
+      "displayed_link": "5 comments · 2 years ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770fcef76c2f91fb62defdcb0498af854fe5.png",
+      "snippet": "500g mascarpone 1 condensed milk (400g) 1 33% cream (250ml). Mix this together. 500g strawberry 120g sugar. Simmer on low for 10 mins.",
+      "source": "Reddit · r/food"
+    },
+    {
+      "position": 7,
+      "title": "Lemon Berry and Almond Semifreddo. This is a very light ...",
+      "link": "https://www.reddit.com/r/ItalianFood/comments/nnx0cj/lemon_berry_and_almond_semifreddo_this_is_a_very/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/ItalianFood/comments/nnx0cj/lemon_berry_and_almond_semifreddo_this_is_a_very/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECBkQAQ",
+      "displayed_link": "6 comments · 3 years ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770f197e342e8a69eda10d9c36f3a7f0595f.png",
+      "snippet": "3/4 cups chopped or slivered roasted almonds. 1 3/4 cups whipping cream. 1 1/4 cups sugar. 7 egg yolks. Juice of 2 large lemons.",
+      "snippet_highlighted_words": [
+        "3/4 cups chopped or slivered roasted almonds"
+      ],
+      "source": "Reddit · r/ItalianFood"
+    },
+    {
+      "position": 8,
+      "title": "Best Semifreddo Posts",
+      "link": "https://www.reddit.com/t/semifreddo/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/t/semifreddo/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECDIQAQ",
+      "displayed_link": "https://www.reddit.com › semifreddo",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770f68aa5fcb35f35ef7fe15ed119ee81ff4.png",
+      "date": "Mar 18, 2022",
+      "snippet": "Semifreddo. Frozen desserts ... A place for anyone to post videos of their recipe or a recipe that they've found that was really enjoyable.",
+      "snippet_highlighted_words": [
+        "Semifreddo"
+      ],
+      "source": "Reddit"
+    },
+    {
+      "position": 9,
+      "title": "2.5g net carb Mint Chip Semifreddo!!! Delicious",
+      "link": "https://www.reddit.com/r/ketorecipes/comments/arrf5v/25g_net_carb_mint_chip_semifreddo_delicious/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/ketorecipes/comments/arrf5v/25g_net_carb_mint_chip_semifreddo_delicious/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECGEQAQ",
+      "displayed_link": "2 comments · 6 years ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770fd98b8084fb95837bf196a299d51a827a.png",
+      "snippet": "Recipe: INGREDIENTS: 2 Egg yolks + 1 egg 2/3 cup heavy cream 2/3 cups swerve erythritol 1/4 tsp mint extract 1TBS Lily's chips 1 drop blue ...",
+      "snippet_highlighted_words": [
+        "INGREDIENTS"
+      ],
+      "source": "Reddit · r/ketorecipes"
+    },
+    {
+      "position": 10,
+      "title": "r/DessertPerson - Grape Semifreddo - goober jelly vibes!",
+      "link": "https://www.reddit.com/r/DessertPerson/comments/14f71ed/grape_semifreddo_goober_jelly_vibes/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/DessertPerson/comments/14f71ed/grape_semifreddo_goober_jelly_vibes/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECEsQAQ",
+      "displayed_link": "1 comment · 1 year ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770fadebc599ade362efefad065f9e32088d.png",
+      "snippet": "This semifreddo uses a more involved method of making a grape curd first, then folding in whipped cream and meringue. But the effort is worth it.",
+      "snippet_highlighted_words": [
+        "making a grape curd first, then folding in whipped cream and meringue"
+      ],
+      "source": "Reddit · r/DessertPerson"
+    },
+    {
+      "position": 11,
+      "title": "Triple Chocolate Semifreddo : r/GifRecipes",
+      "link": "https://www.reddit.com/r/GifRecipes/comments/c5y9t8/triple_chocolate_semifreddo/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/GifRecipes/comments/c5y9t8/triple_chocolate_semifreddo/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECFAQAQ",
+      "displayed_link": "50+ comments · 5 years ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770f6199e7de524acb12552fb5936d374bc9.png",
+      "snippet": "Place over a saucepan of simmering water and, using a hand-held electric mixer, beat for 6–8 minutes or until thick and pale. Remove from the ...",
+      "snippet_highlighted_words": [
+        "Place over a saucepan of simmering water"
+      ],
+      "source": "Reddit · r/GifRecipes"
+    },
+    {
+      "position": 12,
+      "title": "Coffee Stracciatella Semifreddo ☕️ : r/DessertPerson",
+      "link": "https://www.reddit.com/r/DessertPerson/comments/16clh44/coffee_stracciatella_semifreddo/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/DessertPerson/comments/16clh44/coffee_stracciatella_semifreddo/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECGcQAQ",
+      "displayed_link": "3 comments · 1 year ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770f867ff079be4c05cd3d4b7c1b846c54c1.png",
+      "snippet": "loved how light and airy the semifreddo was before putting it in the freezer. the taste reminds me of the coffee mascarpone filling for her ...",
+      "snippet_highlighted_words": [
+        "loved how light and airy the semifreddo was"
+      ],
+      "source": "Reddit · r/DessertPerson"
+    },
+    {
+      "position": 13,
+      "title": "[Homemade] Blueberry Buttermilk Semifreddo : r/DessertPorn",
+      "link": "https://www.reddit.com/r/DessertPorn/comments/kyvb87/homemade_blueberry_buttermilk_semifreddo/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/DessertPorn/comments/kyvb87/homemade_blueberry_buttermilk_semifreddo/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECGgQAQ",
+      "displayed_link": "3 comments · 4 years ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770f9d90ec901c09628f6ce36ae137b63881.png",
+      "snippet": "Semifreddo is a class of semi-frozen desserts. The main ingredients are egg yolks, sugar, and cream.",
+      "snippet_highlighted_words": [
+        "egg yolks, sugar, and cream"
+      ],
+      "source": "Reddit · r/DessertPorn"
+    },
+    {
+      "position": 14,
+      "title": "Mint Semifreddo, Dark Caramel, Coco Nibs, Mint Oil ...",
+      "link": "https://www.reddit.com/r/CulinaryPlating/comments/1eu8r3d/mint_semifreddo_dark_caramel_coco_nibs_mint_oil/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/CulinaryPlating/comments/1eu8r3d/mint_semifreddo_dark_caramel_coco_nibs_mint_oil/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECC8QAQ",
+      "displayed_link": "10+ comments · 8 months ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770fbcba8aca3707368767ba223e5b50cd3a.png",
+      "snippet": "Mint Semifreddo, Dark Caramel, Coco Nibs, Mint Oil, Brown Sugar Crumble.",
+      "snippet_highlighted_words": [
+        "Mint Semifreddo"
+      ],
+      "source": "Reddit · r/CulinaryPlating"
+    },
+    {
+      "position": 15,
+      "title": "[homemade] Valrhona dark chocolate semifreddo, with a ...",
+      "link": "https://www.reddit.com/r/food/comments/zw4b0k/homemade_valrhona_dark_chocolate_semifreddo_with/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/food/comments/zw4b0k/homemade_valrhona_dark_chocolate_semifreddo_with/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECE4QAQ",
+      "displayed_link": "7 comments · 2 years ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770ff3e0835e5a2c7a2ac60e00dd654d07d2.png",
+      "snippet": "[homemade] Valrhona dark chocolate semifreddo, with a marshmallow fluff and peppermint whipped ganache center (I know it's a day late).",
+      "snippet_highlighted_words": [
+        "homemade] Valrhona dark chocolate semifreddo"
+      ],
+      "source": "Reddit · r/food"
+    },
+    {
+      "position": 16,
+      "title": "[Homemade] Chocolate Semifreddo : r/food",
+      "link": "https://www.reddit.com/r/food/comments/pbkdyv/homemade_chocolate_semifreddo/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/food/comments/pbkdyv/homemade_chocolate_semifreddo/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECEwQAQ",
+      "displayed_link": "5 comments · 3 years ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770fe6e79dbc81f51882da238c1d7d7e2dda.png",
+      "snippet": "Full recipe can be found in the link on my profile ✌️. Upvote 1. Downvote Reply reply. Share. not_llama. • 4y ago.. Upvote 2",
+      "snippet_highlighted_words": [
+        "Full recipe can be found in the link on my profile"
+      ],
+      "source": "Reddit · r/food"
+    },
+    {
+      "position": 17,
+      "title": "Week 45: Freezing - Mandarin Orange Biscuit and Cherry ...",
+      "link": "https://www.reddit.com/r/52weeksofcooking/comments/1gmk9ph/week_45_freezing_mandarin_orange_biscuit_and/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/52weeksofcooking/comments/1gmk9ph/week_45_freezing_mandarin_orange_biscuit_and/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECC0QAQ",
+      "displayed_link": "2 comments · 5 months ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770fc6d111aa702982c6625ca1703fb2529b.png",
+      "snippet": "Basically sweetened whipped cream with booze and yummy stuff folded in and then frozen in a loaf pan. Tasty and very simple to make.",
+      "source": "Reddit · r/52weeksofcooking"
+    },
+    {
+      "position": 18,
+      "title": "Mimasaka's Semifreddo : r/ShokugekiNoSoma",
+      "link": "https://www.reddit.com/r/ShokugekiNoSoma/comments/1hrmhiv/mimasakas_semifreddo/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/ShokugekiNoSoma/comments/1hrmhiv/mimasakas_semifreddo/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECG0QAQ",
+      "displayed_link": "10+ comments · 3 months ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770f6bbc16e2efff5020fa7ba03426fdc188.png",
+      "snippet": "The cake is broken into 4 layers: almond praline, semifreddo cream, cake, and lemon curd. I suggest baking your cake first, then making your lemon curd, then ...",
+      "snippet_highlighted_words": [
+        "almond praline, semifreddo cream, cake, and lemon curd"
+      ],
+      "source": "Reddit · r/ShokugekiNoSoma"
+    },
+    {
+      "position": 19,
+      "title": "Blackcurrant semifreddo with a hazelnut crumble",
+      "link": "https://www.reddit.com/r/CulinaryPlating/comments/1bvmatp/blackcurrant_semifreddo_with_a_hazelnut_crumble/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/CulinaryPlating/comments/1bvmatp/blackcurrant_semifreddo_with_a_hazelnut_crumble/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECGkQAQ",
+      "displayed_link": "30+ comments · 1 year ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770ff3a001f4a2f2f11dded5fb2e9e2d6dbe.png",
+      "snippet": "I've created a blackcurrant semifreddo with a layer of dark chocolate on top, accompanied by a hazelnut crumble infused with white chocolate.",
+      "snippet_highlighted_words": [
+        "blackcurrant semifreddo with a layer of dark chocolate on top"
+      ],
+      "source": "Reddit · r/CulinaryPlating"
+    },
+    {
+      "position": 20,
+      "title": "Semifreddo with spiced sponge cake : r/CulinaryPlating",
+      "link": "https://www.reddit.com/r/CulinaryPlating/comments/1ewtmd4/semifreddo_with_spiced_sponge_cake/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/CulinaryPlating/comments/1ewtmd4/semifreddo_with_spiced_sponge_cake/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECG4QAQ",
+      "displayed_link": "10+ comments · 7 months ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770f8383b0b8f825e3595c590eadac47226a.png",
+      "snippet": "Raspberry Semifreddo, Meringue, Almond Crumble, Dried Rose Petals · Creamsicle semifreddo, Graham cracker crust, Orange crème anglaise, ...",
+      "snippet_highlighted_words": [
+        "Raspberry Semifreddo, Meringue, Almond Crumble, Dried Rose Petals"
+      ],
+      "source": "Reddit · r/CulinaryPlating"
+    },
+    {
+      "position": 21,
+      "title": "Coffee Semifreddo topped with fudge and chopped bitter ...",
+      "link": "https://www.reddit.com/r/DessertPorn/comments/1eokgti/coffee_semifreddo_topped_with_fudge_and_chopped/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/DessertPorn/comments/1eokgti/coffee_semifreddo_topped_with_fudge_and_chopped/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECG8QAQ",
+      "displayed_link": "4 comments · 8 months ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770fa14fe8e3b77a261777cf130f3a001634.png",
+      "snippet": "Coffee Semifreddo topped with fudge and chopped bitter sweet chocolate. ... Chocolate Condensed Milk Cookies (Recipe). r/DessertPorn - Chocolate ...",
+      "snippet_highlighted_words": [
+        "Coffee Semifreddo topped with fudge and chopped bitter sweet chocolate"
+      ],
+      "source": "Reddit · r/DessertPorn"
+    },
+    {
+      "position": 22,
+      "title": "vegan semifreddo advice? : r/AskCulinary",
+      "link": "https://www.reddit.com/r/AskCulinary/comments/1jomod/vegan_semifreddo_advice/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/AskCulinary/comments/1jomod/vegan_semifreddo_advice/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECEcQAQ",
+      "displayed_link": "9 comments · 11 years ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770fd6592a0e03e2326351da2cf6177d0098.png",
+      "snippet": "How I made it: Blended soaked cashews with water, salt, vanilla, maple syrup, berries, lemon juice, and liquified coconut oil. I've looked ...",
+      "source": "Reddit · r/AskCulinary"
+    },
+    {
+      "position": 23,
+      "title": "Semifreddo, to heat whites or not to heat whites? : r/Cooking",
+      "link": "https://www.reddit.com/r/Cooking/comments/z1l55x/semifreddo_to_heat_whites_or_not_to_heat_whites/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Cooking/comments/z1l55x/semifreddo_to_heat_whites_or_not_to_heat_whites/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECGAQAQ",
+      "displayed_link": "4 comments · 2 years ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770f7ac00e4fb01135c8ea721a40d90061bf.png",
+      "snippet": "I'm trying a variation on Chef John's Tiramoussa Semifreddo recipe. He heats the yolks with the sugar, but leaves the whites uncooked.",
+      "snippet_highlighted_words": [
+        "Chef John's Tiramoussa Semifreddo recipe"
+      ],
+      "source": "Reddit · r/Cooking"
+    },
+    {
+      "position": 24,
+      "title": "Honey roasted peach with basil semifreddo [oc][2736x3648]",
+      "link": "https://www.reddit.com/r/FoodPorn/comments/1jngp0/honey_roasted_peach_with_basil_semifreddo/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/FoodPorn/comments/1jngp0/honey_roasted_peach_with_basil_semifreddo/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECE0QAQ",
+      "displayed_link": "6 comments · 11 years ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770fbb05f1ad326b931df725c58d287ac2b9.png",
+      "snippet": "It's basically a frozen mousse. Whip egg yolks and sugar together over heat, add in flavour (I added basil puree), then fold in whipped cream.",
+      "snippet_highlighted_words": [
+        "Whip egg yolks and sugar together over heat"
+      ],
+      "source": "Reddit · r/FoodPorn"
+    },
+    {
+      "position": 25,
+      "title": "Creamsicle semifreddo, Graham cracker crust, Orange ...",
+      "link": "https://www.reddit.com/r/CulinaryPlating/comments/1er2s2o/creamsicle_semifreddo_graham_cracker_crust_orange/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/CulinaryPlating/comments/1er2s2o/creamsicle_semifreddo_graham_cracker_crust_orange/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECE8QAQ",
+      "displayed_link": "20+ comments · 8 months ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770f2c73a501ccbe6768732ef8813e8953c4.png",
+      "snippet": "Creamsicle semifreddo, Graham cracker crust, Orange crème anglaise, Peppermint leaf. New to plating desserts, all advice is welcome .",
+      "snippet_highlighted_words": [
+        "Creamsicle semifreddo"
+      ],
+      "source": "Reddit · r/CulinaryPlating"
+    },
+    {
+      "position": 26,
+      "title": "Lemon Curd Italiano Semifreddo : r/ShokugekiNoSoma",
+      "link": "https://www.reddit.com/r/ShokugekiNoSoma/comments/x4p2co/lemon_curd_italiano_semifreddo/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/ShokugekiNoSoma/comments/x4p2co/lemon_curd_italiano_semifreddo/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECEoQAQ",
+      "displayed_link": "10+ comments · 2 years ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770f60ccc590dc2d1b35946bbb6959aad061.png",
+      "snippet": "Combine the lemon curd, cream, powdered sugar, and lemon zest in a mixing bowl and mix it until doubled in size. Fold in the gelatin and add the nuts and ...",
+      "snippet_highlighted_words": [
+        "Combine the lemon curd, cream, powdered sugar, and lemon zest in a mixing bowl"
+      ],
+      "source": "Reddit · r/ShokugekiNoSoma"
+    },
+    {
+      "position": 27,
+      "title": "Semifreddo al pistacchio con caramello e croccante",
+      "link": "https://www.reddit.com/r/ItalianFood/comments/183xxru/semifreddo_al_pistacchio_con_caramello_e_croccante/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/ItalianFood/comments/183xxru/semifreddo_al_pistacchio_con_caramello_e_croccante/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECC4QAQ",
+      "displayed_link": "4 comments · 1 year ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770f5b692aace6663c6652ed84ab1e69a362.png",
+      "snippet": "First, I whisked four egg yolks with about 70 grams of sugar and a splash of warm water in a large bowl until smooth. I proceeded to add in two ...",
+      "snippet_highlighted_words": [
+        "whisked four egg yolks with about 70 grams of sugar"
+      ],
+      "source": "Reddit · r/ItalianFood"
+    },
+    {
+      "position": 28,
+      "title": "You can make iced cream at home without a machine or ...",
+      "link": "https://www.reddit.com/r/foodhacks/comments/c8g1z3/you_can_make_iced_cream_at_home_without_a_machine/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/foodhacks/comments/c8g1z3/you_can_make_iced_cream_at_home_without_a_machine/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECDEQAQ",
+      "displayed_link": "90+ comments · 5 years ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770ffeceb0883db26cb0d8416d87001870ab.png",
+      "snippet": "We like this recipe for home made ice cream ... Chef John from youtube has a few good semifreddo recipes. Upvote 1. Downvote Award Share.",
+      "snippet_highlighted_words": [
+        "Chef John from youtube has a few good semifreddo recipes"
+      ],
+      "source": "Reddit · r/foodhacks"
+    },
+    {
+      "position": 29,
+      "title": "Nutella Semifreddo Recipe : r/cookingvideos",
+      "link": "https://www.reddit.com/r/cookingvideos/comments/5v4kqg/nutella_semifreddo_recipe/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/cookingvideos/comments/5v4kqg/nutella_semifreddo_recipe/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECCwQAQ",
+      "displayed_link": "1 comment · 8 years ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770f7c21f766e91fcdace2192e66ea5d80a6.png",
+      "snippet": "A beautiful log of kind of ice cream drizzled with Nutella topped with some toasted hazel nuts and it is super easy to make.",
+      "source": "Reddit · r/cookingvideos"
+    },
+    {
+      "position": 30,
+      "title": "[Homemade] Strawberry Semifreddo : r/food",
+      "link": "https://www.reddit.com/r/food/comments/uwankd/homemade_strawberry_semifreddo/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/food/comments/uwankd/homemade_strawberry_semifreddo/&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQFnoECDAQAQ",
+      "displayed_link": "2 comments · 2 years ago",
+      "favicon": "https://serpapi.com/searches/67fe8a8efc67056a6401bc9f/images/ad06abf2e7e3d30d42c52bda3550770febb2c7a183483cce6b9f61b4ed3bbe39.png",
+      "snippet": "The title is a lie. The strawberry goes on the other side of the cake. The Semifred is the inside. I am making a ton of cake, ...",
+      "snippet_highlighted_words": [
+        "a"
+      ],
+      "source": "Reddit · r/food"
     }
   ],
   "related_searches": [
     {
       "block_position": 1,
-      "query": "Simple tomato sauce instant pot",
-      "link": "https://www.google.com/search?num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&q=Simple+tomato+sauce+instant+pot&sa=X&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ1QJ6BAgXEAE",
-      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=Simple+tomato+sauce+instant+pot"
+      "query": "Best semifreddo recipe reddit",
+      "link": "https://www.google.com/search?num=30&sca_esv=4f1f0cd305a72421&hl=en&gl=us&q=Best+semifreddo+recipe+reddit&sa=X&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQ1QJ6BAhGEAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Best+semifreddo+recipe+reddit"
     },
     {
       "block_position": 1,
-      "query": "Creamy tomato sauce instant pot",
-      "link": "https://www.google.com/search?num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&q=Creamy+tomato+sauce+instant+pot&sa=X&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ1QJ6BAgYEAE",
-      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=Creamy+tomato+sauce+instant+pot"
+      "query": "Honey semifreddo recipe reddit",
+      "link": "https://www.google.com/search?num=30&sca_esv=4f1f0cd305a72421&hl=en&gl=us&q=Honey+semifreddo+recipe+reddit&sa=X&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQ1QJ6BAhFEAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Honey+semifreddo+recipe+reddit"
     },
     {
       "block_position": 1,
-      "query": "Italian tomato sauce instant pot",
-      "link": "https://www.google.com/search?num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&q=Italian+tomato+sauce+instant+pot&sa=X&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ1QJ6BAgZEAE",
-      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=Italian+tomato+sauce+instant+pot"
+      "query": "Vanilla semifreddo recipe reddit",
+      "link": "https://www.google.com/search?num=30&sca_esv=4f1f0cd305a72421&hl=en&gl=us&q=Vanilla+semifreddo+recipe+reddit&sa=X&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQ1QJ6BAhBEAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Vanilla+semifreddo+recipe+reddit"
     },
     {
       "block_position": 1,
-      "query": "Best tomato sauce instant pot",
-      "link": "https://www.google.com/search?num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&q=Best+tomato+sauce+instant+pot&sa=X&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ1QJ6BAgWEAE",
-      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=Best+tomato+sauce+instant+pot"
+      "query": "Easy semifreddo recipe reddit",
+      "link": "https://www.google.com/search?num=30&sca_esv=4f1f0cd305a72421&hl=en&gl=us&q=Easy+semifreddo+recipe+reddit&sa=X&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQ1QJ6BAg1EAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Easy+semifreddo+recipe+reddit"
+    },
+    {
+      "block_position": 1,
+      "query": "Ice cream semifreddo recipe reddit",
+      "link": "https://www.google.com/search?num=30&sca_esv=4f1f0cd305a72421&hl=en&gl=us&q=Ice+cream+semifreddo+recipe+reddit&sa=X&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQ1QJ6BAgzEAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Ice+cream+semifreddo+recipe+reddit"
+    },
+    {
+      "block_position": 1,
+      "query": "Chocolate semifreddo recipe reddit",
+      "link": "https://www.google.com/search?num=30&sca_esv=4f1f0cd305a72421&hl=en&gl=us&q=Chocolate+semifreddo+recipe+reddit&sa=X&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQ1QJ6BAgrEAE",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Chocolate+semifreddo+recipe+reddit"
     }
   ],
   "pagination": {
     "current": 1,
-    "next": "https://www.google.com/search?q=tomato+sauce+instant+pot+site:reddit.com&num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&ei=X8T2Z9uLBqbcp84Pg9PRuQ4&start=2&sa=N&sstk=Af40H4XNFT3_zjtKrBnHI2I_Qcj7TTOXVTzqGytVrc7Sz8cDUItbz6V5l-N-JAq14gVTcS1rr9ER9Udj9I7ZBOkhicdKVA2aF2lACw&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ8NMDegQIChAW",
+    "next": "https://www.google.com/search?q=site:reddit.com+semifreddo+recipe+Reddit&num=30&sca_esv=4f1f0cd305a72421&hl=en&gl=us&ei=lIr-Z4DsBKaNwbkP5uS7gQM&start=30&sa=N&sstk=Af40H4Xn9RO1Vrd8uCvyM8hiSZDYekZPn1fyc6ZfdP4Lts3de33Y8JZphrGEzYVM-zV4kDJpITNgNng9Tu4DZKo33IK0oqERVzh8yA&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQ8NMDegQICRAW",
     "other_pages": {
-      "2": "https://www.google.com/search?q=tomato+sauce+instant+pot+site:reddit.com&num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&ei=X8T2Z9uLBqbcp84Pg9PRuQ4&start=2&sa=N&sstk=Af40H4XNFT3_zjtKrBnHI2I_Qcj7TTOXVTzqGytVrc7Sz8cDUItbz6V5l-N-JAq14gVTcS1rr9ER9Udj9I7ZBOkhicdKVA2aF2lACw&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ8tMDegQIChAE",
-      "3": "https://www.google.com/search?q=tomato+sauce+instant+pot+site:reddit.com&num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&ei=X8T2Z9uLBqbcp84Pg9PRuQ4&start=4&sa=N&sstk=Af40H4XNFT3_zjtKrBnHI2I_Qcj7TTOXVTzqGytVrc7Sz8cDUItbz6V5l-N-JAq14gVTcS1rr9ER9Udj9I7ZBOkhicdKVA2aF2lACw&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ8tMDegQIChAG",
-      "4": "https://www.google.com/search?q=tomato+sauce+instant+pot+site:reddit.com&num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&ei=X8T2Z9uLBqbcp84Pg9PRuQ4&start=6&sa=N&sstk=Af40H4XNFT3_zjtKrBnHI2I_Qcj7TTOXVTzqGytVrc7Sz8cDUItbz6V5l-N-JAq14gVTcS1rr9ER9Udj9I7ZBOkhicdKVA2aF2lACw&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ8tMDegQIChAI",
-      "5": "https://www.google.com/search?q=tomato+sauce+instant+pot+site:reddit.com&num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&ei=X8T2Z9uLBqbcp84Pg9PRuQ4&start=8&sa=N&sstk=Af40H4XNFT3_zjtKrBnHI2I_Qcj7TTOXVTzqGytVrc7Sz8cDUItbz6V5l-N-JAq14gVTcS1rr9ER9Udj9I7ZBOkhicdKVA2aF2lACw&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ8tMDegQIChAK",
-      "6": "https://www.google.com/search?q=tomato+sauce+instant+pot+site:reddit.com&num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&ei=X8T2Z9uLBqbcp84Pg9PRuQ4&start=10&sa=N&sstk=Af40H4XNFT3_zjtKrBnHI2I_Qcj7TTOXVTzqGytVrc7Sz8cDUItbz6V5l-N-JAq14gVTcS1rr9ER9Udj9I7ZBOkhicdKVA2aF2lACw&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ8tMDegQIChAM",
-      "7": "https://www.google.com/search?q=tomato+sauce+instant+pot+site:reddit.com&num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&ei=X8T2Z9uLBqbcp84Pg9PRuQ4&start=12&sa=N&sstk=Af40H4XNFT3_zjtKrBnHI2I_Qcj7TTOXVTzqGytVrc7Sz8cDUItbz6V5l-N-JAq14gVTcS1rr9ER9Udj9I7ZBOkhicdKVA2aF2lACw&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ8tMDegQIChAO",
-      "8": "https://www.google.com/search?q=tomato+sauce+instant+pot+site:reddit.com&num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&ei=X8T2Z9uLBqbcp84Pg9PRuQ4&start=14&sa=N&sstk=Af40H4XNFT3_zjtKrBnHI2I_Qcj7TTOXVTzqGytVrc7Sz8cDUItbz6V5l-N-JAq14gVTcS1rr9ER9Udj9I7ZBOkhicdKVA2aF2lACw&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ8tMDegQIChAQ",
-      "9": "https://www.google.com/search?q=tomato+sauce+instant+pot+site:reddit.com&num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&ei=X8T2Z9uLBqbcp84Pg9PRuQ4&start=16&sa=N&sstk=Af40H4XNFT3_zjtKrBnHI2I_Qcj7TTOXVTzqGytVrc7Sz8cDUItbz6V5l-N-JAq14gVTcS1rr9ER9Udj9I7ZBOkhicdKVA2aF2lACw&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ8tMDegQIChAS",
-      "10": "https://www.google.com/search?q=tomato+sauce+instant+pot+site:reddit.com&num=2&sca_esv=534ae1ae75709fc0&gl=us&hl=en&ei=X8T2Z9uLBqbcp84Pg9PRuQ4&start=18&sa=N&sstk=Af40H4XNFT3_zjtKrBnHI2I_Qcj7TTOXVTzqGytVrc7Sz8cDUItbz6V5l-N-JAq14gVTcS1rr9ER9Udj9I7ZBOkhicdKVA2aF2lACw&ved=2ahUKEwibt5Dv0cuMAxUm7skDHYNpNOcQ8tMDegQIChAU"
+      "2": "https://www.google.com/search?q=site:reddit.com+semifreddo+recipe+Reddit&num=30&sca_esv=4f1f0cd305a72421&hl=en&gl=us&ei=lIr-Z4DsBKaNwbkP5uS7gQM&start=30&sa=N&sstk=Af40H4Xn9RO1Vrd8uCvyM8hiSZDYekZPn1fyc6ZfdP4Lts3de33Y8JZphrGEzYVM-zV4kDJpITNgNng9Tu4DZKo33IK0oqERVzh8yA&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQ8tMDegQICRAE",
+      "3": "https://www.google.com/search?q=site:reddit.com+semifreddo+recipe+Reddit&num=30&sca_esv=4f1f0cd305a72421&hl=en&gl=us&ei=lIr-Z4DsBKaNwbkP5uS7gQM&start=60&sa=N&sstk=Af40H4Xn9RO1Vrd8uCvyM8hiSZDYekZPn1fyc6ZfdP4Lts3de33Y8JZphrGEzYVM-zV4kDJpITNgNng9Tu4DZKo33IK0oqERVzh8yA&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQ8tMDegQICRAG",
+      "4": "https://www.google.com/search?q=site:reddit.com+semifreddo+recipe+Reddit&num=30&sca_esv=4f1f0cd305a72421&hl=en&gl=us&ei=lIr-Z4DsBKaNwbkP5uS7gQM&start=90&sa=N&sstk=Af40H4Xn9RO1Vrd8uCvyM8hiSZDYekZPn1fyc6ZfdP4Lts3de33Y8JZphrGEzYVM-zV4kDJpITNgNng9Tu4DZKo33IK0oqERVzh8yA&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQ8tMDegQICRAI",
+      "5": "https://www.google.com/search?q=site:reddit.com+semifreddo+recipe+Reddit&num=30&sca_esv=4f1f0cd305a72421&hl=en&gl=us&ei=lIr-Z4DsBKaNwbkP5uS7gQM&start=120&sa=N&sstk=Af40H4Xn9RO1Vrd8uCvyM8hiSZDYekZPn1fyc6ZfdP4Lts3de33Y8JZphrGEzYVM-zV4kDJpITNgNng9Tu4DZKo33IK0oqERVzh8yA&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQ8tMDegQICRAK",
+      "6": "https://www.google.com/search?q=site:reddit.com+semifreddo+recipe+Reddit&num=30&sca_esv=4f1f0cd305a72421&hl=en&gl=us&ei=lIr-Z4DsBKaNwbkP5uS7gQM&start=150&sa=N&sstk=Af40H4Xn9RO1Vrd8uCvyM8hiSZDYekZPn1fyc6ZfdP4Lts3de33Y8JZphrGEzYVM-zV4kDJpITNgNng9Tu4DZKo33IK0oqERVzh8yA&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQ8tMDegQICRAM",
+      "7": "https://www.google.com/search?q=site:reddit.com+semifreddo+recipe+Reddit&num=30&sca_esv=4f1f0cd305a72421&hl=en&gl=us&ei=lIr-Z4DsBKaNwbkP5uS7gQM&start=180&sa=N&sstk=Af40H4Xn9RO1Vrd8uCvyM8hiSZDYekZPn1fyc6ZfdP4Lts3de33Y8JZphrGEzYVM-zV4kDJpITNgNng9Tu4DZKo33IK0oqERVzh8yA&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQ8tMDegQICRAO",
+      "8": "https://www.google.com/search?q=site:reddit.com+semifreddo+recipe+Reddit&num=30&sca_esv=4f1f0cd305a72421&hl=en&gl=us&ei=lIr-Z4DsBKaNwbkP5uS7gQM&start=210&sa=N&sstk=Af40H4Xn9RO1Vrd8uCvyM8hiSZDYekZPn1fyc6ZfdP4Lts3de33Y8JZphrGEzYVM-zV4kDJpITNgNng9Tu4DZKo33IK0oqERVzh8yA&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQ8tMDegQICRAQ",
+      "9": "https://www.google.com/search?q=site:reddit.com+semifreddo+recipe+Reddit&num=30&sca_esv=4f1f0cd305a72421&hl=en&gl=us&ei=lIr-Z4DsBKaNwbkP5uS7gQM&start=240&sa=N&sstk=Af40H4Xn9RO1Vrd8uCvyM8hiSZDYekZPn1fyc6ZfdP4Lts3de33Y8JZphrGEzYVM-zV4kDJpITNgNng9Tu4DZKo33IK0oqERVzh8yA&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQ8tMDegQICRAS",
+      "10": "https://www.google.com/search?q=site:reddit.com+semifreddo+recipe+Reddit&num=30&sca_esv=4f1f0cd305a72421&hl=en&gl=us&ei=lIr-Z4DsBKaNwbkP5uS7gQM&start=270&sa=N&sstk=Af40H4Xn9RO1Vrd8uCvyM8hiSZDYekZPn1fyc6ZfdP4Lts3de33Y8JZphrGEzYVM-zV4kDJpITNgNng9Tu4DZKo33IK0oqERVzh8yA&ved=2ahUKEwiAhqjwu9qMAxWmRjABHWbyLjAQ8tMDegQICRAU"
     }
   },
   "serpapi_pagination": {
     "current": 1,
-    "next_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=2",
-    "next": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=2",
+    "next_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+semifreddo+recipe+Reddit&start=30",
+    "next": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+semifreddo+recipe+Reddit&start=30",
     "other_pages": {
-      "2": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=2",
-      "3": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=4",
-      "4": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=6",
-      "5": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=8",
-      "6": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=10",
-      "7": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=12",
-      "8": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=14",
-      "9": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=16",
-      "10": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=2&q=tomato+sauce+instant+pot+site%3Areddit.com&start=18"
+      "2": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+semifreddo+recipe+Reddit&start=30",
+      "3": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+semifreddo+recipe+Reddit&start=60",
+      "4": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+semifreddo+recipe+Reddit&start=90",
+      "5": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+semifreddo+recipe+Reddit&start=120",
+      "6": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+semifreddo+recipe+Reddit&start=150",
+      "7": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+semifreddo+recipe+Reddit&start=180",
+      "8": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+semifreddo+recipe+Reddit&start=210",
+      "9": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+semifreddo+recipe+Reddit&start=240",
+      "10": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+semifreddo+recipe+Reddit&start=270"
     }
   }
 }

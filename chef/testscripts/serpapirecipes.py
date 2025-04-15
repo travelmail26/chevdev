@@ -27,7 +27,7 @@ def search_serpapi(query: str = "", site: str = "") -> Optional[Dict]:
         params = {
             "q": search_query,
             "hl": "en",
-            "num": 2,
+            "num": 30,
             "gl": "us",
             "api_key": "5dfc2b51a4c7d1866b5aca18c49f902cec425ca083affe953bfa5b0c9767de07"
         }
@@ -53,23 +53,28 @@ def search_serpapi(query: str = "", site: str = "") -> Optional[Dict]:
             logger.error(f"Failed to serialize results to JSON: {e}")
             # Continue execution if JSON serialization fails
 
+        final_result = []
+        if 'organic_results' in results:
+            print("\n=== results from serp api ===\n")
+            for idx, result in enumerate(results['organic_results'], 1):
+                print(f"{idx}. Title: {result.get('title', 'No title')}")
+                print(f"   URL: {result.get('link', 'No link')}")
+                print("-" * 60)
+        if 'organic_results' in results:
+            final_result = [{'title': result.get('title', 'No title'), 'link': result.get('link', 'No link')}
+                           for result in results['organic_results']]
+        else:
+            print("No organic results found in the API response.")
 
-        # Extract and format organic results
-        # if 'organic_results' in results:
-        #     print("\n=== results ===\n")
-        #     for idx, result in enumerate(results['organic_results'], 1):
-        #         print(f"{idx}. Title: {result.get('title', 'No title')}")
-        #         print(f"   URL: {result.get('link', 'No link')}")
-        #         print("-" * 60)
-
-        return results
+        print ('DEBUG: serp api results', final_result)
+        return final_result
 
     except Exception as e:
         logger.error(f"Error during recipe search: {e}")
         return None
 
 if __name__ == "__main__":
-    query = 'cookie recipe common mistakes'
+    query = 'site: reddit.com semifreddo recipe too hard'
     results = search_serpapi(query)
     
     if results is None:

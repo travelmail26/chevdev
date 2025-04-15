@@ -60,7 +60,7 @@ def perplexitycall(messages):
     data = {
         "model": "sonar-pro",
         "messages": messages,
-        "search_domain_filter": ["reddit.com"],
+        #"search_domain_filter": '',
         "stream": True
     }
 
@@ -110,7 +110,7 @@ if __name__ == "__main__":
         "role":
         "user",
         "content":
-        "search for cookie recipes"
+        "search why semifreddo recipe is too solid and not soft. cite names of sources"
     }]
     result = list(perplexitycall(test_messages))
     for item in result:
