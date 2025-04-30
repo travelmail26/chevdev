@@ -38,6 +38,14 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         user_id = update.message.from_user.id
         user_handler = get_user_handler(user_id)
+        
+        if update.message.audio or update.message.voice:
+            audio = update.message.audio or update.message.voice
+            file = await context.bot.get_file(audio.file_id)
+            audio_dir = "saved_audio"
+            os.makedirs(audio_dir, exist_ok=True)
+            local_path = f"{audio_dir}/{audio.file_id}.ogg"
+            await file.download_to_drive(local_path)
 
         if update.message.photo:
             photo = update.message.photo[-1]
@@ -146,6 +154,8 @@ def setup_bot() -> Application:
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     application.add_handler(MessageHandler(filters.PHOTO, handle_message))
     application.add_handler(MessageHandler(filters.VIDEO, handle_message))
+    application.add_handler(MessageHandler(filters.AUDIO | filters.VOICE, handle_message))  # Add this line
+
 
     return application
 
