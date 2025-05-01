@@ -7,7 +7,7 @@ import traceback
 from datetime import datetime
 import pytz
 from perplexity import perplexitycall
-from sheetscall import add_chatlog_entry, sheets_call, fetch_chatlog, task_create, fetch_preferences, fetch_recipes, update_task, fetch_sheet_data_rows
+from chef.utilities.sheetscall import add_chatlog_entry, sheets_call, fetch_chatlog, task_create, fetch_preferences, fetch_recipes, update_task, fetch_sheet_data_rows
 from firestore_chef import firestore_add_doc, firestore_get_docs_by_date_range
 from testscripts.serpapirecipes import search_serpapi
 #from testscripts.telegram_utilities import send_telegram_message
@@ -107,29 +107,29 @@ class AIHandler:
 
         # Load and append contents from each file
         try: 
-            with open(os.path.join(base_path, 'instructions_base.txt'), 'r') as file:
+            with open(os.path.join(base_path, 'utilities/instructions_base.txt'), 'r') as file:
                 system_content_parts.append("=== BASE DEFAULT INSTRUCTIONS ===\n" +
                                             file.read())
-            # with open(os.path.join(base_path, 'instructions_recipe.txt'), 'r') as file:
+            # with open(os.path.join(base_path, 'utilities/instructions_recipe.txt'), 'r') as file:
             #     system_content_parts.append("=== BASE DEFAULT INSTRUCTIONS ===\n" +
             #                                 file.read())
-            # with open('reporter/chef/instructions_diet_logistics.txt','r') as file:
+            # with open('reporter/chef/utilities/instructions_diet_logistics.txt','r') as file:
             #     system_content_parts.append(
             #         "=== DIET LOGISTICS INSTRUCTIONS ===\n" + file.read())
-            # with open(os.path.join(base_path, 'instructions_brainstorm.txt'), 'r') as file:
+            # with open(os.path.join(base_path, 'utilities/instructions_brainstorm.txt'), 'r') as file:
             #     system_content_parts.append("=== BRAINSTORM INSTRUCTIONS ===\n" +
             #                                 file.read())
-            # with open('reporter/chef/exploring_additional_instructions.txt',
+            # with open('reporter/chef/utilities/exploring_additional_instructions.txt',
             #           'r') as file:
             #     system_content_parts.append(
             #         "=== EXPLORING ADDITIONAL INSTRUCTIONS ===\n" + file.read())
-            # with open(os.path.join(base_path, 'instructions_log.txt'), 'r') as file:
+            # with open(os.path.join(base_path, 'utilities/instructions_log.txt'), 'r') as file:
             #     system_content_parts.append(
             #         "=== LOGGING ADDITIONAL INSTRUCTIONS ===\n" + file.read())
-            # with open('reporter/chef/instructions_mealplan.txt', 'r') as file:
+            # with open('reporter/chef/utilities/instructions_mealplan.txt', 'r') as file:
             #     system_content_parts.append(
             #         "=== MEAL PLAN ADDITIONAL INSTRUCTIONS ===\n" + file.read())
-            # with open('reporter/chef/instructions_spiritual.txt', 'r') as file:
+            # with open('reporter/chef/utilities/instructions_spiritual.txt', 'r') as file:
             #     system_content_parts.append("=== SPIRITUAL INSTRUCTIONS ===\n" + file.read())
 
             combined_content = "\n\n".join(system_content_parts)
@@ -391,14 +391,12 @@ class AIHandler:
                                 "Unique identifier. Should be 12 digits from current time year month day hour minute second"
                             },
                             "date": {
-                                "type":
-                                "string",
+                                "type": "string",
                                 "description":
                                 "Date of task creation in ISO format"
                             },
                             "title": {
-                                "type":
-                                "string",
+                                "type": "string",
                                 "description":
                                 "Summarize 2-4 word title from description"
                             },
@@ -838,6 +836,8 @@ class AIHandler:
                         'choices'][0]['message']
                     self.messages.append(final_assistant_message)
                     return final_assistant_message.get(
+                        'content', 'No content in response.')
+                
                         'content', 'No content in response.')
                 
                 #recipes fetch

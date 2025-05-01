@@ -15,6 +15,7 @@ from telegram.ext import (
 
 # Import AIHandler again
 from chefwriter import AIHandler
+from firebase import firebase_get_media_url # Add this import back
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -38,8 +39,8 @@ handlers_per_user = {}
 
 def get_user_handler(user_id, application_data, session_info):
     if user_id not in handlers_per_user:
-        # Pass session_info to AIHandler constructor
-        handlers_per_user[user_id] = AIHandler(user_id=user_id, application=application_data, session_info=session_info)
+        # Remove the 'session_info' argument from the AIHandler initialization
+        handlers_per_user[user_id] = AIHandler(user_id=user_id, application=application_data)
         print(f"DEBUG: Created new AIHandler for user {user_id}")
     return handlers_per_user[user_id]
 
@@ -65,23 +66,33 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Pass session_info to get_user_handler
         user_handler = get_user_handler(user_id, application_data, session_info)
 
-        user_input = ""
-        if update.message.photo:
+        user_input = "" # Initialize user_input
+
+        if update.message.audio or update.message.voice:
+            # Handle audio or voice messages
+            audio = update.message.audio or update.message.voice
+            file = await context.bot.get_file(audio.file_id)
+            audio_dir = "saved_audio"
+            os.makedirs(audio_dir, exist_ok=True)
+            local_path = f"{audio_dir}/{audio.file_id}.ogg"
+            print(f"DEBUG: Downloading audio file to {local_path}")
+            await file.download_to_drive(local_path)
+            # Set input for agentchat, transcription/analysis happens there
+            user_input = f"[Audio received: {local_path}]"
+            # Optional: Acknowledge receipt immediately if processing might take time
+            # await update.message.reply_text("Processing audio...")
+
+        elif update.message.photo:
             photo = update.message.photo[-1]
             file = await context.bot.get_file(photo.file_id)
             photo_dir = "saved_photos"
             os.makedirs(photo_dir, exist_ok=True)
             local_path = f"{photo_dir}/{photo.file_id}.jpg"
             await file.download_to_drive(local_path)
-
             firebase_url = firebase_get_media_url(local_path)
             user_input = f"[Photo received: {firebase_url}]"
-            response = user_handler.agentchat(user_input)
-
-            await update.message.reply_text("Photo processed successfully!")
-            if response:
-                await update.message.reply_text(response)
-            return
+            # Optional: Acknowledge receipt
+            # await update.message.reply_text("Processing photo...")
 
         elif update.message.video:
             video = update.message.video
@@ -90,43 +101,58 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             os.makedirs(video_dir, exist_ok=True)
             local_path = f"{video_dir}/{video.file_id}.mp4"
             await file.download_to_drive(local_path)
-
             firebase_url = firebase_get_media_url(local_path)
             user_input = f"[Video received: {firebase_url}]"
-            response = user_handler.agentchat(user_input)
+            # Optional: Acknowledge receipt
+            # await update.message.reply_text("Processing video...")
 
-            await update.message.reply_text("Video processed successfully!")
-            if response:
-                await update.message.reply_text(response)
-            return
-
-        else:
+        else: # Text messages
             user_input = update.message.text or ""
+            # Check for empty text *only* in this block
+            if not user_input.strip():
+                await update.message.reply_text("I received an empty message. Please send text!")
+                return # Return only if text is empty
 
-        if not user_input.strip():
-            await update.message.reply_text("I received an empty message. Please send text or media!")
-            return
+        # If user_input is still empty here, it means no handler matched or an issue occurred.
+        if not user_input:
+             logging.warning("handle_message reached agentchat call with no user_input set.")
+             # Avoid sending a message if the initial message was empty text (already handled)
+             if not (update.message.text is not None and not update.message.text.strip()):
+                 await update.message.reply_text("Could not process the message type.")
+             return
 
-        response_generator = user_handler.agentchat(user_input)
+        # Centralized call to agentchat and response handling for all types
+        response = user_handler.agentchat(user_input)
 
-        buffer = ""
-        async for chunk in response_generator:
-            if chunk and isinstance(chunk, str) and chunk.strip():
-                buffer += chunk
-                while len(buffer) >= 300:
-                    message_part = buffer[:300]
-                    try:
-                        await update.message.reply_text(message_part)
-                        buffer = buffer[300:]
-                    except Exception as telegram_error:
-                        logging.error(f"Telegram API error sending chunk: {telegram_error}")
-                        break
 
-        if buffer.strip():
-            try:
-                await update.message.reply_text(buffer)
-            except Exception as telegram_error:
-                logging.error(f"Telegram API error sending final buffer: {telegram_error}")
+        print (f"DEBUG telegram_bot: User {user_id} input: {user_input}")
+        print (f"DEBUG telegram_bot: User {user_id} response: {response}")
+
+        yield response
+        
+        ##buffer and send message
+
+        # buffer = ""
+        # # Process the response generator (synchronous logic)
+        # for chunk in response:
+        #     if chunk and isinstance(chunk, str) and chunk.strip():
+        #         buffer += chunk
+        #         # Send message parts when buffer reaches a certain size
+        #         while len(buffer) >= 300: # Example threshold
+        #             message_part = buffer[:300]
+        #             try:
+        #                 await update.message.reply_text(message_part)
+        #                 buffer = buffer[300:]
+        #             except Exception as telegram_error:
+        #                 logging.error(f"Telegram API error sending chunk: {telegram_error}")
+        #                 break # Exit the inner while loop on error
+
+        # # Send any remaining part in the buffer
+        # if buffer.strip():
+        #     try:
+        #         await update.message.reply_text(buffer)
+        #     except Exception as telegram_error:
+        #         logging.error(f"Telegram API error sending final buffer: {telegram_error}")
 
     except Exception as e:
         error_message = f"Error in handle_message: {e}\n{traceback.format_exc()}"
@@ -157,9 +183,14 @@ def setup_bot() -> Application:
 
     try: 
         if environment == 'development':
+            print ('DEBUG: Production environment detected')
             token = os.getenv('TELEGRAM_DEV_KEY')
+            print(f"DEBUG: Using TELEGRAM_DEV_KEY: {token}")
+
+
         else:
             token = os.getenv('TELEGRAM_KEY')
+            print(f"DEBUG: Using TELEGRAM_KEY: {token}")
     except Exception as e:
         print(f"Error loading env.production variables: {e}")
         logging.error(f"Error loading env.production variables: {e}")
@@ -175,6 +206,8 @@ def setup_bot() -> Application:
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     application.add_handler(MessageHandler(filters.PHOTO, handle_message))
     application.add_handler(MessageHandler(filters.VIDEO, handle_message))
+    application.add_handler(MessageHandler(filters.AUDIO | filters.VOICE, handle_message))  # Add this line
+
 
     return application
 

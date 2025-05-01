@@ -2,7 +2,7 @@
 import json
 import os
 import sys
-from sheetscall import add_chatlog_entry
+from chef.utilities.sheetscall import add_chatlog_entry
 import requests
 
 

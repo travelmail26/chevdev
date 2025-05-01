@@ -21,7 +21,12 @@ def search_perplexity(query: str):
     messages = [
         {
             "role": "system",
-            "content": """NEVER say you do not have access to search or browse a specific website. You will search for what the user asks. Return the full citations and bibliography for each result. Always paste the full URL link in every citation. Provide at least one direct quote when citing a source."""
+            "content": """
+            **CRITICAL INSTRUCTION:** For each source you cite, you **MUST** include: --At least one direct quote (a few words minimum) from that source that directly supports the information you are providing. Integrate this quote naturally into your response.
+            --NEVER say you do not have access to search or browse a specific website. 
+            --**ALWAYS** paste the full URL link in every citation. 
+            --**CRITICAL**-- Provide at least one direct quote when citing a source. ALWAYS quote at least a few words from each citation,  \
+                directly relevant to your summary of why you chose this citation."""
         },
         {
             "role": "user",
@@ -49,7 +54,7 @@ def search_perplexity(query: str):
         response.raise_for_status() # Raise an exception for bad status codes (4xx or 5xx)
 
         response_data = response.json()
-        print(f"**DEBUG: Perplexity API Response Data:**\n{json.dumps(response_data, indent=2)}") # Debugging output
+        #print(f"**DEBUG: Perplexity API Response Data:**\n{json.dumps(response_data, indent=2)}") # Debugging output
 
         # Extract content and citations
         content = ""
@@ -58,21 +63,12 @@ def search_perplexity(query: str):
         if 'choices' in response_data and len(response_data['choices']) > 0:
             message = response_data['choices'][0].get('message', {})
             content = message.get('content', '')
-            # Perplexity API might include citations differently in non-streamed responses,
-            # often embedded within the content or in a separate field. Adjust based on actual API structure.
-            # For now, assuming citations might be part of the content or need specific parsing.
-            # If the API has a dedicated 'citations' field in the response, use that.
-            # Example: citations = response_data.get('citations', [])
+            citations = response_data.get('citations', [])
+            structured_citations = [{"index": i + 1, "url": url} for i, url in enumerate(citations)]
 
-        # Basic citation handling (if they are appended manually or need extraction)
-        # This part might need refinement based on how the 'sonar-medium-online' model returns citations non-streamed.
-        # If citations are embedded like "[1]", "[2]", etc., they are already in 'content'.
-        # If there's a separate citation structure, parse it here.
-
-        # For simplicity, returning the main content for now.
-        # Add explicit citation formatting if needed based on API response structure.
-
-        return content
+        print(f"**DEBUG: Perplexity API Content:**\n{content}, **DEBUG: Perplexity API Citations:**\n{structured_citations}") # Debugging output
+        return {"content": content, "citations": structured_citations} # Debugging output
+        return {"content": content, "citations": enumerated_citations}
 
     except requests.exceptions.RequestException as e:
         print(f"Error calling Perplexity API: {e}")
@@ -91,17 +87,11 @@ def search_perplexity(query: str):
 
 
 if __name__ == "__main__":
-    test_query = "search why semifreddo recipe is too solid and not soft. cite names of sources"
+    test_query = "I want to make a semifreddo that is thick and rich. how should I change the recipe?"
     print(f"Testing Perplexity with query: '{test_query}'")
     result = search_perplexity(test_query)
     print("\n--- Perplexity Result ---")
     print(result)
     print("------------------------")
 
-    test_query_2 = "latest news on AI advancements"
-    print(f"\nTesting Perplexity with query: '{test_query_2}'")
-    result_2 = search_perplexity(test_query_2)
-    print("\n--- Perplexity Result ---")
-    print(result_2)
-    print("------------------------")
 

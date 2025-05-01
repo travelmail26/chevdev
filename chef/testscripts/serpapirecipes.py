@@ -54,19 +54,21 @@ def search_serpapi(query: str = "", site: str = "") -> Optional[Dict]:
             # Continue execution if JSON serialization fails
 
         final_result = []
-        if 'organic_results' in results:
-            print("\n=== results from serp api ===\n")
-            for idx, result in enumerate(results['organic_results'], 1):
-                print(f"{idx}. Title: {result.get('title', 'No title')}")
-                print(f"   URL: {result.get('link', 'No link')}")
-                print("-" * 60)
+
+        # if 'organic_results' in results:
+        #     print("\n=== results from serp api ===\n")
+        #     for idx, result in enumerate(results['organic_results'], 1):
+        #         print(f"{idx}. Title: {result.get('title', 'No title')}")
+        #         print(f"   URL: {result.get('link', 'No link')}")
+        #         print("-" * 60)
         if 'organic_results' in results:
             final_result = [{'title': result.get('title', 'No title'), 'link': result.get('link', 'No link')}
                            for result in results['organic_results']]
         else:
             print("No organic results found in the API response.")
+            final_result = []
 
-        print ('DEBUG: serp api results', final_result)
+        #print ('DEBUG: serp api results', final_result)
         return final_result
 
     except Exception as e:

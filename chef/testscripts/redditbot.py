@@ -247,7 +247,7 @@ if __name__ == "__main__":
          # exit(1) # Optional
 
     # Test instruction - replace with your desired test
-    test_instruction = "Summarize this post: https://www.reddit.com/r/Baking/comments/14meyc0/whats_your_best_cookie_recipe/"
+    searruction = "Summarize this post: https://www.reddit.com/r/Baking/comments/14meyc0/whats_your_best_cookie_recipe/"
     result = reddit_agent(test_instruction)
     print("Test Result:", result)
 
