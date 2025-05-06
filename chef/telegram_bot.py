@@ -122,13 +122,14 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
              return
 
         # Centralized call to agentchat and response handling for all types
+        #status user handler class agent chat rather than passing the message
         response = user_handler.agentchat(user_input)
 
 
         print (f"DEBUG telegram_bot: User {user_id} input: {user_input}")
         print (f"DEBUG telegram_bot: User {user_id} response: {response}")
 
-        yield response
+        return response
         
         ##buffer and send message
 

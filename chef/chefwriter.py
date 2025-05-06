@@ -1,5 +1,7 @@
 import json
 import os
+import sys
+sys.path.append('/workspaces/chevdev')
 
 import requests
 import traceback
@@ -107,7 +109,14 @@ class AIHandler:
 
         # Load and append contents from each file
         try: 
-            with open(os.path.join(base_path, 'utilities/instructions_base.txt'), 'r') as file:
+            # Debugging: Print base_path and constructed file path
+
+            print (f"DEBUG: Base path: {base_path}")
+            
+            print(f"DEBUG: Attempting to open file at: {os.path.join(base_path, 'utilities/instructions/instructions_base.txt')}")
+
+
+            with open(os.path.join(base_path, 'utilities/instructions/instructions_base.txt'), 'r') as file:
                 system_content_parts.append("=== BASE DEFAULT INSTRUCTIONS ===\n" +
                                             file.read())
             # with open(os.path.join(base_path, 'utilities/instructions_recipe.txt'), 'r') as file:
@@ -838,7 +847,6 @@ class AIHandler:
                     return final_assistant_message.get(
                         'content', 'No content in response.')
                 
-                        'content', 'No content in response.')
                 
                 #recipes fetch
                 elif function_name == 'fetch_recipes':
