@@ -1,0 +1,36 @@
+[
+    {
+        "type": "function",
+        "function": {
+            "name": "search_serpapi",
+            "description": "Triggered upon one of a few conditions...",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "site": { "type": "string", "description": "Specific site to search" },
+                    "query": { "type": "string", "description": "verbatim search query..." }
+                },
+                "required": ["query"]
+            }
+        }
+    },
+
+    {
+        "type": "function",
+        "function": {
+            "name": "perplexitycall",
+            "description":
+            "Trigger when a user asks to Browse for an answer. Keyword browse should trigger this function. Then fill in the parameter with the user's query vebatim.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "The user's query to search for"
+                    }
+                },
+                "required": ["query"]
+            }
+        }
+    }
+]

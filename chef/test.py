@@ -1,8 +1,89 @@
 
-import os
 
 
-print (os.environ.get('OPENAI_API_KEY_2'))
+import requests
+import re # For extracting the token
+
+def extract_token(application_string):
+    """Extracts the bot token from the application string."""
+    match = re.search(r"token='([^']*)'", application_string)
+    if match:
+        return match.group(1)
+    return None
+
+def send_telegram_message(chat_id, token, message_text):
+    """Sends a message to a Telegram user synchronously."""
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    payload = {
+        'chat_id': chat_id,
+        'text': message_text
+    }
+    try:
+        response = requests.post(url, data=payload)
+        response.raise_for_status()  # Raises an HTTPError for bad responses (4XX or 5XX)
+        print(f"Message sent successfully to chat_id {chat_id}.")
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error sending message: {e}")
+        if hasattr(e, 'response') and e.response is not None:
+            print(f"Response content: {e.response.text}")
+        return None
+
+# Provided message object
+message_object = {
+    'user_id': 1275063227,
+    'application': "Application[bot=ExtBot[token='8081302314:AAHLAeYPVNVI1r9Z5C1lvM-H4iE2moKIvOE']]",
+    'session_info': {
+        'user_id': 1275063227,
+        'chat_id': 1275063227,
+        'message_id': 1531,
+        'timestamp': 1746465955.0,
+        'username': 'ferenstein',
+        'first_name': 'Greg',
+        'last_name': 'Ferenstein'
+    },
+    'user_message': 'search perplexity for cookie recipes'
+}
+
+if __name__ == "__main__":
+    # Extract necessary information
+    chat_id_to_send = message_object['session_info']['chat_id']
+    bot_token = extract_token(message_object['application'])
+    message_to_send = f"Replying to: '{message_object['user_message']}'" # Or any other message
+
+    if not bot_token:
+        print("Could not extract bot token from message_object.")
+    else:
+        print(f"Attempting to send message to chat_id: {chat_id_to_send}")
+        print(f"Using bot_token: ...{bot_token[-6:]}") # Print last 6 chars for verification
+        print(f"Message content: {message_to_send}")
+
+        # Send the message multiple times
+        for i in range(35):
+            print(f"\nSending message attempt {i+1}/15...")
+            api_response = send_telegram_message(chat_id_to_send, bot_token, f"({i+1}/15) {message_to_send}")
+
+            if api_response:
+                print(f"Telegram API Response (Attempt {i+1}):", api_response)
+            else:
+                print(f"Failed to send message (Attempt {i+1}).")
+
+
+# import os
+# from message_router import MessageRouter
+
+# # Initialize the MessageRouter
+# router = MessageRouter()
+
+# # Test dictionary object
+# message_object = {'user_id': 1275063227, 'application': 'Application[bot=ExtBot[token=\'8081302314:AAHLAeYPVNVI1r9Z5C1lvM-H4iE2moKIvOE\']]', 'session_info': {'user_id': 1275063227, 'chat_id': 1275063227, 'message_id': 1531, 'timestamp': 1746465955.0, 'username': 'ferenstein', 'first_name': 'Greg', 'last_name': 'Ferenstein'}, 'user_message': 'search perplexity for cookie recipes'}
+
+# # Call route_message with only the message_object
+# response = router.route_message(message_object=message_object)
+
+# print("Response:", response)
+
+#print (os.environ.get('OPENAI_API_KEY_2'))
 
 # import logging
 

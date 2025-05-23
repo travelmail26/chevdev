@@ -1,17 +1,17 @@
 {
   "search_metadata": {
-    "id": "68090d7972c8dab40e2b2c18",
+    "id": "6830b8903d34dd9fe94e2e3c",
     "status": "Success",
-    "json_endpoint": "https://serpapi.com/searches/b8420a34980f8fde/68090d7972c8dab40e2b2c18.json",
-    "created_at": "2025-04-23 15:55:37 UTC",
-    "processed_at": "2025-04-23 15:55:37 UTC",
-    "google_url": "https://www.google.com/search?q=site%3Areddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe%3F&oq=site%3Areddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe%3F&hl=en&gl=us&num=30&sourceid=chrome&ie=UTF-8",
-    "raw_html_file": "https://serpapi.com/searches/b8420a34980f8fde/68090d7972c8dab40e2b2c18.html",
-    "total_time_taken": 1.7
+    "json_endpoint": "https://serpapi.com/searches/a80c570e4e9b8017/6830b8903d34dd9fe94e2e3c.json",
+    "created_at": "2025-05-23 18:04:00 UTC",
+    "processed_at": "2025-05-23 18:04:00 UTC",
+    "google_url": "https://www.google.com/search?q=best+cookie+recipes&oq=best+cookie+recipes&hl=en&gl=us&num=30&sourceid=chrome&ie=UTF-8",
+    "raw_html_file": "https://serpapi.com/searches/a80c570e4e9b8017/6830b8903d34dd9fe94e2e3c.html",
+    "total_time_taken": 2.69
   },
   "search_parameters": {
     "engine": "google",
-    "q": "site:reddit.com I want to make a semifreddo that is thick and rich. how should I change the recipe?",
+    "q": "best cookie recipes",
     "google_domain": "google.com",
     "hl": "en",
     "gl": "us",
@@ -19,454 +19,784 @@
     "device": "desktop"
   },
   "search_information": {
-    "query_displayed": "site:reddit.com I want to make a semifreddo that is thick and rich. how should I change the recipe?",
-    "total_results": 21,
-    "time_taken_displayed": 0.28,
+    "query_displayed": "best cookie recipes",
+    "total_results": 515000000,
+    "time_taken_displayed": 0.55,
     "organic_results_state": "Results for exact spelling"
   },
-  "inline_images": [
+  "related_questions": [
     {
-      "source": "https://www.reddit.com/r/ShokugekiNoSoma/comments/1hrmhiv/mimasakas_semifreddo/",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvg_8kmfFelo5rCpDMiof_8hyCZCQo89aYArZUpHfUPuc8Q-pNoAd0h9s&s",
-      "original": "https://preview.redd.it/mimasakas-semifreddo-v0-gqmlt6ddmiae1.jpeg?auto=webp&s=bccc92ec70371c866e07c4acf199896bbcd3112b",
-      "title": "Mimasaka's Semifreddo : r/ShokugekiNoSoma",
-      "source_name": "Reddit"
+      "question": "What is the #1 cookie in the US?",
+      "snippet": "The chocolate chip cookie is far and away America's favorite cookie This should come as no surprise to anyone who enjoys the tasty treat. More than 53% of American adults prefer the cookies over the next most popular kind, peanut butter.",
+      "title": "chocolate chip cookie",
+      "date": "Feb 24, 2016",
+      "link": "https://thecravory.com/blogs/the-cravory-the-ultimate-cookie-experience-1/123677505-fun-facts-about-americas-favorite-cookie#:~:text=The%20chocolate%20chip%20cookie%20is,most%20popular%20kind%2C%20peanut%20butter.",
+      "displayed_link": "https://thecravory.com › blogs › 123677505-fun-facts-a...",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqMCREtO9lXsfN8zeaKYOPfIV-X6j_uk0X1J7HxJhsdg&s",
+      "source_logo": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/384678969bf460af70f8a874b9e61aae9febce9b1d7d8ca5d0865b372e3c0cd8.png",
+      "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUR3QwWDNaR2JUaDZOMmhqVkhFMldtdFZkek5KWmt0U1JGcGhPVXRSTlZreVdYZDJPSEU0VFd0bmFVTkVNR05HTmtSa2VFRnlRM0I1WWpGVExVMUhSMnRMY1RCcmMzYzRiakl3YUhFNFFsWjJaakJ3U2toWldrUmZiRlJhWW5Sd1p4SVdhMkpuZDJGUFV6bE5UbXByTW5KdlVHdEpTMWRUVVJvaVFVWk5RVWRIY1RKQlZWbDJhalZLT1RGclZtUklaSGRFYkhsbVUxTXRjbmd0WnciLCJmY3YiOiIzIiwiZWkiOiJrYmd3YU9TOU1Oamsycm9Qa0lLV1NRIiwicWMiOiJDaE5pWlhOMElHTnZiMnRwWlNCeVpXTnBjR1Z6RUFCOTZTWVJQdyIsInF1ZXN0aW9uIjoiV2hhdCBpcyB0aGUgIzEgY29va2llIGluIHRoZSBVUz8iLCJsayI6ImM1T1NMODlJTEZISUxGWW95VWhWVURaVVNNN1B6ODVNVmNqTUF3dVVGZ01BIiwiYnMiOiJjLVB5NEZJSXowZ3NVY2dzVmlqSlNGVlFObFJJenNfUHpreFZ5TXdEQzRRRzIwdk1sakpTbEpJdng2ZXN0SmdyaUVzVlpsSndYbjUtZ1lKTGZucTZlckZDV21KWmZsRm1TU3BVaDcxRXM3eVJtcFFLekxoaXNOb1VyR3E1WExoVWtGMVhuSnBjbEZxaVVKS3ZrSnVmV1Z3Q1ZWVnNMN0hYeDBoU1NoeUhORmNDbHc3WWxNU2lWSVhBMHRUVVBBWFhuTXlxeEtUVWtneE1PNEdtcmM4eDBwWFNMb2RwS1FSclNjV2pSWUFSQUEiLCJpZCI6ImZjX2tiZ3dhT1M5TU5qazJyb1BrSUtXU1FfMyJ9",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUR3QwWDNaR2JUaDZOMmhqVkhFMldtdFZkek5KWmt0U1JGcGhPVXRSTlZreVdYZDJPSEU0VFd0bmFVTkVNR05HTmtSa2VFRnlRM0I1WWpGVExVMUhSMnRMY1RCcmMzYzRiakl3YUhFNFFsWjJaakJ3U2toWldrUmZiRlJhWW5Sd1p4SVdhMkpuZDJGUFV6bE5UbXByTW5KdlVHdEpTMWRUVVJvaVFVWk5RVWRIY1RKQlZWbDJhalZLT1RGclZtUklaSGRFYkhsbVUxTXRjbmd0WnciLCJmY3YiOiIzIiwiZWkiOiJrYmd3YU9TOU1Oamsycm9Qa0lLV1NRIiwicWMiOiJDaE5pWlhOMElHTnZiMnRwWlNCeVpXTnBjR1Z6RUFCOTZTWVJQdyIsInF1ZXN0aW9uIjoiV2hhdCBpcyB0aGUgIzEgY29va2llIGluIHRoZSBVUz8iLCJsayI6ImM1T1NMODlJTEZISUxGWW95VWhWVURaVVNNN1B6ODVNVmNqTUF3dVVGZ01BIiwiYnMiOiJjLVB5NEZJSXowZ3NVY2dzVmlqSlNGVlFObFJJenNfUHpreFZ5TXdEQzRRRzIwdk1sakpTbEpJdng2ZXN0SmdyaUVzVlpsSndYbjUtZ1lKTGZucTZlckZDV21KWmZsRm1TU3BVaDcxRXM3eVJtcFFLekxoaXNOb1VyR3E1WExoVWtGMVhuSnBjbEZxaVVKS3ZrSnVmV1Z3Q1ZWVnNMN0hYeDBoU1NoeUhORmNDbHc3WWxNU2lWSVhBMHRUVVBBWFhuTXlxeEtUVWtneE1PNEdtcmM4eDBwWFNMb2RwS1FSclNjV2pSWUFSQUEiLCJpZCI6ImZjX2tiZ3dhT1M5TU5qazJyb1BrSUtXU1FfMyJ9"
     },
     {
-      "source": "https://www.reddit.com/r/aldi/comments/ybwcfo/i_finally_made_this_months_after_buying_it_it_is/",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX8fetsbzpQAwU7H4N3MfRd5iFk9EHn91gpOumRmDezDMAhc0kDXd5ckQ&s",
-      "original": "https://i.redd.it/0qld3ttm5nv91.jpg",
-      "title": "I finally made this months after buying it. It is the ...",
-      "source_name": "Reddit"
+      "question": "What is Snoop Dogg's favorite cookie?",
+      "snippet": "They are called Snoop Dogg's Rolls Royce PB-Chocolate Chip cookies. Let me tell you, I ate 4 of these cookies, they are so addicting. They are so crispy in a very light kind of way. so flavorful I can't say enough. But that you need to try them. Hope you enjoyed the video, I will see you tommorrow.",
+      "title": "Snoop Dogg's Rolls Royce PB-Chocolate Chip Cookies Vlogmas 2022 Day 6 - YouTube",
+      "date": "Dec 6, 2022",
+      "link": "https://www.youtube.com/watch?v=_UILmXFSIRI",
+      "displayed_link": "https://www.youtube.com › watch",
+      "source_logo": null,
+      "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUR3QwWDNaR2JUaDZOMmhqVkhFMldtdFZkek5KWmt0U1JGcGhPVXRSTlZreVdYZDJPSEU0VFd0bmFVTkVNR05HTmtSa2VFRnlRM0I1WWpGVExVMUhSMnRMY1RCcmMzYzRiakl3YUhFNFFsWjJaakJ3U2toWldrUmZiRlJhWW5Sd1p4SVdhMkpuZDJGUFV6bE5UbXByTW5KdlVHdEpTMWRUVVJvaVFVWk5RVWRIY1RKQlZWbDJhalZLT1RGclZtUklaSGRFYkhsbVUxTXRjbmd0WnciLCJmY3YiOiIzIiwiZWkiOiJrYmd3YU9TOU1Oamsycm9Qa0lLV1NRIiwicWMiOiJDaE5pWlhOMElHTnZiMnRwWlNCeVpXTnBjR1Z6RUFCOTZTWVJQdyIsInF1ZXN0aW9uIjoiV2hhdCBpcyBTbm9vcCBEb2dnJ3MgZmF2b3JpdGUgY29va2llPyIsImxrIjoiR2lSM2FHRjBJR2x6SUhOdWIyOXdJR1J2WjJjbmN5Qm1ZWFp2Y21sMFpTQmpiMjlyYVdVIiwiYnMiOiJjLVB5NEZJSXowZ3NVY2dzVmlqSlNGVlFObFJJenNfUHpreFZ5TXdEQzRRRzIwdk1sakpTbEpJdng2ZXN0SmdyaUVzVlpsSndYbjUtZ1lKTGZucTZlckZDV21KWmZsRm1TU3BVaDcxRXM3eVJtcFFLekxoaXNOb1VyR3E1WExoVWtGMVhuSnBjbEZxaVVKS3ZrSnVmV1Z3Q1ZWVnNMN0hYeDBoU1NoeUhORmNDbHc3WWxNU2lWSVhBMHRUVVBBWFhuTXlxeEtUVWtneE1PNEdtcmM4eDBwWFNMb2RwS1FSclNjV2pSWUFSQUEiLCJpZCI6ImZjX2tiZ3dhT1M5TU5qazJyb1BrSUtXU1FfMyJ9",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUR3QwWDNaR2JUaDZOMmhqVkhFMldtdFZkek5KWmt0U1JGcGhPVXRSTlZreVdYZDJPSEU0VFd0bmFVTkVNR05HTmtSa2VFRnlRM0I1WWpGVExVMUhSMnRMY1RCcmMzYzRiakl3YUhFNFFsWjJaakJ3U2toWldrUmZiRlJhWW5Sd1p4SVdhMkpuZDJGUFV6bE5UbXByTW5KdlVHdEpTMWRUVVJvaVFVWk5RVWRIY1RKQlZWbDJhalZLT1RGclZtUklaSGRFYkhsbVUxTXRjbmd0WnciLCJmY3YiOiIzIiwiZWkiOiJrYmd3YU9TOU1Oamsycm9Qa0lLV1NRIiwicWMiOiJDaE5pWlhOMElHTnZiMnRwWlNCeVpXTnBjR1Z6RUFCOTZTWVJQdyIsInF1ZXN0aW9uIjoiV2hhdCBpcyBTbm9vcCBEb2dnJ3MgZmF2b3JpdGUgY29va2llPyIsImxrIjoiR2lSM2FHRjBJR2x6SUhOdWIyOXdJR1J2WjJjbmN5Qm1ZWFp2Y21sMFpTQmpiMjlyYVdVIiwiYnMiOiJjLVB5NEZJSXowZ3NVY2dzVmlqSlNGVlFObFJJenNfUHpreFZ5TXdEQzRRRzIwdk1sakpTbEpJdng2ZXN0SmdyaUVzVlpsSndYbjUtZ1lKTGZucTZlckZDV21KWmZsRm1TU3BVaDcxRXM3eVJtcFFLekxoaXNOb1VyR3E1WExoVWtGMVhuSnBjbEZxaVVKS3ZrSnVmV1Z3Q1ZWVnNMN0hYeDBoU1NoeUhORmNDbHc3WWxNU2lWSVhBMHRUVVBBWFhuTXlxeEtUVWtneE1PNEdtcmM4eDBwWFNMb2RwS1FSclNjV2pSWUFSQUEiLCJpZCI6ImZjX2tiZ3dhT1M5TU5qazJyb1BrSUtXU1FfMyJ9"
     },
     {
-      "source": "https://www.reddit.com/r/coolguides/comments/14xuj0r/a_cool_guide_for_ice_cream_types/",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSREsxr4sTJJpDog6CyUuaXOL6BdJXEpvOW_g46hd_3Rop1m_5g1pJG1o&s",
-      "original": "https://preview.redd.it/a-cool-guide-for-ice-cream-types-v0-izoviexvgkbb1.png?auto=webp&s=fc9ee096b35b78f8718482cfb2195c5f96db8255",
-      "title": "A cool guide for Ice cream types : r/coolguides",
-      "source_name": "Reddit"
+      "question": "What is the secret to moist cookies?",
+      "snippet": "The simple, yet oh-so-necessary component is cornstarch. That's right, the flavorless thickening agent used for soups, stews, and curries is also the secret weapon for baked goods that boast a silky-smooth mouthfeel.",
+      "title": "Cornstarch Is The Secret To Soft And Chewy Cookies – Here's Why",
+      "date": "May 14, 2023",
+      "link": "https://www.southernliving.com/cornstarch-for-soft-and-chewy-cookies-7497408#:~:text=The%20simple%2C%20yet%20oh%2Dso,boast%20a%20silky%2Dsmooth%20mouthfeel.",
+      "displayed_link": "https://www.southernliving.com › cornstarch-for-soft-an...",
+      "source_logo": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/384678969bf460af70f8a874b9e61aaedceea8429102753c627d9d5c470fb53a.png",
+      "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUR3QwWDNaR2JUaDZOMmhqVkhFMldtdFZkek5KWmt0U1JGcGhPVXRSTlZreVdYZDJPSEU0VFd0bmFVTkVNR05HTmtSa2VFRnlRM0I1WWpGVExVMUhSMnRMY1RCcmMzYzRiakl3YUhFNFFsWjJaakJ3U2toWldrUmZiRlJhWW5Sd1p4SVdhMkpuZDJGUFV6bE5UbXByTW5KdlVHdEpTMWRUVVJvaVFVWk5RVWRIY1RKQlZWbDJhalZLT1RGclZtUklaSGRFYkhsbVUxTXRjbmd0WnciLCJmY3YiOiIzIiwiZWkiOiJrYmd3YU9TOU1Oamsycm9Qa0lLV1NRIiwicWMiOiJDaE5pWlhOMElHTnZiMnRwWlNCeVpXTnBjR1Z6RUFCOTZTWVJQdyIsInF1ZXN0aW9uIjoiV2hhdCBpcyB0aGUgc2VjcmV0IHRvIG1vaXN0IGNvb2tpZXM/IiwibGsiOiJHaGR6WldOeVpYUWdkRzhnYlc5cGMzUWdZMjl2YTJsbGN3IiwiYnMiOiJjLVB5NEZJSXowZ3NVY2dzVmlqSlNGVlFObFJJenNfUHpreFZ5TXdEQzRRRzIwdk1sakpTbEpJdng2ZXN0SmdyaUVzVlpsSndYbjUtZ1lKTGZucTZlckZDV21KWmZsRm1TU3BVaDcxRXM3eVJtcFFLekxoaXNOb1VyR3E1WExoVWtGMVhuSnBjbEZxaVVKS3ZrSnVmV1Z3Q1ZWVnNMN0hYeDBoU1NoeUhORmNDbHc3WWxNU2lWSVhBMHRUVVBBWFhuTXlxeEtUVWtneE1PNEdtcmM4eDBwWFNMb2RwS1FSclNjV2pSWUFSQUEiLCJpZCI6ImZjX2tiZ3dhT1M5TU5qazJyb1BrSUtXU1FfMyJ9",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUR3QwWDNaR2JUaDZOMmhqVkhFMldtdFZkek5KWmt0U1JGcGhPVXRSTlZreVdYZDJPSEU0VFd0bmFVTkVNR05HTmtSa2VFRnlRM0I1WWpGVExVMUhSMnRMY1RCcmMzYzRiakl3YUhFNFFsWjJaakJ3U2toWldrUmZiRlJhWW5Sd1p4SVdhMkpuZDJGUFV6bE5UbXByTW5KdlVHdEpTMWRUVVJvaVFVWk5RVWRIY1RKQlZWbDJhalZLT1RGclZtUklaSGRFYkhsbVUxTXRjbmd0WnciLCJmY3YiOiIzIiwiZWkiOiJrYmd3YU9TOU1Oamsycm9Qa0lLV1NRIiwicWMiOiJDaE5pWlhOMElHTnZiMnRwWlNCeVpXTnBjR1Z6RUFCOTZTWVJQdyIsInF1ZXN0aW9uIjoiV2hhdCBpcyB0aGUgc2VjcmV0IHRvIG1vaXN0IGNvb2tpZXM%2FIiwibGsiOiJHaGR6WldOeVpYUWdkRzhnYlc5cGMzUWdZMjl2YTJsbGN3IiwiYnMiOiJjLVB5NEZJSXowZ3NVY2dzVmlqSlNGVlFObFJJenNfUHpreFZ5TXdEQzRRRzIwdk1sakpTbEpJdng2ZXN0SmdyaUVzVlpsSndYbjUtZ1lKTGZucTZlckZDV21KWmZsRm1TU3BVaDcxRXM3eVJtcFFLekxoaXNOb1VyR3E1WExoVWtGMVhuSnBjbEZxaVVKS3ZrSnVmV1Z3Q1ZWVnNMN0hYeDBoU1NoeUhORmNDbHc3WWxNU2lWSVhBMHRUVVBBWFhuTXlxeEtUVWtneE1PNEdtcmM4eDBwWFNMb2RwS1FSclNjV2pSWUFSQUEiLCJpZCI6ImZjX2tiZ3dhT1M5TU5qazJyb1BrSUtXU1FfMyJ9"
     },
     {
-      "source": "https://www.reddit.com/r/ninjacreami/comments/1jah8oe/any_europeans_getting_lost_in_the_americanisms_of/",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-2PNTWZ7ESHdz1x489B7zEns_tF8UHUHB11gjUGnloLn-CfnkstSDs1A&s",
-      "original": "https://i.redd.it/3tkddd1lwhoe1.jpeg",
-      "title": "any europeans getting lost in the americanisms of the creami ...",
-      "source_name": "Reddit"
-    },
-    {
-      "source": "https://www.reddit.com/r/AskCulinary/comments/bohgvp/my_mousse_came_out_really_hard_and_thick_was_the/",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStSfsuartgxYeFmBB4Q0oTf6DTFqkpA5yZWcyC6IjEdswPYe15t3sQfpE&s",
-      "original": "https://i.imgur.com/6z0Fne4.jpg",
-      "title": "My mousse came out really hard and thick, was the chocolate ...",
-      "source_name": "Reddit"
-    },
-    {
-      "source": "https://www.reddit.com/r/AskCulinary/comments/bohgvp/my_mousse_came_out_really_hard_and_thick_was_the/",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZHcoLf8YoG9eJwgveOfrZbq4nZhZLYFaywzdgU1k54pkdHeXT6OVr-J4&s",
-      "original": "https://i.imgur.com/8KBl1cz.jpg",
-      "title": "My mousse came out really hard and thick, was the chocolate ...",
-      "source_name": "Reddit"
-    },
-    {
-      "source": "https://www.reddit.com/r/finedining/comments/1j0ggd6/per_se_new_york_february_21_2025/",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_-MMk3a6XiBxeNxgfX_oxPpdHwTx94f19tDZACnW--PuHxz0YJ5Dh0jQ&s",
-      "original": "https://preview.redd.it/per-se-new-york-february-21-2025-v0-gyvzu0f3pxle1.jpg?width=4284&format=pjpg&auto=webp&s=e08172fbc6e87283d9ca7917048664c504f8dd46",
-      "title": "Per Se *** (New York, February 21, 2025) : r/finedining",
-      "source_name": "Reddit"
-    },
-    {
-      "source": "https://www.reddit.com/r/icecreamery/comments/xv799q/good_ninja_creami_recipes/",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdUFgxMzHWx5tY00-gWjtxUlr2d5ecsNsxJLR1AcWTZiB0nkpDaTT3FuI&s",
-      "original": "https://forums.egullet.org/applications/dp45imageproxy/interface/imageproxy/imageproxy.php?img=http://tribade.org/Food/Strawberry10092021.jpg&key=21d822756ae72c9534b5e26034a0494ea30d7599a7690fbc3f4f6de6815d5c88",
-      "title": "Good' Ninja Creami recipes? : r/icecreamery",
-      "source_name": "Reddit"
-    },
-    {
-      "source": "https://www.reddit.com/r/Baking/comments/17tll9i/what_are_your_best_light_thanksgiving_desserts/",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiPxf5i2TwpyoSzu0jNK8yGl985xu7E9a_PCVu28vEnlinax0O1jzDLrA&s",
-      "original": "https://styles.redditmedia.com/t5_2qx1h/styles/communityIcon_bpprg3isxj851.png",
-      "title": "what are your best LIGHT thanksgiving desserts? : r/Baking",
-      "source_name": "Reddit"
+      "question": "What are Queen Elizabeth's favorite cookies?",
+      "snippet": "The Queen's Favorite Buckingham Palace Shortbread Cookies Closeup of The Queen's Favorite Buckingham Palace Shortbread cookies on a dark background. These Buckingham Palace Shortbread Cookies are rich, tender, and buttery. They were among the late Queen Elizabeth's favorite sweets for her afternoon tea.",
+      "title": "The Queen’s Favorite Buckingham Palace Shortbread Cookies | Eats by the Beach",
+      "link": "https://eatsbythebeach.com/the-queens-favorite-buckingham-palace-shortbread-cookies/",
+      "displayed_link": "https://eatsbythebeach.com › the-queens-favorite-buckin...",
+      "source_logo": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/384678969bf460af70f8a874b9e61aae4504de4e57cb3f8e0a0b0768918c4195.jpeg",
+      "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUR3QwWDNaR2JUaDZOMmhqVkhFMldtdFZkek5KWmt0U1JGcGhPVXRSTlZreVdYZDJPSEU0VFd0bmFVTkVNR05HTmtSa2VFRnlRM0I1WWpGVExVMUhSMnRMY1RCcmMzYzRiakl3YUhFNFFsWjJaakJ3U2toWldrUmZiRlJhWW5Sd1p4SVdhMkpuZDJGUFV6bE5UbXByTW5KdlVHdEpTMWRUVVJvaVFVWk5RVWRIY1RKQlZWbDJhalZLT1RGclZtUklaSGRFYkhsbVUxTXRjbmd0WnciLCJmY3YiOiIzIiwiZWkiOiJrYmd3YU9TOU1Oamsycm9Qa0lLV1NRIiwicWMiOiJDaE5pWlhOMElHTnZiMnRwWlNCeVpXTnBjR1Z6RUFCOTZTWVJQdyIsInF1ZXN0aW9uIjoiV2hhdCBhcmUgUXVlZW4gRWxpemFiZXRoJ3MgZmF2b3JpdGUgY29va2llcz8iLCJsayI6IkdpdDNhR0YwSUdGeVpTQnhkV1ZsYmlCbGJHbDZZV0psZEdnbmN5Qm1ZWFp2Y21sMFpTQmpiMjlyYVdWeiIsImJzIjoiYy1QeTRGSUl6MGdzVWNnc1ZpakpTRlZRTmxSSXpzX1B6a3hWeU13REM0UUcyMHZNbGpKU2xKSXZ4NmVzdEpncmlFc1ZabEp3WG41LWdZSkxmbnE2ZXJGQ1dtSlpmbEZtU1NwVWg3MUVzN3lSbXBRS3pMaGlzTm9VckdxNVhMaFVrRjFYbkpwY2xGcWlVSkt2a0p1ZldWd0NWVlZzTDdIWHgwaFNTaHlITkZjQ2x3N1lsTVNpVklYQTB0VFVQQVhYbk15cXhLVFVrZ3hNTzRHbXJjOHgwcFhTTG9kcEtRUnJTY1dqUllBUkFBIiwiaWQiOiJmY19rYmd3YU9TOU1Oamsycm9Qa0lLV1NRXzMifQ==",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUR3QwWDNaR2JUaDZOMmhqVkhFMldtdFZkek5KWmt0U1JGcGhPVXRSTlZreVdYZDJPSEU0VFd0bmFVTkVNR05HTmtSa2VFRnlRM0I1WWpGVExVMUhSMnRMY1RCcmMzYzRiakl3YUhFNFFsWjJaakJ3U2toWldrUmZiRlJhWW5Sd1p4SVdhMkpuZDJGUFV6bE5UbXByTW5KdlVHdEpTMWRUVVJvaVFVWk5RVWRIY1RKQlZWbDJhalZLT1RGclZtUklaSGRFYkhsbVUxTXRjbmd0WnciLCJmY3YiOiIzIiwiZWkiOiJrYmd3YU9TOU1Oamsycm9Qa0lLV1NRIiwicWMiOiJDaE5pWlhOMElHTnZiMnRwWlNCeVpXTnBjR1Z6RUFCOTZTWVJQdyIsInF1ZXN0aW9uIjoiV2hhdCBhcmUgUXVlZW4gRWxpemFiZXRoJ3MgZmF2b3JpdGUgY29va2llcz8iLCJsayI6IkdpdDNhR0YwSUdGeVpTQnhkV1ZsYmlCbGJHbDZZV0psZEdnbmN5Qm1ZWFp2Y21sMFpTQmpiMjlyYVdWeiIsImJzIjoiYy1QeTRGSUl6MGdzVWNnc1ZpakpTRlZRTmxSSXpzX1B6a3hWeU13REM0UUcyMHZNbGpKU2xKSXZ4NmVzdEpncmlFc1ZabEp3WG41LWdZSkxmbnE2ZXJGQ1dtSlpmbEZtU1NwVWg3MUVzN3lSbXBRS3pMaGlzTm9VckdxNVhMaFVrRjFYbkpwY2xGcWlVSkt2a0p1ZldWd0NWVlZzTDdIWHgwaFNTaHlITkZjQ2x3N1lsTVNpVklYQTB0VFVQQVhYbk15cXhLVFVrZ3hNTzRHbXJjOHgwcFhTTG9kcEtRUnJTY1dqUllBUkFBIiwiaWQiOiJmY19rYmd3YU9TOU1Oamsycm9Qa0lLV1NRXzMifQ%3D%3D"
     }
   ],
   "organic_results": [
     {
       "position": 1,
-      "title": "Mimasaka's Semifreddo : r/ShokugekiNoSoma",
-      "link": "https://www.reddit.com/r/ShokugekiNoSoma/comments/1hrmhiv/mimasakas_semifreddo/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/ShokugekiNoSoma/comments/1hrmhiv/mimasakas_semifreddo/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECBwQAQ",
-      "displayed_link": "10+ comments · 3 months ago",
-      "thumbnail": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e3207f742ff6a6ab09693869a975525f05782.jpeg",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e32079ff4220b97c797ba83322f62dbbb39fb.png",
-      "snippet": "Start with your egg white and beat it, slowly adding the 1 tbs sugar until you reach stiff peaks. Crack your whole egg in a different bowl and ...",
-      "snippet_highlighted_words": [
-        "Start with your egg white and beat it, slowly adding the 1 tbs sugar"
-      ],
-      "source": "Reddit · r/ShokugekiNoSoma"
+      "title": "The Best Chocolate Chip Cookie Recipe Ever",
+      "link": "https://joyfoodsunshine.com/the-most-amazing-chocolate-chip-cookies/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://joyfoodsunshine.com/the-most-amazing-chocolate-chip-cookies/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECCEQAQ",
+      "displayed_link": "https://joyfoodsunshine.com › Recipes › Dessert",
+      "thumbnail": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2c2573d9ff4ec8b362d392dec0b584b4b.jpeg",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2c4b177c8b2d39ea4f8c3f3ddee5929d1.png",
+      "date": "Feb 11, 2018",
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "rating": 5.0,
+            "reviews": 12554,
+            "min": 30
+          },
+          "extensions": [
+            "5.0(12,554)",
+            "30 min"
+          ]
+        }
+      },
+      "source": "JoyFoodSunshine"
     },
     {
       "position": 2,
-      "title": "What to do with a lot of heavy cream? : r/Cooking",
-      "link": "https://www.reddit.com/r/Cooking/comments/yies4t/what_to_do_with_a_lot_of_heavy_cream/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Cooking/comments/yies4t/what_to_do_with_a_lot_of_heavy_cream/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECBoQAQ",
-      "displayed_link": "160+ comments · 2 years ago",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e32079cf18dba2530a0e0ba52791f6bd35b43.png",
-      "snippet": "If you have holiday gifts to give, I'd recommend making homemade caramel and hot fudge. Both use a decent amount of cream and make great gifts.",
-      "snippet_highlighted_words": [
-        "have",
-        "making",
-        "make"
-      ],
-      "source": "Reddit · r/Cooking"
+      "title": "The 44 Best Cookie Recipes to Make in 2024",
+      "link": "https://www.tasteofhome.com/collection/the-best-cookie-recipes/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.tasteofhome.com/collection/the-best-cookie-recipes/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECB0QAQ",
+      "displayed_link": "https://www.tasteofhome.com › ... › Comfort Food",
+      "thumbnail": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2532d3f41dbc9412830aad08e0c323199.jpeg",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2dc6fdb8932d1e7c1240e6d1050c17e2f.png",
+      "date": "Jul 23, 2024",
+      "source": "Taste of Home"
     },
     {
       "position": 3,
-      "title": "My mousse came out really hard and thick, was the ...",
-      "link": "https://www.reddit.com/r/AskCulinary/comments/bohgvp/my_mousse_came_out_really_hard_and_thick_was_the/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/AskCulinary/comments/bohgvp/my_mousse_came_out_really_hard_and_thick_was_the/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECB0QAQ",
-      "displayed_link": "30+ comments · 5 years ago",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e3207d7d3cf38f80c7f2b940ed49723d08193.png",
-      "snippet": "Whisk one-third of the egg whites into the hot chocolate quickly and vigorously, until thick and well combined - if you add the egg whites in ...",
-      "snippet_highlighted_words": [
-        "thick"
-      ],
-      "missing": [
-        "semifreddo",
-        "rich."
-      ],
-      "source": "Reddit · r/AskCulinary"
-    },
-    {
-      "position": 4,
-      "title": "I made Ice Cream. Why do you need to \"cook/heat ...",
-      "link": "https://www.reddit.com/r/AskCulinary/comments/1h13we/i_made_ice_cream_why_do_you_need_to_cookheat_the/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/AskCulinary/comments/1h13we/i_made_ice_cream_why_do_you_need_to_cookheat_the/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECB8QAQ",
-      "displayed_link": "30+ comments · 11 years ago",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e32071c9ba63f8ec6b9d577c0e4cc777f6763.png",
-      "snippet": "Normally you heat the mixture to make a custard with eggs, but in your case you only need to dissolve the sugar and gelatin while steeping the ...",
-      "snippet_highlighted_words": [
-        "make",
-        "need"
-      ],
-      "missing": [
-        "change"
-      ],
-      "must_include": {
-        "word": "change",
-        "link": "https://www.google.com/search?num=30&sca_esv=ad6a799fb083f8c4&hl=en&gl=us&q=site:reddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+%22change%22+the+recipe?&sa=X&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8Q5t4CegQIMhAB"
+      "title": "What is your favorite cookie you've ever eaten? Like jaw ...",
+      "link": "https://www.reddit.com/r/Baking/comments/1gej3e7/what_is_your_favorite_cookie_youve_ever_eaten/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Baking/comments/1gej3e7/what_is_your_favorite_cookie_youve_ever_eaten/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECCMQAQ",
+      "displayed_link": "180+ comments · 6 months ago",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f29094b8b94c9b4284eb9ede32cc7e840b.png",
+      "sitelinks": {
+        "list": [
+          {
+            "title": "I need the BEST cookie recipes : r/Baking - Reddit",
+            "link": "https://www.reddit.com/r/Baking/comments/rw3nej/i_need_the_best_cookie_recipes/",
+            "answer_count": 21,
+            "date": "Jan 4, 2022"
+          },
+          {
+            "title": "What's Your Best Cookie Recipe? : r/Baking - Reddit",
+            "link": "https://www.reddit.com/r/Baking/comments/18j0ux9/whats_your_best_cookie_recipe/",
+            "answer_count": 95,
+            "date": "Dec 15, 2023"
+          }
+        ]
       },
-      "source": "Reddit · r/AskCulinary"
-    },
-    {
-      "position": 5,
-      "title": "What to do with 3 quarts of heavy whipping cream?",
-      "link": "https://www.reddit.com/r/Cooking/comments/1biztfk/what_to_do_with_3_quarts_of_heavy_whipping_cream/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Cooking/comments/1biztfk/what_to_do_with_3_quarts_of_heavy_whipping_cream/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECCAQAQ",
-      "displayed_link": "250+ comments · 1 year ago",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e32079535d150170bfec231ee12e798262293.png",
-      "snippet": "Freezing it in an icecube tray, then ziploc is the best way to have it on hand for cooking! Whenever I need to richen up a sauce, I throw in a ...",
-      "snippet_highlighted_words": [
-        "Freezing it in an icecube tray, then ziploc"
-      ],
-      "source": "Reddit · r/Cooking"
-    },
-    {
-      "position": 6,
-      "title": "I have a litre of heavy cream at hand and I really don't want ...",
-      "link": "https://www.reddit.com/r/AskBaking/comments/njsd18/i_have_a_litre_of_heavy_cream_at_hand_and_i/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/AskBaking/comments/njsd18/i_have_a_litre_of_heavy_cream_at_hand_and_i/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECBsQAQ",
-      "displayed_link": "110+ comments · 3 years ago",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e320735db61ba483fef18dd0971fca878f7c9.png",
-      "snippet": "I have a litre of heavy cream at hand and I really don't want it to go to waste. What can I make with that? I also have other ingredients in my ...",
-      "snippet_highlighted_words": [
-        "have",
-        "heavy",
-        "want",
-        "can",
-        "make",
-        "have"
-      ],
-      "source": "Reddit · r/AskBaking"
-    },
-    {
-      "position": 7,
-      "title": "What's your favorite decadent summer dessert to make? I ...",
-      "link": "https://www.reddit.com/r/Cooking/comments/1jy9n96/whats_your_favorite_decadent_summer_dessert_to/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Cooking/comments/1jy9n96/whats_your_favorite_decadent_summer_dessert_to/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECB4QAQ",
-      "displayed_link": "120+ comments · 1 week ago",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e320734e1f361e0c9f26a09fdf080e9666ddf.png",
-      "snippet": "Try with homemade crust w/homemade lemon curd overtop of cream cheese, then cover with fresh fruit. Best if eaten the same day. Crust will ...",
-      "snippet_highlighted_words": [
-        "Try with homemade crust w/homemade lemon curd overtop of cream cheese"
-      ],
-      "missing": [
-        "change"
-      ],
-      "must_include": {
-        "word": "change",
-        "link": "https://www.google.com/search?num=30&sca_esv=ad6a799fb083f8c4&hl=en&gl=us&q=site:reddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+%22change%22+the+recipe?&sa=X&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8Q5t4CegQIMRAB"
-      },
-      "source": "Reddit · r/Cooking"
-    },
-    {
-      "position": 8,
-      "title": "What are some recipes that use a TON of egg yolks (but not ...",
-      "link": "https://www.reddit.com/r/Cooking/comments/12824xb/what_are_some_recipes_that_use_a_ton_of_egg_yolks/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Cooking/comments/12824xb/what_are_some_recipes_that_use_a_ton_of_egg_yolks/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECFkQAQ",
-      "displayed_link": "140+ comments · 2 years ago",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e3207f0e8344b75e2c6fe05e69287fdd14ed7.png",
-      "snippet": "24 yolks would make a TON of that, you need about a stick of butter for each 2 yolks, and even more oil for mayo. What you gonna do with all ...",
-      "snippet_highlighted_words": [
-        "would make",
-        "need",
-        "do"
-      ],
-      "source": "Reddit · r/Cooking"
-    },
-    {
-      "position": 9,
-      "title": "What is your favourite recipe with condensed milk?",
-      "link": "https://www.reddit.com/r/Cooking/comments/17nhmt8/what_is_your_favourite_recipe_with_condensed_milk/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Cooking/comments/17nhmt8/what_is_your_favourite_recipe_with_condensed_milk/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECGEQAQ",
-      "displayed_link": "220+ comments · 1 year ago",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e32074ef0c33ed3c00c7f5d35d01af0e75bc0.png",
-      "snippet": "You can make it in a slow cooker so you don't have to be afraid of ... You just mix condensed milk with heavy cream to make a sweet, creamy sauce.",
-      "snippet_highlighted_words": [
-        "You just mix condensed milk with heavy cream"
-      ],
-      "missing": [
-        "change"
-      ],
-      "must_include": {
-        "word": "change",
-        "link": "https://www.google.com/search?num=30&sca_esv=ad6a799fb083f8c4&hl=en&gl=us&q=site:reddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+%22change%22+the+recipe?&sa=X&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8Q5t4CegQIbBAB"
-      },
-      "source": "Reddit · r/Cooking"
-    },
-    {
-      "position": 10,
-      "title": "'Good' Ninja Creami recipes? : r/icecreamery",
-      "link": "https://www.reddit.com/r/icecreamery/comments/xv799q/good_ninja_creami_recipes/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/icecreamery/comments/xv799q/good_ninja_creami_recipes/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECDYQAQ",
-      "displayed_link": "20+ comments · 2 years ago",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e3207f772c1d195728be7fcdec5192af9e7b8.png",
-      "snippet": "It seems like the Creami can handle normal ice cream recipes perfectly fine. In the past I was under the impression that the Pacojet needed ...",
-      "snippet_highlighted_words": [
-        "like",
-        "can",
-        "recipes"
-      ],
-      "missing": [
-        "thick",
-        "change"
-      ],
-      "source": "Reddit · r/icecreamery"
-    },
-    {
-      "position": 11,
-      "title": "Cookie Monster Ice Cream : r/GifRecipes",
-      "link": "https://www.reddit.com/r/GifRecipes/comments/4n03j4/cookie_monster_ice_cream/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/GifRecipes/comments/4n03j4/cookie_monster_ice_cream/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECFQQAQ",
-      "displayed_link": "110+ comments · 8 years ago",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e32070ace2929537695681f2d958c5f68313b.png",
-      "snippet": "I was sitting here thinking \"wow that mixture is really thick for an ice cream maker.. I thought it had to be more liquid then that..\".",
-      "snippet_highlighted_words": [
-        "thick"
-      ],
-      "missing": [
-        "change"
-      ],
-      "must_include": {
-        "word": "change",
-        "link": "https://www.google.com/search?num=30&sca_esv=ad6a799fb083f8c4&hl=en&gl=us&q=site:reddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+%22change%22+the+recipe?&sa=X&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8Q5t4CegQIahAB"
-      },
-      "source": "Reddit · r/GifRecipes"
-    },
-    {
-      "position": 12,
-      "title": "Favorite Recipes from Bodega Bakes, Sift, and/or What's ...",
-      "link": "https://www.reddit.com/r/CookbookLovers/comments/1jq473a/favorite_recipes_from_bodega_bakes_sift_andor/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/CookbookLovers/comments/1jq473a/favorite_recipes_from_bodega_bakes_sift_andor/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECFoQAQ",
-      "displayed_link": "10+ comments · 2 weeks ago",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e3207f1d5f97df6fb2820db0b4f972eab38c6.png",
-      "snippet": "I will note that I don't have an 8x8, so I made a double recipe in an 9x13 the first time (117 instead of 128 square inches, so thicker), and a ...",
-      "snippet_highlighted_words": [
-        "will",
-        "have",
-        "recipe",
-        "thicker"
-      ],
-      "source": "Reddit · r/CookbookLovers"
-    },
-    {
-      "position": 13,
-      "title": "what are your best LIGHT thanksgiving desserts? : r/Baking",
-      "link": "https://www.reddit.com/r/Baking/comments/17tll9i/what_are_your_best_light_thanksgiving_desserts/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Baking/comments/17tll9i/what_are_your_best_light_thanksgiving_desserts/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECD4QAQ",
-      "displayed_link": "260+ comments · 1 year ago",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e3207bc40fb8695ff497286934e5c1a546868.png",
-      "snippet": "I'm handling Thanksgiving desserts this year and kind of want to stick with lighter feeling options for a change.",
-      "snippet_highlighted_words": [
-        "want",
-        "change"
-      ],
       "source": "Reddit · r/Baking"
     },
     {
+      "position": 4,
+      "title": "The Best Cookie Recipes, According to Eater Staff",
+      "link": "https://www.eater.com/23941973/best-cookie-recipes-chocolate-chip-cookies-pretzel-linzers-marranitos",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.eater.com/23941973/best-cookie-recipes-chocolate-chip-cookies-pretzel-linzers-marranitos&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECDMQAQ",
+      "displayed_link": "https://www.eater.com › best-cookie-recipes-chocolate-c...",
+      "thumbnail": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2e4df8f55e910cc7c9e76267563ff9bdc.jpeg",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f280088af12c6775cfefa58406f916df40.png",
+      "date": "Dec 20, 2024",
+      "source": "Eater"
+    },
+    {
+      "position": 5,
+      "title": "Best Cookie Recipes: Delicious Cookies Made Easy",
+      "link": "https://bestcookierecipes.com/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://bestcookierecipes.com/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECDgQAQ",
+      "displayed_link": "https://bestcookierecipes.com",
+      "thumbnail": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f26be0cd4d6f0a88e2800070b70cb5336a.jpeg",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f253fc52b6803ae3602026bb9cb7dc07d6.png",
+      "source": "bestcookierecipes.com"
+    },
+    {
+      "position": 6,
+      "title": "The Best Soft Chocolate Chip Cookies - Pinch of Yum",
+      "link": "https://pinchofyum.com/the-best-soft-chocolate-chip-cookies",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://pinchofyum.com/the-best-soft-chocolate-chip-cookies&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoFCIIBEAE",
+      "displayed_link": "https://pinchofyum.com › the-best-soft-chocolate-chip-...",
+      "thumbnail": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2572ad62ceb94169b0efc8bbd213f1e17.jpeg",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2d1443cb246d187e9e894a56a40023984.png",
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "rating": 4.5,
+            "reviews": 1893,
+            "min": 20
+          },
+          "extensions": [
+            "4.5(1,893)",
+            "20 min"
+          ]
+        }
+      },
+      "source": "Pinch of Yum"
+    },
+    {
+      "position": 7,
+      "title": "Best Cookie Recipes - NYT Cooking - The New York Times",
+      "link": "https://cooking.nytimes.com/68861692-nyt-cooking/18131908-cookie-recipes",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://cooking.nytimes.com/68861692-nyt-cooking/18131908-cookie-recipes&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoFCKsBEAE",
+      "displayed_link": "https://cooking.nytimes.com › 18131908-cookie-recipes",
+      "thumbnail": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f291e505c541c1b9a8ab883ebea30f9b74.jpeg",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2af0b7c85b30386e14d56167945912365.png",
+      "source": "NYT Cooking"
+    },
+    {
+      "position": 8,
+      "title": "Best Cookie Recipes of All Time",
+      "link": "https://www.allrecipes.com/gallery/best-cookie-recipes-of-all-time/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.allrecipes.com/gallery/best-cookie-recipes-of-all-time/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECDIQAQ",
+      "displayed_link": "https://www.allrecipes.com › Recipes › Desserts › Cookies",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAQUuoaOesdgrgiI8Oh2ASRbF6JWyJ5PTd-DVFGZSgRHAeiVoZ7QYp4G4&usqp=CAE&s",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2c43b8222c3d6a77c616bdea6d789886b.png",
+      "date": "Jul 25, 2022",
+      "source": "Allrecipes"
+    },
+    {
+      "position": 9,
+      "title": "BEST Chocolate Chip Cookies",
+      "link": "https://butternutbakeryblog.com/best-chocolate-chip-cookies/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://butternutbakeryblog.com/best-chocolate-chip-cookies/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECHUQAQ",
+      "displayed_link": "https://butternutbakeryblog.com › Recipes › Cookies",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2d335af1d95d7f6d95c9cc394265c3912.png",
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "rating": 5.0,
+            "reviews": 499,
+            "min": 30
+          },
+          "extensions": [
+            "5.0(499)",
+            "30 min"
+          ]
+        }
+      },
+      "source": "Butternut Bakery"
+    },
+    {
+      "position": 10,
+      "title": "Best-Ever Chocolate Chip Cookies",
+      "link": "https://easygayoven.com/best-ever-chocolate-chip-cookies/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://easygayoven.com/best-ever-chocolate-chip-cookies/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECH0QAQ",
+      "displayed_link": "https://easygayoven.com › Blog",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTO4URQcb9K32vTZ6hhHDBzs4Nbp7Legzg-PJSAX5Ofog&usqp=CAE&s",
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "rating": 5.0,
+            "reviews": 24,
+            "hr_min": 2
+          },
+          "extensions": [
+            "5.0(24)",
+            "2 hr 45 min"
+          ]
+        }
+      },
+      "source": "easygayoven"
+    },
+    {
+      "position": 11,
+      "title": "Best Chocolate Chip Cookies (Popular Recipe!)",
+      "link": "https://sallysbakingaddiction.com/chewy-chocolate-chip-cookies/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://sallysbakingaddiction.com/chewy-chocolate-chip-cookies/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoFCJoBEAE",
+      "displayed_link": "https://sallysbakingaddiction.com › Recipes › Cookies",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf7dGTv8TTEk83UotGyvP_8Cyj-S9WQPHo4NJ8JhWTWmq4YKu2QcdTyhs&usqp=CAE&s",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f225a4a7e8d5a1606eb91d0f2384c83e2a.png",
+      "date": "May 13, 2022",
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "rating": 4.7,
+            "reviews": 1492,
+            "hr_min": 2
+          },
+          "extensions": [
+            "4.7(1,492)",
+            "2 hr 45 min"
+          ]
+        }
+      },
+      "source": "Sally's Baking Addiction"
+    },
+    {
+      "position": 12,
+      "title": "Easy Sugar Cookies Recipe (with Video)",
+      "link": "https://www.allrecipes.com/recipe/9870/easy-sugar-cookies/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.allrecipes.com/recipe/9870/easy-sugar-cookies/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoFCJgBEAE",
+      "displayed_link": "https://www.allrecipes.com › ... › Sugar Cookie Recipes",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRopDjy4Ch-0wqzGw3690cUKOUT2WUpi_-dlDLT0oeEPN5uLleNO9jDBJg&usqp=CAE&s",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f250f8ea6d928e87ce282470c5860c0286.png",
+      "date": "Jan 17, 2025",
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "rating": 4.5,
+            "reviews": 8872,
+            "min": 30
+          },
+          "extensions": [
+            "4.5(8,872)",
+            "30 min"
+          ]
+        }
+      },
+      "source": "Allrecipes"
+    },
+    {
+      "position": 13,
+      "title": "40 Epic Cookie Recipes From Brown Butter to Chocolate ...",
+      "link": "https://www.foodandwine.com/best-cookie-recipes-6400978",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.foodandwine.com/best-cookie-recipes-6400978&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoFCJkBEAE",
+      "displayed_link": "https://www.foodandwine.com › ... › Desserts › Cookies",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjQTP8jktlAkqGu1F6F0nQppq3W_a8_mlZJLMs5lDgXQYgGx7sRG_WKDQ&usqp=CAE&s",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f25e2694afbf786feaf3e9205c6576dcb1.png",
+      "date": "Dec 4, 2024",
+      "source": "Food & Wine"
+    },
+    {
       "position": 14,
-      "title": "any europeans getting lost in the americanisms of ...",
-      "link": "https://www.reddit.com/r/ninjacreami/comments/1jah8oe/any_europeans_getting_lost_in_the_americanisms_of/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/ninjacreami/comments/1jah8oe/any_europeans_getting_lost_in_the_americanisms_of/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECDsQAQ",
-      "displayed_link": "220+ comments · 1 month ago",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e3207d00f88df1b007964c8a0d6c60e3f8674.png",
-      "snippet": "you can make any real ice cream recipes in the Creami. If the consistency is too icey add a little milk & respin until it's to your preference.",
-      "snippet_highlighted_words": [
-        "can make",
-        "recipes"
-      ],
-      "source": "Reddit · r/ninjacreami"
+      "title": "Cookie Recipes - Shopping and Cooking",
+      "link": "https://www.donrockwell.com/topic/1616-cookie-recipes/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.donrockwell.com/topic/1616-cookie-recipes/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoFCJYBEAE",
+      "displayed_link": "https://www.donrockwell.com › topic › 1616-cookie-reci...",
+      "date": "Nov 29, 2005",
+      "source": "DonRockwell.com"
     },
     {
       "position": 15,
-      "title": "What's involved in a good chocolate ice cream?",
-      "link": "https://www.reddit.com/r/AskCulinary/comments/13qrj47/whats_involved_in_a_good_chocolate_ice_cream/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/AskCulinary/comments/13qrj47/whats_involved_in_a_good_chocolate_ice_cream/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECFsQAQ",
-      "displayed_link": "60+ comments · 1 year ago",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e3207163e7de5bc3270a29f427c17c3374533.png",
-      "snippet": "General consensus is salt, vanilla, and espresso; I already add salt and vanilla and I don't do coffee or alcohol.",
-      "snippet_highlighted_words": [
-        "salt, vanilla, and espresso"
-      ],
-      "source": "Reddit · r/AskCulinary"
+      "title": "What are some good recipes for making different types of ...",
+      "link": "https://www.quora.com/What-are-some-good-recipes-for-making-different-types-of-cookies",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.quora.com/What-are-some-good-recipes-for-making-different-types-of-cookies&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECC8QAQ",
+      "displayed_link": "3 answers · 8 years ago",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f29197b03387c4ad95bae33781bb1c9efb.png",
+      "source": "Quora"
     },
     {
       "position": 16,
-      "title": "I finally made this months after buying it. It is the softest ...",
-      "link": "https://www.reddit.com/r/aldi/comments/ybwcfo/i_finally_made_this_months_after_buying_it_it_is/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/aldi/comments/ybwcfo/i_finally_made_this_months_after_buying_it_it_is/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECDUQAQ",
-      "displayed_link": "30+ comments · 2 years ago",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e3207835d5d1bc6f6aafab30695925bc19122.png",
-      "snippet": "It is the softest cheesiest pillowy pasta that I have tasted in a while. And that extra flavor from whatever the “pickle” is! I'm so sad I didn' ...",
-      "snippet_highlighted_words": [
-        "have"
-      ],
-      "source": "Reddit · r/aldi"
+      "title": "I Built The PERFECT Chocolate Chip Cookie Recipe",
+      "link": "https://www.youtube.com/watch?v=3pW3Lr7vZ3o",
+      "displayed_link": "856.9K+ views · 1 week ago",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZQP0eO75O5HU5gFXL08M-co_z-HaMXZ4UC8fKgz07qATL&s",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f20c77e756ac50b8b356fe7c8ec0644e78.png",
+      "snippet": "Learn from them and build out the most perfect chocolate chip cookie that we can make at home.",
+      "duration": "15:28",
+      "video_link": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcQ96vrDCDdQTHRezBEPEF5kB08uuFpEI3wUCw",
+      "source": "YouTube · FutureCanoe"
     },
     {
       "position": 17,
-      "title": "What was the \"it\" dish at your establishment this year?",
-      "link": "https://www.reddit.com/r/Chefit/comments/5kh307/what_was_the_it_dish_at_your_establishment_this/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Chefit/comments/5kh307/what_was_the_it_dish_at_your_establishment_this/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECDQQAQ",
-      "displayed_link": "20+ comments · 8 years ago",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e3207111016f794c7a23c3c6321a463a2a652.png",
-      "snippet": "Rich as hell, really thick on a spoon - I only serve like four fluid ... Any way I could get that semifreddo recipe? It sounds amazing ...",
-      "snippet_highlighted_words": [
-        "Rich",
-        "thick",
-        "like",
-        "could",
-        "semifreddo recipe"
-      ],
-      "source": "Reddit · r/Chefit"
+      "title": "The World's Best Cookie Recipe, According to Redditors",
+      "link": "https://www.simplyrecipes.com/reddit-greatest-recipe-ever-8754051",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.simplyrecipes.com/reddit-greatest-recipe-ever-8754051&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECHAQAQ",
+      "displayed_link": "https://www.simplyrecipes.com › Table Talk › Celebrity",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2712b25d47c87596db08a64fb9857e2ab.png",
+      "source": "Simply Recipes"
     },
     {
       "position": 18,
-      "title": "Low carb ice cream? : r/keto",
-      "link": "https://www.reddit.com/r/keto/comments/29h7gk/low_carb_ice_cream/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/keto/comments/29h7gk/low_carb_ice_cream/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECDMQAQ",
-      "displayed_link": "130+ comments · 10 years ago",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e32072b11dd658215fa1f4a2597aedc709da0.png",
-      "snippet": "I'm just starting the keto diet and don't really know what I'm doing yet. Does anyone have a low carb ice cream recipe I can try? Thanks! :).",
-      "snippet_highlighted_words": [
-        "have",
-        "recipe",
-        "can"
-      ],
-      "source": "Reddit · r/keto"
+      "title": "What is your favorite cookie recipe?",
+      "link": "http://cookbooker.com/forum/discussion/10/what-is-your-favorite-cookie-recipe/p1",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=http://cookbooker.com/forum/discussion/10/what-is-your-favorite-cookie-recipe/p1&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECGsQAQ",
+      "displayed_link": "http://cookbooker.com › forum › discussion › what-is-y...",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2dc1655290da36d963376f5cb247ef2a3.png",
+      "source": "Cookbooker"
     },
     {
       "position": 19,
-      "title": "Cooking a 5 course (almost) vegetarian meal for 7 people ...",
-      "link": "https://www.reddit.com/r/AskCulinary/comments/8kl5ev/cooking_a_5_course_almost_vegetarian_meal_for_7/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/AskCulinary/comments/8kl5ev/cooking_a_5_course_almost_vegetarian_meal_for_7/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECD0QAQ",
-      "displayed_link": "40+ comments · 6 years ago",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e3207915760a1074c8613245cee9ae439cd44.png",
-      "snippet": "Semifreddo would be in Leiu of ice cream! I actually really like the William Sonoma recipe for cheesecake. Biggest tip with any cheesecake I can ...",
-      "snippet_highlighted_words": [
-        "Semifreddo would",
-        "like",
-        "recipe",
-        "can"
-      ],
-      "source": "Reddit · r/AskCulinary"
+      "title": "Chocolate Chip Cookies Recipe",
+      "link": "https://www.loveandlemons.com/chocolate-chip-cookies/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.loveandlemons.com/chocolate-chip-cookies/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECGwQAQ",
+      "displayed_link": "https://www.loveandlemons.com › Recipes",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2ef959c4705b05fd3ff27d25efd2b3c37.png",
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "rating": 4.8,
+            "reviews": 113,
+            "hr": 1
+          },
+          "extensions": [
+            "4.8(113)",
+            "1 hr"
+          ]
+        }
+      },
+      "source": "Love and Lemons"
     },
     {
       "position": 20,
-      "title": "What's on your Christmas Day menu this year? : r/Cooking",
-      "link": "https://www.reddit.com/r/Cooking/comments/ednhp0/whats_on_your_christmas_day_menu_this_year/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Cooking/comments/ednhp0/whats_on_your_christmas_day_menu_this_year/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECDwQAQ",
-      "displayed_link": "90+ comments · 5 years ago",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e3207f455cff347ad754601da5eff9f6658e0.png",
-      "snippet": "The dessert will probably be something cold like a baked alaska or a semifreddo ... make whatever they want. Upvote 2. Downvote Award Share.",
-      "snippet_highlighted_words": [
-        "will",
-        "like",
-        "semifreddo",
-        "make",
-        "want"
-      ],
-      "source": "Reddit · r/Cooking"
+      "title": "Chocolate Chip Cookies - NYT Cooking - The New York Times",
+      "link": "https://cooking.nytimes.com/recipes/1015819-chocolate-chip-cookies",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://cooking.nytimes.com/recipes/1015819-chocolate-chip-cookies&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECG0QAQ",
+      "displayed_link": "https://cooking.nytimes.com › recipes › 1015819-choc...",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f24f9a7183033cc85d79d13fbac9b6d4b3.png",
+      "date": "Jan 22, 2025",
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "rating": 5.0,
+            "reviews": 18090,
+            "min": 45
+          },
+          "extensions": [
+            "5.0(18,090)",
+            "45 min"
+          ]
+        }
+      },
+      "source": "NYT Cooking"
     },
     {
       "position": 21,
-      "title": "What are some very soft and also high calorie/fatty dishes?",
-      "link": "https://www.reddit.com/r/Cooking/comments/188n6wn/what_are_some_very_soft_and_also_high/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Cooking/comments/188n6wn/what_are_some_very_soft_and_also_high/&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8QFnoECFwQAQ",
-      "displayed_link": "240+ comments · 1 year ago",
-      "favicon": "https://serpapi.com/searches/68090d7972c8dab40e2b2c18/images/afae1b6699b18aaace10da355c2e32073e0843e1532927c741c94d8e954a654c.png",
-      "snippet": "TLDR: Any recommendations on some very soft and also high calorie/fat foods? Need help with what foods to make my grandma.",
-      "snippet_highlighted_words": [
-        "Need",
-        "make"
-      ],
-      "source": "Reddit · r/Cooking"
+      "title": "World's Best Chocolate Chip Cookie Recipe (watch full vid!)",
+      "link": "https://www.youtube.com/shorts/NOjLrN_QktM",
+      "displayed_link": "5.1M+ views · 1 year ago",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNXTa6NoStglqNaxlvml_NAghibLV-AS_aR8u3_nN73WDo&s",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f26c098f88a9db36af12038589c869ddda.png",
+      "snippet": "World's Best Chocolate Chip Cookie Recipe (watch full vid!) 404K. Dislike. 1,225. Share. Video unavailable. This content isn't available.",
+      "duration": "0:58",
+      "video_link": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcRv8B7AoyPMQ2mSRSMJ3vhmuYOFBlHgz-QLiA",
+      "source": "YouTube · Honeysuckle"
+    },
+    {
+      "position": 22,
+      "title": "Who has the best cookie recipe?? - Community - The Bump",
+      "link": "https://forums.thebump.com/discussion/5898678/who-has-the-best-cookie-recipe",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://forums.thebump.com/discussion/5898678/who-has-the-best-cookie-recipe&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECHkQAQ",
+      "displayed_link": "https://forums.thebump.com › discussion › who-has-the-...",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2763e813c98d4b98d10ec9b062eb3fe98.png",
+      "date": "Nov 15, 2010",
+      "source": "The Bump"
+    },
+    {
+      "position": 23,
+      "title": "Top 5 Cookie Recipes You Need to Try",
+      "link": "https://www.tiktok.com/@thesqueakymixer/video/7458467595188964654",
+      "displayed_link": "58.8K+ views · 4 months ago",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQclr9kjkHb0T775nBWqS_KFxKRCtfeftXgXGcu8Y5q1Kcx&s",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2341a079f84c2bd8264747ea42af3f50c.png",
+      "snippet": "Discover one of the top 5 cookie recipes that will impress your taste buds. Get the full recipe on my website!",
+      "duration": "0:47",
+      "video_link": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcQ_xa6YYtVtHb1YkfUNu6DTHvW6paJGFYjElA",
+      "source": "TikTok · The Squeaky Mixer"
+    },
+    {
+      "position": 24,
+      "title": "Original NESTLÉ® TOLL HOUSE® Chocolate Chip Cookies",
+      "link": "https://www.verybestbaking.com/toll-house/recipes/original-nestle-toll-house-chocolate-chip-cookies/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.verybestbaking.com/toll-house/recipes/original-nestle-toll-house-chocolate-chip-cookies/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoFCKkBEAE",
+      "displayed_link": "https://www.verybestbaking.com › ... › ​Types of Recipes",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f28e27ae46994fc8e5638d1f86fab389d2.png",
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "rating": 4.8,
+            "reviews": 13318
+          },
+          "extensions": [
+            "4.8(13,318)"
+          ]
+        }
+      },
+      "source": "Very Best Baking"
+    },
+    {
+      "position": 25,
+      "title": "THE BEST Chocolate Chip Cookies (Bakery-Style)",
+      "link": "https://scientificallysweet.com/the-best-chocolate-chip-cookies-bakery-style/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://scientificallysweet.com/the-best-chocolate-chip-cookies-bakery-style/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECD0QAQ",
+      "displayed_link": "https://scientificallysweet.com › Cookies",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEr8CZGOD1umhO_DwkFlhkrrSDq7ipdn55PHSqZ-ApVcPaZhs64PF9yjY&usqp=CAE&s",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2e2629e71e97d46c68e0d668162189607.png",
+      "date": "Jul 27, 2024",
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "rating": 5.0,
+            "reviews": 161,
+            "min": 20
+          },
+          "extensions": [
+            "5.0(161)",
+            "20 min"
+          ]
+        }
+      },
+      "source": "Scientifically Sweet"
+    },
+    {
+      "position": 26,
+      "title": "The Best Cookie Recipes - Over 325 Easy Cookies to Bake!",
+      "link": "https://cookiesandcups.com/recipes/cookies/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://cookiesandcups.com/recipes/cookies/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECDQQAQ",
+      "displayed_link": "https://cookiesandcups.com › Recipes",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROu-uAydCFpdUakF0VuF-o1YNN2b1DWxPCtueLP22_yE7WRzZPqpHCULI&usqp=CAE&s",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2f98388af6656dd44e5144a57f3d1672e.png",
+      "source": "Cookies and Cups"
+    },
+    {
+      "position": 27,
+      "title": "How To Make the World's Best Cookies Recipe",
+      "link": "https://www.crazyforcrust.com/the-worlds-best-cookies/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.crazyforcrust.com/the-worlds-best-cookies/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECEIQAQ",
+      "displayed_link": "https://www.crazyforcrust.com › Recipe Index",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDSjeIYByuPQQy0S8Y4AI-1FZlWtmzX91O9UN1PX-3oXaYNeKO-pHjAoc&usqp=CAE&s",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2e9bbc4b9599436e3c3755f177d75a82f.png",
+      "date": "Jan 7, 2023",
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "rating": 4.0,
+            "reviews": 385,
+            "hr_min": 1
+          },
+          "extensions": [
+            "4.0(385)",
+            "1 hr 12 min"
+          ]
+        }
+      },
+      "source": "Crazy for Crust"
+    },
+    {
+      "position": 28,
+      "title": "The best cookie recipe you'll find! Very easy and quick to ...",
+      "link": "https://www.facebook.com/recipesyumyum/videos/the-best-cookie-recipe-youll-find-very-easy-and-quick-to-make/625997856757797/",
+      "displayed_link": "30+ reactions · 5 months ago",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhJfcKi_9tzqm4ZOrGR3cD3gB--oMZqSC8YbVvuABRdgd0&s",
+      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f232e0c06a0c2dee93580249af21a9d535.png",
+      "snippet": "This homemade cookie recipe is very easy to make. And I'm sure once you start making it it will become a routine at your house.",
+      "duration": "3:01",
+      "video_link": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcSulNOZhWAqHi9CYINBAsn52KbBzLz3PLsFaQ",
+      "source": "Facebook · Recipes Yum"
     }
   ],
-  "top_stories_link": "https://www.google.com/search?num=30&sca_esv=ad6a799fb083f8c4&hl=en&gl=us&q=site:reddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe?&udm=2&source=univ&fir=FhmnntvOpIXPzM%252CkdQDS274MEXNIM%252C_%253BYQveWFOyhK1pTM%252CUHKvQgTTEeTrBM%252C_%253B9sd-CNbhLKVziM%252CshkWPUPH7KQKRM%252C_%253ByJFIlNMsiRzbNM%252C2whB0tnCV5IViM%252C_%253BUdBwpsxhloV6kM%252C3BcZG9HC2XfMuM%252C_%253BSu4kKMcW5KlMeM%252C3BcZG9HC2XfMuM%252C_%253B01Nw42IsCz_LoM%252CD2iZO2rwJjrbmM%252C_%253BqRw4gNhaeSsx7M%252C_-1mm-ChNZ5NSM%252C_%253BL_INqeB2oIZjqM%252CQeAciIJoNN7q3M%252C_&usg=AI4_-kQUtQXGIb1ltsVmo3Cxt3-LCQZDCg&sa=X&ved=2ahUKEwjuzayPwu6MAxVknK8BHVnNCz8Q7Al6BAhREAY",
-  "top_stories_serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe%3F",
-  "dmca_messages": {
-    "title": "Notices about Filtered Results",
-    "messages": [
-      {
-        "content": "In order to show you the most relevant results, we have omitted some entries very similar to the 21 already displayed.If you like, you can repeat the search with the omitted results included.",
-        "highlighted_words": [
-          {
-            "link": "https://www.google.com/search?q=site:reddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe%3F&num=30&sca_esv=ad6a799fb083f8c4&hl=en&gl=us&filter=0",
-            "text": "repeat the search with the omitted results included"
-          }
-        ]
-      }
-    ]
-  },
+  "perspectives": [
+    {
+      "author": "Chef Buck",
+      "author_description": "Cooking & baking channel",
+      "source": "YouTube",
+      "extensions": [
+        "1K+ views "
+      ],
+      "thumbnails": [
+        "https://img.youtube.com/vi/9pZOpDMN6RE/hqdefault.jpg"
+      ],
+      "title": "Best Oatmeal Cookie Recipe",
+      "link": "https://www.youtube.com/watch?v=9pZOpDMN6RE",
+      "date": "6 days ago"
+    },
+    {
+      "author": "Spicy Foodz",
+      "author_description": "Indian food recipes creator",
+      "source": "YouTube",
+      "extensions": [
+        "1.2K+ views "
+      ],
+      "thumbnails": [
+        "https://img.youtube.com/vi/o4SqNDnfVP8/hqdefault.jpg"
+      ],
+      "title": "Easy Soft Chocolate Chip Cookies Recipe | Spicy Foodz",
+      "link": "https://www.youtube.com/watch?v=o4SqNDnfVP8",
+      "date": "3 days ago"
+    },
+    {
+      "author": "Best Cookie Recipes Ever",
+      "source": "Facebook",
+      "extensions": [
+        "70+ reactions "
+      ],
+      "thumbnails": [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSZr3TUeQ-Ug_k2yi58GhO6Y5TQeBV9n4gDGbp4-NADxQBR4DKW9bEmFMV&usqp=CAI&s"
+      ],
+      "title": "I have been using the same recipe for chocolate chip cookies for 35 years. I’ve always been told they were amazing and everyone expected them at potlucks and parties. I recently joined this page and have been seeing everyone’s recipes and decided to see",
+      "link": "https://www.facebook.com/groups/756832418039671/posts/2818511085205117/",
+      "date": "5 days ago"
+    },
+    {
+      "author": "cookingwithkarli",
+      "source": "Instagram",
+      "extensions": [
+        "1.6K+ likes "
+      ],
+      "thumbnails": [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXqlbww15nL17Q8sDFM9vGOcmvV9Z3eIm-PgWWnyQFKvyf-Z40s9lYy4anUg&usqp=CAI&s"
+      ],
+      "title": "The search is OVER! This is the BEST chocolate chip cookie recipe! 🍪 Get the full recipe👇 ✨Page 12 of my cookbook, Cookies for Days. ✨Search ‘The Best Chocolate Chip Cookie Recipe’ using the link in my bio for the free printable recipe on my blog! Shop my cookbook, Cookies for Days, during my Mother’s Day Sale happening now! Snag your copy today at the link in my bio! #cookies #baker #bakingisfun #bakingtherapy #recipereview #chocolatechip #chocolatechipcookies #perfect #bestcookies",
+      "link": "https://www.instagram.com/reel/DI-BM3HJpbX/?hl=en",
+      "date": "4 weeks ago"
+    },
+    {
+      "author": "FutureCanoe",
+      "author_description": "NYC-based food enthusiast",
+      "source": "YouTube",
+      "extensions": [
+        "856.9K+ views "
+      ],
+      "thumbnails": [
+        "https://img.youtube.com/vi/3pW3Lr7vZ3o/hqdefault.jpg"
+      ],
+      "title": "I Built The PERFECT Chocolate Chip Cookie Recipe",
+      "link": "https://www.youtube.com/watch?v=3pW3Lr7vZ3o",
+      "date": "1 week ago"
+    },
+    {
+      "author": "Just the Bells 10",
+      "author_description": "Cooking & sharing recipes",
+      "source": "YouTube",
+      "extensions": [
+        "37.5K+ views "
+      ],
+      "thumbnails": [
+        "https://img.youtube.com/vi/T342H_vocZg/hqdefault.jpg"
+      ],
+      "title": "THE BEST CHOCOLATE CHiP COOKiE RECIPE #bakingrecipes #cookiesrecipe #bakingtips #justthebells10",
+      "link": "https://www.youtube.com/shorts/T342H_vocZg",
+      "date": "2 weeks ago"
+    },
+    {
+      "author": "daphneoz",
+      "source": "Facebook",
+      "extensions": [
+        "1.8K+ reactions "
+      ],
+      "thumbnails": [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrqd3bFkNppIwQNlWBxMToAjsADBCM9KJpnCM4aMnAJVo2Tf2VZfdovsE&usqp=CAI&s"
+      ],
+      "title": "The Best Chocolate Chip Cookie?? ❤️🍪😜 Recipe and description of the years of research, testing, tasting etc that went into these at the link in the comments and on my website. Most of all…enjoy!! And then tell me what you think…🤗",
+      "link": "https://www.facebook.com/daphneoz/videos/the-best-chocolate-chip-cookie-%EF%B8%8F-recipe-and-description-of-the-years-of-research/9765459486902184/",
+      "date": "1 week ago"
+    },
+    {
+      "author": "Huma in the kitchen",
+      "author_description": "Cooking enthusiast",
+      "source": "YouTube",
+      "extensions": [
+        "4.6K+ views "
+      ],
+      "thumbnails": [
+        "https://img.youtube.com/vi/BJmlnUF5Gms/hqdefault.jpg"
+      ],
+      "title": "Better than Bakery | The best Cookie of your life | Chocolate Chip Cookies Recipe | Fool Proof",
+      "link": "https://www.youtube.com/watch?v=BJmlnUF5Gms",
+      "date": "2 weeks ago"
+    },
+    {
+      "author": "VeryBestRecipes",
+      "source": "Facebook",
+      "extensions": [
+        "7 reactions "
+      ],
+      "thumbnails": [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOMC7-WcNw-0oqGKDmCbwo8xvX7Gioh8cMsZNM_XO-OJDNNzt2MtQTa-A&usqp=CAI&s"
+      ],
+      "title": "3 Amazing Cookie Recipes! ~~~~~~ smores cookie ingredients: 6 large marshmallows, cut in half 3 full-size graham crackers, broken into smaller pieces 2 Hershey’s milk chocolate bars, broken into pieces (1.55-ounce bars) 1⅓ cups salted butter, softened 1 c",
+      "link": "https://www.facebook.com/VeryBestRecipes/posts/3-amazing-cookie-recipessmores-cookie-ingredients6-large-marshmallows-cut-in-hal/1096852205800669/",
+      "date": "4 days ago"
+    },
+    {
+      "author": "BuzzFeedUK",
+      "source": "Facebook",
+      "extensions": [
+        "1 reaction "
+      ],
+      "thumbnails": [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKmQCznsQERQtZbmVCsIR293ki6Ed2T_A4aYq0DYhi5qYBzS4SDWQTBMRY&usqp=CAI&s"
+      ],
+      "title": "@mimooo.ahmed shares Tasty’s 5 tips to making the perfect chocolate chip cookie. Full recipe on Tasty.co",
+      "link": "https://www.facebook.com/BuzzFeedUK/videos/we-tested-50-chocolate-chip-cookie-recipes-and-heres-the-best-one/1014874884121663/",
+      "date": "2 weeks ago"
+    },
+    {
+      "author": "Sugar Spun Run",
+      "author_description": "Dessert recipes creator",
+      "source": "YouTube",
+      "extensions": [
+        "15.4K+ views "
+      ],
+      "thumbnails": [
+        "https://img.youtube.com/vi/SWt_sAdCRGs/hqdefault.jpg"
+      ],
+      "title": "The BEST Soft and Chewy Chocolate Chip Cookies",
+      "link": "https://www.youtube.com/watch?v=SWt_sAdCRGs",
+      "date": "3 weeks ago"
+    },
+    {
+      "author": "old fashioned family recipes",
+      "source": "Facebook",
+      "extensions": [
+        "30+ reactions "
+      ],
+      "thumbnails": [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj-z4C7t8bQS_qYjtiRK2oTAtGcX5lJhCXlS3YvA3I7fQ6LRibh82zZb7H&usqp=CAI&s"
+      ],
+      "title": "Did someone say they wanted the recipe for the softest, chewy most delicious cookies ever?!",
+      "link": "https://www.facebook.com/groups/957724288519331/posts/1562331131391974/",
+      "date": "1 week ago"
+    }
+  ],
+  "related_searches": [
+    {
+      "block_position": 1,
+      "items": [
+        {
+          "name": "Chocolate Chip Cookie Dough Pud...",
+          "image": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/384678969bf460aff926b24132ced533e8af47380a5ce98db076ce949f57658a629ac6aa66671d72.gif",
+          "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Chocolate+Chip+Cookie+Dough+Pudding&stick=H4sIAAAAAAAAAOMwVOLVT9c3NCxKLjOIL7Ao_MXIsIGF4RULPxeq-CsWLi4O_Vx9g2zT4pxXLNxcnCCOaVGRQRZCcU5ReVpFelkRQj7LMrsEzkuvKM81gPPMzbMMTeA8o4ycvGSESXmmVdmmSVkVcHnjApMis0Wsys4Z-cn5OYklqQrOGZkFCs75-dmZqQou-aXpGQoBpSkpmXnpt9gkGXYv6vjJ4rrfcKOl8cZNYo-3s_9y_1ubNmPlIg6xgNT8gpxUhcSc4nyF4tTEouQMhbT8ohUcjAAXAT_zDAEAAA&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQs9oBKAB6BQi1ARAJ",
+          "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Chocolate+Chip+Cookie+Dough+Pudding&stick=H4sIAAAAAAAAAOMwVOLVT9c3NCxKLjOIL7Ao_MXIsIGF4RULPxeq-CsWLi4O_Vx9g2zT4pxXLNxcnCCOaVGRQRZCcU5ReVpFelkRQj7LMrsEzkuvKM81gPPMzbMMTeA8o4ycvGSESXmmVdmmSVkVcHnjApMis0Wsys4Z-cn5OYklqQrOGZkFCs75-dmZqQou-aXpGQoBpSkpmXnpt9gkGXYv6vjJ4rrfcKOl8cZNYo-3s_9y_1ubNmPlIg6xgNT8gpxUhcSc4nyF4tTEouQMhbT8ohUcjAAXAT_zDAEAAA"
+        },
+        {
+          "name": "Chocolate chip cookie",
+          "image": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/384678969bf460aff926b24132ced533e8af47380a5ce98df1992c01488076a38a3826241f083b2e.gif",
+          "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Chocolate+chip+cookie&stick=H4sIAAAAAAAAAOMwVOLQz9U3yDYtzvnFyLCBheEVCz8Xr366vqFhUXKZQXyBReErFi4uuKJXLNxcnCCOaVGRQRZCcU5ReVpFelkRQj7LMrsEzkuvKM81gPPMzbMMTeA8o4ycvGSESXmmVdmmSVkVcHnjApMis0Wsos4Z-cn5OYklqQrJGZkFCsn5-dmZqbfYJBl2L-r4yeK633CjpfHGTWKPt7P_cv9bmzZj5SIOsYDU_IKcVIXEnOJ8heLUxKLkDIW0_KIVHIwArauv1fkAAAA&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQs9oBKAB6BQi1ARAO",
+          "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Chocolate+chip+cookie&stick=H4sIAAAAAAAAAOMwVOLQz9U3yDYtzvnFyLCBheEVCz8Xr366vqFhUXKZQXyBReErFi4uuKJXLNxcnCCOaVGRQRZCcU5ReVpFelkRQj7LMrsEzkuvKM81gPPMzbMMTeA8o4ycvGSESXmmVdmmSVkVcHnjApMis0Wsos4Z-cn5OYklqQrJGZkFCsn5-dmZqbfYJBl2L-r4yeK633CjpfHGTWKPt7P_cv9bmzZj5SIOsYDU_IKcVIXEnOJ8heLUxKLkDIW0_KIVHIwArauv1fkAAAA"
+        },
+        {
+          "name": "Chocolate chip",
+          "image": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/384678969bf460aff926b24132ced533e8af47380a5ce98d36940fcf69a1ca7fc063b6ee2a921758.gif",
+          "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Chocolate+chip&stick=H4sIAAAAAAAAAOMwVOLUz9U3MC0qMsj6xciwgYXhFQs_F69-ur6hYVFymUF8gUXhKxYuLg6QqmzT4pxXLNxcCC0IxTlF5WkV6WVFCPksy-wSOC-9ojzXAM4zN88yNIHzjDJy8pIRJuWZVmWbJmVVwOWNC0yKzBax8jln5Cfn5ySWpCokZ2QW3GKTZNi9qOMni-t-w42Wxhs3iT3ezv7L_W9t2oyVizjEAlLzC3JSFRJzivMVilMTi5IzFNLyi1ZwMAIAyr-QWvMAAAA&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQs9oBKAB6BQi1ARAT",
+          "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Chocolate+chip&stick=H4sIAAAAAAAAAOMwVOLUz9U3MC0qMsj6xciwgYXhFQs_F69-ur6hYVFymUF8gUXhKxYuLg6QqmzT4pxXLNxcCC0IxTlF5WkV6WVFCPksy-wSOC-9ojzXAM4zN88yNIHzjDJy8pIRJuWZVmWbJmVVwOWNC0yKzBax8jln5Cfn5ySWpCokZ2QW3GKTZNi9qOMni-t-w42Wxhs3iT3ezv7L_W9t2oyVizjEAlLzC3JSFRJzivMVilMTi5IzFNLyi1ZwMAIAyr-QWvMAAAA"
+        },
+        {
+          "name": "Double chocolate chip cookies",
+          "image": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/384678969bf460aff926b24132ced533e8af47380a5ce98d33d4a9b790ae0dee43c26f7059e8b325.gif",
+          "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Double+chocolate+chip+cookies&stick=H4sIAAAAAAAAAOMwVOLVT9c3NMwpKk-rSC8r-sXIsIGF4RULPxdEvCi5zCC-wKLwFQsXF4d-rr5BtmlxzisWbi5OEMe0qMggC6EYZghCPssyuwTOS68ozzWA88zNswxN4DyjjJy8ZIRJeaZV2aZJWRVweeMCkyKzRayyLvmlSTmpCskZ-cn5OYklIFZmgUJyfn52ZmrxLTZJht2LOn6yuO433GhpvHGT2OPt7L_c_9amzVi5iEMsIDW_AKg3Mac4X6E4NbEoOUMhLb9oBQcjAG8NMuYGAQAA&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQs9oBKAB6BQi1ARAY",
+          "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Double+chocolate+chip+cookies&stick=H4sIAAAAAAAAAOMwVOLVT9c3NMwpKk-rSC8r-sXIsIGF4RULPxdEvCi5zCC-wKLwFQsXF4d-rr5BtmlxzisWbi5OEMe0qMggC6EYZghCPssyuwTOS68ozzWA88zNswxN4DyjjJy8ZIRJeaZV2aZJWRVweeMCkyKzRayyLvmlSTmpCskZ-cn5OYklIFZmgUJyfn52ZmrxLTZJht2LOn6yuO433GhpvHGT2OPt7L_c_9amzVi5iEMsIDW_AKg3Mac4X6E4NbEoOUMhLb9oBQcjAG8NMuYGAQAA"
+        },
+        {
+          "name": "Sugar cookie",
+          "image": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/384678969bf460aff926b24132ced533e8af47380a5ce98dbec512fb4e90bd3f0b4f205ef259de0e.gif",
+          "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Sugar+cookie&stick=H4sIAAAAAAAAAOMwVOLUz9U3MM2yzC75xciwgYXhFQs_F69-ur6hYVFymUF8gUXhKxYuLg6QqmzT4pxXLNxcEC1FRQZZCMU5ReVpFellRQh5kJFwXnpFea4BnGdunmVoAucZZeTkJSNMyjOtyjZNyqqAyxsXmBSZLWLlCS5NTyxSSM7Pz85MvcUmybB7UcdPFtf9hhstjTduEnu8nf2X-9_atBkrF3GIBaTmF-SkKiTmFOcrFKcmFiVnKKTlF63gYAQAXLFnT_EAAAA&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQs9oBKAB6BQi1ARAd",
+          "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Sugar+cookie&stick=H4sIAAAAAAAAAOMwVOLUz9U3MM2yzC75xciwgYXhFQs_F69-ur6hYVFymUF8gUXhKxYuLg6QqmzT4pxXLNxcEC1FRQZZCMU5ReVpFellRQh5kJFwXnpFea4BnGdunmVoAucZZeTkJSNMyjOtyjZNyqqAyxsXmBSZLWLlCS5NTyxSSM7Pz85MvcUmybB7UcdPFtf9hhstjTduEnu8nf2X-9_atBkrF3GIBaTmF-SkKiTmFOcrFKcmFiVnKKTlF63gYAQAXLFnT_EAAAA"
+        },
+        {
+          "name": "Peanut butter cookie",
+          "image": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/384678969bf460aff926b24132ced533e8af47380a5ce98d6f3436d57bf62703c7de3685d4f8bd92.gif",
+          "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Peanut+butter+cookie&stick=H4sIAAAAAAAAAOMwVOLUz9U3SK8ozzX4xciwgYXhFQs_F69-ur6hYVFymUF8gUXhKxYuLg6QqmzT4pxXLNxcYC2mRUUGWQjFOUXlaRXpZUUI-SzL7BI4D2wBnGdunmVoAucZZeTkJSNMyjOtyjZNyqqAyxsXmBSZLWIVCUhNzCstUUgqLSlJLVJIzs_Pzky9xSbJsHtRx08W1_2GGy2NN24Se7yd_Zf739q0GSsXcYgFpOYX5KQqJOYU5ysUpyYWJWcopOUXreBgBACIbWpD-QAAAA&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQs9oBKAB6BQi1ARAi",
+          "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Peanut+butter+cookie&stick=H4sIAAAAAAAAAOMwVOLUz9U3SK8ozzX4xciwgYXhFQs_F69-ur6hYVFymUF8gUXhKxYuLg6QqmzT4pxXLNxcYC2mRUUGWQjFOUXlaRXpZUUI-SzL7BI4D2wBnGdunmVoAucZZeTkJSNMyjOtyjZNyqqAyxsXmBSZLWIVCUhNzCstUUgqLSlJLVJIzs_Pzky9xSbJsHtRx08W1_2GGy2NN24Se7yd_Zf739q0GSsXcYgFpOYX5KQqJOYU5ysUpyYWJWcopOUXreBgBACIbWpD-QAAAA"
+        }
+      ]
+    },
+    {
+      "block_position": 1,
+      "query": "5 best cookie recipes",
+      "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=5+best+cookie+recipes&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ1QJ6BQi8ARAB",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=5+best+cookie+recipes"
+    },
+    {
+      "block_position": 1,
+      "query": "Unique cookie recipes",
+      "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Unique+cookie+recipes&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ1QJ6BQi7ARAB",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Unique+cookie+recipes"
+    },
+    {
+      "block_position": 1,
+      "query": "Best chocolate chip cookies recipe",
+      "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Best+chocolate+chip+cookies+recipe&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ1QJ6BQi6ARAB",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Best+chocolate+chip+cookies+recipe"
+    },
+    {
+      "block_position": 1,
+      "query": "Best cookie recipes 2024",
+      "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Best+cookie+recipes+2024&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ1QJ6BQi5ARAB",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Best+cookie+recipes+2024"
+    },
+    {
+      "block_position": 1,
+      "query": "Easy chocolate chip cookies recipe",
+      "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Easy+chocolate+chip+cookies+recipe&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ1QJ6BQi3ARAB",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Easy+chocolate+chip+cookies+recipe"
+    },
+    {
+      "block_position": 1,
+      "query": "Best cookie recipes Reddit",
+      "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Best+cookie+recipes+Reddit&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ1QJ6BQi2ARAB",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Best+cookie+recipes+Reddit"
+    },
+    {
+      "block_position": 1,
+      "query": "Best cookie recipes, not chocolate chip",
+      "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Best+cookie+recipes,+not+chocolate+chip&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ1QJ6BQi4ARAB",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Best+cookie+recipes%2C+not+chocolate+chip"
+    },
+    {
+      "block_position": 1,
+      "query": "Easy cookie recipes",
+      "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Easy+cookie+recipes&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ1QJ6BQi9ARAB",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Easy+cookie+recipes"
+    }
+  ],
   "pagination": {
     "current": 1,
-    "next": "https://www.google.com/search?q=site%3Areddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe%3F&oq=site%3Areddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe%3F&hl=en&gl=us&num=30&start=30&sourceid=chrome&ie=UTF-8",
+    "next": "https://www.google.com/search?q=best+cookie+recipes&num=30&sca_esv=237638b250c80c54&gl=us&hl=en&ei=kbgwaOS9MNjk2roPkIKWSQ&start=30&sa=N&sstk=Ac65TH7nCWATgMEJPg21gxi_TGd3TPx3OONIuwvRBCPF6RyQ0TwirBVMzq_o-ltqO1Py5SzMejzJ_Hhozt2LgF0ATtloIe_W781ZeA&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ8NMDegQIDBAS",
     "other_pages": {
-      "2": "https://www.google.com/search?q=site%3Areddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe%3F&oq=site%3Areddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe%3F&hl=en&gl=us&num=30&start=30&sourceid=chrome&ie=UTF-8",
-      "3": "https://www.google.com/search?q=site%3Areddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe%3F&oq=site%3Areddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe%3F&hl=en&gl=us&num=30&start=60&sourceid=chrome&ie=UTF-8",
-      "4": "https://www.google.com/search?q=site%3Areddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe%3F&oq=site%3Areddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe%3F&hl=en&gl=us&num=30&start=90&sourceid=chrome&ie=UTF-8",
-      "5": "https://www.google.com/search?q=site%3Areddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe%3F&oq=site%3Areddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe%3F&hl=en&gl=us&num=30&start=120&sourceid=chrome&ie=UTF-8"
+      "2": "https://www.google.com/search?q=best+cookie+recipes&num=30&sca_esv=237638b250c80c54&gl=us&hl=en&ei=kbgwaOS9MNjk2roPkIKWSQ&start=30&sa=N&sstk=Ac65TH7nCWATgMEJPg21gxi_TGd3TPx3OONIuwvRBCPF6RyQ0TwirBVMzq_o-ltqO1Py5SzMejzJ_Hhozt2LgF0ATtloIe_W781ZeA&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ8tMDegQIDBAE",
+      "3": "https://www.google.com/search?q=best+cookie+recipes&num=30&sca_esv=237638b250c80c54&gl=us&hl=en&ei=kbgwaOS9MNjk2roPkIKWSQ&start=60&sa=N&sstk=Ac65TH7nCWATgMEJPg21gxi_TGd3TPx3OONIuwvRBCPF6RyQ0TwirBVMzq_o-ltqO1Py5SzMejzJ_Hhozt2LgF0ATtloIe_W781ZeA&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ8tMDegQIDBAG",
+      "4": "https://www.google.com/search?q=best+cookie+recipes&num=30&sca_esv=237638b250c80c54&gl=us&hl=en&ei=kbgwaOS9MNjk2roPkIKWSQ&start=90&sa=N&sstk=Ac65TH7nCWATgMEJPg21gxi_TGd3TPx3OONIuwvRBCPF6RyQ0TwirBVMzq_o-ltqO1Py5SzMejzJ_Hhozt2LgF0ATtloIe_W781ZeA&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ8tMDegQIDBAI",
+      "5": "https://www.google.com/search?q=best+cookie+recipes&num=30&sca_esv=237638b250c80c54&gl=us&hl=en&ei=kbgwaOS9MNjk2roPkIKWSQ&start=120&sa=N&sstk=Ac65TH7nCWATgMEJPg21gxi_TGd3TPx3OONIuwvRBCPF6RyQ0TwirBVMzq_o-ltqO1Py5SzMejzJ_Hhozt2LgF0ATtloIe_W781ZeA&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ8tMDegQIDBAK",
+      "6": "https://www.google.com/search?q=best+cookie+recipes&num=30&sca_esv=237638b250c80c54&gl=us&hl=en&ei=kbgwaOS9MNjk2roPkIKWSQ&start=150&sa=N&sstk=Ac65TH7nCWATgMEJPg21gxi_TGd3TPx3OONIuwvRBCPF6RyQ0TwirBVMzq_o-ltqO1Py5SzMejzJ_Hhozt2LgF0ATtloIe_W781ZeA&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ8tMDegQIDBAM",
+      "7": "https://www.google.com/search?q=best+cookie+recipes&num=30&sca_esv=237638b250c80c54&gl=us&hl=en&ei=kbgwaOS9MNjk2roPkIKWSQ&start=180&sa=N&sstk=Ac65TH7nCWATgMEJPg21gxi_TGd3TPx3OONIuwvRBCPF6RyQ0TwirBVMzq_o-ltqO1Py5SzMejzJ_Hhozt2LgF0ATtloIe_W781ZeA&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ8tMDegQIDBAO",
+      "8": "https://www.google.com/search?q=best+cookie+recipes&num=30&sca_esv=237638b250c80c54&gl=us&hl=en&ei=kbgwaOS9MNjk2roPkIKWSQ&start=210&sa=N&sstk=Ac65TH7nCWATgMEJPg21gxi_TGd3TPx3OONIuwvRBCPF6RyQ0TwirBVMzq_o-ltqO1Py5SzMejzJ_Hhozt2LgF0ATtloIe_W781ZeA&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ8tMDegQIDBAQ"
     }
   },
   "serpapi_pagination": {
     "current": 1,
-    "next_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe%3F&start=30",
-    "next": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe%3F&start=30",
+    "next_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=best+cookie+recipes&start=30",
+    "next": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=best+cookie+recipes&start=30",
     "other_pages": {
-      "2": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe%3F&start=30",
-      "3": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe%3F&start=60",
-      "4": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe%3F&start=90",
-      "5": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=site%3Areddit.com+I+want+to+make+a+semifreddo+that+is+thick+and+rich.+how+should+I+change+the+recipe%3F&start=120"
+      "2": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=best+cookie+recipes&start=30",
+      "3": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=best+cookie+recipes&start=60",
+      "4": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=best+cookie+recipes&start=90",
+      "5": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=best+cookie+recipes&start=120",
+      "6": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=best+cookie+recipes&start=150",
+      "7": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=best+cookie+recipes&start=180",
+      "8": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=best+cookie+recipes&start=210"
     }
   }
 }

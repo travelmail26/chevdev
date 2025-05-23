@@ -8,7 +8,7 @@ import traceback
 
 from datetime import datetime
 import pytz
-from perplexity import perplexitycall
+from perplexity import search_perplexity
 from chef.utilities.sheetscall import add_chatlog_entry, sheets_call, fetch_chatlog, task_create, fetch_preferences, fetch_recipes, update_task, fetch_sheet_data_rows
 from firestore_chef import firestore_add_doc, firestore_get_docs_by_date_range
 from testscripts.serpapirecipes import search_serpapi

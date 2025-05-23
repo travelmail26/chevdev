@@ -1,147 +1,103 @@
-
+\
 import json
 import os
-import sys
-from chef.utilities.sheetscall import add_chatlog_entry
 import requests
-
-
-from openai import OpenAI
 
 try:
     YOUR_API_KEY = os.environ.get('PERPLEXITY_KEY')
-
-except:
+    if not YOUR_API_KEY:
+        raise ValueError("The 'PERPLEXITY_KEY' environment variable is not set or is empty.")
+except KeyError:
     raise ValueError("The 'PERPLEXITY_KEY' environment variable is not set.")
 
-try:
-    with open('tools.txt', 'r') as file:
-        tools = json.load(file)
-except Exception:
-    None
+def search_perplexity(query: str):
+    """
+    Performs a search using the Perplexity API and returns the summarized result with citations.
+    Use this tool for general web searches, finding explanations, or getting summaries on topics.
+    It directly returns the answer content, unlike search_serpapi which only returns URLs.
+    """
+    print(f'**DEBUG: search_perplexity triggered with query: {query}**')
 
-messages = [{
-    "role":
-    "system",
-    "content":
-    ("""You are an artificial intelligence assistant. Just say hi back to me."""
-     ),
-}]
-
-
-
-def perplexitycall(messages):
-    print('**DEBUG: perplexitycall triggered**')
-
-    yield "Perplexity is searching the internet..."
-    
+    messages = [
+        {
+            "role": "system",
+            "content": """
+            **CRITICAL INSTRUCTION:** For each source you cite, you **MUST** include: --At least one direct quote (a few words minimum) from that source that directly supports the information you are providing. Integrate this quote naturally into your response.
+            --NEVER say you do not have access to search or browse a specific website. 
+            --**ALWAYS** paste the full URL link in every citation. 
+            --**CRITICAL**-- Provide at least one direct quote when citing a source. ALWAYS quote at least a few words from each citation,  \
+                directly relevant to your summary of why you chose this citation."""
+        },
+        {
+            "role": "user",
+            "content": query
+        }
+    ]
 
     headers = {
         "Authorization": f"Bearer {YOUR_API_KEY}",
         "Content-Type": "application/json"
     }
 
-    print('**DEBUG: messages sent to perplexity api**', messages)
-
-    messages.insert(
-        0, {
-            "role": "system",
-            # "content": """--Return the full citations and bibliography for each result. \
-            #                     --Always paste the full URL link in every citation. \ 
-            #                      --Provide at last one direct quote when citing a source \
-            #                         --Do not suggest nutritional advice on your own. 
-            #                         -- You do not know what is or is not healthy, nor if I should consult someone.  \
-            #                           --  You will not suggest consulting an a health expert or medical professional unless it is explicitly found in your search results"""
-            "content": """NEVER say you do not have access to search or browse a specific webiste. You will search for what the user asks."""
-        }
-    )
-
-
     data = {
-        "model": "sonar-pro",
+        "model": "sonar", # Using the online model for search capabilities
         "messages": messages,
-        #"search_domain_filter": '',
-        "stream": True
+        "stream": False # Set stream to False to get the full response at once
     }
 
+    try:
+        response = requests.post(
+            "https://api.perplexity.ai/chat/completions",
+            headers=headers,
+            json=data
+        )
+        response.raise_for_status() # Raise an exception for bad status codes (4xx or 5xx)
 
-    response = requests.post(
-        "https://api.perplexity.ai/chat/completions",
-        headers=headers,
-        json=data,
-        stream=True
-    )
-    response.raise_for_status()
-    content = ""
-    buffer = ""
+        response_data = response.json()
 
-    for line in response.iter_lines():
-        if line:
-            decoded_line = line.decode('utf-8')
-            if decoded_line.startswith("data: ") and decoded_line != "data: [DONE]":
-                data = json.loads(decoded_line[len("data: "):])
+        # Extract content and citations
+        content = ""
+        citations = []
 
-                # Capture citations if present
-                if 'citations' in data:
-                    citations = data['citations']
+        if 'choices' in response_data and len(response_data['choices']) > 0:
+            message = response_data['choices'][0].get('message', {})
+            content = message.get('content', '')
+            citations = response_data.get('citations', [])
+            structured_citations = [{"index": i + 1, "url": url} for i, url in enumerate(citations)]
+            
+            # Format the result with content and citations in a single string
+            formatted_result = content
+            
+            # Add citations at the end if there are any
+            if structured_citations:
+                formatted_result += "\n\nCitations:\n"
+                for citation in structured_citations:
+                    formatted_result += f"[{citation['index']}] {citation['url']}\n"
+            
+            return formatted_result
 
-                if 'choices' in data and 'delta' in data['choices'][0]:
-                    delta = data['choices'][0]['delta']
-                    if 'content' in delta and delta['content'] is not None:
-                        buffer += delta['content']
-                        content += delta['content']
-                        if len(buffer) >= 40:
-                            buffer = ""
-            elif decoded_line == "data: [DONE]":
-                break
-
-
-
-    if citations:
-        content += "\n\n**Sources:**\n"
-        for i, citation in enumerate(citations, 1):
-            content += f"[{i}] {citation}\n"
-
-    yield content
+    except requests.exceptions.RequestException as e:
+        print(f"Error calling Perplexity API: {e}")
+        if hasattr(e, 'response') and e.response is not None:
+            try:
+                error_details = e.response.json()
+                print(f"Error details: {json.dumps(error_details, indent=2)}")
+                return f"Error accessing Perplexity: {error_details.get('error', {}).get('message', str(e))}"
+            except json.JSONDecodeError:
+                print(f"Could not decode JSON error response. Status code: {e.response.status_code}, Response text: {e.response.text}")
+                return f"Error accessing Perplexity: Status {e.response.status_code} - {e.response.reason}"
+        return f"Error accessing Perplexity: {str(e)}"
+    except Exception as e:
+        print(f"An unexpected error occurred in search_perplexity: {e}")
+        return f"An unexpected error occurred: {str(e)}"
 
 
 if __name__ == "__main__":
-    test_messages = [{
-        "role":
-        "user",
-        "content":
-        "search why semifreddo recipe is too solid and not soft. cite names of sources"
-    }]
-    result = list(perplexitycall(test_messages))
-    for item in result:
-        print(item)
+    test_query = "I want to make a semifreddo that is thick and rich. how should I change the recipe?"
+    print(f"Testing Perplexity with query: '{test_query}'")
+    result = search_perplexity(test_query)
+    print("\n--- Perplexity Result ---")
+    print(result)
+    print("------------------------")
 
 
-
-
-##misc code###
-
-# def perplexitychat():
-#     print('**DEBUG: persplexitychat triggered**')
-
-#     first_input = True
-#     user_input = ""
-
-#     while True:
-#         user_input = input("User: ")
-#         if first_input:
-#             user_input = user_input
-#             first_input = False
-
-#         # Add user input to messages
-#         messages.append({"role": "user", "content": user_input})
-
-#         # Get response from OpenAI
-#         response = perplexitycall(messages)
-
-#         # Add AI response to messages
-#         messages.append({"role": "assistant", "content": response})
-#         print('**DEBUG: message after response**', messages)
-
-#         # Print AI response
-#         print("\nAI: ", response)

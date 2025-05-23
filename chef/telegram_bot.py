@@ -3,6 +3,8 @@ import sys
 import logging
 import traceback
 from dotenv import load_dotenv, dotenv_values
+from testscripts.history_messages import create_session_log_file # Adjust path if necessary
+
 
 from telegram import Update
 from telegram.ext import (
@@ -16,6 +18,7 @@ from telegram.ext import (
 # Import AIHandler again
 from chefwriter import AIHandler
 from firebase import firebase_get_media_url # Add this import back
+from message_router import MessageRouter # Import MessageRouter
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -35,14 +38,49 @@ logging.getLogger("telegram.ext").setLevel(logging.WARNING)
 application = None
 conversations = {}
 handlers_per_user = {}
+message_router = None # Add global variable for the router
 
+# Global dictionary to store user contexts
+user_contexts = {}
 
-def get_user_handler(user_id, application_data, session_info):
-    if user_id not in handlers_per_user:
-        # Remove the 'session_info' argument from the AIHandler initialization
-        handlers_per_user[user_id] = AIHandler(user_id=user_id, application=application_data)
-        print(f"DEBUG: Created new AIHandler for user {user_id}")
-    return handlers_per_user[user_id]
+def get_user_handler(user_id, session_info, user_message, application_data=None):
+    """
+    Creates or retrieves a user context dictionary.
+
+    Args:
+        user_id: The user's ID.
+        application_data: The Telegram application object.
+        session_info: A dictionary containing session information.
+        user_message: The user's message.
+
+    Returns:
+        A dictionary containing the user's context.
+    """
+    if user_id not in user_contexts:
+        # Create a new user context
+        user_context = {
+            'user_id': user_id,
+            #'application': application_data,
+            'session_info': session_info,
+            'user_message': user_message,  # Add the user's message to the context
+            # Add other relevant data here as needed
+        }
+        user_contexts[user_id] = user_context
+    else:
+        # Retrieve existing user context
+        user_context = user_contexts[user_id]
+        # Update session info
+        user_context['session_info'] = session_info
+        # Update user message
+        user_context['user_message'] = user_message
+    return user_context
+
+# def get_user_handler(user_id, application_data, session_info):
+#     if user_id not in handlers_per_user:
+#         # Remove the 'session_info' argument from the AIHandler initialization
+#         handlers_per_user[user_id] = AIHandler(user_id=user_id, application=application_data)
+#         print(f"DEBUG: Created new AIHandler for user {user_id}")
+#     return handlers_per_user[user_id]
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Hello! I'm your AI assistant. How can I help you today?")
@@ -51,7 +89,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         user_id = update.message.from_user.id
         application_data = context.application
-        
+        user_input = update.message.text
+
+
         # Gather session information
         session_info = {
             'user_id': user_id,
@@ -63,10 +103,17 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             'last_name': update.message.from_user.last_name
         }
 
+        #store application token
+        with open(f"application_data_for_{session_info['user_id']}.txt", "w") as f:
+            f.write(str(application_data))
+        
         # Pass session_info to get_user_handler
-        user_handler = get_user_handler(user_id, application_data, session_info)
+
+        message_object = get_user_handler(user_id, session_info, user_input)
+
 
         user_input = "" # Initialize user_input
+
 
         if update.message.audio or update.message.voice:
             # Handle audio or voice messages
@@ -123,13 +170,46 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         # Centralized call to agentchat and response handling for all types
         #status user handler class agent chat rather than passing the message
-        response = user_handler.agentchat(user_input)
+        
+        message_object =  get_user_handler(user_id, session_info, user_input)
 
 
-        print (f"DEBUG telegram_bot: User {user_id} input: {user_input}")
-        print (f"DEBUG telegram_bot: User {user_id} response: {response}")
+        #thhe message object dictionary example
+        """
+        DEBUG: User handler object: {'user_id': 1275******, 
+        'application': Application[bot=ExtBot[token=<token>]], 
+        'session_info': {'user_id': 1275******, 'chat_id': 1275******, 'message_id': 1***, 
+        'timestamp': 1746130241.0, 'username': 'ferenstein', 
+        'first_name': '<name>', 'last_name': '<name>'}, 'user_message': 'hi'}
+        """
 
-        return response
+
+        print(f"DEBUG: User handler object: {message_object}")
+        
+        # Get or create user conversation history
+        if user_id not in conversations:
+            print(f"DEBUG: Creating new conversation history for user {user_id}")
+            conversations[user_id] = []
+        else:
+            print(f"DEBUG: Using existing conversation history for user {user_id}")
+        
+        # Trigger the message router with the conversation history and message object
+         
+
+        router_instance_for_this_call = MessageRouter()
+        router_instance_for_this_call.route_message(message_object=message_object)
+        logging.info(f"Message object for user {user_id} passed to message router.")
+        
+            
+        pass
+
+    
+
+
+
+        # Now, pass the user_context to the agentchat function
+
+        pass
         
         ##buffer and send message
 
@@ -162,6 +242,24 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
+
+    user_id = update.effective_user.id
+    chat_id = update.effective_chat.id # Get chat_id
+
+    # Construct session_info from the update object
+    session_info_for_restart = {
+        'user_id': user_id,
+        'chat_id': chat_id,
+        'message_id': update.effective_message.message_id, # ID of the /restart message
+        'timestamp': update.effective_message.date.timestamp(), # Timestamp of the /restart message
+        'username': update.effective_user.username,
+        'first_name': update.effective_user.first_name,
+        'last_name': update.effective_user.last_name,
+        'trigger_command': '/restart' # You can add custom info like this
+    }
+    logging.info(f"Restart command received. Session info for restart: {session_info_for_restart}")
+
+    create_session_log_file(user_id)
     try:
         if user_id in handlers_per_user:
             handlers_per_user.pop(user_id)
@@ -180,13 +278,10 @@ async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
 #setup bot loads message handler commands into application
 def setup_bot() -> Application:
     environment = os.getenv("ENVIRONMENT", "development")
-    print('DEBUG: setup bot triggered', environment)
 
     try: 
         if environment == 'development':
-            print ('DEBUG: Production environment detected')
             token = os.getenv('TELEGRAM_DEV_KEY')
-            print(f"DEBUG: Using TELEGRAM_DEV_KEY: {token}")
 
 
         else:
@@ -198,9 +293,8 @@ def setup_bot() -> Application:
     if not token:
         raise ValueError("No Telegram token found; check environment variables.")
     
-    global application
+    global application, message_router # Add message_router to global declaration
     application = Application.builder().token(token).build()
-    print('DEBUG: telegram application', application)
     
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("restart", restart))
