@@ -47,7 +47,7 @@ class MessageRouter:
     
 
     
-    def execute_tool(self, tool_call):
+    def execute_tool(self, tool_call, user_id=None):
         """Execute a tool call and return the result as a string"""
         if not tool_call:
             return "Error: No tool call provided"
@@ -68,6 +68,37 @@ class MessageRouter:
                 # Get the function from the map
                 tool_function = self.tool_map[function_name]
                 logging.debug(f"Found tool function: {tool_function.__name__}")
+                
+                # Special handling for Perplexity - include last 5 messages as context
+                if function_name == "search_perplexity" and user_id:
+                    history_obj = get_full_history_message_object(str(user_id))
+                    all_messages = history_obj.get("messages", [])
+                    
+                    # Filter messages to only include those with valid content for Perplexity
+                    valid_messages = []
+                    for msg in all_messages:
+                        # Only include messages that have non-empty content
+                        if (msg.get("content") is not None and 
+                            msg.get("content") != "" and 
+                            msg.get("role") in ["user", "assistant"]):
+                            valid_messages.append({"role": msg["role"], "content": msg["content"]})
+                    
+                    # Get last 5 valid messages for context
+                    context_messages = valid_messages[-5:] if len(valid_messages) >= 5 else valid_messages
+                    
+                    if context_messages:
+                        # Keep the user's query but inject it with conversation context as a JSON string
+                        user_query = function_args.get("query", "")
+                        
+                        # Convert context to JSON string and combine with current query
+                        context_json = json.dumps(context_messages, indent=2)
+                        combined_query = f"Current query: {user_query}\n\nConversation context (JSON):\n{context_json}"
+                        
+                        function_args["query"] = combined_query
+                        print(f"**DEBUG: Perplexity will receive context as JSON string with {len(context_messages)} messages**")
+                    else:
+                        # If no valid context, just send the current query
+                        print(f"**DEBUG: No valid context found, sending current query only**")
                 
                 # === DIAGNOSIS START ===
                 #print(f"**DIAGNOSIS: About to call {function_name} with args: {function_args}**")
@@ -124,7 +155,7 @@ class MessageRouter:
         # Ensure system instructions are present at the start of the messages list
         system_instruction = {"role": "system", "content": """You are an assistant that MUST ALWAYS call a tool for EVERY user message.
                               For general conversation, greetings, or simple questions, use the call_openai_no_tool tool.
-                              When calling any tool, ALWAYS pass the user's latest message (not your own response) as the 'query' parameter.
+                              When calling search_perplexity, pass only the user's current search query as a string - do NOT construct message arrays.
                               NEVER pass your own response as the query."""}
         if not messages or messages[0].get("role") != "system":
             messages.insert(0, system_instruction)
@@ -152,13 +183,13 @@ class MessageRouter:
                 "type": "function",
                 "function": {
                     "name": "search_perplexity",
-                    "description": "Search the web for information",
+                    "description": "Search the web for information with conversation context. This tool automatically includes the last 5 messages from the conversation history to provide contextual search results. Use this when the user's question relates to previous conversation topics or when follow-up questions need context.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "query": {
                                 "type": "string",
-                                "description": "The search query"
+                                "description": "The current user's question or search query - conversation context will be automatically added"
                             }
                         },
                         "required": ["query"]
@@ -249,7 +280,8 @@ class MessageRouter:
                     message_history_process(message_object, assistant_response_with_tool_call)
                 
                 # Execute the tool
-                result = self.execute_tool(tool_call)
+                user_id = message_object.get('user_id') if message_object else None
+                result = self.execute_tool(tool_call, user_id)
                 
                 tool_response_message = {
                     "role": "tool",

@@ -10,13 +10,21 @@ try:
 except KeyError:
     raise ValueError("The 'PERPLEXITY_KEY' environment variable is not set.")
 
-def search_perplexity(query: str):
+def search_perplexity(query):
     """
     Performs a search using the Perplexity API and returns the summarized result with citations.
     Use this tool for general web searches, finding explanations, or getting summaries on topics.
-    It directly returns the answer content, unlike search_serpapi which only returns URLs.
+    Args:
+        query: Either a string for simple queries or a list of message dicts for conversation context
     """
-    print(f'**DEBUG: search_perplexity triggered with query: {query}**')
+    print(f'**DEBUG: search_perplexity triggered with query type: {type(query)}**')
+    print(f'**DEBUG: query content: {query}**')
+
+    # If query is a string, treat as single message. If list, use as conversation history
+    if isinstance(query, str):
+        query_messages = [{"role": "user", "content": query}]
+    else:
+        query_messages = query
 
     messages = [
         {
@@ -27,12 +35,8 @@ def search_perplexity(query: str):
             --**ALWAYS** paste the full URL link in every citation. 
             --**CRITICAL**-- Provide at least one direct quote when citing a source. ALWAYS quote at least a few words from each citation,  \
                 directly relevant to your summary of why you chose this citation."""
-        },
-        {
-            "role": "user",
-            "content": query
         }
-    ]
+    ] + query_messages
 
     headers = {
         "Authorization": f"Bearer {YOUR_API_KEY}",
@@ -40,20 +44,65 @@ def search_perplexity(query: str):
     }
 
     data = {
-        "model": "sonar-reasoning", # Using the online model for search capabilities
+        "model": "sonar-reasoning-pro",  # Using model that returns reasoning tokens
         "messages": messages,
-        "stream": False # Set stream to False to get the full response at once
+        "stream": True,  # Enable streaming for reasoning tokens
+        "reasoning_effort": "high"  # Get detailed reasoning tokens
     }
 
     try:
+        print("\n=== Streaming reasoning tokens: ===\n")
         response = requests.post(
             "https://api.perplexity.ai/chat/completions",
             headers=headers,
-            json=data
+            json=data,
+            stream=True,
+            timeout=120
         )
-        response.raise_for_status() # Raise an exception for bad status codes (4xx or 5xx)
-
-        response_data = response.json()
+        response.raise_for_status()
+        
+        # Collect the complete response while streaming reasoning tokens
+        full_content = ""
+        seen_citations = set()  # Use a set to track unique citations
+        citations = []
+        
+        for line in response.iter_lines():
+            if line:
+                try:
+                    # Remove 'data: ' prefix and parse JSON
+                    decoded_line = json.loads(line.decode('utf-8').removeprefix('data: '))
+                    
+                    # Extract the delta content (new tokens) if present
+                    if 'choices' in decoded_line and len(decoded_line['choices']) > 0:
+                        delta = decoded_line['choices'][0].get('delta', {})
+                        if 'content' in delta:
+                            # Print just the new content tokens
+                            print(delta['content'], end='', flush=True)
+                            full_content += delta['content']
+                        # Handle citations - only add new ones
+                        if 'citations' in decoded_line:
+                            for citation in decoded_line['citations']:
+                                if citation not in seen_citations:
+                                    seen_citations.add(citation)
+                                    citations.append(citation)
+                except json.JSONDecodeError:
+                    # Skip lines that aren't JSON
+                    continue
+                except Exception as e:
+                    print(f"Error processing stream line: {e}")
+                    continue
+        
+        print("\n=== End of reasoning tokens ===\n")
+        
+        # Create response_data structure matching the non-streaming format
+        response_data = {
+            'choices': [{
+                'message': {
+                    'content': full_content
+                }
+            }],
+            'citations': citations
+        }
 
         # Extract content and citations
         content = ""
