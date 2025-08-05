@@ -1,17 +1,18 @@
 {
   "search_metadata": {
-    "id": "6830b8903d34dd9fe94e2e3c",
+    "id": "6890e441ecf5ed3d69c43e6b",
     "status": "Success",
-    "json_endpoint": "https://serpapi.com/searches/a80c570e4e9b8017/6830b8903d34dd9fe94e2e3c.json",
-    "created_at": "2025-05-23 18:04:00 UTC",
-    "processed_at": "2025-05-23 18:04:00 UTC",
-    "google_url": "https://www.google.com/search?q=best+cookie+recipes&oq=best+cookie+recipes&hl=en&gl=us&num=30&sourceid=chrome&ie=UTF-8",
-    "raw_html_file": "https://serpapi.com/searches/a80c570e4e9b8017/6830b8903d34dd9fe94e2e3c.html",
-    "total_time_taken": 2.69
+    "json_endpoint": "https://serpapi.com/searches/fc9b537e7c2638f9/6890e441ecf5ed3d69c43e6b.json",
+    "pixel_position_endpoint": "https://serpapi.com/searches/fc9b537e7c2638f9/6890e441ecf5ed3d69c43e6b.json_with_pixel_position",
+    "created_at": "2025-08-04 16:48:01 UTC",
+    "processed_at": "2025-08-04 16:48:01 UTC",
+    "google_url": "https://www.google.com/search?q=gooey+croissant+recipe+crisp+outside&oq=gooey+croissant+recipe+crisp+outside&hl=en&gl=us&num=30&sourceid=chrome&ie=UTF-8",
+    "raw_html_file": "https://serpapi.com/searches/fc9b537e7c2638f9/6890e441ecf5ed3d69c43e6b.html",
+    "total_time_taken": 9.35
   },
   "search_parameters": {
     "engine": "google",
-    "q": "best cookie recipes",
+    "q": "gooey croissant recipe crisp outside",
     "google_domain": "google.com",
     "hl": "en",
     "gl": "us",
@@ -19,784 +20,1050 @@
     "device": "desktop"
   },
   "search_information": {
-    "query_displayed": "best cookie recipes",
-    "total_results": 515000000,
-    "time_taken_displayed": 0.55,
-    "organic_results_state": "Results for exact spelling"
+    "query_displayed": "gooey croissant recipe crisp outside",
+    "total_results": 1710000,
+    "time_taken_displayed": 0.45,
+    "organic_results_state": "Showing results for exact spelling despite spelling suggestion",
+    "spelling_fix": "gooey croissant recipe crispy outside"
   },
-  "related_questions": [
-    {
-      "question": "What is the #1 cookie in the US?",
-      "snippet": "The chocolate chip cookie is far and away America's favorite cookie This should come as no surprise to anyone who enjoys the tasty treat. More than 53% of American adults prefer the cookies over the next most popular kind, peanut butter.",
-      "title": "chocolate chip cookie",
-      "date": "Feb 24, 2016",
-      "link": "https://thecravory.com/blogs/the-cravory-the-ultimate-cookie-experience-1/123677505-fun-facts-about-americas-favorite-cookie#:~:text=The%20chocolate%20chip%20cookie%20is,most%20popular%20kind%2C%20peanut%20butter.",
-      "displayed_link": "https://thecravory.com › blogs › 123677505-fun-facts-a...",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqMCREtO9lXsfN8zeaKYOPfIV-X6j_uk0X1J7HxJhsdg&s",
-      "source_logo": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/384678969bf460af70f8a874b9e61aae9febce9b1d7d8ca5d0865b372e3c0cd8.png",
-      "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUR3QwWDNaR2JUaDZOMmhqVkhFMldtdFZkek5KWmt0U1JGcGhPVXRSTlZreVdYZDJPSEU0VFd0bmFVTkVNR05HTmtSa2VFRnlRM0I1WWpGVExVMUhSMnRMY1RCcmMzYzRiakl3YUhFNFFsWjJaakJ3U2toWldrUmZiRlJhWW5Sd1p4SVdhMkpuZDJGUFV6bE5UbXByTW5KdlVHdEpTMWRUVVJvaVFVWk5RVWRIY1RKQlZWbDJhalZLT1RGclZtUklaSGRFYkhsbVUxTXRjbmd0WnciLCJmY3YiOiIzIiwiZWkiOiJrYmd3YU9TOU1Oamsycm9Qa0lLV1NRIiwicWMiOiJDaE5pWlhOMElHTnZiMnRwWlNCeVpXTnBjR1Z6RUFCOTZTWVJQdyIsInF1ZXN0aW9uIjoiV2hhdCBpcyB0aGUgIzEgY29va2llIGluIHRoZSBVUz8iLCJsayI6ImM1T1NMODlJTEZISUxGWW95VWhWVURaVVNNN1B6ODVNVmNqTUF3dVVGZ01BIiwiYnMiOiJjLVB5NEZJSXowZ3NVY2dzVmlqSlNGVlFObFJJenNfUHpreFZ5TXdEQzRRRzIwdk1sakpTbEpJdng2ZXN0SmdyaUVzVlpsSndYbjUtZ1lKTGZucTZlckZDV21KWmZsRm1TU3BVaDcxRXM3eVJtcFFLekxoaXNOb1VyR3E1WExoVWtGMVhuSnBjbEZxaVVKS3ZrSnVmV1Z3Q1ZWVnNMN0hYeDBoU1NoeUhORmNDbHc3WWxNU2lWSVhBMHRUVVBBWFhuTXlxeEtUVWtneE1PNEdtcmM4eDBwWFNMb2RwS1FSclNjV2pSWUFSQUEiLCJpZCI6ImZjX2tiZ3dhT1M5TU5qazJyb1BrSUtXU1FfMyJ9",
-      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUR3QwWDNaR2JUaDZOMmhqVkhFMldtdFZkek5KWmt0U1JGcGhPVXRSTlZreVdYZDJPSEU0VFd0bmFVTkVNR05HTmtSa2VFRnlRM0I1WWpGVExVMUhSMnRMY1RCcmMzYzRiakl3YUhFNFFsWjJaakJ3U2toWldrUmZiRlJhWW5Sd1p4SVdhMkpuZDJGUFV6bE5UbXByTW5KdlVHdEpTMWRUVVJvaVFVWk5RVWRIY1RKQlZWbDJhalZLT1RGclZtUklaSGRFYkhsbVUxTXRjbmd0WnciLCJmY3YiOiIzIiwiZWkiOiJrYmd3YU9TOU1Oamsycm9Qa0lLV1NRIiwicWMiOiJDaE5pWlhOMElHTnZiMnRwWlNCeVpXTnBjR1Z6RUFCOTZTWVJQdyIsInF1ZXN0aW9uIjoiV2hhdCBpcyB0aGUgIzEgY29va2llIGluIHRoZSBVUz8iLCJsayI6ImM1T1NMODlJTEZISUxGWW95VWhWVURaVVNNN1B6ODVNVmNqTUF3dVVGZ01BIiwiYnMiOiJjLVB5NEZJSXowZ3NVY2dzVmlqSlNGVlFObFJJenNfUHpreFZ5TXdEQzRRRzIwdk1sakpTbEpJdng2ZXN0SmdyaUVzVlpsSndYbjUtZ1lKTGZucTZlckZDV21KWmZsRm1TU3BVaDcxRXM3eVJtcFFLekxoaXNOb1VyR3E1WExoVWtGMVhuSnBjbEZxaVVKS3ZrSnVmV1Z3Q1ZWVnNMN0hYeDBoU1NoeUhORmNDbHc3WWxNU2lWSVhBMHRUVVBBWFhuTXlxeEtUVWtneE1PNEdtcmM4eDBwWFNMb2RwS1FSclNjV2pSWUFSQUEiLCJpZCI6ImZjX2tiZ3dhT1M5TU5qazJyb1BrSUtXU1FfMyJ9"
-    },
-    {
-      "question": "What is Snoop Dogg's favorite cookie?",
-      "snippet": "They are called Snoop Dogg's Rolls Royce PB-Chocolate Chip cookies. Let me tell you, I ate 4 of these cookies, they are so addicting. They are so crispy in a very light kind of way. so flavorful I can't say enough. But that you need to try them. Hope you enjoyed the video, I will see you tommorrow.",
-      "title": "Snoop Dogg's Rolls Royce PB-Chocolate Chip Cookies Vlogmas 2022 Day 6 - YouTube",
-      "date": "Dec 6, 2022",
-      "link": "https://www.youtube.com/watch?v=_UILmXFSIRI",
-      "displayed_link": "https://www.youtube.com › watch",
-      "source_logo": null,
-      "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUR3QwWDNaR2JUaDZOMmhqVkhFMldtdFZkek5KWmt0U1JGcGhPVXRSTlZreVdYZDJPSEU0VFd0bmFVTkVNR05HTmtSa2VFRnlRM0I1WWpGVExVMUhSMnRMY1RCcmMzYzRiakl3YUhFNFFsWjJaakJ3U2toWldrUmZiRlJhWW5Sd1p4SVdhMkpuZDJGUFV6bE5UbXByTW5KdlVHdEpTMWRUVVJvaVFVWk5RVWRIY1RKQlZWbDJhalZLT1RGclZtUklaSGRFYkhsbVUxTXRjbmd0WnciLCJmY3YiOiIzIiwiZWkiOiJrYmd3YU9TOU1Oamsycm9Qa0lLV1NRIiwicWMiOiJDaE5pWlhOMElHTnZiMnRwWlNCeVpXTnBjR1Z6RUFCOTZTWVJQdyIsInF1ZXN0aW9uIjoiV2hhdCBpcyBTbm9vcCBEb2dnJ3MgZmF2b3JpdGUgY29va2llPyIsImxrIjoiR2lSM2FHRjBJR2x6SUhOdWIyOXdJR1J2WjJjbmN5Qm1ZWFp2Y21sMFpTQmpiMjlyYVdVIiwiYnMiOiJjLVB5NEZJSXowZ3NVY2dzVmlqSlNGVlFObFJJenNfUHpreFZ5TXdEQzRRRzIwdk1sakpTbEpJdng2ZXN0SmdyaUVzVlpsSndYbjUtZ1lKTGZucTZlckZDV21KWmZsRm1TU3BVaDcxRXM3eVJtcFFLekxoaXNOb1VyR3E1WExoVWtGMVhuSnBjbEZxaVVKS3ZrSnVmV1Z3Q1ZWVnNMN0hYeDBoU1NoeUhORmNDbHc3WWxNU2lWSVhBMHRUVVBBWFhuTXlxeEtUVWtneE1PNEdtcmM4eDBwWFNMb2RwS1FSclNjV2pSWUFSQUEiLCJpZCI6ImZjX2tiZ3dhT1M5TU5qazJyb1BrSUtXU1FfMyJ9",
-      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUR3QwWDNaR2JUaDZOMmhqVkhFMldtdFZkek5KWmt0U1JGcGhPVXRSTlZreVdYZDJPSEU0VFd0bmFVTkVNR05HTmtSa2VFRnlRM0I1WWpGVExVMUhSMnRMY1RCcmMzYzRiakl3YUhFNFFsWjJaakJ3U2toWldrUmZiRlJhWW5Sd1p4SVdhMkpuZDJGUFV6bE5UbXByTW5KdlVHdEpTMWRUVVJvaVFVWk5RVWRIY1RKQlZWbDJhalZLT1RGclZtUklaSGRFYkhsbVUxTXRjbmd0WnciLCJmY3YiOiIzIiwiZWkiOiJrYmd3YU9TOU1Oamsycm9Qa0lLV1NRIiwicWMiOiJDaE5pWlhOMElHTnZiMnRwWlNCeVpXTnBjR1Z6RUFCOTZTWVJQdyIsInF1ZXN0aW9uIjoiV2hhdCBpcyBTbm9vcCBEb2dnJ3MgZmF2b3JpdGUgY29va2llPyIsImxrIjoiR2lSM2FHRjBJR2x6SUhOdWIyOXdJR1J2WjJjbmN5Qm1ZWFp2Y21sMFpTQmpiMjlyYVdVIiwiYnMiOiJjLVB5NEZJSXowZ3NVY2dzVmlqSlNGVlFObFJJenNfUHpreFZ5TXdEQzRRRzIwdk1sakpTbEpJdng2ZXN0SmdyaUVzVlpsSndYbjUtZ1lKTGZucTZlckZDV21KWmZsRm1TU3BVaDcxRXM3eVJtcFFLekxoaXNOb1VyR3E1WExoVWtGMVhuSnBjbEZxaVVKS3ZrSnVmV1Z3Q1ZWVnNMN0hYeDBoU1NoeUhORmNDbHc3WWxNU2lWSVhBMHRUVVBBWFhuTXlxeEtUVWtneE1PNEdtcmM4eDBwWFNMb2RwS1FSclNjV2pSWUFSQUEiLCJpZCI6ImZjX2tiZ3dhT1M5TU5qazJyb1BrSUtXU1FfMyJ9"
-    },
-    {
-      "question": "What is the secret to moist cookies?",
-      "snippet": "The simple, yet oh-so-necessary component is cornstarch. That's right, the flavorless thickening agent used for soups, stews, and curries is also the secret weapon for baked goods that boast a silky-smooth mouthfeel.",
-      "title": "Cornstarch Is The Secret To Soft And Chewy Cookies – Here's Why",
-      "date": "May 14, 2023",
-      "link": "https://www.southernliving.com/cornstarch-for-soft-and-chewy-cookies-7497408#:~:text=The%20simple%2C%20yet%20oh%2Dso,boast%20a%20silky%2Dsmooth%20mouthfeel.",
-      "displayed_link": "https://www.southernliving.com › cornstarch-for-soft-an...",
-      "source_logo": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/384678969bf460af70f8a874b9e61aaedceea8429102753c627d9d5c470fb53a.png",
-      "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUR3QwWDNaR2JUaDZOMmhqVkhFMldtdFZkek5KWmt0U1JGcGhPVXRSTlZreVdYZDJPSEU0VFd0bmFVTkVNR05HTmtSa2VFRnlRM0I1WWpGVExVMUhSMnRMY1RCcmMzYzRiakl3YUhFNFFsWjJaakJ3U2toWldrUmZiRlJhWW5Sd1p4SVdhMkpuZDJGUFV6bE5UbXByTW5KdlVHdEpTMWRUVVJvaVFVWk5RVWRIY1RKQlZWbDJhalZLT1RGclZtUklaSGRFYkhsbVUxTXRjbmd0WnciLCJmY3YiOiIzIiwiZWkiOiJrYmd3YU9TOU1Oamsycm9Qa0lLV1NRIiwicWMiOiJDaE5pWlhOMElHTnZiMnRwWlNCeVpXTnBjR1Z6RUFCOTZTWVJQdyIsInF1ZXN0aW9uIjoiV2hhdCBpcyB0aGUgc2VjcmV0IHRvIG1vaXN0IGNvb2tpZXM/IiwibGsiOiJHaGR6WldOeVpYUWdkRzhnYlc5cGMzUWdZMjl2YTJsbGN3IiwiYnMiOiJjLVB5NEZJSXowZ3NVY2dzVmlqSlNGVlFObFJJenNfUHpreFZ5TXdEQzRRRzIwdk1sakpTbEpJdng2ZXN0SmdyaUVzVlpsSndYbjUtZ1lKTGZucTZlckZDV21KWmZsRm1TU3BVaDcxRXM3eVJtcFFLekxoaXNOb1VyR3E1WExoVWtGMVhuSnBjbEZxaVVKS3ZrSnVmV1Z3Q1ZWVnNMN0hYeDBoU1NoeUhORmNDbHc3WWxNU2lWSVhBMHRUVVBBWFhuTXlxeEtUVWtneE1PNEdtcmM4eDBwWFNMb2RwS1FSclNjV2pSWUFSQUEiLCJpZCI6ImZjX2tiZ3dhT1M5TU5qazJyb1BrSUtXU1FfMyJ9",
-      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUR3QwWDNaR2JUaDZOMmhqVkhFMldtdFZkek5KWmt0U1JGcGhPVXRSTlZreVdYZDJPSEU0VFd0bmFVTkVNR05HTmtSa2VFRnlRM0I1WWpGVExVMUhSMnRMY1RCcmMzYzRiakl3YUhFNFFsWjJaakJ3U2toWldrUmZiRlJhWW5Sd1p4SVdhMkpuZDJGUFV6bE5UbXByTW5KdlVHdEpTMWRUVVJvaVFVWk5RVWRIY1RKQlZWbDJhalZLT1RGclZtUklaSGRFYkhsbVUxTXRjbmd0WnciLCJmY3YiOiIzIiwiZWkiOiJrYmd3YU9TOU1Oamsycm9Qa0lLV1NRIiwicWMiOiJDaE5pWlhOMElHTnZiMnRwWlNCeVpXTnBjR1Z6RUFCOTZTWVJQdyIsInF1ZXN0aW9uIjoiV2hhdCBpcyB0aGUgc2VjcmV0IHRvIG1vaXN0IGNvb2tpZXM%2FIiwibGsiOiJHaGR6WldOeVpYUWdkRzhnYlc5cGMzUWdZMjl2YTJsbGN3IiwiYnMiOiJjLVB5NEZJSXowZ3NVY2dzVmlqSlNGVlFObFJJenNfUHpreFZ5TXdEQzRRRzIwdk1sakpTbEpJdng2ZXN0SmdyaUVzVlpsSndYbjUtZ1lKTGZucTZlckZDV21KWmZsRm1TU3BVaDcxRXM3eVJtcFFLekxoaXNOb1VyR3E1WExoVWtGMVhuSnBjbEZxaVVKS3ZrSnVmV1Z3Q1ZWVnNMN0hYeDBoU1NoeUhORmNDbHc3WWxNU2lWSVhBMHRUVVBBWFhuTXlxeEtUVWtneE1PNEdtcmM4eDBwWFNMb2RwS1FSclNjV2pSWUFSQUEiLCJpZCI6ImZjX2tiZ3dhT1M5TU5qazJyb1BrSUtXU1FfMyJ9"
-    },
-    {
-      "question": "What are Queen Elizabeth's favorite cookies?",
-      "snippet": "The Queen's Favorite Buckingham Palace Shortbread Cookies Closeup of The Queen's Favorite Buckingham Palace Shortbread cookies on a dark background. These Buckingham Palace Shortbread Cookies are rich, tender, and buttery. They were among the late Queen Elizabeth's favorite sweets for her afternoon tea.",
-      "title": "The Queen’s Favorite Buckingham Palace Shortbread Cookies | Eats by the Beach",
-      "link": "https://eatsbythebeach.com/the-queens-favorite-buckingham-palace-shortbread-cookies/",
-      "displayed_link": "https://eatsbythebeach.com › the-queens-favorite-buckin...",
-      "source_logo": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/384678969bf460af70f8a874b9e61aae4504de4e57cb3f8e0a0b0768918c4195.jpeg",
-      "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUR3QwWDNaR2JUaDZOMmhqVkhFMldtdFZkek5KWmt0U1JGcGhPVXRSTlZreVdYZDJPSEU0VFd0bmFVTkVNR05HTmtSa2VFRnlRM0I1WWpGVExVMUhSMnRMY1RCcmMzYzRiakl3YUhFNFFsWjJaakJ3U2toWldrUmZiRlJhWW5Sd1p4SVdhMkpuZDJGUFV6bE5UbXByTW5KdlVHdEpTMWRUVVJvaVFVWk5RVWRIY1RKQlZWbDJhalZLT1RGclZtUklaSGRFYkhsbVUxTXRjbmd0WnciLCJmY3YiOiIzIiwiZWkiOiJrYmd3YU9TOU1Oamsycm9Qa0lLV1NRIiwicWMiOiJDaE5pWlhOMElHTnZiMnRwWlNCeVpXTnBjR1Z6RUFCOTZTWVJQdyIsInF1ZXN0aW9uIjoiV2hhdCBhcmUgUXVlZW4gRWxpemFiZXRoJ3MgZmF2b3JpdGUgY29va2llcz8iLCJsayI6IkdpdDNhR0YwSUdGeVpTQnhkV1ZsYmlCbGJHbDZZV0psZEdnbmN5Qm1ZWFp2Y21sMFpTQmpiMjlyYVdWeiIsImJzIjoiYy1QeTRGSUl6MGdzVWNnc1ZpakpTRlZRTmxSSXpzX1B6a3hWeU13REM0UUcyMHZNbGpKU2xKSXZ4NmVzdEpncmlFc1ZabEp3WG41LWdZSkxmbnE2ZXJGQ1dtSlpmbEZtU1NwVWg3MUVzN3lSbXBRS3pMaGlzTm9VckdxNVhMaFVrRjFYbkpwY2xGcWlVSkt2a0p1ZldWd0NWVlZzTDdIWHgwaFNTaHlITkZjQ2x3N1lsTVNpVklYQTB0VFVQQVhYbk15cXhLVFVrZ3hNTzRHbXJjOHgwcFhTTG9kcEtRUnJTY1dqUllBUkFBIiwiaWQiOiJmY19rYmd3YU9TOU1Oamsycm9Qa0lLV1NRXzMifQ==",
-      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFBQkNtSkJUR3QwWDNaR2JUaDZOMmhqVkhFMldtdFZkek5KWmt0U1JGcGhPVXRSTlZreVdYZDJPSEU0VFd0bmFVTkVNR05HTmtSa2VFRnlRM0I1WWpGVExVMUhSMnRMY1RCcmMzYzRiakl3YUhFNFFsWjJaakJ3U2toWldrUmZiRlJhWW5Sd1p4SVdhMkpuZDJGUFV6bE5UbXByTW5KdlVHdEpTMWRUVVJvaVFVWk5RVWRIY1RKQlZWbDJhalZLT1RGclZtUklaSGRFYkhsbVUxTXRjbmd0WnciLCJmY3YiOiIzIiwiZWkiOiJrYmd3YU9TOU1Oamsycm9Qa0lLV1NRIiwicWMiOiJDaE5pWlhOMElHTnZiMnRwWlNCeVpXTnBjR1Z6RUFCOTZTWVJQdyIsInF1ZXN0aW9uIjoiV2hhdCBhcmUgUXVlZW4gRWxpemFiZXRoJ3MgZmF2b3JpdGUgY29va2llcz8iLCJsayI6IkdpdDNhR0YwSUdGeVpTQnhkV1ZsYmlCbGJHbDZZV0psZEdnbmN5Qm1ZWFp2Y21sMFpTQmpiMjlyYVdWeiIsImJzIjoiYy1QeTRGSUl6MGdzVWNnc1ZpakpTRlZRTmxSSXpzX1B6a3hWeU13REM0UUcyMHZNbGpKU2xKSXZ4NmVzdEpncmlFc1ZabEp3WG41LWdZSkxmbnE2ZXJGQ1dtSlpmbEZtU1NwVWg3MUVzN3lSbXBRS3pMaGlzTm9VckdxNVhMaFVrRjFYbkpwY2xGcWlVSkt2a0p1ZldWd0NWVlZzTDdIWHgwaFNTaHlITkZjQ2x3N1lsTVNpVklYQTB0VFVQQVhYbk15cXhLVFVrZ3hNTzRHbXJjOHgwcFhTTG9kcEtRUnJTY1dqUllBUkFBIiwiaWQiOiJmY19rYmd3YU9TOU1Oamsycm9Qa0lLV1NRXzMifQ%3D%3D"
-    }
-  ],
-  "organic_results": [
+  "short_videos": [
     {
       "position": 1,
-      "title": "The Best Chocolate Chip Cookie Recipe Ever",
-      "link": "https://joyfoodsunshine.com/the-most-amazing-chocolate-chip-cookies/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://joyfoodsunshine.com/the-most-amazing-chocolate-chip-cookies/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECCEQAQ",
-      "displayed_link": "https://joyfoodsunshine.com › Recipes › Dessert",
-      "thumbnail": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2c2573d9ff4ec8b362d392dec0b584b4b.jpeg",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2c4b177c8b2d39ea4f8c3f3ddee5929d1.png",
-      "date": "Feb 11, 2018",
-      "rich_snippet": {
-        "top": {
-          "detected_extensions": {
-            "rating": 5.0,
-            "reviews": 12554,
-            "min": 30
-          },
-          "extensions": [
-            "5.0(12,554)",
-            "30 min"
-          ]
-        }
-      },
-      "source": "JoyFoodSunshine"
+      "title": "Vanilla Brown Sugar Honey Butter Crispy Croissant •Follow ... by seriousfoodfetish on Instagram. Play on Instagram.",
+      "source": "Instagram",
+      "profile_name": "seriousfoodfetish",
+      "extensions": [
+        "seriousfoodfetish"
+      ],
+      "source_logo": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/5203ad3d70dc92476b32b9676dc426d23f0975edfdbe6f135f938a096fc5efab.png",
+      "clip": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcR6cC8CaUu4aMGVCmAR69Adio9cyR19I5p99w",
+      "thumbnail": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/5203ad3d70dc9247c4751a3343781df05a8026fcf4b94df580b4b6a21beb1d22.jpeg",
+      "link": "https://www.instagram.com/reel/C5joP5dJShN/?hl=en"
     },
     {
       "position": 2,
-      "title": "The 44 Best Cookie Recipes to Make in 2024",
-      "link": "https://www.tasteofhome.com/collection/the-best-cookie-recipes/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.tasteofhome.com/collection/the-best-cookie-recipes/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECB0QAQ",
-      "displayed_link": "https://www.tasteofhome.com › ... › Comfort Food",
-      "thumbnail": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2532d3f41dbc9412830aad08e0c323199.jpeg",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2dc6fdb8932d1e7c1240e6d1050c17e2f.png",
-      "date": "Jul 23, 2024",
-      "source": "Taste of Home"
+      "title": "Viral Cookie Croissants Recipe: Gooey Center with Crispy ... by ivymade_ on TikTok. Play on TikTok.",
+      "source": "TikTok",
+      "profile_name": "ivymade_",
+      "extensions": [
+        "ivymade_"
+      ],
+      "source_logo": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/5203ad3d70dc9247394ed2ad27196cf07c3fa326053401ee92aabb6178884c9f.png",
+      "clip": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcQqOSJH2Aeexwfbef86jcDiDkUQ-pTFRH6mjg",
+      "thumbnail": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/5203ad3d70dc924777c44a179cdecc212b4d3501a7354935144936e2e73ea7e5.jpeg",
+      "link": "https://www.tiktok.com/@ivymade_/video/7342157710022020395?lang=en"
     },
     {
       "position": 3,
-      "title": "What is your favorite cookie you've ever eaten? Like jaw ...",
-      "link": "https://www.reddit.com/r/Baking/comments/1gej3e7/what_is_your_favorite_cookie_youve_ever_eaten/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Baking/comments/1gej3e7/what_is_your_favorite_cookie_youve_ever_eaten/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECCMQAQ",
-      "displayed_link": "180+ comments · 6 months ago",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f29094b8b94c9b4284eb9ede32cc7e840b.png",
-      "sitelinks": {
-        "list": [
-          {
-            "title": "I need the BEST cookie recipes : r/Baking - Reddit",
-            "link": "https://www.reddit.com/r/Baking/comments/rw3nej/i_need_the_best_cookie_recipes/",
-            "answer_count": 21,
-            "date": "Jan 4, 2022"
-          },
-          {
-            "title": "What's Your Best Cookie Recipe? : r/Baking - Reddit",
-            "link": "https://www.reddit.com/r/Baking/comments/18j0ux9/whats_your_best_cookie_recipe/",
-            "answer_count": 95,
-            "date": "Dec 15, 2023"
-          }
-        ]
-      },
-      "source": "Reddit · r/Baking"
+      "title": "💖🥐 Almond Croissants Fit for a Queen (a.k.a Mum) 💖🥐 The ... by Steph de Sousa on Facebook. Play on Facebook.",
+      "source": "Facebook",
+      "profile_name": "Steph de Sousa",
+      "extensions": [
+        "Steph de Sousa"
+      ],
+      "source_logo": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/5203ad3d70dc92473cac7f926add57d2fe03d709037f17e6f2cd75e25578cb1d.png",
+      "clip": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcTplbziiwCoyOcPkVHXNhngQp5LNnU6S3_bFQ",
+      "thumbnail": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/5203ad3d70dc9247b825cbdc0c5857a61c1573edc9f8485fd581638dddeb197f.jpeg",
+      "link": "https://www.facebook.com/steph.desousa.au/videos/almond-croissants/903150108579158/"
     },
     {
       "position": 4,
-      "title": "The Best Cookie Recipes, According to Eater Staff",
-      "link": "https://www.eater.com/23941973/best-cookie-recipes-chocolate-chip-cookies-pretzel-linzers-marranitos",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.eater.com/23941973/best-cookie-recipes-chocolate-chip-cookies-pretzel-linzers-marranitos&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECDMQAQ",
-      "displayed_link": "https://www.eater.com › best-cookie-recipes-chocolate-c...",
-      "thumbnail": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2e4df8f55e910cc7c9e76267563ff9bdc.jpeg",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f280088af12c6775cfefa58406f916df40.png",
-      "date": "Dec 20, 2024",
-      "source": "Eater"
+      "title": "Crunchy Croissant Recipe: Try the Delicious Honey Butter ... by ainttooproudtomeg on TikTok. Play on TikTok.",
+      "source": "TikTok",
+      "profile_name": "ainttooproudtomeg",
+      "extensions": [
+        "ainttooproudtomeg"
+      ],
+      "source_logo": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/5203ad3d70dc9247e63616c200f32e307ec5192c426c1a9d829ce0c46b9114b3.png",
+      "clip": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcQS4ceEp5bq46YcnbHzlPcVlIWGVsCUFCSxIA",
+      "thumbnail": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/5203ad3d70dc9247f3f39a9053b6f8a964637cc7c7b60b214c763f7278344754.jpeg",
+      "link": "https://www.tiktok.com/@ainttooproudtomeg/video/7213031210984017194?lang=en"
     },
     {
       "position": 5,
-      "title": "Best Cookie Recipes: Delicious Cookies Made Easy",
-      "link": "https://bestcookierecipes.com/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://bestcookierecipes.com/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECDgQAQ",
-      "displayed_link": "https://bestcookierecipes.com",
-      "thumbnail": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f26be0cd4d6f0a88e2800070b70cb5336a.jpeg",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f253fc52b6803ae3602026bb9cb7dc07d6.png",
-      "source": "bestcookierecipes.com"
+      "title": "the viral croissant hack (I finally understand the hype) roll out a ... by coconutandbliss on Instagram. Play on Instagram.",
+      "source": "Instagram",
+      "profile_name": "coconutandbliss",
+      "extensions": [
+        "coconutandbliss"
+      ],
+      "source_logo": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/5203ad3d70dc924720212a7a7e0cb5ed60a93c2d165f17af4b9e30a19db99e8e.png",
+      "clip": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcTjb9y7hv5h4z8zaG6FxQzvfh7xk0cAztBitQ",
+      "thumbnail": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/5203ad3d70dc9247b3dd292973821b5740743b9fa2db03523fbe7d11628f7425.jpeg",
+      "link": "https://www.instagram.com/reel/DHRpUjKTQnX/"
     },
     {
       "position": 6,
-      "title": "The Best Soft Chocolate Chip Cookies - Pinch of Yum",
-      "link": "https://pinchofyum.com/the-best-soft-chocolate-chip-cookies",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://pinchofyum.com/the-best-soft-chocolate-chip-cookies&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoFCIIBEAE",
-      "displayed_link": "https://pinchofyum.com › the-best-soft-chocolate-chip-...",
-      "thumbnail": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2572ad62ceb94169b0efc8bbd213f1e17.jpeg",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2d1443cb246d187e9e894a56a40023984.png",
-      "rich_snippet": {
-        "top": {
-          "detected_extensions": {
-            "rating": 4.5,
-            "reviews": 1893,
-            "min": 20
-          },
-          "extensions": [
-            "4.5(1,893)",
-            "20 min"
-          ]
-        }
-      },
-      "source": "Pinch of Yum"
+      "title": "Viral dipped flat croissant recipe from food TikToker",
+      "source": "YouTube",
+      "profile_name": "WKYC Channel 3",
+      "extensions": [
+        "WKYC Channel 3"
+      ],
+      "source_logo": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/5203ad3d70dc9247634860671e5f802cb81ac3418d5408ebe5756d5f8b7d811e.png",
+      "clip": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcSbjlkPRXcbBgGbYxKcDaChfFUS0ja2T-Wf9w",
+      "date": "Apr 15, 2024",
+      "thumbnail": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/5203ad3d70dc9247e255aeb76ef5bec7f9b981caa1cc909d556203216d485c57.jpeg",
+      "link": "https://www.youtube.com/shorts/-cmN5qCqW2A"
     },
     {
       "position": 7,
-      "title": "Best Cookie Recipes - NYT Cooking - The New York Times",
-      "link": "https://cooking.nytimes.com/68861692-nyt-cooking/18131908-cookie-recipes",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://cooking.nytimes.com/68861692-nyt-cooking/18131908-cookie-recipes&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoFCKsBEAE",
-      "displayed_link": "https://cooking.nytimes.com › 18131908-cookie-recipes",
-      "thumbnail": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f291e505c541c1b9a8ab883ebea30f9b74.jpeg",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2af0b7c85b30386e14d56167945912365.png",
-      "source": "NYT Cooking"
+      "title": "The Crookie Bake | kingcooks Buttery croissants intertwining ... by kingcooksofficial on TikTok. Play on TikTok.",
+      "source": "TikTok",
+      "profile_name": "kingcooksofficial",
+      "extensions": [
+        "kingcooksofficial"
+      ],
+      "source_logo": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/5203ad3d70dc92477875c2bd3f73ed0c7ae99361d8af84cfaea4c7e3231cccb1.png",
+      "clip": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcSHWKfI29vVhYDAzcaGtaDA9Oj7KIZ-ffO1zQ",
+      "thumbnail": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/5203ad3d70dc92475eb59b4515f4907361d6c997c297972085c533b2f2df40dd.jpeg",
+      "link": "https://www.tiktok.com/@kingcooksofficial/video/7346687437940493614"
     },
     {
       "position": 8,
-      "title": "Best Cookie Recipes of All Time",
-      "link": "https://www.allrecipes.com/gallery/best-cookie-recipes-of-all-time/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.allrecipes.com/gallery/best-cookie-recipes-of-all-time/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECDIQAQ",
-      "displayed_link": "https://www.allrecipes.com › Recipes › Desserts › Cookies",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAQUuoaOesdgrgiI8Oh2ASRbF6JWyJ5PTd-DVFGZSgRHAeiVoZ7QYp4G4&usqp=CAE&s",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2c43b8222c3d6a77c616bdea6d789886b.png",
-      "date": "Jul 25, 2022",
-      "source": "Allrecipes"
+      "title": "THERESE LUM | Food Creative | COOKIE CROISSANT Crispy ... by therese.lum on Instagram. Play on Instagram.",
+      "source": "Instagram",
+      "profile_name": "therese.lum",
+      "extensions": [
+        "therese.lum"
+      ],
+      "source_logo": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/5203ad3d70dc9247959144c9aab1f115f8581636b19585b62a37669641f930a4.png",
+      "clip": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcSh1lRKXekjtqBRlnXiDqtZy5nR6hBmYRm26w",
+      "thumbnail": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/5203ad3d70dc9247366fab1d431d4b6d2bfa195a45a5f58a2494c065b1aebdb3.jpeg",
+      "link": "https://www.instagram.com/reel/C5XrBpXvjZ4/"
     },
     {
       "position": 9,
-      "title": "BEST Chocolate Chip Cookies",
-      "link": "https://butternutbakeryblog.com/best-chocolate-chip-cookies/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://butternutbakeryblog.com/best-chocolate-chip-cookies/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECHUQAQ",
-      "displayed_link": "https://butternutbakeryblog.com › Recipes › Cookies",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2d335af1d95d7f6d95c9cc394265c3912.png",
-      "rich_snippet": {
-        "top": {
-          "detected_extensions": {
-            "rating": 5.0,
-            "reviews": 499,
-            "min": 30
-          },
-          "extensions": [
-            "5.0(499)",
-            "30 min"
-          ]
-        }
-      },
-      "source": "Butternut Bakery"
+      "title": "Crunchy Croissant Recipe for Perfect Flakiness by tinafarmer51 on TikTok. Play on TikTok.",
+      "source": "TikTok",
+      "profile_name": "tinafarmer51",
+      "extensions": [
+        "tinafarmer51"
+      ],
+      "source_logo": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/5203ad3d70dc9247f2275e472d119e9c6af2d7aac9b74a3d1127242525b9819f.png",
+      "clip": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcS6EJjSigLa1Sehb-UzjNwxaOgbwrcehqPwGw",
+      "thumbnail": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/5203ad3d70dc9247129648351487a070e32275552044d5b187d584a57394bca0.jpeg",
+      "link": "https://www.tiktok.com/@tinafarmer51/video/7489216139596270879"
     },
     {
       "position": 10,
-      "title": "Best-Ever Chocolate Chip Cookies",
-      "link": "https://easygayoven.com/best-ever-chocolate-chip-cookies/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://easygayoven.com/best-ever-chocolate-chip-cookies/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECH0QAQ",
-      "displayed_link": "https://easygayoven.com › Blog",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTO4URQcb9K32vTZ6hhHDBzs4Nbp7Legzg-PJSAX5Ofog&usqp=CAE&s",
-      "rich_snippet": {
-        "top": {
-          "detected_extensions": {
-            "rating": 5.0,
-            "reviews": 24,
-            "hr_min": 2
-          },
-          "extensions": [
-            "5.0(24)",
-            "2 hr 45 min"
-          ]
-        }
-      },
-      "source": "easygayoven"
+      "title": "Vanilla Brown Sugar Honey Butter Crispy Croissant Recipe by seriousfoodfetish on TikTok. Play on TikTok.",
+      "source": "TikTok",
+      "profile_name": "seriousfoodfetish",
+      "extensions": [
+        "seriousfoodfetish"
+      ],
+      "source_logo": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/5203ad3d70dc9247c2bdc3d0bc11847198099ea4932e721e197931aae9495c53.png",
+      "clip": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcSeicLbX0DFpMT9bNNhlgB2N5Tw6qwkmTRwtA",
+      "thumbnail": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/5203ad3d70dc9247ef22702cec49404d885422db476f02a1ad7aee3194b99572.jpeg",
+      "link": "https://www.tiktok.com/@seriousfoodfetish/video/7355995342229294378"
+    }
+  ],
+  "related_questions": [
+    {
+      "question": "How to crisp up soggy croissants?",
+      "type": "featured_snippet",
+      "snippet": "Pop the Croissant In The Oven Smear some butter on the top, put it under the broiler for about 5 minutes and it returns the crispiness of the outside of the bread and make it taste fresh. You know it's done when you poke it and the outside feels hard. Croissants that have been sitting are very soft on the outside.",
+      "title": "Turn Old Grocery Store Croissants Into Fresh, Crispy Honey Butter ...",
+      "link": "https://steemit.com/food/@marxrab/turn-old-grocery-store-croissants-into-fresh-crispy-honey-butter-croissants#:~:text=Pop%20the%20Croissant%20In%20The,very%20soft%20on%20the%20outside.",
+      "displayed_link": "https://steemit.com › food › turn-old-grocery-store-croiss...",
+      "source_logo": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/b568919a72bbdfa0d00756215bfb0f8d7f338a5e407f53e15390404a4ff327d7.png",
+      "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJUR3QwWDNaSFJGTm5hMWRrV1hsYVZETmxTVXBIVUZsRk0zTkRZbGhFU25VME1HVk1OSGRqTjB4eE0wUkZkVjluYTJaWExXVk9lamM1UW1scWJWcE1UMEpCWkVrNGJUTjBaR3RKZWxOTVIzTlNPRVZhV1Y5MFZVdFBSbFIyVVV4bVFSSVhVM1ZUVVdGTU56TkNZbEJyTlU1dlVITXRhakkwVVc4YUlrRkdUVUZIUjNGUk5rcEJkM05SZEhCVlVrVlZSWGR1V0dKdFltd3pibmx2Ym5jIiwiZmN2IjoiMyIsImVpIjoiU3VTUWFMNzNCYlBrNU5vUHMtajI0UW8iLCJxYyI6IkNpUm5iMjlsZVNCamNtOXBjM05oYm5RZ2NtVmphWEJsSUdOeWFYTndJRzkxZEhOcFpHVVFBSDNBUHUwLSIsInF1ZXN0aW9uIjoiSG93IHRvIGNyaXNwIHVwIHNvZ2d5IGNyb2lzc2FudHM/IiwibGsiOiJHaUJvYjNjZ2RHOGdZM0pwYzNBZ2RYQWdjMjluWjNrZ1kzSnZhWE56WVc1MGN3IiwiYnMiOiJjLVB5NGxMMHlDOVhLTWxYU0M3S0xDNVFLQzFRS001UFQ2OEVjdk16aTRzVDgwcUs3U1hlR1JvcFNTbGtFRkRINWNHbEFEVXJOekU3RlVrR29pY3p0Y2hlb2szYVNGRktQZ09fTWk0M0x2bndqRXFGekdLRlhDUWJGUEx5U3lCcUt1MGxydG9ZS1VqSmxlTlZ4UlhBcFlMc291S1N4QnhNQzRHR3JmQTBVcFZTemlDc1ZJQVJBQSIsImlkIjoiZmNfU3VTUWFMNzNCYlBrNU5vUHMtajI0UW9fNCJ9",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJUR3QwWDNaSFJGTm5hMWRrV1hsYVZETmxTVXBIVUZsRk0zTkRZbGhFU25VME1HVk1OSGRqTjB4eE0wUkZkVjluYTJaWExXVk9lamM1UW1scWJWcE1UMEpCWkVrNGJUTjBaR3RKZWxOTVIzTlNPRVZhV1Y5MFZVdFBSbFIyVVV4bVFSSVhVM1ZUVVdGTU56TkNZbEJyTlU1dlVITXRhakkwVVc4YUlrRkdUVUZIUjNGUk5rcEJkM05SZEhCVlVrVlZSWGR1V0dKdFltd3pibmx2Ym5jIiwiZmN2IjoiMyIsImVpIjoiU3VTUWFMNzNCYlBrNU5vUHMtajI0UW8iLCJxYyI6IkNpUm5iMjlsZVNCamNtOXBjM05oYm5RZ2NtVmphWEJsSUdOeWFYTndJRzkxZEhOcFpHVVFBSDNBUHUwLSIsInF1ZXN0aW9uIjoiSG93IHRvIGNyaXNwIHVwIHNvZ2d5IGNyb2lzc2FudHM%2FIiwibGsiOiJHaUJvYjNjZ2RHOGdZM0pwYzNBZ2RYQWdjMjluWjNrZ1kzSnZhWE56WVc1MGN3IiwiYnMiOiJjLVB5NGxMMHlDOVhLTWxYU0M3S0xDNVFLQzFRS001UFQ2OEVjdk16aTRzVDgwcUs3U1hlR1JvcFNTbGtFRkRINWNHbEFEVXJOekU3RlVrR29pY3p0Y2hlb2szYVNGRktQZ09fTWk0M0x2bndqRXFGekdLRlhDUWJGUEx5U3lCcUt1MGxydG9ZS1VqSmxlTlZ4UlhBcFlMc291S1N4QnhNQzRHR3JmQTBVcFZTemlDc1ZJQVJBQSIsImlkIjoiZmNfU3VTUWFMNzNCYlBrNU5vUHMtajI0UW9fNCJ9"
     },
     {
-      "position": 11,
-      "title": "Best Chocolate Chip Cookies (Popular Recipe!)",
-      "link": "https://sallysbakingaddiction.com/chewy-chocolate-chip-cookies/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://sallysbakingaddiction.com/chewy-chocolate-chip-cookies/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoFCJoBEAE",
-      "displayed_link": "https://sallysbakingaddiction.com › Recipes › Cookies",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf7dGTv8TTEk83UotGyvP_8Cyj-S9WQPHo4NJ8JhWTWmq4YKu2QcdTyhs&usqp=CAE&s",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f225a4a7e8d5a1606eb91d0f2384c83e2a.png",
-      "date": "May 13, 2022",
+      "question": "How to make croissants crispier?",
+      "type": "featured_snippet",
+      "snippet": null,
+      "title": "Instructions",
+      "date": "Mar 25, 2024",
+      "link": "https://foodmymuse.com/crispy-croissants/",
+      "list": [
+        "First, flatten the croissant with a rolling pin.",
+        "Secondly, spread butter on one side and then drizzle honey.",
+        "Then, sear in a pan until golden and flip. Adding a bit more butter to the pan.",
+        "Lastly, let cool and dip into your favorite skyr!"
+      ],
+      "displayed_link": "https://foodmymuse.com › crispy-croissants",
+      "source_logo": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/b568919a72bbdfa0d00756215bfb0f8d1f285501f8765b27a0d9258473a884d7.png",
+      "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJUR3QwWDNaSFJGTm5hMWRrV1hsYVZETmxTVXBIVUZsRk0zTkRZbGhFU25VME1HVk1OSGRqTjB4eE0wUkZkVjluYTJaWExXVk9lamM1UW1scWJWcE1UMEpCWkVrNGJUTjBaR3RKZWxOTVIzTlNPRVZhV1Y5MFZVdFBSbFIyVVV4bVFSSVhVM1ZUVVdGTU56TkNZbEJyTlU1dlVITXRhakkwVVc4YUlrRkdUVUZIUjNGUk5rcEJkM05SZEhCVlVrVlZSWGR1V0dKdFltd3pibmx2Ym5jIiwiZmN2IjoiMyIsImVpIjoiU3VTUWFMNzNCYlBrNU5vUHMtajI0UW8iLCJxYyI6IkNpUm5iMjlsZVNCamNtOXBjM05oYm5RZ2NtVmphWEJsSUdOeWFYTndJRzkxZEhOcFpHVVFBSDNBUHUwLSIsInF1ZXN0aW9uIjoiSG93IHRvIG1ha2UgY3JvaXNzYW50cyBjcmlzcGllcj8iLCJsayI6IkdoOW9iM2NnZEc4Z2JXRnJaU0JqY205cGMzTmhiblJ6SUdOeWFYTndhV1Z5IiwiYnMiOiJjLVB5NGxMMHlDOVhLTWxYU0M3S0xDNVFLQzFRS001UFQ2OEVjdk16aTRzVDgwcUs3U1hlR1JvcFNTbGtFRkRINWNHbEFEVXJOekU3RlVrR29pY3p0Y2hlb2szYVNGRktQZ09fTWk0M0x2bndqRXFGekdLRlhDUWJGUEx5U3lCcUt1MGxydG9ZS1VqSmxlTlZ4UlhBcFlMc291S1N4QnhNQzRHR3JmQTBVcFZTemlDc1ZJQVJBQSIsImlkIjoiZmNfU3VTUWFMNzNCYlBrNU5vUHMtajI0UW9fNCJ9",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJUR3QwWDNaSFJGTm5hMWRrV1hsYVZETmxTVXBIVUZsRk0zTkRZbGhFU25VME1HVk1OSGRqTjB4eE0wUkZkVjluYTJaWExXVk9lamM1UW1scWJWcE1UMEpCWkVrNGJUTjBaR3RKZWxOTVIzTlNPRVZhV1Y5MFZVdFBSbFIyVVV4bVFSSVhVM1ZUVVdGTU56TkNZbEJyTlU1dlVITXRhakkwVVc4YUlrRkdUVUZIUjNGUk5rcEJkM05SZEhCVlVrVlZSWGR1V0dKdFltd3pibmx2Ym5jIiwiZmN2IjoiMyIsImVpIjoiU3VTUWFMNzNCYlBrNU5vUHMtajI0UW8iLCJxYyI6IkNpUm5iMjlsZVNCamNtOXBjM05oYm5RZ2NtVmphWEJsSUdOeWFYTndJRzkxZEhOcFpHVVFBSDNBUHUwLSIsInF1ZXN0aW9uIjoiSG93IHRvIG1ha2UgY3JvaXNzYW50cyBjcmlzcGllcj8iLCJsayI6IkdoOW9iM2NnZEc4Z2JXRnJaU0JqY205cGMzTmhiblJ6SUdOeWFYTndhV1Z5IiwiYnMiOiJjLVB5NGxMMHlDOVhLTWxYU0M3S0xDNVFLQzFRS001UFQ2OEVjdk16aTRzVDgwcUs3U1hlR1JvcFNTbGtFRkRINWNHbEFEVXJOekU3RlVrR29pY3p0Y2hlb2szYVNGRktQZ09fTWk0M0x2bndqRXFGekdLRlhDUWJGUEx5U3lCcUt1MGxydG9ZS1VqSmxlTlZ4UlhBcFlMc291S1N4QnhNQzRHR3JmQTBVcFZTemlDc1ZJQVJBQSIsImlkIjoiZmNfU3VTUWFMNzNCYlBrNU5vUHMtajI0UW9fNCJ9"
+    },
+    {
+      "question": "Why is my croissant not crispy?",
+      "type": "featured_snippet",
+      "snippet": "It seems like your croissants were cooked too long at too low of a temperature, which made them crispy on the outside but still doughy inside. Next time, try baking them at a higher temperature for less time, and make sure they rise properly before baking.",
+      "title": "My croissants are undercooked :( : r/pastry",
+      "date": "Mar 5, 2024",
+      "link": "https://www.reddit.com/r/pastry/comments/1b7jnux/my_croissants_are_undercooked/",
+      "displayed_link": "https://www.reddit.com › pastry › comments › my_croiss...",
+      "source_logo": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/b568919a72bbdfa0d00756215bfb0f8d2cc9784586e682e6cd2c2a4f1fbd5d8f.png",
+      "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJUR3QwWDNaSFJGTm5hMWRrV1hsYVZETmxTVXBIVUZsRk0zTkRZbGhFU25VME1HVk1OSGRqTjB4eE0wUkZkVjluYTJaWExXVk9lamM1UW1scWJWcE1UMEpCWkVrNGJUTjBaR3RKZWxOTVIzTlNPRVZhV1Y5MFZVdFBSbFIyVVV4bVFSSVhVM1ZUVVdGTU56TkNZbEJyTlU1dlVITXRhakkwVVc4YUlrRkdUVUZIUjNGUk5rcEJkM05SZEhCVlVrVlZSWGR1V0dKdFltd3pibmx2Ym5jIiwiZmN2IjoiMyIsImVpIjoiU3VTUWFMNzNCYlBrNU5vUHMtajI0UW8iLCJxYyI6IkNpUm5iMjlsZVNCamNtOXBjM05oYm5RZ2NtVmphWEJsSUdOeWFYTndJRzkxZEhOcFpHVVFBSDNBUHUwLSIsInF1ZXN0aW9uIjoiV2h5IGlzIG15IGNyb2lzc2FudCBub3QgY3Jpc3B5PyIsImxrIjoiR2g1M2FIa2dhWE1nYlhrZ1kzSnZhWE56WVc1MElHNXZkQ0JqY21semNIayIsImJzIjoiYy1QeTRsTDB5QzlYS01sWFNDN0tMQzVRS0MxUUtNNVBUNjhFY3ZNemk0c1Q4MHFLN1NYZUdSb3BTU2xrRUZESDVjR2xBRFVyTnpFN0ZVa0dvaWN6dGNoZW9rM2FTRkZLUGdPX01pNDNMdm53akVxRnpHS0ZYQ1FiRlBMeVN5QnFLdTBscnRvWUtVakpsZU5WeFJYQXBZTHNvdUtTeEJ4TUM0R0dyZkEwVXBWU3ppQ3NWSUFSQUEiLCJpZCI6ImZjX1N1U1FhTDczQmJQazVOb1BzLWoyNFFvXzQifQ==",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJUR3QwWDNaSFJGTm5hMWRrV1hsYVZETmxTVXBIVUZsRk0zTkRZbGhFU25VME1HVk1OSGRqTjB4eE0wUkZkVjluYTJaWExXVk9lamM1UW1scWJWcE1UMEpCWkVrNGJUTjBaR3RKZWxOTVIzTlNPRVZhV1Y5MFZVdFBSbFIyVVV4bVFSSVhVM1ZUVVdGTU56TkNZbEJyTlU1dlVITXRhakkwVVc4YUlrRkdUVUZIUjNGUk5rcEJkM05SZEhCVlVrVlZSWGR1V0dKdFltd3pibmx2Ym5jIiwiZmN2IjoiMyIsImVpIjoiU3VTUWFMNzNCYlBrNU5vUHMtajI0UW8iLCJxYyI6IkNpUm5iMjlsZVNCamNtOXBjM05oYm5RZ2NtVmphWEJsSUdOeWFYTndJRzkxZEhOcFpHVVFBSDNBUHUwLSIsInF1ZXN0aW9uIjoiV2h5IGlzIG15IGNyb2lzc2FudCBub3QgY3Jpc3B5PyIsImxrIjoiR2g1M2FIa2dhWE1nYlhrZ1kzSnZhWE56WVc1MElHNXZkQ0JqY21semNIayIsImJzIjoiYy1QeTRsTDB5QzlYS01sWFNDN0tMQzVRS0MxUUtNNVBUNjhFY3ZNemk0c1Q4MHFLN1NYZUdSb3BTU2xrRUZESDVjR2xBRFVyTnpFN0ZVa0dvaWN6dGNoZW9rM2FTRkZLUGdPX01pNDNMdm53akVxRnpHS0ZYQ1FiRlBMeVN5QnFLdTBscnRvWUtVakpsZU5WeFJYQXBZTHNvdUtTeEJ4TUM0R0dyZkEwVXBWU3ppQ3NWSUFSQUEiLCJpZCI6ImZjX1N1U1FhTDczQmJQazVOb1BzLWoyNFFvXzQifQ%3D%3D"
+    },
+    {
+      "question": "How to make stale croissants crispy?",
+      "type": "featured_snippet",
+      "snippet": "Save stale croissants from the bin. Turn them into our crunchy, caramelised croissants instead. Frying croissants in a mix of ghee and honey gives them a rich, crisp crust. Just like the top of a crème brûlée.",
+      "title": "Crunchy Caramelised Croissants Recipe - Abel & Cole",
+      "link": "https://www.abelandcole.co.uk/recipes/crunchy-caramelised-croissants#:~:text=Save%20stale%20croissants%20from%20the,top%20of%20a%20cr%C3%A8me%20br%C3%BBl%C3%A9e.",
+      "displayed_link": "https://www.abelandcole.co.uk › recipes › crunchy-cara...",
+      "source_logo": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/b568919a72bbdfa0d00756215bfb0f8da0fc01b5e4918978aa7d747736c498f1.png",
+      "next_page_token": "eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJUR3QwWDNaSFJGTm5hMWRrV1hsYVZETmxTVXBIVUZsRk0zTkRZbGhFU25VME1HVk1OSGRqTjB4eE0wUkZkVjluYTJaWExXVk9lamM1UW1scWJWcE1UMEpCWkVrNGJUTjBaR3RKZWxOTVIzTlNPRVZhV1Y5MFZVdFBSbFIyVVV4bVFSSVhVM1ZUVVdGTU56TkNZbEJyTlU1dlVITXRhakkwVVc4YUlrRkdUVUZIUjNGUk5rcEJkM05SZEhCVlVrVlZSWGR1V0dKdFltd3pibmx2Ym5jIiwiZmN2IjoiMyIsImVpIjoiU3VTUWFMNzNCYlBrNU5vUHMtajI0UW8iLCJxYyI6IkNpUm5iMjlsZVNCamNtOXBjM05oYm5RZ2NtVmphWEJsSUdOeWFYTndJRzkxZEhOcFpHVVFBSDNBUHUwLSIsInF1ZXN0aW9uIjoiSG93IHRvIG1ha2Ugc3RhbGUgY3JvaXNzYW50cyBjcmlzcHk/IiwibGsiOiJHaU5vYjNjZ2RHOGdiV0ZyWlNCemRHRnNaU0JqY205cGMzTmhiblJ6SUdOeWFYTndlUSIsImJzIjoiYy1QeTRsTDB5QzlYS01sWFNDN0tMQzVRS0MxUUtNNVBUNjhFY3ZNemk0c1Q4MHFLN1NYZUdSb3BTU2xrRUZESDVjR2xBRFVyTnpFN0ZVa0dvaWN6dGNoZW9rM2FTRkZLUGdPX01pNDNMdm53akVxRnpHS0ZYQ1FiRlBMeVN5QnFLdTBscnRvWUtVakpsZU5WeFJYQXBZTHNvdUtTeEJ4TUM0R0dyZkEwVXBWU3ppQ3NWSUFSQUEiLCJpZCI6ImZjX1N1U1FhTDczQmJQazVOb1BzLWoyNFFvXzQifQ==",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google_related_questions&google_domain=google.com&next_page_token=eyJvbnMiOiIxMDA0MSIsImZjIjoiRXFFQkNtSkJUR3QwWDNaSFJGTm5hMWRrV1hsYVZETmxTVXBIVUZsRk0zTkRZbGhFU25VME1HVk1OSGRqTjB4eE0wUkZkVjluYTJaWExXVk9lamM1UW1scWJWcE1UMEpCWkVrNGJUTjBaR3RKZWxOTVIzTlNPRVZhV1Y5MFZVdFBSbFIyVVV4bVFSSVhVM1ZUVVdGTU56TkNZbEJyTlU1dlVITXRhakkwVVc4YUlrRkdUVUZIUjNGUk5rcEJkM05SZEhCVlVrVlZSWGR1V0dKdFltd3pibmx2Ym5jIiwiZmN2IjoiMyIsImVpIjoiU3VTUWFMNzNCYlBrNU5vUHMtajI0UW8iLCJxYyI6IkNpUm5iMjlsZVNCamNtOXBjM05oYm5RZ2NtVmphWEJsSUdOeWFYTndJRzkxZEhOcFpHVVFBSDNBUHUwLSIsInF1ZXN0aW9uIjoiSG93IHRvIG1ha2Ugc3RhbGUgY3JvaXNzYW50cyBjcmlzcHk%2FIiwibGsiOiJHaU5vYjNjZ2RHOGdiV0ZyWlNCemRHRnNaU0JqY205cGMzTmhiblJ6SUdOeWFYTndlUSIsImJzIjoiYy1QeTRsTDB5QzlYS01sWFNDN0tMQzVRS0MxUUtNNVBUNjhFY3ZNemk0c1Q4MHFLN1NYZUdSb3BTU2xrRUZESDVjR2xBRFVyTnpFN0ZVa0dvaWN6dGNoZW9rM2FTRkZLUGdPX01pNDNMdm53akVxRnpHS0ZYQ1FiRlBMeVN5QnFLdTBscnRvWUtVakpsZU5WeFJYQXBZTHNvdUtTeEJ4TUM0R0dyZkEwVXBWU3ppQ3NWSUFSQUEiLCJpZCI6ImZjX1N1U1FhTDczQmJQazVOb1BzLWoyNFFvXzQifQ%3D%3D"
+    }
+  ],
+  "ai_overview": {
+    "page_token": "VdOvGnicxZXZcvI2FMdv-yLlJh-LjQk4M56OLJsidrEFcsOAbRRjGxHLrHffQ_QN-lR9mkpyICzJNJ1eVDBeZJ__2X4cfv4Z-qvgr1_-eE2SNXvK53e7XY5QSkIv59AoP2OHlZNf0JDFzutvJDQ2LPMaGt4qc9gaxYzDjELG843-po9nzXLRnHeDUpt2WXapaphmpLkxnc-Yt-Tq-yXLT_P8EPxatPhNjuW8Ve7YIImbWNpoBXJqQankOvlZxF8A_3GR2w1TfkGVH9DlPgb25wo2FCro6vH52hJaECDc4Gdq3rmC6UUDg64_7e7JvQYSri8iQaAJEAQTAnA_DfWzbFJdfHo8vIkZXyUgAyXgJuFb4daFNTdZ7M73whanvjUafeSAgAf2u5a2bnyqaVMIJyAb1Mz7LqROzZ5pq6zNs8y7hDe7kJ_H_KTkYyZaDwd6gVZr1uNC2XbqZnGhLhVVaaph0BoipFP8Q0LlsDNV7JKq6iYc7oe1l_JhmGvmTOWMFBT5ESSrZKXVtAHEwP-yPHL1PmoFrlohu2DyDxeLhpO0NmhsAhic2rwA0BqDEZD38FS-9BnmbTGJrDtXws8mFoEhjPgeqQpPRMhzLV-Y-NyQ2BhCETonYHcRjlDSapoljdDvqfeC3E-RwvAEgX1BCU3zEF_PhDZ44Y-ewXrSWsL3t4mMGcF3J6DP9WvCpyngJRawK1yvItMRjkQ5xZunXxnmqrxQzinQHrFl4OwGKRnUDvzTuuX9Y3GUPmFI3x7cI553H_cqcxfObLKhesOLm-MueGeIRvN_MZqc_4cywVjVtAC6pAx_Rdn14Eops0-UjQVlcnBxF_SGMvNEWa_Rt_jgWuzJBWX2mTJM0Adll4MLgnoa9okyYfgdyiQ1J8rsM2X1LymTg-uKssX-TNlAUkbuKPvm4Bp_a3BJ2Lz0dD3FNktyR-LorYNUurFblXrpBfbJXO1NrbfRY7fEp9kiSp5mbvhj6rtPplpPDm7mzeB_xN7hwYmpz9hslTzEnuOvPb7hs_UD3STMd71MFMbUKMzKYDwg5XW21xu_PNK5tp3Ao1_burBUKbNgl32LwrbesltRO0vX2N7Vx6uaCw-rWrgePi8VAjWYjE39uA52lRirenx4DvQwWx2YG6hb5uo1Lk0pj8Kp08R_XLYi1OoEk5GitLNwUNQ6S92u9og6SA4oPJb6CMnAmNHxJkDH3mbf4TuxY_AOawFoY4AzzJlNPbY1yopXmFUqrlup6LqmlDIRSQ5rQ9P-Bj3ngxw",
+    "serpapi_link": "https://serpapi.com/search.json?engine=google_ai_overview&page_token=VdOvGnicxZXZcvI2FMdv-yLlJh-LjQk4M56OLJsidrEFcsOAbRRjGxHLrHffQ_QN-lR9mkpyICzJNJ1eVDBeZJ__2X4cfv4Z-qvgr1_-eE2SNXvK53e7XY5QSkIv59AoP2OHlZNf0JDFzutvJDQ2LPMaGt4qc9gaxYzDjELG843-po9nzXLRnHeDUpt2WXapaphmpLkxnc-Yt-Tq-yXLT_P8EPxatPhNjuW8Ve7YIImbWNpoBXJqQankOvlZxF8A_3GR2w1TfkGVH9DlPgb25wo2FCro6vH52hJaECDc4Gdq3rmC6UUDg64_7e7JvQYSri8iQaAJEAQTAnA_DfWzbFJdfHo8vIkZXyUgAyXgJuFb4daFNTdZ7M73whanvjUafeSAgAf2u5a2bnyqaVMIJyAb1Mz7LqROzZ5pq6zNs8y7hDe7kJ_H_KTkYyZaDwd6gVZr1uNC2XbqZnGhLhVVaaph0BoipFP8Q0LlsDNV7JKq6iYc7oe1l_JhmGvmTOWMFBT5ESSrZKXVtAHEwP-yPHL1PmoFrlohu2DyDxeLhpO0NmhsAhic2rwA0BqDEZD38FS-9BnmbTGJrDtXws8mFoEhjPgeqQpPRMhzLV-Y-NyQ2BhCETonYHcRjlDSapoljdDvqfeC3E-RwvAEgX1BCU3zEF_PhDZ44Y-ewXrSWsL3t4mMGcF3J6DP9WvCpyngJRawK1yvItMRjkQ5xZunXxnmqrxQzinQHrFl4OwGKRnUDvzTuuX9Y3GUPmFI3x7cI553H_cqcxfObLKhesOLm-MueGeIRvN_MZqc_4cywVjVtAC6pAx_Rdn14Eops0-UjQVlcnBxF_SGMvNEWa_Rt_jgWuzJBWX2mTJM0Adll4MLgnoa9okyYfgdyiQ1J8rsM2X1LymTg-uKssX-TNlAUkbuKPvm4Bp_a3BJ2Lz0dD3FNktyR-LorYNUurFblXrpBfbJXO1NrbfRY7fEp9kiSp5mbvhj6rtPplpPDm7mzeB_xN7hwYmpz9hslTzEnuOvPb7hs_UD3STMd71MFMbUKMzKYDwg5XW21xu_PNK5tp3Ao1_burBUKbNgl32LwrbesltRO0vX2N7Vx6uaCw-rWrgePi8VAjWYjE39uA52lRirenx4DvQwWx2YG6hb5uo1Lk0pj8Kp08R_XLYi1OoEk5GitLNwUNQ6S92u9og6SA4oPJb6CMnAmNHxJkDH3mbf4TuxY_AOawFoY4AzzJlNPbY1yopXmFUqrlup6LqmlDIRSQ5rQ9P-Bj3ngxw"
+  },
+  "organic_results": [
+    {
+      "position": 1,
+      "title": "How to Make 3 Viral Croissant Recipes (Crookie, Flat ...",
+      "link": "https://www.youtube.com/watch?v=XlenPgYGTm4&pp=0gcJCfwAo7VqN5tD",
+      "displayed_link": "238.5K+ views · 1 year ago",
+      "thumbnail": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b16afa4645a486faba4450aca32c7b793f2.jpeg",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b16f17fbcfaa57e9e7f9195e7c3fcc724ae.png",
+      "snippet": "I've got three viral recipes sure to satisfy your sweet tooth and they all start with the humble croissant.",
+      "duration": "8:02",
+      "key_moments": [
+        {
+          "time": "00:00",
+          "title": "Crookie",
+          "link": "https://www.youtube.com/watch?v=XlenPgYGTm4&pp=0gcJCfwAo7VqN5tD&t=0",
+          "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVM_Se8MSwgF4uEUBbTfDkxImHQWvdufLE3orbONkiUQ&s"
+        },
+        {
+          "time": "02:14",
+          "title": "Flat Croissant",
+          "link": "https://www.youtube.com/watch?v=XlenPgYGTm4&pp=0gcJCfwAo7VqN5tD&t=134",
+          "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxm0CbJUpjjxaD3tc0mL7VwNsISGF_GXBfCfBuvZGEpQ&s"
+        },
+        {
+          "time": "04:36",
+          "title": "Lemon Cheesecake Creme Brûlée Croissant",
+          "link": "https://www.youtube.com/watch?v=XlenPgYGTm4&pp=0gcJCfwAo7VqN5tD&t=276",
+          "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrb0ariewSUII5qp6h-S9UczM3wqRe54JOBLBIpgTPCA&s"
+        }
+      ],
+      "missing": [
+        "crisp"
+      ],
+      "must_include": {
+        "word": "crisp",
+        "link": "https://www.google.com/search?num=30&sca_esv=71e0a88dd8899415&gl=us&hl=en&q=gooey+croissant+recipe+%22crisp%22+outside&sa=X&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQ5t4CegQIHhAk"
+      },
+      "source": "YouTube · Allrecipes"
+    },
+    {
+      "position": 2,
+      "title": "Cookie Croissants",
+      "link": "https://ashbaber.com/cookie-croissants/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://ashbaber.com/cookie-croissants/&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQFnoECDQQAQ",
+      "displayed_link": "https://ashbaber.com › Recipes",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSauQpvvwi5frTYY0E2ylpgW5t_NR_Z3PaP-g414unjiBD39vQm4YCk&usqp=CAE&s",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b1621483d9a58a5e9bef6753731f3b0d13a.png",
+      "date": "Mar 12, 2024",
+      "snippet": "After they are baked, the croissants are going to be nice and crispy on the outside, and they will be soft and gooey on the inside. Let ...",
+      "snippet_highlighted_words": [
+        "croissants",
+        "crispy",
+        "outside",
+        "gooey"
+      ],
+      "sitelinks": {
+        "inline": [
+          {
+            "title": "The Cookie Dough",
+            "link": "https://ashbaber.com/cookie-croissants/#:~:text=The%20cookie%20dough,-We%27re%20going%20to%20start"
+          },
+          {
+            "title": "The Chocolate",
+            "link": "https://ashbaber.com/cookie-croissants/#:~:text=The%20chocolate,-I%20wanted%20to%20quickly%20talk"
+          },
+          {
+            "title": "Here Are Some Other...",
+            "link": "https://ashbaber.com/cookie-croissants/#:~:text=Here%20are%20some%20other%20croissant%20recipes%20I%20think%20you%20might%20also%20like%3A"
+          }
+        ]
+      },
       "rich_snippet": {
         "top": {
           "detected_extensions": {
             "rating": 4.7,
-            "reviews": 1492,
-            "hr_min": 2
+            "reviews": 56
           },
           "extensions": [
-            "4.7(1,492)",
-            "2 hr 45 min"
+            "4.7(56)"
           ]
         }
       },
-      "source": "Sally's Baking Addiction"
+      "source": "Ash Baber"
+    },
+    {
+      "position": 3,
+      "title": "Cookie Croissant {Le Crookie}",
+      "link": "https://bellyfull.net/cookie-croissant/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://bellyfull.net/cookie-croissant/&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQFnoECGAQAQ",
+      "displayed_link": "https://bellyfull.net › cookie-croissant",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b16d5e3c645c27e861f3079d05acff42353.png",
+      "date": "Apr 7, 2024",
+      "snippet": "A buttery croissant stuffed with chocolate chip cookie dough and baked for a crisp flaky outside and decadent gooey middle. They're amazing.",
+      "snippet_highlighted_words": [
+        "croissant",
+        "crisp",
+        "outside",
+        "gooey"
+      ],
+      "sitelinks": {
+        "inline": [
+          {
+            "title": "Tips And Variations",
+            "link": "https://bellyfull.net/cookie-croissant/#:~:text=Tips%20and%20Variations"
+          },
+          {
+            "title": "Cookie Croissant (le...",
+            "link": "https://bellyfull.net/cookie-croissant/#:~:text=Cookie%20Croissant%20%28Le%20Crookie%29,-Prep%3A%2015"
+          },
+          {
+            "title": "Instructions",
+            "link": "https://bellyfull.net/cookie-croissant/#:~:text=Instructions"
+          }
+        ]
+      },
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "min": 27
+          },
+          "extensions": [
+            "27 min"
+          ]
+        }
+      },
+      "source": "Belly Full"
+    },
+    {
+      "position": 4,
+      "title": "Viral Supreme Croissants with Cornflake Pastry Cream",
+      "link": "https://thejamlab.co/2023/02/10/supreme-croissants/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://thejamlab.co/2023/02/10/supreme-croissants/&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQFnoECHgQAQ",
+      "displayed_link": "https://thejamlab.co › 2023/02/10 › supreme-croissants",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b1651686b5223a24e81a111ff26c6dcfe94.png",
+      "date": "Feb 10, 2023",
+      "snippet": "... gooey, perfect pastries! supreme croissants. Key equipment for ... Once you stretch it out to the desired size, fold it per the recipe.",
+      "snippet_highlighted_words": [
+        "gooey",
+        "croissants",
+        "out",
+        "recipe"
+      ],
+      "source": "Jam Lab"
+    },
+    {
+      "position": 5,
+      "title": "Ooey-Gooey Viral Crookies (Croissants Meet Chocolate ...",
+      "link": "https://www.tastingtable.com/1668827/viral-cookie-croissant-recipe/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.tastingtable.com/1668827/viral-cookie-croissant-recipe/&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQFnoECHoQAQ",
+      "displayed_link": "https://www.tastingtable.com › ... › Cookie Recipes",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b16b0cb8cee3230ce57768e523af1c42049.png",
+      "date": "Oct 4, 2024",
+      "snippet": "The croissant shell provides a light, crispy contrast to the gooey interior, making each bite a perfect blend of textures and flavors. Who ...",
+      "snippet_highlighted_words": [
+        "croissant",
+        "crispy",
+        "gooey",
+        "making"
+      ],
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "rating": 4.9,
+            "reviews": 32,
+            "min": 40
+          },
+          "extensions": [
+            "4.9(32)",
+            "40 min"
+          ]
+        }
+      },
+      "source": "Tasting Table"
+    },
+    {
+      "position": 6,
+      "title": "Using up leftover croissants fast? : r/Breadit",
+      "link": "https://www.reddit.com/r/Breadit/comments/1bawzlm/using_up_leftover_croissants_fast/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.reddit.com/r/Breadit/comments/1bawzlm/using_up_leftover_croissants_fast/&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQFnoECCUQAQ",
+      "displayed_link": "170+ comments · 1 year ago",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b1672cbd3f6ae22e8daffa9c91629b88fcd.png",
+      "snippet": "I'm striving to remember to freeze them before they're stale next time and I know I could moisturize and reheat them now and they'd be pretty decent.",
+      "source": "Reddit · r/Breadit"
+    },
+    {
+      "position": 7,
+      "title": "Viral Cookie Croissant",
+      "link": "https://nodashofgluten.com/viral-cookie-croissant/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://nodashofgluten.com/viral-cookie-croissant/&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQFnoECDMQAQ",
+      "displayed_link": "https://nodashofgluten.com › course › Desserts",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpsXd1hBhBc03wHEy6uGRx74NrOs8RQmjO03CTQFq2eQokzZN2rwuo&usqp=CAE&s",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b16dfaf67cf8178f796330ccdcbc8819f45.png",
+      "date": "May 13, 2025",
+      "snippet": "The croissant gets crispy and golden on the outside, while the cookie dough melts into this gooey, sweet center that's like biting into ...",
+      "snippet_highlighted_words": [
+        "croissant",
+        "crispy",
+        "outside",
+        "gooey"
+      ],
+      "sitelinks": {
+        "inline": [
+          {
+            "title": "Table Of Content",
+            "link": "https://nodashofgluten.com/viral-cookie-croissant/#:~:text=Table%20of%20content"
+          },
+          {
+            "title": "Ingredient Notes",
+            "link": "https://nodashofgluten.com/viral-cookie-croissant/#:~:text=Ingredient%20Notes%3A"
+          },
+          {
+            "title": "Frequently Asked Questions",
+            "link": "https://nodashofgluten.com/viral-cookie-croissant/#:~:text=Frequently%20Asked%20Questions%3A"
+          }
+        ]
+      },
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "min": 15
+          },
+          "extensions": [
+            "15 min"
+          ]
+        }
+      },
+      "source": "No Dash of Gluten"
+    },
+    {
+      "position": 8,
+      "title": "Cookie Dough Croissants (AKA Crookies)",
+      "link": "https://www.realmomkitchen.com/cookie-dough-croissants-aka-crookies/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.realmomkitchen.com/cookie-dough-croissants-aka-crookies/&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQFnoECFIQAQ",
+      "displayed_link": "https://www.realmomkitchen.com › cookie-dough-crois...",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRq4uBGbQ7_-6lT7DIkljQ71Wx32yv_SWVyEUu4PIs&usqp=CAE&s",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b16420f55b131da62f84b8bd728f6994b87.png",
+      "date": "Sep 14, 2024",
+      "snippet": "They are lightly crispy on the outside and flaky tender on the inside. Add the warm, gooey cookie dough on the inside, along with the crispy ...",
+      "snippet_highlighted_words": [
+        "crispy",
+        "outside",
+        "gooey",
+        "crispy"
+      ],
+      "sitelinks": {
+        "inline": [
+          {
+            "title": "My Latest Videos",
+            "link": "https://www.realmomkitchen.com/cookie-dough-croissants-aka-crookies/#:~:text=MY%20LATEST%20VIDEOS"
+          },
+          {
+            "title": "Frequently Asked Questions",
+            "link": "https://www.realmomkitchen.com/cookie-dough-croissants-aka-crookies/#:~:text=Frequently%20Asked%20Questions"
+          },
+          {
+            "title": "For More Recipes Like This...",
+            "link": "https://www.realmomkitchen.com/cookie-dough-croissants-aka-crookies/#:~:text=FOR%20MORE%20RECIPES%20LIKE%20THIS%2C%20TRY%3A"
+          }
+        ]
+      },
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "min": 17
+          },
+          "extensions": [
+            "17 min"
+          ]
+        }
+      },
+      "source": "Real Mom Kitchen"
+    },
+    {
+      "position": 9,
+      "title": "Viral Cookie Croissants Recipe: Gooey Center with Crispy ...",
+      "link": "https://www.tiktok.com/@ivymade_/video/7342157710022020395?lang=en",
+      "displayed_link": "7.9M+ views · 1 year ago",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ-XahA09Onxqna1cbqFN_wz2HZhsHCoY9y1GDGYp9ArYz&s",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b16acd71ceb3f5034339af15ec8ff390b1b.png",
+      "snippet": "Indulge in the perfection of cookie croissants with a gooey center and crispy texture. Get the recipe for these viral treats and enjoy the deliciousness.",
+      "duration": "1:01",
+      "missing": [
+        "crisp"
+      ],
+      "must_include": {
+        "word": "crisp",
+        "link": "https://www.google.com/search?num=30&sca_esv=71e0a88dd8899415&gl=us&hl=en&q=gooey+croissant+recipe+%22crisp%22+outside&sa=X&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQ5t4CegUIiwEQEg"
+      },
+      "video_link": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcQgproVLLC44tLPY4etLWPtiQSmYpLlyHDJnQ",
+      "source": "TikTok · ivy made"
+    },
+    {
+      "position": 10,
+      "title": "My Perfect Cookie Croissant (Le Crookie) Recipe",
+      "link": "https://zhangcatherine.com/cookie-croissant/?srsltid=AfmBOoqULjM1e-aA_R8p3i9N6fkmYK-e8eT-j64_4ttLMnDBkVC3wIv_",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://zhangcatherine.com/cookie-croissant/%3Fsrsltid%3DAfmBOoqULjM1e-aA_R8p3i9N6fkmYK-e8eT-j64_4ttLMnDBkVC3wIv_&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQFnoECEsQAQ",
+      "displayed_link": "https://zhangcatherine.com › Cookies Recipes",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b16917afb79149cd166f5a7c4e060de8ee9.png",
+      "snippet": "Buttery, gooey cookie dough studded with chocolate chunks layered in a flaky croissant topped with cookie dough baked to crunchy golden perfection",
+      "snippet_highlighted_words": [
+        "gooey",
+        "croissant",
+        "crunchy"
+      ],
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "min": 15
+          },
+          "extensions": [
+            "15 min"
+          ]
+        }
+      },
+      "source": "Catherine Desserts"
+    },
+    {
+      "position": 11,
+      "title": "Croissant Cookies: Viral Crookies Recipe with Tips ...",
+      "link": "https://vegtasty.com/croissant-cookie/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://vegtasty.com/croissant-cookie/&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQFnoECGIQAQ",
+      "displayed_link": "https://vegtasty.com › Recipes",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b164057b57ab9a0df9f2787f2d38d1a7396.png",
+      "date": "May 28, 2024",
+      "snippet": "Just cut a croissant in half, stuff it with cookie dough, and bake. This makes it crispy on the outside and gooey inside. So, where did it ...",
+      "snippet_highlighted_words": [
+        "croissant",
+        "crispy",
+        "outside",
+        "gooey"
+      ],
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "rating": 5.0,
+            "reviews": 1,
+            "min": 22
+          },
+          "extensions": [
+            "5.0(1)",
+            "22 min"
+          ]
+        }
+      },
+      "source": "vegtasty"
     },
     {
       "position": 12,
-      "title": "Easy Sugar Cookies Recipe (with Video)",
-      "link": "https://www.allrecipes.com/recipe/9870/easy-sugar-cookies/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.allrecipes.com/recipe/9870/easy-sugar-cookies/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoFCJgBEAE",
-      "displayed_link": "https://www.allrecipes.com › ... › Sugar Cookie Recipes",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRopDjy4Ch-0wqzGw3690cUKOUT2WUpi_-dlDLT0oeEPN5uLleNO9jDBJg&usqp=CAE&s",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f250f8ea6d928e87ce282470c5860c0286.png",
-      "date": "Jan 17, 2025",
+      "title": "Ridiculously Delish 3-Ingredient Nutella Croissants Recipe",
+      "link": "https://flavorfulife.com/nutella-croissants/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://flavorfulife.com/nutella-croissants/&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQFnoECHkQAQ",
+      "displayed_link": "https://flavorfulife.com › Recipes › Breakfast",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b168a29a466ad70d2d2682662ee5ffa0105.png",
+      "date": "Apr 18, 2025",
+      "snippet": "Flaky, golden croissants filled with warm, gooey Nutella and crunchy pistachios? Say no more. These Nutella croissants are easy to make and even easier to ...",
+      "snippet_highlighted_words": [
+        "croissants",
+        "gooey",
+        "crunchy",
+        "croissants",
+        "easy"
+      ],
       "rich_snippet": {
         "top": {
           "detected_extensions": {
-            "rating": 4.5,
-            "reviews": 8872,
-            "min": 30
+            "rating": 5.0,
+            "reviews": 1,
+            "min": 33
           },
           "extensions": [
-            "4.5(8,872)",
-            "30 min"
+            "5.0(1)",
+            "33 min"
           ]
         }
       },
-      "source": "Allrecipes"
+      "source": "It's A Flavorful Life"
     },
     {
       "position": 13,
-      "title": "40 Epic Cookie Recipes From Brown Butter to Chocolate ...",
-      "link": "https://www.foodandwine.com/best-cookie-recipes-6400978",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.foodandwine.com/best-cookie-recipes-6400978&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoFCJkBEAE",
-      "displayed_link": "https://www.foodandwine.com › ... › Desserts › Cookies",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjQTP8jktlAkqGu1F6F0nQppq3W_a8_mlZJLMs5lDgXQYgGx7sRG_WKDQ&usqp=CAE&s",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f25e2694afbf786feaf3e9205c6576dcb1.png",
-      "date": "Dec 4, 2024",
-      "source": "Food & Wine"
-    },
-    {
-      "position": 14,
-      "title": "Cookie Recipes - Shopping and Cooking",
-      "link": "https://www.donrockwell.com/topic/1616-cookie-recipes/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.donrockwell.com/topic/1616-cookie-recipes/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoFCJYBEAE",
-      "displayed_link": "https://www.donrockwell.com › topic › 1616-cookie-reci...",
-      "date": "Nov 29, 2005",
-      "source": "DonRockwell.com"
-    },
-    {
-      "position": 15,
-      "title": "What are some good recipes for making different types of ...",
-      "link": "https://www.quora.com/What-are-some-good-recipes-for-making-different-types-of-cookies",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.quora.com/What-are-some-good-recipes-for-making-different-types-of-cookies&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECC8QAQ",
-      "displayed_link": "3 answers · 8 years ago",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f29197b03387c4ad95bae33781bb1c9efb.png",
-      "source": "Quora"
-    },
-    {
-      "position": 16,
-      "title": "I Built The PERFECT Chocolate Chip Cookie Recipe",
-      "link": "https://www.youtube.com/watch?v=3pW3Lr7vZ3o",
-      "displayed_link": "856.9K+ views · 1 week ago",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZQP0eO75O5HU5gFXL08M-co_z-HaMXZ4UC8fKgz07qATL&s",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f20c77e756ac50b8b356fe7c8ec0644e78.png",
-      "snippet": "Learn from them and build out the most perfect chocolate chip cookie that we can make at home.",
-      "duration": "15:28",
-      "video_link": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcQ96vrDCDdQTHRezBEPEF5kB08uuFpEI3wUCw",
-      "source": "YouTube · FutureCanoe"
-    },
-    {
-      "position": 17,
-      "title": "The World's Best Cookie Recipe, According to Redditors",
-      "link": "https://www.simplyrecipes.com/reddit-greatest-recipe-ever-8754051",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.simplyrecipes.com/reddit-greatest-recipe-ever-8754051&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECHAQAQ",
-      "displayed_link": "https://www.simplyrecipes.com › Table Talk › Celebrity",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2712b25d47c87596db08a64fb9857e2ab.png",
-      "source": "Simply Recipes"
-    },
-    {
-      "position": 18,
-      "title": "What is your favorite cookie recipe?",
-      "link": "http://cookbooker.com/forum/discussion/10/what-is-your-favorite-cookie-recipe/p1",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=http://cookbooker.com/forum/discussion/10/what-is-your-favorite-cookie-recipe/p1&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECGsQAQ",
-      "displayed_link": "http://cookbooker.com › forum › discussion › what-is-y...",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2dc1655290da36d963376f5cb247ef2a3.png",
-      "source": "Cookbooker"
-    },
-    {
-      "position": 19,
-      "title": "Chocolate Chip Cookies Recipe",
-      "link": "https://www.loveandlemons.com/chocolate-chip-cookies/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.loveandlemons.com/chocolate-chip-cookies/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECGwQAQ",
-      "displayed_link": "https://www.loveandlemons.com › Recipes",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2ef959c4705b05fd3ff27d25efd2b3c37.png",
-      "rich_snippet": {
-        "top": {
-          "detected_extensions": {
-            "rating": 4.8,
-            "reviews": 113,
-            "hr": 1
-          },
-          "extensions": [
-            "4.8(113)",
-            "1 hr"
-          ]
-        }
-      },
-      "source": "Love and Lemons"
-    },
-    {
-      "position": 20,
-      "title": "Chocolate Chip Cookies - NYT Cooking - The New York Times",
-      "link": "https://cooking.nytimes.com/recipes/1015819-chocolate-chip-cookies",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://cooking.nytimes.com/recipes/1015819-chocolate-chip-cookies&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECG0QAQ",
-      "displayed_link": "https://cooking.nytimes.com › recipes › 1015819-choc...",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f24f9a7183033cc85d79d13fbac9b6d4b3.png",
-      "date": "Jan 22, 2025",
+      "title": "Easy French Almond Croissants",
+      "link": "https://flouringkitchen.com/almond-croissants/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://flouringkitchen.com/almond-croissants/&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQFnoFCIUBEAE",
+      "displayed_link": "https://flouringkitchen.com › Breads and Rolls",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b165d08c7950ec951e05c11066efbeca2d0.png",
+      "date": "Dec 22, 2022",
+      "snippet": "The filling tastes like a floral, rich, and gooey almond custard. These croissants will make you feel like you just visited a fancy French ...",
+      "snippet_highlighted_words": [
+        "gooey",
+        "croissants"
+      ],
       "rich_snippet": {
         "top": {
           "detected_extensions": {
             "rating": 5.0,
-            "reviews": 18090,
-            "min": 45
-          },
-          "extensions": [
-            "5.0(18,090)",
-            "45 min"
-          ]
-        }
-      },
-      "source": "NYT Cooking"
-    },
-    {
-      "position": 21,
-      "title": "World's Best Chocolate Chip Cookie Recipe (watch full vid!)",
-      "link": "https://www.youtube.com/shorts/NOjLrN_QktM",
-      "displayed_link": "5.1M+ views · 1 year ago",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNXTa6NoStglqNaxlvml_NAghibLV-AS_aR8u3_nN73WDo&s",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f26c098f88a9db36af12038589c869ddda.png",
-      "snippet": "World's Best Chocolate Chip Cookie Recipe (watch full vid!) 404K. Dislike. 1,225. Share. Video unavailable. This content isn't available.",
-      "duration": "0:58",
-      "video_link": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcRv8B7AoyPMQ2mSRSMJ3vhmuYOFBlHgz-QLiA",
-      "source": "YouTube · Honeysuckle"
-    },
-    {
-      "position": 22,
-      "title": "Who has the best cookie recipe?? - Community - The Bump",
-      "link": "https://forums.thebump.com/discussion/5898678/who-has-the-best-cookie-recipe",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://forums.thebump.com/discussion/5898678/who-has-the-best-cookie-recipe&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECHkQAQ",
-      "displayed_link": "https://forums.thebump.com › discussion › who-has-the-...",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2763e813c98d4b98d10ec9b062eb3fe98.png",
-      "date": "Nov 15, 2010",
-      "source": "The Bump"
-    },
-    {
-      "position": 23,
-      "title": "Top 5 Cookie Recipes You Need to Try",
-      "link": "https://www.tiktok.com/@thesqueakymixer/video/7458467595188964654",
-      "displayed_link": "58.8K+ views · 4 months ago",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQclr9kjkHb0T775nBWqS_KFxKRCtfeftXgXGcu8Y5q1Kcx&s",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2341a079f84c2bd8264747ea42af3f50c.png",
-      "snippet": "Discover one of the top 5 cookie recipes that will impress your taste buds. Get the full recipe on my website!",
-      "duration": "0:47",
-      "video_link": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcQ_xa6YYtVtHb1YkfUNu6DTHvW6paJGFYjElA",
-      "source": "TikTok · The Squeaky Mixer"
-    },
-    {
-      "position": 24,
-      "title": "Original NESTLÉ® TOLL HOUSE® Chocolate Chip Cookies",
-      "link": "https://www.verybestbaking.com/toll-house/recipes/original-nestle-toll-house-chocolate-chip-cookies/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.verybestbaking.com/toll-house/recipes/original-nestle-toll-house-chocolate-chip-cookies/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoFCKkBEAE",
-      "displayed_link": "https://www.verybestbaking.com › ... › ​Types of Recipes",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f28e27ae46994fc8e5638d1f86fab389d2.png",
-      "rich_snippet": {
-        "top": {
-          "detected_extensions": {
-            "rating": 4.8,
-            "reviews": 13318
-          },
-          "extensions": [
-            "4.8(13,318)"
-          ]
-        }
-      },
-      "source": "Very Best Baking"
-    },
-    {
-      "position": 25,
-      "title": "THE BEST Chocolate Chip Cookies (Bakery-Style)",
-      "link": "https://scientificallysweet.com/the-best-chocolate-chip-cookies-bakery-style/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://scientificallysweet.com/the-best-chocolate-chip-cookies-bakery-style/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECD0QAQ",
-      "displayed_link": "https://scientificallysweet.com › Cookies",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEr8CZGOD1umhO_DwkFlhkrrSDq7ipdn55PHSqZ-ApVcPaZhs64PF9yjY&usqp=CAE&s",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2e2629e71e97d46c68e0d668162189607.png",
-      "date": "Jul 27, 2024",
-      "rich_snippet": {
-        "top": {
-          "detected_extensions": {
-            "rating": 5.0,
-            "reviews": 161,
+            "reviews": 2,
             "min": 20
           },
           "extensions": [
-            "5.0(161)",
+            "5.0(2)",
             "20 min"
           ]
         }
       },
-      "source": "Scientifically Sweet"
+      "source": "Flouring Kitchen"
     },
     {
-      "position": 26,
-      "title": "The Best Cookie Recipes - Over 325 Easy Cookies to Bake!",
-      "link": "https://cookiesandcups.com/recipes/cookies/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://cookiesandcups.com/recipes/cookies/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECDQQAQ",
-      "displayed_link": "https://cookiesandcups.com › Recipes",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROu-uAydCFpdUakF0VuF-o1YNN2b1DWxPCtueLP22_yE7WRzZPqpHCULI&usqp=CAE&s",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2f98388af6656dd44e5144a57f3d1672e.png",
-      "source": "Cookies and Cups"
-    },
-    {
-      "position": 27,
-      "title": "How To Make the World's Best Cookies Recipe",
-      "link": "https://www.crazyforcrust.com/the-worlds-best-cookies/",
-      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.crazyforcrust.com/the-worlds-best-cookies/&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQFnoECEIQAQ",
-      "displayed_link": "https://www.crazyforcrust.com › Recipe Index",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDSjeIYByuPQQy0S8Y4AI-1FZlWtmzX91O9UN1PX-3oXaYNeKO-pHjAoc&usqp=CAE&s",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f2e9bbc4b9599436e3c3755f177d75a82f.png",
-      "date": "Jan 7, 2023",
+      "position": 14,
+      "title": "25 Minute Almond Croissants",
+      "link": "https://dishedbykate.com/how-to-make-easy-almond-croissants/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://dishedbykate.com/how-to-make-easy-almond-croissants/&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQFnoECCEQAQ",
+      "displayed_link": "https://dishedbykate.com › Recipes › Method › Baking",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b168fbe1805530d06b4ae66daf064dde016.png",
+      "date": "Nov 25, 2022",
+      "snippet": "There's just something about tearing into a perfectly flaky and crispy on the outside, soft, gooey and buttery on the inside almond croissant.",
+      "snippet_highlighted_words": [
+        "crispy",
+        "outside",
+        "gooey",
+        "croissant"
+      ],
       "rich_snippet": {
         "top": {
           "detected_extensions": {
-            "rating": 4.0,
-            "reviews": 385,
-            "hr_min": 1
+            "min": 25
           },
           "extensions": [
-            "4.0(385)",
-            "1 hr 12 min"
+            "25 min"
           ]
         }
       },
-      "source": "Crazy for Crust"
+      "source": "Dished by Kate"
     },
     {
-      "position": 28,
-      "title": "The best cookie recipe you'll find! Very easy and quick to ...",
-      "link": "https://www.facebook.com/recipesyumyum/videos/the-best-cookie-recipe-youll-find-very-easy-and-quick-to-make/625997856757797/",
-      "displayed_link": "30+ reactions · 5 months ago",
-      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhJfcKi_9tzqm4ZOrGR3cD3gB--oMZqSC8YbVvuABRdgd0&s",
-      "favicon": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/158ef76bf85c106606cde610f6a126f232e0c06a0c2dee93580249af21a9d535.png",
-      "snippet": "This homemade cookie recipe is very easy to make. And I'm sure once you start making it it will become a routine at your house.",
-      "duration": "3:01",
-      "video_link": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcSulNOZhWAqHi9CYINBAsn52KbBzLz3PLsFaQ",
-      "source": "Facebook · Recipes Yum"
-    }
-  ],
-  "perspectives": [
-    {
-      "author": "Chef Buck",
-      "author_description": "Cooking & baking channel",
-      "source": "YouTube",
-      "extensions": [
-        "1K+ views "
-      ],
-      "thumbnails": [
-        "https://img.youtube.com/vi/9pZOpDMN6RE/hqdefault.jpg"
-      ],
-      "title": "Best Oatmeal Cookie Recipe",
-      "link": "https://www.youtube.com/watch?v=9pZOpDMN6RE",
-      "date": "6 days ago"
+      "position": 15,
+      "title": "THERESE LUM | Food Creative | COOKIE CROISSANT Crispy ...",
+      "link": "https://www.instagram.com/reel/C5XrBpXvjZ4/",
+      "displayed_link": "180+ likes · 1 year ago",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLvPhayI7c--Rk-fInxZ9c8BLb47jc9pPlz2YLBmEon2af&s",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b16fb772038464e10efd7b606acb403b838.png",
+      "snippet": "Crispy buttery croissants with a gooey chocolate chip cookie dough centre. Ok, it's worth the hype ‍ #recipe 3-4 large croissants 115g butter, ...",
+      "duration": "0:24",
+      "video_link": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcTAEm_vW4JqHDPwOdVDgO6xEgea4Qy3ih6deg",
+      "source": "Instagram · therese.lum"
     },
     {
-      "author": "Spicy Foodz",
-      "author_description": "Indian food recipes creator",
-      "source": "YouTube",
-      "extensions": [
-        "1.2K+ views "
-      ],
-      "thumbnails": [
-        "https://img.youtube.com/vi/o4SqNDnfVP8/hqdefault.jpg"
-      ],
-      "title": "Easy Soft Chocolate Chip Cookies Recipe | Spicy Foodz",
-      "link": "https://www.youtube.com/watch?v=o4SqNDnfVP8",
-      "date": "3 days ago"
+      "position": 16,
+      "title": "The Crookie Bake | kingcooks Buttery croissants intertwining ...",
+      "link": "https://www.tiktok.com/@kingcooksofficial/video/7346687437940493614",
+      "displayed_link": "149.2K+ views · 1 year ago",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5cjPJ9-TDNcEz0ZITVrFLNwZz1DdcEezZx3USuQKZXwwl&s",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b166f3eef6396ffb5d6a0a29b8fd3173fa9.png",
+      "snippet": "Buttery croissants intertwining with gooey chocolate chip cookies. A perfect balance of sweet, savory, and crispy. Every bite is irresistible.",
+      "duration": "1:00",
+      "video_link": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcQLcdPPcpsyetsslk5ENiXLPTvV8fr_RKhLhg",
+      "source": "TikTok · Rey | kingcooks"
     },
     {
-      "author": "Best Cookie Recipes Ever",
-      "source": "Facebook",
-      "extensions": [
-        "70+ reactions "
+      "position": 17,
+      "title": "Brownie Batter Croissants",
+      "link": "https://tasting-thyme.com/brownie-batter-croissants/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://tasting-thyme.com/brownie-batter-croissants/&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQFnoECC0QAQ",
+      "displayed_link": "https://tasting-thyme.com › brownie-batter-croissants",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaevuw5OIxgAQlGJG7XnuN2uXDS4WqMx6DdZckny3_-8gHICuHLrED&usqp=CAE&s",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b16e9ee1c5fe0c3342843c87cee4be79286.png",
+      "date": "Aug 8, 2024",
+      "snippet": "They are fudgy and gooey and have that crisp croissant outer. Like a warm dessert sandwich, irresistible. Print ...",
+      "snippet_highlighted_words": [
+        "gooey",
+        "crisp croissant outer"
       ],
-      "thumbnails": [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSZr3TUeQ-Ug_k2yi58GhO6Y5TQeBV9n4gDGbp4-NADxQBR4DKW9bEmFMV&usqp=CAI&s"
-      ],
-      "title": "I have been using the same recipe for chocolate chip cookies for 35 years. I’ve always been told they were amazing and everyone expected them at potlucks and parties. I recently joined this page and have been seeing everyone’s recipes and decided to see",
-      "link": "https://www.facebook.com/groups/756832418039671/posts/2818511085205117/",
-      "date": "5 days ago"
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "min": 35
+          },
+          "extensions": [
+            "35 min"
+          ]
+        }
+      },
+      "source": "Tasting Thyme"
     },
     {
-      "author": "cookingwithkarli",
-      "source": "Instagram",
-      "extensions": [
-        "1.6K+ likes "
+      "position": 18,
+      "title": "Air Fryer CROOKIE 🍪 The recipe is in the comments. ⬇️ If ...",
+      "link": "https://www.facebook.com/steph.desousa.au/posts/air-fryer-crookie-the-recipe-is-in-the-comments-%EF%B8%8Fif-youre-into-buttery-croissant/1226781389459602/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.facebook.com/steph.desousa.au/posts/air-fryer-crookie-the-recipe-is-in-the-comments-%25EF%25B8%258Fif-youre-into-buttery-croissant/1226781389459602/&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQFnoECFEQAQ",
+      "displayed_link": "1.1K+ reactions · 1 month ago",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHy_zChosNuiTIy21iGIj4q4QfQSOAlG3yEURlw80V9LVdmumrXb1V&usqp=CAE&s",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b160eac6778ab40cac3043e7d208774fdc1.png",
+      "snippet": "⬇️ If you're into buttery croissants and gooey chocolate chip cookie dough (who isn't?!), ... It's crispy on the outside, soft and ...",
+      "snippet_highlighted_words": [
+        "croissants",
+        "gooey",
+        "crispy",
+        "outside"
       ],
-      "thumbnails": [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXqlbww15nL17Q8sDFM9vGOcmvV9Z3eIm-PgWWnyQFKvyf-Z40s9lYy4anUg&usqp=CAI&s"
-      ],
-      "title": "The search is OVER! This is the BEST chocolate chip cookie recipe! 🍪 Get the full recipe👇 ✨Page 12 of my cookbook, Cookies for Days. ✨Search ‘The Best Chocolate Chip Cookie Recipe’ using the link in my bio for the free printable recipe on my blog! Shop my cookbook, Cookies for Days, during my Mother’s Day Sale happening now! Snag your copy today at the link in my bio! #cookies #baker #bakingisfun #bakingtherapy #recipereview #chocolatechip #chocolatechipcookies #perfect #bestcookies",
-      "link": "https://www.instagram.com/reel/DI-BM3HJpbX/?hl=en",
-      "date": "4 weeks ago"
+      "source": "Facebook · Steph de Sousa"
     },
     {
-      "author": "FutureCanoe",
-      "author_description": "NYC-based food enthusiast",
-      "source": "YouTube",
-      "extensions": [
-        "856.9K+ views "
+      "position": 19,
+      "title": "Cookie Croissant (Le Crookies)- A Paris Viral Recipe",
+      "link": "https://muchbutter.com/cookie-croissant-le-crookies-a-paris-viral-recipe/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://muchbutter.com/cookie-croissant-le-crookies-a-paris-viral-recipe/&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQFnoECFYQAQ",
+      "displayed_link": "https://muchbutter.com › cookie-croissant-le-crookies-a...",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b16122ddb188cad477f83ee2d4f2091c592.jpeg",
+      "date": "May 25, 2024",
+      "snippet": "It's baked until the cookie is gooey in the middle and the croissant is golden and crispy Then it is dusted with sea salt, and best enjoyed warm ...",
+      "snippet_highlighted_words": [
+        "gooey",
+        "croissant",
+        "crispy"
       ],
-      "thumbnails": [
-        "https://img.youtube.com/vi/3pW3Lr7vZ3o/hqdefault.jpg"
-      ],
-      "title": "I Built The PERFECT Chocolate Chip Cookie Recipe",
-      "link": "https://www.youtube.com/watch?v=3pW3Lr7vZ3o",
-      "date": "1 week ago"
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "min": 45
+          },
+          "extensions": [
+            "45 min"
+          ]
+        }
+      },
+      "source": "Much Butter"
     },
     {
-      "author": "Just the Bells 10",
-      "author_description": "Cooking & sharing recipes",
-      "source": "YouTube",
-      "extensions": [
-        "37.5K+ views "
-      ],
-      "thumbnails": [
-        "https://img.youtube.com/vi/T342H_vocZg/hqdefault.jpg"
-      ],
-      "title": "THE BEST CHOCOLATE CHiP COOKiE RECIPE #bakingrecipes #cookiesrecipe #bakingtips #justthebells10",
-      "link": "https://www.youtube.com/shorts/T342H_vocZg",
-      "date": "2 weeks ago"
+      "position": 20,
+      "title": "The last thing a croissant needs is more butter, or at least ...",
+      "link": "https://www.tiktok.com/@theasiantestkitchen/video/7249823026877828398?lang=en",
+      "displayed_link": "48K+ views · 2 years ago",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOhz_lq6rUb0T9y1JtxCiE6T21u4T9o_Te8ZN-aLBKiG72&s",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b16b0727d030f8968a3883441be71a6337c.png",
+      "snippet": "Flatten the croissant and then cook them with honey and butter on each side for a couple minutes until they're golden brown.",
+      "duration": "0:18",
+      "video_link": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcTYbSdlqH6YX0csiK_3_xuNX7PS2ZujEsJasQ",
+      "source": "TikTok · Phuong Le - Asian Test Kitchen"
     },
     {
-      "author": "daphneoz",
-      "source": "Facebook",
-      "extensions": [
-        "1.8K+ reactions "
-      ],
-      "thumbnails": [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrqd3bFkNppIwQNlWBxMToAjsADBCM9KJpnCM4aMnAJVo2Tf2VZfdovsE&usqp=CAI&s"
-      ],
-      "title": "The Best Chocolate Chip Cookie?? ❤️🍪😜 Recipe and description of the years of research, testing, tasting etc that went into these at the link in the comments and on my website. Most of all…enjoy!! And then tell me what you think…🤗",
-      "link": "https://www.facebook.com/daphneoz/videos/the-best-chocolate-chip-cookie-%EF%B8%8F-recipe-and-description-of-the-years-of-research/9765459486902184/",
-      "date": "1 week ago"
+      "position": 21,
+      "title": "💖🥐 Almond Croissants Fit for a Queen (a.k.a Mum) 💖🥐 The ...",
+      "link": "https://www.facebook.com/steph.desousa.au/videos/almond-croissants/903150108579158/",
+      "displayed_link": "1.6K+ reactions · 2 months ago",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw4gK3KFG2POXz42PajMUXOE9R7M-VzUKL8ytJAr7HC8TS&s",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b167e0bba9f498139fa985cfbba0ec5e2db.png",
+      "snippet": "... out of the oven perfectly crisp on the outside, gooey and dreamy on the inside… and the best part? They're ready in just 10 minutes ...",
+      "duration": "1:12",
+      "video_link": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcQhTE5XH230FvL9vxzU0LQN-k9weUctYFTqpQ",
+      "source": "Facebook · Steph de Sousa"
     },
     {
-      "author": "Huma in the kitchen",
-      "author_description": "Cooking enthusiast",
-      "source": "YouTube",
-      "extensions": [
-        "4.6K+ views "
-      ],
-      "thumbnails": [
-        "https://img.youtube.com/vi/BJmlnUF5Gms/hqdefault.jpg"
-      ],
-      "title": "Better than Bakery | The best Cookie of your life | Chocolate Chip Cookies Recipe | Fool Proof",
-      "link": "https://www.youtube.com/watch?v=BJmlnUF5Gms",
-      "date": "2 weeks ago"
+      "position": 22,
+      "title": "2 Ingredient Viral Recipe: “Crookies”: a cross between a ...",
+      "link": "https://www.facebook.com/gritsandgouda/videos/crookies-video/1163611121735374/",
+      "displayed_link": "40+ reactions · 1 year ago",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFufg4XXW37nkScc5S7gpWZZZ10cU6bL39gOxjN-QAXSob&s",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b16aeec92bc5b1b414a061be77c4f1b7fc1.png",
+      "snippet": "Yum. It is crunchy on the outside because you baked your croissant again. The cookie dough is soft and chewy. Gooey. Look at that y'all.",
+      "duration": "9:18",
+      "source": "Facebook · Grits and Gouda"
     },
     {
-      "author": "VeryBestRecipes",
-      "source": "Facebook",
-      "extensions": [
-        "7 reactions "
+      "position": 23,
+      "title": "Cookie Croissant",
+      "link": "https://www.kimscravings.com/cookie-croissant/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.kimscravings.com/cookie-croissant/&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQFnoECF8QAQ",
+      "displayed_link": "https://www.kimscravings.com › cookie-croissant",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b16e27ddeacb1837e9b57fa65f5fc16c3fe.png",
+      "date": "Mar 13, 2024",
+      "snippet": "This decadent recipe is made with a flaky croissant stuffed with chocolate chip cookie dough and baked to gooey, rich golden perfection.",
+      "snippet_highlighted_words": [
+        "recipe",
+        "croissant",
+        "gooey"
       ],
-      "thumbnails": [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOMC7-WcNw-0oqGKDmCbwo8xvX7Gioh8cMsZNM_XO-OJDNNzt2MtQTa-A&usqp=CAI&s"
-      ],
-      "title": "3 Amazing Cookie Recipes! ~~~~~~ smores cookie ingredients: 6 large marshmallows, cut in half 3 full-size graham crackers, broken into smaller pieces 2 Hershey’s milk chocolate bars, broken into pieces (1.55-ounce bars) 1⅓ cups salted butter, softened 1 c",
-      "link": "https://www.facebook.com/VeryBestRecipes/posts/3-amazing-cookie-recipessmores-cookie-ingredients6-large-marshmallows-cut-in-hal/1096852205800669/",
-      "date": "4 days ago"
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "rating": 5.0,
+            "reviews": 6,
+            "min": 32
+          },
+          "extensions": [
+            "5.0(6)",
+            "32 min"
+          ]
+        }
+      },
+      "source": "Kim's Cravings"
     },
     {
-      "author": "BuzzFeedUK",
-      "source": "Facebook",
-      "extensions": [
-        "1 reaction "
+      "position": 24,
+      "title": "This one's worth the hype 😮‍💨 It's crunchy, sticky and a fun ...",
+      "link": "https://www.tiktok.com/@chefmarinie/video/7222376401574317318",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.tiktok.com/%40chefmarinie/video/7222376401574317318&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQFnoECCQQAQ",
+      "displayed_link": "14.7K+ views · 2 years ago",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b166c6cb2942a73c2ccbc37971e2f3efcb8.png",
+      "snippet": "This one's worth the hype ‍ It's crunchy, sticky and a fun way to eat croissant I paired mine with a combo of grated mozzarella and feta, ...",
+      "snippet_highlighted_words": [
+        "crunchy",
+        "sticky",
+        "croissant"
       ],
-      "thumbnails": [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKmQCznsQERQtZbmVCsIR293ki6Ed2T_A4aYq0DYhi5qYBzS4SDWQTBMRY&usqp=CAI&s"
-      ],
-      "title": "@mimooo.ahmed shares Tasty’s 5 tips to making the perfect chocolate chip cookie. Full recipe on Tasty.co",
-      "link": "https://www.facebook.com/BuzzFeedUK/videos/we-tested-50-chocolate-chip-cookie-recipes-and-heres-the-best-one/1014874884121663/",
-      "date": "2 weeks ago"
+      "source": "TikTok · Marina"
     },
     {
-      "author": "Sugar Spun Run",
-      "author_description": "Dessert recipes creator",
-      "source": "YouTube",
-      "extensions": [
-        "15.4K+ views "
+      "position": 25,
+      "title": "Easiest Almond Croissants EVER!",
+      "link": "https://www.youtube.com/watch?v=XJTw1AB9FFk",
+      "displayed_link": "91.7K+ views · 2 years ago",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU-p1LeWebnl6TYtPlLnYZS8jos0mVooVkTqUmDtESaFym&s",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b16e55d675b27b0f3bd1885ede5d0bffe18.png",
+      "snippet": "bakery! Flaky, buttery croissants, filled with a sweet, sticky frangipane, topped with a crispy ... How to Make 3 Viral Croissant Recipes (Crookie ...",
+      "duration": "4:01",
+      "key_moments": [
+        {
+          "time": "00:00",
+          "title": "Intro",
+          "link": "https://www.youtube.com/watch?v=XJTw1AB9FFk&t=0",
+          "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4_7heXcLIag7f4Cwre-1i0pgA16jXKyF86JjOBK0uRg&s"
+        },
+        {
+          "time": "00:38",
+          "title": "Make the glaze",
+          "link": "https://www.youtube.com/watch?v=XJTw1AB9FFk&t=38",
+          "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpVhnIFEALSULnGJfdLm_HcQ4rgc88BjHEf--lAAOhQA&s"
+        },
+        {
+          "time": "01:09",
+          "title": "Making the frangipane",
+          "link": "https://www.youtube.com/watch?v=XJTw1AB9FFk&t=69",
+          "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTsKjgXFJ-O4ZN9TXO2tHMfMKgs14E2eAoXJzlz8Gtow&s"
+        },
+        {
+          "time": "02:01",
+          "title": "Slicing the croissants",
+          "link": "https://www.youtube.com/watch?v=XJTw1AB9FFk&t=121",
+          "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtNGnK_7qrPbVQXDk8q9RWaltIaV1X4PAq5Q3h18P2uQ&s"
+        },
+        {
+          "time": "02:17",
+          "title": "Glaze croissants",
+          "link": "https://www.youtube.com/watch?v=XJTw1AB9FFk&t=137",
+          "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFN4vf1QXqsGVCEnESAcsBSbY43nITUQpT2N7ZWWkV4A&s"
+        },
+        {
+          "time": "02:36",
+          "title": "Assemble the croissants",
+          "link": "https://www.youtube.com/watch?v=XJTw1AB9FFk&t=156",
+          "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ3iEqRjJqW1_GltP4cnB1fgTEySqi9KweaOyFK_JzTA&s"
+        },
+        {
+          "time": "03:17",
+          "title": "Bake the croissants",
+          "link": "https://www.youtube.com/watch?v=XJTw1AB9FFk&t=197",
+          "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIhoSV7kYPcs5_Ks-WduHlwD3RSjGB_iQMdjgl20aD6w&s"
+        },
+        {
+          "time": "03:29",
+          "title": "Sprinkle with confectioners sugar",
+          "link": "https://www.youtube.com/watch?v=XJTw1AB9FFk&t=209",
+          "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGfHmOH4NPSnkl1wztBXRYqfoPsmETiBj9BKwK6x-HFg&s"
+        }
       ],
-      "thumbnails": [
-        "https://img.youtube.com/vi/SWt_sAdCRGs/hqdefault.jpg"
+      "missing": [
+        "gooey"
       ],
-      "title": "The BEST Soft and Chewy Chocolate Chip Cookies",
-      "link": "https://www.youtube.com/watch?v=SWt_sAdCRGs",
-      "date": "3 weeks ago"
+      "must_include": {
+        "word": "gooey",
+        "link": "https://www.google.com/search?num=30&sca_esv=71e0a88dd8899415&gl=us&hl=en&q=%22gooey%22+croissant+recipe+crisp+outside&sa=X&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQ5t4CegQIfBAz"
+      },
+      "source": "YouTube · Kitchen Sanctuary"
     },
     {
-      "author": "old fashioned family recipes",
-      "source": "Facebook",
-      "extensions": [
-        "30+ reactions "
+      "position": 26,
+      "title": "Gooey Almond Croissant Cake",
+      "link": "https://tasting-thyme.com/gooey-almond-croissant-cake/",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://tasting-thyme.com/gooey-almond-croissant-cake/&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQFnoECDIQAQ",
+      "displayed_link": "https://tasting-thyme.com › gooey-almond-croissant-cake",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b16478f6f868b002a6191fc0b15ad63698f.png",
+      "date": "Aug 8, 2024",
+      "snippet": "Gooey Almond Croissant Cake - A perfect afternoon tea treat. Fluffy sponge cake covered in a gooey frangipane topping.",
+      "snippet_highlighted_words": [
+        "Gooey",
+        "Croissant",
+        "gooey"
       ],
-      "thumbnails": [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj-z4C7t8bQS_qYjtiRK2oTAtGcX5lJhCXlS3YvA3I7fQ6LRibh82zZb7H&usqp=CAI&s"
-      ],
-      "title": "Did someone say they wanted the recipe for the softest, chewy most delicious cookies ever?!",
-      "link": "https://www.facebook.com/groups/957724288519331/posts/1562331131391974/",
-      "date": "1 week ago"
+      "rich_snippet": {
+        "top": {
+          "detected_extensions": {
+            "hr_min": 1
+          },
+          "extensions": [
+            "1 hr 5 min"
+          ]
+        }
+      },
+      "source": "Tasting Thyme"
+    },
+    {
+      "position": 27,
+      "title": "Pistachio Croissant S'mores Recipe: Gooey and Delicious",
+      "link": "https://www.tiktok.com/@thefastfoodie.tv/video/7474906867123129622",
+      "displayed_link": "84.8K+ views · 5 months ago",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtH7NTHptZ0J1UKJeqMTaGESaMVNwkwDqsxUe3nz9k6WCu&s",
+      "favicon": "https://serpapi.com/searches/6890e441ecf5ed3d69c43e6b/images/e40247e122814fcc06b2782cc30d0b1609be1adb41bb7c1545d604e5d6e5a19c.png",
+      "snippet": "Crispy and flaky on the outside, gooey in the middle… SO good! #pizzaparcels #easyfoodhack #crispycheesy #easyrecipes #foodthatgoesviral ...",
+      "duration": "0:11",
+      "video_link": "https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcQXhaoMhi2OK91myMPwlA0tTp78Qfxr5q3qKA",
+      "source": "TikTok · TheFastFoodie.tv"
     }
   ],
   "related_searches": [
     {
       "block_position": 1,
-      "items": [
+      "query": "Croissant cookies recipe",
+      "link": "https://www.google.com/search?num=30&sca_esv=71e0a88dd8899415&gl=us&hl=en&q=Croissant+cookies+recipe&sa=X&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQ1QJ6BQiTARAB",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Croissant+cookies+recipe"
+    },
+    {
+      "block_position": 1,
+      "query": "Supreme croissant recipe",
+      "link": "https://www.google.com/search?num=30&sca_esv=71e0a88dd8899415&gl=us&hl=en&q=Supreme+croissant+recipe&sa=X&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQ1QJ6BQiUARAB",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Supreme+croissant+recipe"
+    },
+    {
+      "block_position": 1,
+      "query": "Circular croissant recipe",
+      "link": "https://www.google.com/search?num=30&sca_esv=71e0a88dd8899415&gl=us&hl=en&q=Circular+croissant+recipe&sa=X&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQ1QJ6BQiXARAB",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Circular+croissant+recipe"
+    },
+    {
+      "block_position": 1,
+      "query": "Wheelbarrow croissant recipe",
+      "link": "https://www.google.com/search?num=30&sca_esv=71e0a88dd8899415&gl=us&hl=en&q=Wheelbarrow+croissant+recipe&sa=X&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQ1QJ6BQiYARAB",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Wheelbarrow+croissant+recipe"
+    },
+    {
+      "block_position": 1,
+      "query": "Cookie croissant near me",
+      "link": "https://www.google.com/search?num=30&sca_esv=71e0a88dd8899415&gl=us&hl=en&q=Cookie+croissant+near+me&sa=X&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQ1QJ6BQiZARAB",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Cookie+croissant+near+me"
+    },
+    {
+      "block_position": 1,
+      "query": "Crookie recipe",
+      "link": "https://www.google.com/search?num=30&sca_esv=71e0a88dd8899415&gl=us&hl=en&q=Crookie+recipe&sa=X&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQ1QJ6BQiVARAB",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Crookie+recipe"
+    },
+    {
+      "block_position": 1,
+      "query": "Cream filled croissant recipe",
+      "link": "https://www.google.com/search?num=30&sca_esv=71e0a88dd8899415&gl=us&hl=en&q=Cream+filled+croissant+recipe&sa=X&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQ1QJ6BQiRARAB",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Cream+filled+croissant+recipe"
+    },
+    {
+      "block_position": 1,
+      "query": "cream-filled croissant name",
+      "link": "https://www.google.com/search?num=30&sca_esv=71e0a88dd8899415&gl=us&hl=en&q=cream-filled+croissant+name&sa=X&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQ1QJ6BQiQARAB",
+      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=cream-filled+croissant+name"
+    }
+  ],
+  "discussions_and_forums": [
+    {
+      "title": "What's crispy on the outside, and ooey gooey in the middle? Our crookie of ...",
+      "link": "https://www.facebook.com/groups/463346923703557/posts/7779720968732746/",
+      "date": "1 year ago",
+      "extensions": [
+        "Catskill Community Board",
+        "1 comment"
+      ],
+      "source": "Facebook",
+      "answers": [
         {
-          "name": "Chocolate Chip Cookie Dough Pud...",
-          "image": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/384678969bf460aff926b24132ced533e8af47380a5ce98db076ce949f57658a629ac6aa66671d72.gif",
-          "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Chocolate+Chip+Cookie+Dough+Pudding&stick=H4sIAAAAAAAAAOMwVOLVT9c3NCxKLjOIL7Ao_MXIsIGF4RULPxeq-CsWLi4O_Vx9g2zT4pxXLNxcnCCOaVGRQRZCcU5ReVpFelkRQj7LMrsEzkuvKM81gPPMzbMMTeA8o4ycvGSESXmmVdmmSVkVcHnjApMis0Wsys4Z-cn5OYklqQrOGZkFCs75-dmZqQou-aXpGQoBpSkpmXnpt9gkGXYv6vjJ4rrfcKOl8cZNYo-3s_9y_1ubNmPlIg6xgNT8gpxUhcSc4nyF4tTEouQMhbT8ohUcjAAXAT_zDAEAAA&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQs9oBKAB6BQi1ARAJ",
-          "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Chocolate+Chip+Cookie+Dough+Pudding&stick=H4sIAAAAAAAAAOMwVOLVT9c3NCxKLjOIL7Ao_MXIsIGF4RULPxeq-CsWLi4O_Vx9g2zT4pxXLNxcnCCOaVGRQRZCcU5ReVpFelkRQj7LMrsEzkuvKM81gPPMzbMMTeA8o4ycvGSESXmmVdmmSVkVcHnjApMis0Wsys4Z-cn5OYklqQrOGZkFCs75-dmZqQou-aXpGQoBpSkpmXnpt9gkGXYv6vjJ4rrfcKOl8cZNYo-3s_9y_1ubNmPlIg6xgNT8gpxUhcSc4nyF4tTEouQMhbT8ohUcjAAXAT_zDAEAAA"
-        },
-        {
-          "name": "Chocolate chip cookie",
-          "image": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/384678969bf460aff926b24132ced533e8af47380a5ce98df1992c01488076a38a3826241f083b2e.gif",
-          "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Chocolate+chip+cookie&stick=H4sIAAAAAAAAAOMwVOLQz9U3yDYtzvnFyLCBheEVCz8Xr366vqFhUXKZQXyBReErFi4uuKJXLNxcnCCOaVGRQRZCcU5ReVpFelkRQj7LMrsEzkuvKM81gPPMzbMMTeA8o4ycvGSESXmmVdmmSVkVcHnjApMis0Wsos4Z-cn5OYklqQrJGZkFCsn5-dmZqbfYJBl2L-r4yeK633CjpfHGTWKPt7P_cv9bmzZj5SIOsYDU_IKcVIXEnOJ8heLUxKLkDIW0_KIVHIwArauv1fkAAAA&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQs9oBKAB6BQi1ARAO",
-          "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Chocolate+chip+cookie&stick=H4sIAAAAAAAAAOMwVOLQz9U3yDYtzvnFyLCBheEVCz8Xr366vqFhUXKZQXyBReErFi4uuKJXLNxcnCCOaVGRQRZCcU5ReVpFelkRQj7LMrsEzkuvKM81gPPMzbMMTeA8o4ycvGSESXmmVdmmSVkVcHnjApMis0Wsos4Z-cn5OYklqQrJGZkFCsn5-dmZqbfYJBl2L-r4yeK633CjpfHGTWKPt7P_cv9bmzZj5SIOsYDU_IKcVIXEnOJ8heLUxKLkDIW0_KIVHIwArauv1fkAAAA"
-        },
-        {
-          "name": "Chocolate chip",
-          "image": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/384678969bf460aff926b24132ced533e8af47380a5ce98d36940fcf69a1ca7fc063b6ee2a921758.gif",
-          "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Chocolate+chip&stick=H4sIAAAAAAAAAOMwVOLUz9U3MC0qMsj6xciwgYXhFQs_F69-ur6hYVFymUF8gUXhKxYuLg6QqmzT4pxXLNxcCC0IxTlF5WkV6WVFCPksy-wSOC-9ojzXAM4zN88yNIHzjDJy8pIRJuWZVmWbJmVVwOWNC0yKzBax8jln5Cfn5ySWpCokZ2QW3GKTZNi9qOMni-t-w42Wxhs3iT3ezv7L_W9t2oyVizjEAlLzC3JSFRJzivMVilMTi5IzFNLyi1ZwMAIAyr-QWvMAAAA&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQs9oBKAB6BQi1ARAT",
-          "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Chocolate+chip&stick=H4sIAAAAAAAAAOMwVOLUz9U3MC0qMsj6xciwgYXhFQs_F69-ur6hYVFymUF8gUXhKxYuLg6QqmzT4pxXLNxcCC0IxTlF5WkV6WVFCPksy-wSOC-9ojzXAM4zN88yNIHzjDJy8pIRJuWZVmWbJmVVwOWNC0yKzBax8jln5Cfn5ySWpCokZ2QW3GKTZNi9qOMni-t-w42Wxhs3iT3ezv7L_W9t2oyVizjEAlLzC3JSFRJzivMVilMTi5IzFNLyi1ZwMAIAyr-QWvMAAAA"
-        },
-        {
-          "name": "Double chocolate chip cookies",
-          "image": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/384678969bf460aff926b24132ced533e8af47380a5ce98d33d4a9b790ae0dee43c26f7059e8b325.gif",
-          "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Double+chocolate+chip+cookies&stick=H4sIAAAAAAAAAOMwVOLVT9c3NMwpKk-rSC8r-sXIsIGF4RULPxdEvCi5zCC-wKLwFQsXF4d-rr5BtmlxzisWbi5OEMe0qMggC6EYZghCPssyuwTOS68ozzWA88zNswxN4DyjjJy8ZIRJeaZV2aZJWRVweeMCkyKzRayyLvmlSTmpCskZ-cn5OYklIFZmgUJyfn52ZmrxLTZJht2LOn6yuO433GhpvHGT2OPt7L_c_9amzVi5iEMsIDW_AKg3Mac4X6E4NbEoOUMhLb9oBQcjAG8NMuYGAQAA&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQs9oBKAB6BQi1ARAY",
-          "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Double+chocolate+chip+cookies&stick=H4sIAAAAAAAAAOMwVOLVT9c3NMwpKk-rSC8r-sXIsIGF4RULPxdEvCi5zCC-wKLwFQsXF4d-rr5BtmlxzisWbi5OEMe0qMggC6EYZghCPssyuwTOS68ozzWA88zNswxN4DyjjJy8ZIRJeaZV2aZJWRVweeMCkyKzRayyLvmlSTmpCskZ-cn5OYklIFZmgUJyfn52ZmrxLTZJht2LOn6yuO433GhpvHGT2OPt7L_c_9amzVi5iEMsIDW_AKg3Mac4X6E4NbEoOUMhLb9oBQcjAG8NMuYGAQAA"
-        },
-        {
-          "name": "Sugar cookie",
-          "image": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/384678969bf460aff926b24132ced533e8af47380a5ce98dbec512fb4e90bd3f0b4f205ef259de0e.gif",
-          "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Sugar+cookie&stick=H4sIAAAAAAAAAOMwVOLUz9U3MM2yzC75xciwgYXhFQs_F69-ur6hYVFymUF8gUXhKxYuLg6QqmzT4pxXLNxcEC1FRQZZCMU5ReVpFellRQh5kJFwXnpFea4BnGdunmVoAucZZeTkJSNMyjOtyjZNyqqAyxsXmBSZLWLlCS5NTyxSSM7Pz85MvcUmybB7UcdPFtf9hhstjTduEnu8nf2X-9_atBkrF3GIBaTmF-SkKiTmFOcrFKcmFiVnKKTlF63gYAQAXLFnT_EAAAA&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQs9oBKAB6BQi1ARAd",
-          "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Sugar+cookie&stick=H4sIAAAAAAAAAOMwVOLUz9U3MM2yzC75xciwgYXhFQs_F69-ur6hYVFymUF8gUXhKxYuLg6QqmzT4pxXLNxcEC1FRQZZCMU5ReVpFellRQh5kJFwXnpFea4BnGdunmVoAucZZeTkJSNMyjOtyjZNyqqAyxsXmBSZLWLlCS5NTyxSSM7Pz85MvcUmybB7UcdPFtf9hhstjTduEnu8nf2X-9_atBkrF3GIBaTmF-SkKiTmFOcrFKcmFiVnKKTlF63gYAQAXLFnT_EAAAA"
-        },
-        {
-          "name": "Peanut butter cookie",
-          "image": "https://serpapi.com/searches/6830b8903d34dd9fe94e2e3c/images/384678969bf460aff926b24132ced533e8af47380a5ce98d6f3436d57bf62703c7de3685d4f8bd92.gif",
-          "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Peanut+butter+cookie&stick=H4sIAAAAAAAAAOMwVOLUz9U3SK8ozzX4xciwgYXhFQs_F69-ur6hYVFymUF8gUXhKxYuLg6QqmzT4pxXLNxcYC2mRUUGWQjFOUXlaRXpZUUI-SzL7BI4D2wBnGdunmVoAucZZeTkJSNMyjOtyjZNyqqAyxsXmBSZLWIVCUhNzCstUUgqLSlJLVJIzs_Pzky9xSbJsHtRx08W1_2GGy2NN24Se7yd_Zf739q0GSsXcYgFpOYX5KQqJOYU5ysUpyYWJWcopOUXreBgBACIbWpD-QAAAA&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQs9oBKAB6BQi1ARAi",
-          "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Peanut+butter+cookie&stick=H4sIAAAAAAAAAOMwVOLUz9U3SK8ozzX4xciwgYXhFQs_F69-ur6hYVFymUF8gUXhKxYuLg6QqmzT4pxXLNxcYC2mRUUGWQjFOUXlaRXpZUUI-SzL7BI4D2wBnGdunmVoAucZZeTkJSNMyjOtyjZNyqqAyxsXmBSZLWIVCUhNzCstUUgqLSlJLVJIzs_Pzky9xSbJsHtRx08W1_2GGy2NN24Se7yd_Zf739q0GSsXcYgFpOYX5KQqJOYU5ysUpyYWJWcopOUXreBgBACIbWpD-QAAAA"
+          "snippet": "Ingredients: 2 large croissants (preferably day-old for better texture) ½ cup semi-sweet chocolate chips 2 tbsp butter (melted) ¼ cup brown ...",
+          "link": "https://www.facebook.com/groups/463346923703557/posts/7779720968732746/"
         }
       ]
     },
     {
-      "block_position": 1,
-      "query": "5 best cookie recipes",
-      "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=5+best+cookie+recipes&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ1QJ6BQi8ARAB",
-      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=5+best+cookie+recipes"
+      "title": "How do they get this ultra thin and crispy top on a croissant?",
+      "link": "https://www.reddit.com/r/pastry/comments/1b3tbdn/how_do_they_get_this_ultra_thin_and_crispy_top_on/",
+      "date": "1 year ago",
+      "extensions": [
+        "r/pastry",
+        "10+ comments"
+      ],
+      "source": "Reddit",
+      "answers": [
+        {
+          "snippet": "Proper lamination: where the layers are so thin that the outer layer of dough is elevated by ...",
+          "link": "https://www.reddit.com/r/pastry/comments/1b3tbdn/how_do_they_get_this_ultra_thin_and_crispy_top_on/ksvlm36/",
+          "extensions": [
+            "Top answer",
+            "24 votes",
+            "a year ago"
+          ]
+        },
+        {
+          "snippet": "It's egg wash. Depends on your wash ingredients and such. Try an equal mixture of cream, yolk, ...",
+          "link": "https://www.reddit.com/r/pastry/comments/1b3tbdn/how_do_they_get_this_ultra_thin_and_crispy_top_on/ksuftfh/",
+          "extensions": [
+            "22 votes",
+            "a year ago"
+          ]
+        },
+        {
+          "snippet": "It could have a \"wrap\". When you sheet the dough to cut croissants you wrap an additional ...",
+          "link": "https://www.reddit.com/r/pastry/comments/1b3tbdn/how_do_they_get_this_ultra_thin_and_crispy_top_on/ksuh7yl/",
+          "extensions": [
+            "8 votes",
+            "a year ago"
+          ]
+        }
+      ]
     },
     {
-      "block_position": 1,
-      "query": "Unique cookie recipes",
-      "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Unique+cookie+recipes&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ1QJ6BQi7ARAB",
-      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Unique+cookie+recipes"
-    },
-    {
-      "block_position": 1,
-      "query": "Best chocolate chip cookies recipe",
-      "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Best+chocolate+chip+cookies+recipe&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ1QJ6BQi6ARAB",
-      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Best+chocolate+chip+cookies+recipe"
-    },
-    {
-      "block_position": 1,
-      "query": "Best cookie recipes 2024",
-      "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Best+cookie+recipes+2024&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ1QJ6BQi5ARAB",
-      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Best+cookie+recipes+2024"
-    },
-    {
-      "block_position": 1,
-      "query": "Easy chocolate chip cookies recipe",
-      "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Easy+chocolate+chip+cookies+recipe&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ1QJ6BQi3ARAB",
-      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Easy+chocolate+chip+cookies+recipe"
-    },
-    {
-      "block_position": 1,
-      "query": "Best cookie recipes Reddit",
-      "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Best+cookie+recipes+Reddit&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ1QJ6BQi2ARAB",
-      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Best+cookie+recipes+Reddit"
-    },
-    {
-      "block_position": 1,
-      "query": "Best cookie recipes, not chocolate chip",
-      "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Best+cookie+recipes,+not+chocolate+chip&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ1QJ6BQi4ARAB",
-      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Best+cookie+recipes%2C+not+chocolate+chip"
-    },
-    {
-      "block_position": 1,
-      "query": "Easy cookie recipes",
-      "link": "https://www.google.com/search?num=30&sca_esv=237638b250c80c54&gl=us&hl=en&q=Easy+cookie+recipes&sa=X&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ1QJ6BQi9ARAB",
-      "serpapi_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=Easy+cookie+recipes"
+      "title": "Croissant | Croissant making in two simple ways, crispy outside, yummy! ...",
+      "link": "https://www.facebook.com/groups/mvasustyle123/posts/4176181242504957/",
+      "date": "3 years ago",
+      "extensions": [
+        "All In All Samayal",
+        "2 comments"
+      ],
+      "source": "Facebook",
+      "answers": [
+        {
+          "snippet": "Croissant | Croissant making in two simple ways, crispy outside, yummy! Full recipe：https://youtu.be/wdkwZNgbW8E Ingredients: for 16 ...",
+          "link": "https://www.facebook.com/groups/mvasustyle123/posts/4176181242504957/"
+        }
+      ]
     }
   ],
   "pagination": {
     "current": 1,
-    "next": "https://www.google.com/search?q=best+cookie+recipes&num=30&sca_esv=237638b250c80c54&gl=us&hl=en&ei=kbgwaOS9MNjk2roPkIKWSQ&start=30&sa=N&sstk=Ac65TH7nCWATgMEJPg21gxi_TGd3TPx3OONIuwvRBCPF6RyQ0TwirBVMzq_o-ltqO1Py5SzMejzJ_Hhozt2LgF0ATtloIe_W781ZeA&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ8NMDegQIDBAS",
+    "next": "https://www.google.com/search?q=gooey+croissant+recipe+crisp+outside&num=30&sca_esv=71e0a88dd8899415&gl=us&hl=en&ei=SuSQaL73BbPk5NoPs-j24Qo&start=30&sa=N&sstk=Ac65TH6s3VJsqo8-bhdXuV68hRkNPeKH3JDkFoWThsewZyAZsrLkbncdpjZPENLS0Iy3EDVGnHVpd9Wr58rm_gCCiquOh-YfxBVJ8w&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQ8NMDegQIBxAI",
     "other_pages": {
-      "2": "https://www.google.com/search?q=best+cookie+recipes&num=30&sca_esv=237638b250c80c54&gl=us&hl=en&ei=kbgwaOS9MNjk2roPkIKWSQ&start=30&sa=N&sstk=Ac65TH7nCWATgMEJPg21gxi_TGd3TPx3OONIuwvRBCPF6RyQ0TwirBVMzq_o-ltqO1Py5SzMejzJ_Hhozt2LgF0ATtloIe_W781ZeA&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ8tMDegQIDBAE",
-      "3": "https://www.google.com/search?q=best+cookie+recipes&num=30&sca_esv=237638b250c80c54&gl=us&hl=en&ei=kbgwaOS9MNjk2roPkIKWSQ&start=60&sa=N&sstk=Ac65TH7nCWATgMEJPg21gxi_TGd3TPx3OONIuwvRBCPF6RyQ0TwirBVMzq_o-ltqO1Py5SzMejzJ_Hhozt2LgF0ATtloIe_W781ZeA&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ8tMDegQIDBAG",
-      "4": "https://www.google.com/search?q=best+cookie+recipes&num=30&sca_esv=237638b250c80c54&gl=us&hl=en&ei=kbgwaOS9MNjk2roPkIKWSQ&start=90&sa=N&sstk=Ac65TH7nCWATgMEJPg21gxi_TGd3TPx3OONIuwvRBCPF6RyQ0TwirBVMzq_o-ltqO1Py5SzMejzJ_Hhozt2LgF0ATtloIe_W781ZeA&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ8tMDegQIDBAI",
-      "5": "https://www.google.com/search?q=best+cookie+recipes&num=30&sca_esv=237638b250c80c54&gl=us&hl=en&ei=kbgwaOS9MNjk2roPkIKWSQ&start=120&sa=N&sstk=Ac65TH7nCWATgMEJPg21gxi_TGd3TPx3OONIuwvRBCPF6RyQ0TwirBVMzq_o-ltqO1Py5SzMejzJ_Hhozt2LgF0ATtloIe_W781ZeA&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ8tMDegQIDBAK",
-      "6": "https://www.google.com/search?q=best+cookie+recipes&num=30&sca_esv=237638b250c80c54&gl=us&hl=en&ei=kbgwaOS9MNjk2roPkIKWSQ&start=150&sa=N&sstk=Ac65TH7nCWATgMEJPg21gxi_TGd3TPx3OONIuwvRBCPF6RyQ0TwirBVMzq_o-ltqO1Py5SzMejzJ_Hhozt2LgF0ATtloIe_W781ZeA&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ8tMDegQIDBAM",
-      "7": "https://www.google.com/search?q=best+cookie+recipes&num=30&sca_esv=237638b250c80c54&gl=us&hl=en&ei=kbgwaOS9MNjk2roPkIKWSQ&start=180&sa=N&sstk=Ac65TH7nCWATgMEJPg21gxi_TGd3TPx3OONIuwvRBCPF6RyQ0TwirBVMzq_o-ltqO1Py5SzMejzJ_Hhozt2LgF0ATtloIe_W781ZeA&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ8tMDegQIDBAO",
-      "8": "https://www.google.com/search?q=best+cookie+recipes&num=30&sca_esv=237638b250c80c54&gl=us&hl=en&ei=kbgwaOS9MNjk2roPkIKWSQ&start=210&sa=N&sstk=Ac65TH7nCWATgMEJPg21gxi_TGd3TPx3OONIuwvRBCPF6RyQ0TwirBVMzq_o-ltqO1Py5SzMejzJ_Hhozt2LgF0ATtloIe_W781ZeA&ved=2ahUKEwikyrrilrqNAxVYslYBHRCBJQkQ8tMDegQIDBAQ"
+      "2": "https://www.google.com/search?q=gooey+croissant+recipe+crisp+outside&num=30&sca_esv=71e0a88dd8899415&gl=us&hl=en&ei=SuSQaL73BbPk5NoPs-j24Qo&start=30&sa=N&sstk=Ac65TH6s3VJsqo8-bhdXuV68hRkNPeKH3JDkFoWThsewZyAZsrLkbncdpjZPENLS0Iy3EDVGnHVpd9Wr58rm_gCCiquOh-YfxBVJ8w&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQ8tMDegQIBxAE",
+      "3": "https://www.google.com/search?q=gooey+croissant+recipe+crisp+outside&num=30&sca_esv=71e0a88dd8899415&gl=us&hl=en&ei=SuSQaL73BbPk5NoPs-j24Qo&start=60&sa=N&sstk=Ac65TH6s3VJsqo8-bhdXuV68hRkNPeKH3JDkFoWThsewZyAZsrLkbncdpjZPENLS0Iy3EDVGnHVpd9Wr58rm_gCCiquOh-YfxBVJ8w&ved=2ahUKEwi-xK77zfGOAxUzMlkFHTO0PawQ8tMDegQIBxAG"
     }
   },
   "serpapi_pagination": {
     "current": 1,
-    "next_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=best+cookie+recipes&start=30",
-    "next": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=best+cookie+recipes&start=30",
+    "next_link": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=gooey+croissant+recipe+crisp+outside&start=30",
+    "next": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=gooey+croissant+recipe+crisp+outside&start=30",
     "other_pages": {
-      "2": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=best+cookie+recipes&start=30",
-      "3": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=best+cookie+recipes&start=60",
-      "4": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=best+cookie+recipes&start=90",
-      "5": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=best+cookie+recipes&start=120",
-      "6": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=best+cookie+recipes&start=150",
-      "7": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=best+cookie+recipes&start=180",
-      "8": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=best+cookie+recipes&start=210"
+      "2": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=gooey+croissant+recipe+crisp+outside&start=30",
+      "3": "https://serpapi.com/search.json?device=desktop&engine=google&gl=us&google_domain=google.com&hl=en&num=30&q=gooey+croissant+recipe+crisp+outside&start=60"
     }
   }
 }

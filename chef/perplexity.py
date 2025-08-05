@@ -40,7 +40,7 @@ def search_perplexity(query: str):
     }
 
     data = {
-        "model": "sonar", # Using the online model for search capabilities
+        "model": "sonar-reasoning", # Using the online model for search capabilities
         "messages": messages,
         "stream": False # Set stream to False to get the full response at once
     }
