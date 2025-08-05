@@ -309,7 +309,7 @@ def setup_bot() -> Application:
 def run_bot_webhook_set():
     try:
         app = setup_bot()
-        webhook_url = 'https://fuzzy-happiness-7jgw66wxqqhg77-8080.app.github.dev'
+        webhook_url = 'https://literate-adventure-jpx9vv9wppfpgjj-8080.app.github.dev'
         if not webhook_url:
             raise ValueError("TELEGRAM_WEBHOOK_URL not set!")
         
