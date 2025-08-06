@@ -24,6 +24,9 @@ class MessageRouter:
         """Initialize the MessageRouter with API key"""
         self.openai_api_key = openai_api_key or os.environ.get('OPENAI_API_KEY')
         self.handlers = {}  # Store AIHandler instances by user_id
+        self.base_instructions = self._load_base_instructions()
+        
+        # Restore tool_map definition
         self.tool_map = {
             "search_perplexity": search_perplexity,
             "search_serpapi": search_serpapi,
@@ -33,17 +36,27 @@ class MessageRouter:
             "update_task": update_task,
             "fetch_preferences": fetch_preferences,
             "fetch_recipes": fetch_recipes,
-            "call_openai_no_tool": lambda query="", openai_api_key=None: call_openai_no_tool(
+            "answer_general_question": lambda query="", openai_api_key=None: call_openai_no_tool(
                 {"messages": [
-
+                    {"role": "system", "content": "You are a curious cooking assistant. Keep responses to 1-2 sentences MAX. Always end with a curious follow-up question. Don't give lists or detailed suggestions - just acknowledge what they said and ask what specific direction they want to explore. Be conversational and brief."},
                     {"role": "user", "content": query}
                 ]},
                 openai_api_key=openai_api_key
             )
         }
-        
         if not self.openai_api_key:
             logging.error("OpenAI API key is missing!")
+    
+    def _load_base_instructions(self):
+        """Load the base instructions from the instructions file"""
+        try:
+            base_path = os.path.dirname(__file__)
+            instructions_path = os.path.join(base_path, 'utilities/instructions/instructions_base.txt')
+            with open(instructions_path, 'r') as file:
+                return "=== BASE DEFAULT INSTRUCTIONS ===\n" + file.read()
+        except Exception as e:
+            print(f"ERROR loading base instructions: {e}")
+            return "You are a helpful culinary assistant."
     
 
     
@@ -154,7 +167,7 @@ class MessageRouter:
         
         # Ensure system instructions are present at the start of the messages list
         system_instruction = {"role": "system", "content": """You are an assistant that MUST ALWAYS call a tool for EVERY user message.
-                              For general conversation, greetings, or simple questions, use the call_openai_no_tool tool.
+                              For general conversation, greetings, or simple questions, use the answer_general_question tool.
                               When calling search_perplexity, pass only the user's current search query as a string - do NOT construct message arrays.
                               NEVER pass your own response as the query."""}
         if not messages or messages[0].get("role") != "system":
@@ -220,7 +233,7 @@ class MessageRouter:
             {
                 "type": "function",
                 "function": {
-                    "name": "call_openai_no_tool",
+                    "name": "answer_general_question",
                     "description": "DEFAULT TOOL for all general conversation, greetings, questions, and anything that doesn't specifically require other specialized tools. \
                         This tool MUST be used whenever no other specialized tool is needed. \
                             If you're at all uncertain which tool to use, use this one. \
@@ -303,6 +316,21 @@ class MessageRouter:
                     # Append the assistant's response (with tool_calls) and the tool message.
                     messages_for_second_call = messages + [assistant_response_with_tool_call, tool_response_message]
                 
+                # Add conditional system instruction based on tool type
+                function_name = tool_call['function']['name']
+                if function_name == "answer_general_question":
+                    # For general questions, keep responses brief and natural
+                    system_content = "Use the tool's response directly. Do not expand, add lists, or provide additional suggestions. Just relay what the tool returned in a natural way."
+                else:
+                    # For search tools (perplexity, serpapi, etc.), present full detailed responses
+                    system_content = "Present the tool's response fully and completely. Include all details, formatting, and citations provided. Do not truncate or summarize."
+                
+                if not messages_for_second_call or messages_for_second_call[0].get("role") != "system":
+                    messages_for_second_call.insert(0, {"role": "system", "content": system_content})
+                elif messages_for_second_call[0].get("content") == "":
+                    # Replace empty system message with our instruction
+                    messages_for_second_call[0] = {"role": "system", "content": system_content}
+
                 payload2 = {
                     'model': 'gpt-4o-mini-2024-07-18',
                     'messages': messages_for_second_call,
