@@ -10,7 +10,7 @@ from perplexity import search_perplexity
 from chef.testscripts.serpapirecipes import search_serpapi
 from chef.testscripts.advanced_recipe_reasoning import advanced_recipe_reasoning
 from chef.utilities.sheetscall import sheets_call, task_create, fetch_preferences, fetch_recipes, update_task
-from chef.firestore_chef import firestore_get_docs_by_date_range
+from chef.utilities.firestore_chef import firestore_get_docs_by_date_range
 from chef.message_user import process_message_object
 from chef.utilities.history_messages import message_history_process, get_full_history_message_object
 from testscripts.openai_agent_no_tool import call_openai_no_tool

@@ -17,7 +17,7 @@ from telegram.ext import (
 
 # Import AIHandler again
 from chefwriter import AIHandler
-from firebase import firebase_get_media_url # Add this import back
+from chef.utilities.firebase import firebase_get_media_url # Add this import back
 from message_router import MessageRouter # Import MessageRouter
 
 # Set up logging
