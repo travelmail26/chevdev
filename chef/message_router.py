@@ -8,6 +8,7 @@ import requests
 sys.path.append('/workspaces/chevdev')
 from perplexity import search_perplexity
 from chef.testscripts.serpapirecipes import search_serpapi
+from chef.testscripts.advanced_recipe_reasoning import advanced_recipe_reasoning
 from chef.utilities.sheetscall import sheets_call, task_create, fetch_preferences, fetch_recipes, update_task
 from chef.firestore_chef import firestore_get_docs_by_date_range
 from chef.message_user import process_message_object
@@ -36,9 +37,13 @@ class MessageRouter:
             "update_task": update_task,
             "fetch_preferences": fetch_preferences,
             "fetch_recipes": fetch_recipes,
+            "advanced_recipe_reasoning": lambda query="", openai_api_key=None: advanced_recipe_reasoning(
+                query=query,
+                openai_api_key=openai_api_key or self.openai_api_key
+            ),
             "answer_general_question": lambda query="", openai_api_key=None: call_openai_no_tool(
                 {"messages": [
-                    {"role": "system", "content": "You are a curious cooking assistant. Keep responses to 1-2 sentences MAX. Always end with a curious follow-up question. Don't give lists or detailed suggestions - just acknowledge what they said and ask what specific direction they want to explore. Be conversational and brief."},
+                    {"role": "system", "content": "You are a cooking assistant with specialized capabilities. Be explicit about what you can do:\n\nIf the user mentions recipes AND wants to 'explore', 'experiment', 'make simultaneously', 'at the same time', or optimize workflows, say: 'I can help you with advanced recipe experimentation and optimization. This involves analyzing constraints, identifying overlapping steps, and creating efficient workflows. Would you like me to engage my advanced recipe reasoning to design an optimized experimental approach?'\n\nOtherwise, provide brief helpful responses with ONE sentence and ONE follow-up question."},
                     {"role": "user", "content": query}
                 ]},
                 openai_api_key=openai_api_key
@@ -112,6 +117,32 @@ class MessageRouter:
                     else:
                         # If no valid context, just send the current query
                         print(f"**DEBUG: No valid context found, sending current query only**")
+
+                # Special handling for Advanced Recipe Reasoning - include last 10 messages as context
+                if function_name == "advanced_recipe_reasoning" and user_id:
+                    history_obj = get_full_history_message_object(str(user_id))
+                    all_messages = history_obj.get("messages", [])
+                    
+                    # Filter messages to only include those with valid content
+                    valid_messages = []
+                    for msg in all_messages:
+                        if (msg.get("content") is not None and 
+                            msg.get("content") != "" and 
+                            msg.get("role") in ["user", "assistant"]):
+                            valid_messages.append({"role": msg["role"], "content": msg["content"]})
+                    
+                    # Get last 10 valid messages for context (more context needed for recipe experimentation)
+                    context_messages = valid_messages[-10:] if len(valid_messages) >= 10 else valid_messages
+                    
+                    if context_messages:
+                        user_query = function_args.get("query", "")
+                        context_json = json.dumps(context_messages, indent=2)
+                        combined_query = f"Current query: {user_query}\n\nConversation context (includes recipe data from previous searches):\n{context_json}"
+                        
+                        function_args["query"] = combined_query
+                        print(f"**DEBUG: Advanced Recipe Reasoning will receive context with {len(context_messages)} messages**")
+                    else:
+                        print(f"**DEBUG: No context found for advanced recipe reasoning")
                 
                 # === DIAGNOSIS START ===
                 #print(f"**DIAGNOSIS: About to call {function_name} with args: {function_args}**")
@@ -166,10 +197,22 @@ class MessageRouter:
             messages = []
         
         # Ensure system instructions are present at the start of the messages list
-        system_instruction = {"role": "system", "content": """You are an assistant that MUST ALWAYS call a tool for EVERY user message.
-                              For general conversation, greetings, or simple questions, use the answer_general_question tool.
-                              When calling search_perplexity, pass only the user's current search query as a string - do NOT construct message arrays.
-                              NEVER pass your own response as the query."""}
+        system_instruction = {"role": "system", "content": """You are an intelligent assistant that MUST ALWAYS call a tool for EVERY user message.
+
+TOOL SELECTION RULES:
+1. Use 'advanced_recipe_reasoning' when ALL conditions are met:
+   - User is asking about recipe experimentation, variations, modifications, cooking techniques, or wants to "explore" recipes
+   - AND recent conversation contains recipe data from previous searches or provided recipes
+   - Keywords: explore, experiment, variation, what if, try different, modify recipe, make simultaneously
+
+2. Use 'search_perplexity' or 'search_serpapi' when user asks for new recipe searches or information lookup
+
+3. Use 'answer_general_question' ONLY for:
+   - Greetings, acknowledgments, or off-topic questions  
+   - General cooking questions WITHOUT existing recipe context
+   - Simple clarifying questions
+
+CRITICAL: If user wants to "explore" or "experiment" with recipes when recipe data exists in conversation, you MUST use advanced_recipe_reasoning, NOT answer_general_question."""}
         if not messages or messages[0].get("role") != "system":
             messages.insert(0, system_instruction)
 
@@ -233,11 +276,30 @@ class MessageRouter:
             {
                 "type": "function",
                 "function": {
+                    "name": "advanced_recipe_reasoning",
+                    "description": "Use ONLY when ALL of these conditions are met: 1) User is asking about recipe experimentation, variations, modifications, or cooking techniques AND 2) Recent conversation (last 5-10 messages) contains recipe data from previous searches or recipe discussions. Keywords: 'explore', 'experiment', 'variation', 'what if', 'try different', 'modify recipe', ingredient substitutions within recipe context. Do NOT use for general cooking questions without existing recipe context.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "query": {
+                                "type": "string",
+                                "description": "User's recipe experimentation question"
+                            }
+                        },
+                        "required": ["query"]
+                    }
+                }
+            },
+            {
+                "type": "function",
+                "function": {
                     "name": "answer_general_question",
-                    "description": "DEFAULT TOOL for all general conversation, greetings, questions, and anything that doesn't specifically require other specialized tools. \
-                        This tool MUST be used whenever no other specialized tool is needed. \
-                            If you're at all uncertain which tool to use, use this one. \
-                                The object will always been a string from the user. It is the user's message",
+                    "description": "DEFAULT TOOL. Use when: 1) No recipe context exists in recent conversation,"
+                    " OR 2) User asks general cooking questions without specific recipe experimentation intent, OR "
+                    "3) Greetings, acknowledgments, or off-topic questions. DO NOT use if user wants to 'explore't"
+                    ", "
+                    "'experiment', or 'try different' recipes when recipe data exists in conversation."
+                    "NEVER use this tool at the same time as another tool",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -254,11 +316,12 @@ class MessageRouter:
         #print(f"**DEBUG: message passed to openai message_router: {messages}**")
         
         payload = {
-            'model': 'gpt-4o-mini-2024-07-18',
+            'model': 'gpt-4o',
             'messages': messages,
             'temperature': 0.5,
             'tools': tools,
-            'tool_choice': 'required'  # Force the model to always use a tool
+            'tool_choice': 'required',  # Force the model to always use a tool
+            'parallel_tool_calls': False  # Disable parallel tool calls
         }
         
         print(f"**DEBUG: Payload sent to OpenAI: {payload}**")
@@ -316,14 +379,17 @@ class MessageRouter:
                     # Append the assistant's response (with tool_calls) and the tool message.
                     messages_for_second_call = messages + [assistant_response_with_tool_call, tool_response_message]
                 
-                # Add conditional system instruction based on tool type
+                # Add conditional system instruction based on tool type - respect tool's intended behavior
                 function_name = tool_call['function']['name']
                 if function_name == "answer_general_question":
                     # For general questions, keep responses brief and natural
-                    system_content = "Use the tool's response directly. Do not expand, add lists, or provide additional suggestions. Just relay what the tool returned in a natural way."
+                    system_content = "Present the tool's response exactly as given. Keep it brief and natural."
+                elif function_name == "advanced_recipe_reasoning":
+                    # For advanced recipe reasoning, respect the tool's escalation logic
+                    system_content = "Present the tool's response exactly as provided. If it asks questions, present the questions. If it provides detailed plans, present the complete plans. Do not modify or truncate the tool's intended response."
                 else:
                     # For search tools (perplexity, serpapi, etc.), present full detailed responses
-                    system_content = "Present the tool's response fully and completely. Include all details, formatting, and citations provided. Do not truncate or summarize."
+                    system_content = "Present the tool's response fully and completely. Include all details, formatting, and citations provided."
                 
                 if not messages_for_second_call or messages_for_second_call[0].get("role") != "system":
                     messages_for_second_call.insert(0, {"role": "system", "content": system_content})
@@ -332,7 +398,7 @@ class MessageRouter:
                     messages_for_second_call[0] = {"role": "system", "content": system_content}
 
                 payload2 = {
-                    'model': 'gpt-4o-mini-2024-07-18',
+                    'model': 'gpt-4o',
                     'messages': messages_for_second_call,
                     'temperature': 0.5,
                     # No 'tools' or 'tool_choice' for the second call
