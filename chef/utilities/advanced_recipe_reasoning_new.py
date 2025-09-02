@@ -14,14 +14,6 @@ def advanced_recipe_reasoning(conversation_history=None, openai_api_key=None):
         String response with helpful recipe guidance
     """
     
-    print(f"**DEBUG: advanced_recipe_reasoning called with conversation_history type: {type(conversation_history)}**")
-    if conversation_history:
-        print(f"**DEBUG: conversation_history has {len(conversation_history)} messages**")
-        for i, msg in enumerate(conversation_history[-3:]):  # Show last 3 messages
-            print(f"**DEBUG: Message {i}: {msg.get('role')} - {msg.get('content', '')[:100]}...**")
-    else:
-        print(f"**DEBUG: No conversation_history provided**")
-    
     if not openai_api_key:
         openai_api_key = os.environ.get('OPENAI_API_KEY')
     
@@ -34,7 +26,6 @@ def advanced_recipe_reasoning(conversation_history=None, openai_api_key=None):
         instructions_path = os.path.join(base_path, 'instructions', 'recipe_experimenting.txt')
         with open(instructions_path, 'r') as file:
             system_message = file.read()
-        print(f"**DEBUG: Loaded instructions from {instructions_path}**")
     except Exception as e:
         print(f"Warning: Could not load instructions: {e}")
         system_message = "You are an expert culinary assistant. Help users with their cooking questions and recipe experiments. Be conversational and responsive to what the user is actually asking."
@@ -45,7 +36,7 @@ def advanced_recipe_reasoning(conversation_history=None, openai_api_key=None):
     if conversation_history:
         messages.extend(conversation_history)
     
-    print(f"**DEBUG: Sending {len(messages)} total messages to LLM (1 system + {len(conversation_history or [])} conversation)**")
+    print(f"**DEBUG: Sending {len(messages)} messages to LLM**")
 
     # Make API call
     headers = {
@@ -56,7 +47,7 @@ def advanced_recipe_reasoning(conversation_history=None, openai_api_key=None):
     payload = {
         'model': 'gpt-4o-mini',
         'messages': messages,
-        'temperature': 0.7,
+        'temperature': 0.7,  # Slightly higher for more natural conversation
         'max_tokens': 1500,
         'presence_penalty': 0.1,
         'frequency_penalty': 0.1
@@ -71,9 +62,18 @@ def advanced_recipe_reasoning(conversation_history=None, openai_api_key=None):
         )
         response.raise_for_status()
         response_data = response.json()
-        result = response_data['choices'][0]['message']['content']
-        print(f"**DEBUG: Got response: {result[:100]}...**")
-        return result
+        return response_data['choices'][0]['message']['content']
     except Exception as e:
-        print(f"**DEBUG: API call failed: {e}**")
         return f"Error in advanced recipe reasoning: {str(e)}"
+
+
+# Test function if run directly
+if __name__ == "__main__":
+    test_conversation = [
+        {"role": "user", "content": "search for carbonara recipes"}, 
+        {"role": "assistant", "content": "Found 3 approaches: traditional with eggs and pecorino, cream-based version, and modern sous vide technique"},
+        {"role": "user", "content": "I want to experiment with carbonara techniques"}
+    ]
+    
+    result = advanced_recipe_reasoning(conversation_history=test_conversation)
+    print(result)

@@ -7,13 +7,13 @@ import requests
 # Import necessary modules for tool functions
 sys.path.append('/workspaces/chevdev')
 from perplexity import search_perplexity
-from chef.testscripts.serpapirecipes import search_serpapi
-from chef.testscripts.advanced_recipe_reasoning import advanced_recipe_reasoning
-from chef.utilities.sheetscall import sheets_call, task_create, fetch_preferences, fetch_recipes, update_task
-from chef.utilities.firestore_chef import firestore_get_docs_by_date_range
-from chef.message_user import process_message_object
-from chef.utilities.history_messages import message_history_process, get_full_history_message_object
-from testscripts.openai_agent_no_tool import call_openai_no_tool
+#from testscripts.serpapirecipes import search_serpapi
+from utilities.advanced_recipe_reasoning import advanced_recipe_reasoning
+from utilities.sheetscall import sheets_call, task_create, fetch_preferences, fetch_recipes, update_task
+from utilities.firestore_chef import firestore_get_docs_by_date_range
+from message_user import process_message_object
+from utilities.history_messages import message_history_process, get_full_history_message_object
+from utilities.openai_agent_no_tool import call_openai_no_tool
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -30,15 +30,15 @@ class MessageRouter:
         # Restore tool_map definition
         self.tool_map = {
             "search_perplexity": search_perplexity,
-            "search_serpapi": search_serpapi,
+            "search_serpapi": search_perplexity,  # Use perplexity as fallback for serpapi
             "firestore_get_docs_by_date_range": firestore_get_docs_by_date_range,
             "sheets_call": sheets_call,
             "task_create": task_create,
             "update_task": update_task,
             "fetch_preferences": fetch_preferences,
             "fetch_recipes": fetch_recipes,
-            "advanced_recipe_reasoning": lambda query="", openai_api_key=None: advanced_recipe_reasoning(
-                query=query,
+            "advanced_recipe_reasoning": lambda conversation_history=None, openai_api_key=None: advanced_recipe_reasoning(
+                conversation_history=conversation_history,
                 openai_api_key=openai_api_key or self.openai_api_key
             ),
             "answer_general_question": lambda query="", openai_api_key=None: call_openai_no_tool(
@@ -118,8 +118,9 @@ class MessageRouter:
                         # If no valid context, just send the current query
                         print(f"**DEBUG: No valid context found, sending current query only**")
 
-                # Special handling for Advanced Recipe Reasoning - include last 10 messages as context
+                # Special handling for Advanced Recipe Reasoning - pass conversation history directly
                 if function_name == "advanced_recipe_reasoning" and user_id:
+                    print(f"**DEBUG: Advanced Recipe Reasoning will receive conversation history for user_id: {user_id}**")
                     history_obj = get_full_history_message_object(str(user_id))
                     all_messages = history_obj.get("messages", [])
                     
@@ -131,18 +132,12 @@ class MessageRouter:
                             msg.get("role") in ["user", "assistant"]):
                             valid_messages.append({"role": msg["role"], "content": msg["content"]})
                     
-                    # Get last 10 valid messages for context (more context needed for recipe experimentation)
-                    context_messages = valid_messages[-10:] if len(valid_messages) >= 10 else valid_messages
-                    
-                    if context_messages:
-                        user_query = function_args.get("query", "")
-                        context_json = json.dumps(context_messages, indent=2)
-                        combined_query = f"Current query: {user_query}\n\nConversation context (includes recipe data from previous searches):\n{context_json}"
-                        
-                        function_args["query"] = combined_query
-                        print(f"**DEBUG: Advanced Recipe Reasoning will receive context with {len(context_messages)} messages**")
-                    else:
-                        print(f"**DEBUG: No context found for advanced recipe reasoning")
+                    print(f"**DEBUG: Conversation history loaded: {len(valid_messages)} messages**")
+                    # Pass conversation history directly to the function and remove query parameter
+                    function_args.clear()  # Remove all existing args including 'query'
+                    function_args["conversation_history"] = valid_messages
+                    print(f"**DEBUG: Advanced Recipe Reasoning will receive {len(valid_messages)} messages directly**")
+                
                 
                 # === DIAGNOSIS START ===
                 #print(f"**DIAGNOSIS: About to call {function_name} with args: {function_args}**")
@@ -193,36 +188,56 @@ class MessageRouter:
             messages: Optional list of message dictionaries for the conversation history
             message_object: Optional dictionary containing user_message and other data
         """
+        logging.debug(f"DEBUG: route_message called with messages={messages}, message_object={message_object}")
+        
         if messages is None:
             messages = []
         
         # Ensure system instructions are present at the start of the messages list
-        system_instruction = {"role": "system", "content": """You are an intelligent assistant that MUST ALWAYS call a tool for EVERY user message.
+        system_instruction = {"role": "system", "content": """You MUST ALWAYS select and call EXACTLY ONE tool for EVERY user message (never zero, never more than one). Do not answer directly without a tool.
 
-TOOL SELECTION RULES:
-1. Use 'advanced_recipe_reasoning' when ALL conditions are met:
-   - User is asking about recipe experimentation, variations, modifications, cooking techniques, or wants to "explore" recipes
-   - AND recent conversation contains recipe data from previous searches or provided recipes
-   - Keywords: explore, experiment, variation, what if, try different, modify recipe, make simultaneously
+STRICT TOOL DECISIONS:
+1. advanced_recipe_reasoning → Use ONLY when BOTH are true:
+   a. User is exploring / experimenting / modifying / optimizing / overlapping / batching / comparing recipes (keywords: explore, experiment, variation, modify, substitute, swap, compare, simultaneous, parallel, overlap, optimize, workflow, plan, schedule, timing, batch) AND
+   b. Recent conversation (last ~10 messages) already contains recipe data, prior search results, ingredients, steps, or constraints.
 
-2. Use 'search_perplexity' or 'search_serpapi' when user asks for new recipe searches or information lookup
+2. search_perplexity or search_serpapi → Use when the user explicitly wants NEW info or to look up / find / search / pull data not yet in conversation.
 
-3. Use 'answer_general_question' ONLY for:
-   - Greetings, acknowledgments, or off-topic questions  
-   - General cooking questions WITHOUT existing recipe context
-   - Simple clarifying questions
+3. answer_general_question → Use ONLY for greetings, small talk, acknowledgments, off-topic, or simple clarifying/general cooking questions WITHOUT experimentation intent and WITHOUT sufficient recipe context for (1).
 
-CRITICAL: If user wants to "explore" or "experiment" with recipes when recipe data exists in conversation, you MUST use advanced_recipe_reasoning, NOT answer_general_question."""}
-        if not messages or messages[0].get("role") != "system":
-            messages.insert(0, system_instruction)
+PRIORITY: If (1) and (2) both could apply, prefer advanced_recipe_reasoning unless user explicitly asks to search. Never choose answer_general_question if (1) conditions are satisfied.
 
+CONTINUITY (PROMPT-ONLY): If the last assistant tool output was from advanced_recipe_reasoning and the user reply is short and appears to supply a constraint (time, equipment, quantity, dietary, confirmation) without requesting a search, continue with advanced_recipe_reasoning to gather remaining constraints or produce the plan.
+
+OUTPUT: Provide only the tool call (model-internal). Never fabricate tool names. Exactly one tool per turn.
+"""}
+        logging.debug(f"DEBUG: messages type: {type(messages)}, length: {len(messages) if hasattr(messages, '__len__') else 'no length'}")
+        logging.debug(f"DEBUG: messages content: {messages}")
+        
         # Extract user message from message_object if provided
         if message_object and "user_message" in message_object:
             user_message = message_object["user_message"]
+            logging.debug(f"Processing message_object: {message_object}")
             full_message_object = message_history_process(message_object, {"role": "user", "content": user_message})  # Process the message object
+            logging.debug(f"Returned from message_history_process: {full_message_object}")
             # Use the full message history from the updated object
             messages = full_message_object.get("messages", [])
             logging.debug(f"Added user message from message_object: {user_message}")
+            logging.debug(f"Messages structure: {type(messages)}, length: {len(messages)}")
+            if messages:
+                logging.debug(f"First message: {messages[0]}")
+                logging.debug(f"Last message: {messages[-1]}")
+            else:
+                logging.debug("Messages list is empty!")
+                
+        # Ensure messages is a proper list
+        if not isinstance(messages, list):
+            logging.debug(f"DEBUG: Converting messages from {type(messages)} to list")
+            messages = []
+        
+        # Ensure system instruction is present at the start AFTER loading conversation history
+        if not messages or len(messages) == 0 or not isinstance(messages[0], dict) or messages[0].get("role") != "system":
+            messages.insert(0, system_instruction)
         
         # Clean messages before sending to OpenAI: remove any with content None, but preserve those with tool_calls
         messages = [m for m in messages if m.get('content') is not None or m.get('tool_calls') is not None]
@@ -315,13 +330,44 @@ CRITICAL: If user wants to "explore" or "experiment" with recipes when recipe da
         ]
         #print(f"**DEBUG: message passed to openai message_router: {messages}**")
         
+        # --- Continuity Heuristic for advanced_recipe_reasoning ---
+        # If the last tool used was advanced_recipe_reasoning and the user is likely answering a constraint question,
+        # we force the next tool call to continue with advanced_recipe_reasoning to maintain phase consistency.
+        force_tool_choice = None
+        try:
+            # Find last user message (assumed to be final in list after insertion earlier)
+            last_user_msg = next((m for m in reversed(messages) if m.get('role') == 'user'), None)
+            # Walk backwards to find the most recent assistant tool call before that user message
+            last_tool_function = None
+            seen_user = False
+            for m in reversed(messages):
+                role = m.get('role')
+                if role == 'user' and not seen_user:
+                    seen_user = True
+                    continue  # start looking before the last user
+                if role == 'assistant' and m.get('tool_calls'):
+                    tc = m['tool_calls'][0]
+                    if tc.get('function', {}).get('name'):
+                        last_tool_function = tc['function']['name']
+                        break
+            if last_tool_function == 'advanced_recipe_reasoning' and last_user_msg:
+                user_text = (last_user_msg.get('content') or '').lower()
+                # Heuristic: short reply, likely answering a constraint; avoid if user explicitly asks to search
+                if (len(user_text) < 250 and
+                    not any(kw in user_text for kw in ['search', 'find', 'lookup', 'serp', 'perplexity']) and
+                    not user_text.startswith('/')  # ignore commands
+                   ):
+                    force_tool_choice = 'advanced_recipe_reasoning'
+        except Exception as continuity_err:
+            logging.debug(f"Continuity heuristic skipped due to error: {continuity_err}")
+
         payload = {
             'model': 'gpt-4o',
             'messages': messages,
             'temperature': 0.5,
             'tools': tools,
-            'tool_choice': 'required',  # Force the model to always use a tool
-            'parallel_tool_calls': False  # Disable parallel tool calls
+            'tool_choice': ({'type': 'function', 'function': {'name': force_tool_choice}} if force_tool_choice else 'required'),
+            'parallel_tool_calls': False
         }
         
         print(f"**DEBUG: Payload sent to OpenAI: {payload}**")
@@ -386,7 +432,7 @@ CRITICAL: If user wants to "explore" or "experiment" with recipes when recipe da
                     system_content = "Present the tool's response exactly as given. Keep it brief and natural."
                 elif function_name == "advanced_recipe_reasoning":
                     # For advanced recipe reasoning, respect the tool's escalation logic
-                    system_content = "Present the tool's response exactly as provided. If it asks questions, present the questions. If it provides detailed plans, present the complete plans. Do not modify or truncate the tool's intended response."
+                    system_content = "CRITICAL: You are a transparent message relay. Output ONLY the exact text from the tool response, nothing else. Do not add context, explanations, elaborations, or your own steps. Do not interpret or expand. If the tool asks a question, output only that question. If the tool provides a plan, output only that plan. Be a perfect pass-through."
                 else:
                     # For search tools (perplexity, serpapi, etc.), present full detailed responses
                     system_content = "Present the tool's response fully and completely. Include all details, formatting, and citations provided."
