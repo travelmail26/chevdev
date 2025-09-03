@@ -8,7 +8,7 @@ import requests
 sys.path.append('/workspaces/chevdev')
 from perplexity import search_perplexity
 #from testscripts.serpapirecipes import search_serpapi
-from utilities.advanced_recipe_reasoning import advanced_recipe_reasoning
+from chef.testscripts.advanced_recipe_reasoning import advanced_recipe_reasoning
 from utilities.sheetscall import sheets_call, task_create, fetch_preferences, fetch_recipes, update_task
 from utilities.firestore_chef import firestore_get_docs_by_date_range
 from message_user import process_message_object

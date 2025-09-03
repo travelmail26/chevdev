@@ -7,6 +7,8 @@ import signal
 import traceback
 from threading import Thread
 
+# Add current directory to path for imports
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from telegram_bot import run_bot_webhook_set
 

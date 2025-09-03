@@ -2,6 +2,10 @@ import os
 import sys
 import logging
 import traceback
+
+# Add parent directory to path to import utilities
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from dotenv import load_dotenv, dotenv_values
 from utilities.history_messages import create_session_log_file # Adjust path if necessary
 

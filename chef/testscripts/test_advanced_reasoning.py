@@ -4,7 +4,7 @@ import sys
 import os
 sys.path.append('/workspaces/chevdev/chef')
 
-from utilities.advanced_recipe_reasoning import advanced_recipe_reasoning
+from chef.testscripts.advanced_recipe_reasoning import advanced_recipe_reasoning
 
 def test_advanced_reasoning_directly():
     """Test the advanced recipe reasoning function directly with the croissant context"""
