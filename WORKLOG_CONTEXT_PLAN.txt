@@ -1,0 +1,52 @@
+Session Context and Next Steps
+
+Updated: <now>
+
+Scope
+- Goal: Verify bot can persist conversation, engage advanced reasoning, gather constraints, and propose steps for multi‑recipe workflows.
+- Focus: chef/chefmain/message_router.py, telegram_bot.py, utilities/history_messages.py, tests under chef/testscripts.
+
+What Works
+- History persistence: message_history_process writes JSON to chat_history_logs/<user>_history.json; router reloads with get_full_history_message_object.
+- Tool selection: Router enforces exactly one tool and includes a continuity heuristic to keep using advanced_recipe_reasoning on short constraint replies.
+- Context into tools:
+  - search_perplexity: injects last ~5 valid messages as JSON context string.
+  - advanced_recipe_reasoning: passes full conversation_history directly (not just a query string).
+- Telegram handling: process_message_object sends to Telegram only if chat_id is present; omitting chat_id allows safe local runs.
+
+Key Caveats
+- advanced_recipe_reasoning implementation is imported from chef/testscripts/advanced_recipe_reasoning.py. It attempts to load testscripts/instructions/recipe_experimenting.txt (not present) and falls back to a generic prompt. This weakens the intended “short constraint‑discovery first” behavior.
+- message_router._load_base_instructions points to chef/chefmain/utilities/instructions/... (path does not exist), so it also falls back.
+
+What I Added
+- File: chef/testscripts/test_reasoning_live_workflow.py
+  - Live end‑to‑end test using real APIs (OpenAI + Perplexity) via MessageRouter.
+  - Exercises a 5‑step croissant workflow: search → explore → equipment → constraints → next steps.
+  - Uses message_object with only user_id in session_info to persist history and avoid Telegram sends.
+  - Asserts tool usage sequence (search_perplexity then advanced_recipe_reasoning), continuity, and context awareness.
+
+How To Run
+- Requirements: export OPENAI_API_KEY and PERPLEXITY_KEY; ensure outbound network.
+- Direct: python chef/testscripts/test_reasoning_live_workflow.py
+- Pytest: pytest -q chef/testscripts/test_reasoning_live_workflow.py
+
+Evidence You Should See
+- chat_history_logs/<generated_user>_history.json created and growing.
+- Step 1 last tool: search_perplexity. Steps 2–5 last tool: advanced_recipe_reasoning.
+- Responses contain context keywords (e.g., croissant, flour, equipment, oven, mixer, schedule/plan/next).
+
+Recommended Next Steps (when resuming)
+1) Fix advanced reasoning instructions path
+   - Use the richer instructions at chef/utilities/instructions/recipe_experimenting.txt.
+   - Option A: Move/duplicate advanced_recipe_reasoning into chef/utilities and import from there.
+   - Option B: Adjust testscripts/advanced_recipe_reasoning.py to load from chef/utilities/instructions.
+2) Re‑run the live test to observe improved constraint‑first behavior.
+3) Add a second live scenario (e.g., two pizza styles) to confirm generality.
+4) Optionally, tighten assertions for “short question first” once instructions are fixed.
+5) If desired, include Telegram delivery in tests by providing chat_id and ensuring the bot writes the application token file.
+
+Notes
+- The test intentionally avoids Telegram sends by omitting chat_id in session_info.
+- message_router continuity heuristic pins the next tool to advanced reasoning on short replies that look like constraints.
+- For production, prefer a single, non‑testpath advanced reasoning module under chef/utilities.
+

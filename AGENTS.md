@@ -1,5 +1,12 @@
 # Repository Guidelines
 
+## Agent Defaults
+- Default working directory: `chef/chefmain/` unless otherwise specified.
+- Scope focus: prioritize `main.py`, `telegram_bot.py`, `message_router.py` and only necessary items under `chef/utilities/`.
+- Exceptions: when edits/reads are needed outside `chef/chefmain/`, call it out explicitly first.
+- Token minimization: avoid repo‑wide scans; prefer targeted reads within `chef/chefmain/` by default.
+- Override: the user can set a different working directory per request.
+
 ## Project Structure & Module Organization
 - `chef/chefmain/`: Telegram bot entrypoint (`main.py`) and runtime code (`telegram_bot.py`, `message_router.py`).
 - `chef/utilities/`: Shared helpers (Firebase upload, Sheets, history logging, OpenAI glue).
@@ -35,4 +42,3 @@
 - Required env vars: `TELEGRAM_DEV_KEY` or `TELEGRAM_KEY`, `FIREBASEJSON` (service account JSON string), optional `ENVIRONMENT`.
 - Do not commit secrets. Use `.env` locally; keep `chef/.env.production` out of VCS.
 - Be cautious with webhook URLs and public file uploads; rotate tokens on leaks.
-
