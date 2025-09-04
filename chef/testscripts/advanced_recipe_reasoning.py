@@ -54,9 +54,9 @@ def advanced_recipe_reasoning(conversation_history=None, openai_api_key=None):
     }
 
     payload = {
-        'model': 'gpt-4o-mini',
+        'model': 'gpt-5-mini-2025-08-07',
         'messages': messages,
-        'temperature': 0.7,
+        'temperature': 1.0,  # Fixed: gpt-5-mini only supports default temperature of 1.0
         'max_tokens': 1500,
         'presence_penalty': 0.1,
         'frequency_penalty': 0.1

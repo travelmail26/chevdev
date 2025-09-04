@@ -286,6 +286,7 @@ def setup_bot() -> Application:
     try: 
         if environment == 'development':
             token = os.getenv('TELEGRAM_DEV_KEY')
+            print(f"DEBUG: Using TELEGRAM_DEV_KEY: {token}")
 
 
         else:

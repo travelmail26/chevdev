@@ -362,9 +362,9 @@ OUTPUT: Provide only the tool call (model-internal). Never fabricate tool names.
             logging.debug(f"Continuity heuristic skipped due to error: {continuity_err}")
 
         payload = {
-            'model': 'gpt-4o',
+            'model': 'gpt-5-nano-2025-08-07',
             'messages': messages,
-            'temperature': 0.5,
+            'temperature': 1.0,  # Fixed: gpt-5-nano only supports default temperature of 1.0
             'tools': tools,
             'tool_choice': ({'type': 'function', 'function': {'name': force_tool_choice}} if force_tool_choice else 'required'),
             'parallel_tool_calls': False
