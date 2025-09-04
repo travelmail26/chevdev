@@ -281,7 +281,7 @@ async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 #setup bot loads message handler commands into application
 def setup_bot() -> Application:
-    environment = os.getenv("ENVIRONMENT", "development")
+    environment = os.getenv("ENVIRONMENT", "production")
 
     try: 
         if environment == 'development':
@@ -313,7 +313,7 @@ def setup_bot() -> Application:
 def run_bot_webhook_set():
     try:
         app = setup_bot()
-        webhook_url = 'https://literate-adventure-jpx9vv9wppfpgjj-8080.app.github.dev'
+        webhook_url = 'https://expert-spoon-x5976q7wjfvvq7-8080.app.github.dev/'
         if not webhook_url:
             raise ValueError("TELEGRAM_WEBHOOK_URL not set!")
         
