@@ -3,6 +3,15 @@ import os
 import sys
 import logging
 import requests
+try:
+    from dotenv import load_dotenv
+    # Load default .env
+    load_dotenv()
+    # Optionally load .env.local for per-developer overrides (gitignored)
+    if os.path.exists(os.path.join(os.getcwd(), ".env.local")):
+        load_dotenv(dotenv_path=os.path.join(os.getcwd(), ".env.local"), override=False)
+except Exception:
+    pass
 
 # Import necessary modules for tool functions
 sys.path.append('/workspaces/chevdev')
@@ -198,10 +207,10 @@ class MessageRouter:
 
 STRICT TOOL DECISIONS:
 1. advanced_recipe_reasoning → Use ONLY when BOTH are true:
-   a. User is exploring / experimenting / modifying / optimizing / overlapping / batching / comparing recipes (keywords: explore, experiment, variation, modify, substitute, swap, compare, simultaneous, parallel, overlap, optimize, workflow, plan, schedule, timing, batch) AND
+   a. User is exploring / experimenting / modifying / optimizing / overlapping / batching / comparing recipes (keywords: explore, experiment, variation, modify, substitute, swap, compare, simultaneous, at the same time, concurrently, parallel, overlap, optimize, workflow, plan, schedule, timing, batch) AND
    b. Recent conversation (last ~10 messages) already contains recipe data, prior search results, ingredients, steps, or constraints.
 
-2. search_perplexity or search_serpapi → Use when the user explicitly wants NEW info or to look up / find / search / pull data not yet in conversation.
+2. search_perplexity or search_serpapi → Use when the user explicitly wants NEW info or to look up / find / search / pull data not yet in conversation. If the user explicitly mentions "perplexity", use search_perplexity.
 
 3. answer_general_question → Use ONLY for greetings, small talk, acknowledgments, off-topic, or simple clarifying/general cooking questions WITHOUT experimentation intent and WITHOUT sufficient recipe context for (1).
 
@@ -330,43 +339,13 @@ OUTPUT: Provide only the tool call (model-internal). Never fabricate tool names.
         ]
         #print(f"**DEBUG: message passed to openai message_router: {messages}**")
         
-        # --- Continuity Heuristic for advanced_recipe_reasoning ---
-        # If the last tool used was advanced_recipe_reasoning and the user is likely answering a constraint question,
-        # we force the next tool call to continue with advanced_recipe_reasoning to maintain phase consistency.
-        force_tool_choice = None
-        try:
-            # Find last user message (assumed to be final in list after insertion earlier)
-            last_user_msg = next((m for m in reversed(messages) if m.get('role') == 'user'), None)
-            # Walk backwards to find the most recent assistant tool call before that user message
-            last_tool_function = None
-            seen_user = False
-            for m in reversed(messages):
-                role = m.get('role')
-                if role == 'user' and not seen_user:
-                    seen_user = True
-                    continue  # start looking before the last user
-                if role == 'assistant' and m.get('tool_calls'):
-                    tc = m['tool_calls'][0]
-                    if tc.get('function', {}).get('name'):
-                        last_tool_function = tc['function']['name']
-                        break
-            if last_tool_function == 'advanced_recipe_reasoning' and last_user_msg:
-                user_text = (last_user_msg.get('content') or '').lower()
-                # Heuristic: short reply, likely answering a constraint; avoid if user explicitly asks to search
-                if (len(user_text) < 250 and
-                    not any(kw in user_text for kw in ['search', 'find', 'lookup', 'serp', 'perplexity']) and
-                    not user_text.startswith('/')  # ignore commands
-                   ):
-                    force_tool_choice = 'advanced_recipe_reasoning'
-        except Exception as continuity_err:
-            logging.debug(f"Continuity heuristic skipped due to error: {continuity_err}")
 
         payload = {
             'model': 'gpt-5-nano-2025-08-07',
             'messages': messages,
             'temperature': 1.0,  # Fixed: gpt-5-nano only supports default temperature of 1.0
             'tools': tools,
-            'tool_choice': ({'type': 'function', 'function': {'name': force_tool_choice}} if force_tool_choice else 'required'),
+            'tool_choice': 'required',
             'parallel_tool_calls': False
         }
         
@@ -444,9 +423,9 @@ OUTPUT: Provide only the tool call (model-internal). Never fabricate tool names.
                     messages_for_second_call[0] = {"role": "system", "content": system_content}
 
                 payload2 = {
-                    'model': 'gpt-4o',
+                    'model': 'gpt-5-nano-2025-08-07',
                     'messages': messages_for_second_call,
-                    'temperature': 0.5,
+                    'temperature': 1,
                     # No 'tools' or 'tool_choice' for the second call
                 }
                 
@@ -514,7 +493,4 @@ if __name__ == "__main__":
         # by appending assistant responses and tool results.
         
         print(f"AI: {response}")
-
-
-
 

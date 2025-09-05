@@ -3,7 +3,7 @@ from datetime import datetime
 import json
 import os
 
-LOGS_DIR = "chat_history_logs" # Directory to store the text files
+LOGS_DIR = os.path.join(os.path.dirname(__file__), "chat_history_logs") # Directory relative to utilities folder
 
 from datetime import datetime, timezone
 

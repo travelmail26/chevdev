@@ -9,6 +9,16 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from dotenv import load_dotenv, dotenv_values
 from utilities.history_messages import create_session_log_file # Adjust path if necessary
 
+# Load environment variables early so downstream imports (e.g., perplexity) see keys
+try:
+    # Load default .env
+    load_dotenv()
+    # Optionally load a local override file that is gitignored
+    if os.path.exists(os.path.join(os.getcwd(), ".env.local")):
+        load_dotenv(dotenv_path=os.path.join(os.getcwd(), ".env.local"), override=False)
+except Exception:
+    pass
+
 
 from telegram import Update
 from telegram.ext import (
@@ -281,7 +291,7 @@ async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 #setup bot loads message handler commands into application
 def setup_bot() -> Application:
-    environment = os.getenv("ENVIRONMENT", "production")
+    environment = os.getenv("ENVIRONMENT", "development")
 
     try: 
         if environment == 'development':
@@ -314,7 +324,7 @@ def setup_bot() -> Application:
 def run_bot_webhook_set():
     try:
         app = setup_bot()
-        webhook_url = 'https://expert-spoon-x5976q7wjfvvq7-8080.app.github.dev/'
+        webhook_url = 'https://expert-spoon-x5976q7wjfvvq7-8080.app.github.dev'
         if not webhook_url:
             raise ValueError("TELEGRAM_WEBHOOK_URL not set!")
         

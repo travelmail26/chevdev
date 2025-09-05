@@ -80,7 +80,7 @@ def test_complete_system():
         message_obj2 = {
             'user_id': 'test_user_123',
             'session_info': {'user_id': 'test_user_123', 'chat_id': 'test_chat'},
-            'user_message': 'help me explore these recipes and choose the best one for my situation'
+            'user_message': 'help me explore these recipes at the same time'
         }
         
         print(f"→ Sending to MessageRouter: '{message_obj2['user_message']}'")
