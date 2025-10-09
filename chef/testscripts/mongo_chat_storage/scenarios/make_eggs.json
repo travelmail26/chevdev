@@ -1,0 +1,30 @@
+{
+  "description": "User asks for help cooking eggs; assistant provides guidance.",
+  "user_id": "demo_eggs_user",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Hi Chef bot, I'm feeling nervous about making scrambled eggs. Can you walk me through it?"
+    },
+    {
+      "role": "assistant",
+      "content": "Absolutely! Start by whisking three eggs with a pinch of salt. Heat a buttered non-stick pan over medium-low heat." 
+    },
+    {
+      "role": "user",
+      "content": "Should I stir constantly or let them sit?"
+    },
+    {
+      "role": "assistant",
+      "content": "Stir slowly with a spatula so soft curds form, then remove from the heat while still glossy and finish with herbs." 
+    },
+    {
+      "role": "user",
+      "content": "Thanks—that sounds doable!"
+    },
+    {
+      "role": "assistant",
+      "content": "You got this! Serve immediately so they stay creamy, and adjust seasoning to taste." 
+    }
+  ]
+}

@@ -8,7 +8,7 @@
 **Key Success: Natural Tool Switching During Advanced Recipe Reasoning**
 
 ### What Happened:
-- User was in advanced recipe reasoning (exploring croissant recipes)
+- User was in advanced recipe reasoning (exploring croissant recipes). Bot did not get the full recipe ingredients the first time
 - User asked: "search perplexity for those exact recipes again and have it return the full ingredient list"
 - **AI model correctly chose `search_perplexity`** instead of staying forced in `advanced_recipe_reasoning`
 - Perplexity successfully provided detailed ingredient list from Natasha's Baking recipe

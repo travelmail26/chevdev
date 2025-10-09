@@ -1,0 +1,3 @@
+# Extra dependencies for the LibreChat adapter.
+# Install alongside the main requirements when running the HTTP service.
+pymongo[srv]==4.8.0

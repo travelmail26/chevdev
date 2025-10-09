@@ -1,0 +1,27 @@
+{
+  "user_id": "u1",
+  "session_info": {
+    "user_id": "u1"
+  },
+  "user_message": "ok",
+  "chat_session_id": "u1_09102025_210340_501939",
+  "chat_session_created_at": "2025-10-09T21:03:40.501963+00:00",
+  "messages": [
+    {
+      "role": "system",
+      "content": ""
+    },
+    {
+      "role": "user",
+      "content": "hi"
+    },
+    {
+      "role": "user",
+      "content": "hi"
+    },
+    {
+      "role": "assistant",
+      "content": "ok"
+    }
+  ]
+}

@@ -31,8 +31,8 @@ from telegram.ext import (
 
 # Import AIHandler again
 #from chefwriter import AIHandler
+from utilities.firebase import firebase_get_media_url 
 from message_router import MessageRouter # Import MessageRouter
-from utilities.firebase import firebase_get_media_url
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -138,18 +138,10 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             local_path = f"{audio_dir}/{audio.file_id}.ogg"
             print(f"DEBUG: Downloading audio file to {local_path}")
             await file.download_to_drive(local_path)
-
-            firebase_url = None
-            try:
-                firebase_url = firebase_get_media_url(local_path)
-            except Exception as firebase_error:
-                logging.error(f"Firebase upload failed for audio: {firebase_error}")
-
-            if firebase_url:
-                # Example before/after: [audio_gridfs_id: 123] -> [audio_url: https://...]
-                user_input = f"[audio_url: {firebase_url}]"
-            else:
-                user_input = f"[Audio saved locally: {local_path}]"
+            # Set input for agentchat, transcription/analysis happens there
+            user_input = f"[Audio received: {local_path}]"
+            # Optional: Acknowledge receipt immediately if processing might take time
+            # await update.message.reply_text("Processing audio...")
 
         elif update.message.photo:
             photo = update.message.photo[-1]
@@ -158,17 +150,10 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             os.makedirs(photo_dir, exist_ok=True)
             local_path = f"{photo_dir}/{photo.file_id}.jpg"
             await file.download_to_drive(local_path)
-            firebase_url = None
-            try:
-                firebase_url = firebase_get_media_url(local_path)
-            except Exception as firebase_error:
-                logging.error(f"Firebase upload failed for photo: {firebase_error}")
-
-            if firebase_url:
-                # Example before/after: [photo_gridfs_id: 456] -> [photo_url: https://...]
-                user_input = f"[photo_url: {firebase_url}]"
-            else:
-                user_input = f"[Photo saved locally: {local_path}]"
+            firebase_url = firebase_get_media_url(local_path)
+            user_input = f"[Photo received: {firebase_url}]"
+            # Optional: Acknowledge receipt
+            # await update.message.reply_text("Processing photo...")
 
         elif update.message.video:
             video = update.message.video
@@ -177,23 +162,17 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             os.makedirs(video_dir, exist_ok=True)
             local_path = f"{video_dir}/{video.file_id}.mp4"
             await file.download_to_drive(local_path)
-            firebase_url = None
-            try:
-                firebase_url = firebase_get_media_url(local_path)
-            except Exception as firebase_error:
-                logging.error(f"Firebase upload failed for video: {firebase_error}")
+            firebase_url = firebase_get_media_url(local_path)
+            user_input = f"[Video received: {firebase_url}]"
+            # Optional: Acknowledge receipt
+            # await update.message.reply_text("Processing video...")
 
-            if firebase_url:
-                # Example before/after: [video_gridfs_id: 789] -> [video_url: https://...]
-                user_input = f"[video_url: {firebase_url}]"
-            else:
-                user_input = f"[Video saved locally: {local_path}]"
-
-        else:  # Text messages
+        else: # Text messages
             user_input = update.message.text or ""
+            # Check for empty text *only* in this block
             if not user_input.strip():
                 await update.message.reply_text("I received an empty message. Please send text!")
-                return  # Return only if text is empty
+                return # Return only if text is empty
 
         # If user_input is still empty here, it means no handler matched or an issue occurred.
         if not user_input:

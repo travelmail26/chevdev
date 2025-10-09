@@ -1,0 +1,13 @@
+2025-10-07: Restored Firebase bucket uploads for audio/photo/video in telegram_bot.py; removed GridFS usage so conversation references public firebase URLs.
+2025-10-07: Added instruction reminding assistant to acknowledge multimedia without auto-analyzing so users can request analysis explicitly.
+2025-10-07: Added testscripts/test_openai_vision.py to probe GPT-4.1-mini vision against Firebase-hosted photo.
+2025-10-07: Corrected message_router to load utilities instructions and replace blank system prompt so OpenAI payload carries full base instructions.
+2025-10-07: Simplified message_router to load manual instruction path list and reuse combined prompt before optional tool calls.
+2025-10-07: Reworked message_router load_instructions to return combined text from manual path list with no fallback prompts.
+2025-10-07: Updated instructions_base.txt to enforce acknowledgement-only responses unless user explicitly requests help.
+2025-10-07: Forced message_router to overwrite first system message with combined instructions each turn to avoid stale prompts.
+2025-10-07: Reverted system-message overwrite; router now only fills when missing or blank.
+2025-10-07: Clarified instructions_base to treat descriptive updates as info-only unless user explicitly asks for help.
+2025-10-07: Strengthened instructions to keep replies empathetic-only when users express uncertainty without explicit requests.
+2025-10-09: Added positive/negative example conversation section to instructions_base.txt to clarify acknowledgement-only vs help-request responses.
+2025-10-09: Updated message_router to persist base system instructions after empty-history sessions so /restart reloads the prompt; verified by simulating a fresh conversation.

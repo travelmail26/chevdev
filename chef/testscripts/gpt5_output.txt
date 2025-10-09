@@ -1,0 +1,40 @@
+GPT-5 Research Query Output
+================================
+
+Query: Research archives prior to 1920 for primary documentation referencing jews and their preference for brisket. Do not use modern interpretations. It must be a primary document. Modern blogs or books may use a primary document if they provide an image or a direct quote with citation
+
+Stream Processing:
+- 128 chunks processed
+- 10 web search tool calls made:
+  1. "brisket" Jewish cookbook 1918 "International Jewish Cook Book"
+  2. Esther Levy "Jewish Cookery Book" brisket 1871
+  3. "Aunt Babette's" brisket 1889 cookbook
+  4. "The Jewish Manual" brisket Montefiore 1846
+  5. "Settlement Cook Book" brisket corned beef 1901
+  6. site:chroniclingamerica.loc.gov brisket Jewish
+  7. "American Hebrew" brisket 1900
+  8. "Jewish Chronicle" brisket 1890
+  9. Forverts brisket 1910
+  10. "kosher" brisket advertisement 1915
+
+Partial Response (cut off due to timeout):
+Below are pre-1920 primary sources (scanned originals) that explicitly mention brisket in a Jewish context. Each entry includes a direct title quote from the source and a link to the digitized copy. These demonstrate brisket as a named, standard dish within Jewish cookery well before 1920.
+
+1) The International Jewish Cook Book (Florence Kreisler Greenbaum, New York: Bloch Publishing Co., 1918)
+- Primary evidence: Multiple recipes explicitly titled:
+  - "Roast Brisket of Beef"
+  - "Brisket of Beef with Prunes"
+- Why it's relevant: A mainstream American Jewish cookbook from 1918 treating brisket as a standard Jewish dish with multiple preparations.
+
+2) Aunt Babette's Cook Book: Foreign and Domestic Receipts for the Household (Cincinnati: Bloch Publishing & Printing Co., 1889)
+- Primary evidence: Recipes explicitly named for brisket appear in early editions (e.g., "Boiled Brisket of Beef"). The book was published by a major Jewish press (Bloch) and was widely used in Jewish households in the U.S.
+
+3) The Settlement Cook Book (Mrs. Simon Kander, ed., Milwaukee: Settlement Cook Book Co.)
+[Response was cut off]
+
+The script successfully demonstrated:
+✅ Proper streaming with chunk processing
+✅ Multiple tool calls with forced search
+✅ Real-time display of search queries being built
+✅ Progress indicators during processing
+✅ Comprehensive historical research approach

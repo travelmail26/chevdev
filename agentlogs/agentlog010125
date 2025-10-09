@@ -1,0 +1,42 @@
+Agent Log — 2025-10-01
+Workspace: /workspaces/chevdev
+Repository: chevdev
+---
+Initialized agent log. All actions and decisions will be noted chronologically.
+
+2025-10-01 20:31Z — Read chef/chefmain main.py and telegram_bot.py. Found webhook-only runner with hardcoded Codespaces URL; briefly added polling and env switch.
+2025-10-01 20:33Z — Reverted to webhook-only behavior per user request; restored original `setup_bot()` token debug prints and removed polling edits.
+2025-10-01 20:33Z — Added optional dev runner `chef/chefmain/dev_polling.py` that uses polling without altering production/main.
+2025-10-01 20:39Z — Fixed startup import failure: wrapped Perplexity import in message_router with a safe fallback when PERPLEXITY_KEY is missing, so webhook server can run without that key.
+2025-10-04T22:33:03+00:00 planning: drafted initial plan for Mongo-backed chat storage without touching existing scripts.
+2025-10-04T22:33:09+00:00 research: reviewed chef/testscripts/mangodb.txt for MongoDB connection details.
+2025-10-04T22:33:23+00:00 research: inspected main.py, message_router.py, and utilities/history_messages.py to understand chat flow and storage format.
+2025-10-04T22:36:48+00:00 planning: incorporated user scenario (egg conversation) for MongoDB verification tests.
+2025-10-04T22:37:46+00:00 work: created chef/testscripts/mongo_chat_storage/scenarios directory for new Mongo integration modules.
+2025-10-04T22:37:51+00:00 work: wrote mongo_chat_storage/__init__.py with module exports.
+2025-10-04T22:38:10+00:00 work: added config.py with env+file based Mongo settings loader.
+2025-10-04T22:38:19+00:00 work: added client.py with Mongo client caching and ping helper.
+2025-10-04T22:38:35+00:00 work: added schemas.py with session/message normalizers leveraging existing helper.
+2025-10-04T22:38:49+00:00 work: created MongoChatRepository with upsert/append/fetch helpers.
+2025-10-04T22:39:01+00:00 work: implemented history_ingestor CLI for migrating existing logs.
+2025-10-04T22:39:10+00:00 work: added router_adapter bridging MessageRouter to Mongo repository.
+2025-10-04T22:39:18+00:00 work: added make_eggs scenario JSON for manual runner verification.
+2025-10-04T22:39:31+00:00 work: implemented manual_runner CLI for scripted conversations.
+2025-10-04T22:39:48+00:00 work: documented new Mongo utilities in README.
+2025-10-04T22:40:19+00:00 work: added pytest coverage for repository and history ingestor with mongomock.
+2025-10-04T22:40:34+00:00 work: installed pymongo deps and mongomock for testing.
+2025-10-04T22:40:42+00:00 work: installed pytest for unit tests.
+2025-10-04T22:40:58+00:00 work: pytest for mongo_chat_storage passed (5 tests).
+2025-10-04T22:42:21+00:00 work: adjusted client TLS settings; tests remain green.
+2025-10-04T22:43:38+00:00 issue: initial manual_runner connection hit Mongo TLS handshake error; enabling CHEF_MONGO_TLS_INSECURE=1 for retry.
+2025-10-04T22:44:56+00:00 issue: manual_runner still failing due to Mongo TLS handshake; likely Atlas network allowlist/cert requirement.
+2025-10-04T22:47:44+00:00 note: user provided IP 172.191.151.5 for Mongo allowlist.
+2025-10-04T22:58:49+00:00 work: Mongo ping succeeded and stored make_eggs scenario into chat_sessions_testscripts.
+2025-10-06T15:02:41Z work: Swapped all runtime/test references from CHEF_MONGO_* to MONGODB_* secrets so deployments rely on Codespaces secret MONGODB_URI; updated history_messages Mongo sync helper and tests to honor new vars.
+2025-10-06T15:02:41Z cleanup: Deleted chef/testscripts/mongo_chat_storage/pingmongo.py and chef/testscripts/mangodb.txt to remove hardcoded Atlas credentials from repo.
+2025-02-14: Replaced chefmain flow with questionnaire + recipe stub; updated telegram_bot.py, message_router.py, main.py; added recipe_database placeholder and test_message_router; requirements trimmed; ensured Mongo sync intact.
+2025-02-14: Reverted broad overhaul after user feedback; restored original chefmain files and removed new placeholders.
+2025-02-14: Trimmed message_router and telegram_bot to only collect user info; removed tool calls and media handling; verified with compileall.
+2025-02-14: Reverted message_router.py and telegram_bot.py to original structure per user request.
+2025-02-14: Trimmed message_router tool_map to answer_general_question only; updated instructions and tool handling to remove search and sheet integrations.
+2025-02-14: Added GridFS media helper and wired telegram bot to store audio/photo/video IDs in Mongo.

@@ -22,11 +22,21 @@
 - Tests (quick): `pytest chef/testscripts -q` or `python -m pytest chef/testscripts -q`.
 - TypeScript (if used): `npm run build` then `npm start` (runs `dist/mcp/gemini-server.js`).
 
+## Transparency with user
+- ALWAYS: use print tails or other methods to show the user what you are working on while you are working. You are run in a CLI terminal in a github codespace. You must constantly show the user what you are thinking or coding as you working.
+
 ## Coding Style & Naming Conventions
 - Python: PEP 8, 4-space indent, `snake_case` for functions/vars, `CamelCase` for classes, module names lowercase.
 - TypeScript: 2-space indent, `camelCase` for vars/functions, `PascalCase` for classes.
 - Logging: prefer `logging` over `print`; use structured, single-line messages.
 - Files: keep bot code in `chef/chefmain/`, shared code in `chef/utilities/`, tests in `chef/testscripts/`.
+
+## User preferences for code
+
+- CRITICAL: keep code simple and readable. It is better to create multiple functions that use simple code that something more complex, even if its efficient.
+ - NEVER NEVER change major code structure or approach without approval. The user must know exactly how the code works and changing major strategies or variables confuses the user. Do not do without approval. 
+
+- Add inline comments that show concrete before/after examples so the user can follow each step easily.
 
 ## Testing Guidelines
 - Framework: pytest. Name files `test_*.py`; keep unit helpers near the code or under `testscripts`.
@@ -40,5 +50,11 @@
 
 ## Security & Configuration
 - Required env vars: `TELEGRAM_DEV_KEY` or `TELEGRAM_KEY`, `FIREBASEJSON` (service account JSON string), optional `ENVIRONMENT`.
+- Mongo history sync uses `MONGODB_URI` secret; optional overrides `MONGODB_DB_NAME`, `MONGODB_COLLECTION_NAME`, and `MONGODB_TLS_INSECURE` (set to `1` only for local testing).
 - Do not commit secrets. Use `.env` locally; keep `chef/.env.production` out of VCS.
 - Be cautious with webhook URLs and public file uploads; rotate tokens on leaks.
+
+## Logging
+
+--You will ALWAYS keep notes on what you have changed, as though you were keeping notes for yourself that you can reference later. Keep very brief notes on code has been changes, including any mistakes or feedback you get from the user. If the session closes, the user can tell you to reference this and you can immediately begin where you left off as though you knew everything to start exactly from where you were working. The user will give you the file to take notes from.  
+--Append major updates (especially credential or storage changes) to `agentlogs/agentlog010125` right after performing them so the history stays current.

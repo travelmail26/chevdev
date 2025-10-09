@@ -1,0 +1,93 @@
+*** Proposed Changes: message_router.py ***
+
+```diff
+diff --git a/chef/chefmain/message_router.py b/chef/chefmain/message_router.py
+index 0000000..0000000 100644
+--- a/chef/chefmain/message_router.py
++++ b/chef/chefmain/message_router.py
+@@
+-sys.path.append('/workspaces/chevdev')
+-from perplexity import search_perplexity
+-#from testscripts.serpapirecipes import search_serpapi
+-from chef.testscripts.advanced_recipe_reasoning import advanced_recipe_reasoning
+-from utilities.sheetscall import sheets_call, task_create, fetch_preferences, fetch_recipes, update_task
+-from utilities.firestore_chef import firestore_get_docs_by_date_range
+-from message_user import process_message_object
+-from utilities.history_messages import message_history_process, get_full_history_message_object
+-from utilities.openai_agent_no_tool import call_openai_no_tool
++sys.path.append('/workspaces/chevdev')
++try:
++    from perplexity import search_perplexity
++except Exception as e:
++    def search_perplexity(**kwargs):
++        return f"Perplexity unavailable: {str(e)}"
++#from testscripts.serpapirecipes import search_serpapi
++from chef.testscripts.advanced_recipe_reasoning import advanced_recipe_reasoning
++try:
++    from chef.testscripts.simple_mongo_dump import save_chat_session_to_mongo
++except Exception:
++    save_chat_session_to_mongo = None
++from utilities.sheetscall import sheets_call, task_create, fetch_preferences, fetch_recipes, update_task
++from utilities.firestore_chef import firestore_get_docs_by_date_range
++from message_user import process_message_object
++from utilities.history_messages import message_history_process, get_full_history_message_object
++from utilities.openai_agent_no_tool import call_openai_no_tool
+@@
+-        if not self.openai_api_key:
+-            logging.error("OpenAI API key is missing!")
++        if not self.openai_api_key:
++            logging.error("OpenAI API key is missing!")
++
++    def _sync_history_to_mongo(self, user_id):
++        if not user_id or not os.environ.get("MONGODB_URI") or not callable(save_chat_session_to_mongo):
++            return
++        # Before: chat content lived only inside chat_history_logs/<user>.json.
++        # After: with MONGODB_URI set, each append mirrors the same snapshot to MongoDB.
++        try:
++            session_id = save_chat_session_to_mongo(str(user_id))
++            logger.debug("Mongo snapshot updated", extra={"user_id": str(user_id), "session_id": session_id})
++        except Exception as exc:
++            logger.warning("Mongo snapshot skipped", extra={"user_id": str(user_id), "error": str(exc)})
++
++    def _append_to_history(self, message_object, message_to_append=None):
++        if not message_object:
++            return None
++        full_history = message_history_process(message_object, message_to_append)
++        if message_to_append is not None:
++            # Before: message_history_process wrote to disk only.
++            # After: the same write also triggers Mongo sync so history stays aligned.
++            self._sync_history_to_mongo(message_object.get("user_id"))
++        return full_history
+@@
+-            full_message_object = message_history_process(message_object, {"role": "user", "content": user_message})  # Process the message object
++            full_message_object = self._append_to_history(
++                message_object,
++                {"role": "user", "content": user_message},
++            )  # Before: history only flushed to disk; After: same append also mirrors to Mongo.
+@@
+-                if message_object:
+-                    message_history_process(message_object, assistant_response_with_tool_call)
++                if message_object:
++                    self._append_to_history(message_object, assistant_response_with_tool_call)
+@@
+-                if message_object:
+-                    message_history_process(message_object, tool_response_message)
++                if message_object:
++                    self._append_to_history(message_object, tool_response_message)
+@@
+-                if message_object:
+-                    message_history_process(message_object, {"role": "assistant", "content": final_assistant_message.get('content', '')})
++                if message_object:
++                    self._append_to_history(
++                        message_object,
++                        {"role": "assistant", "content": final_assistant_message.get('content', '')},
++                    )
+@@
+-                if message_object:
+-                    message_history_process(message_object, {"role": "assistant", "content": assistant_message.get('content', '')})
++                if message_object:
++                    self._append_to_history(
++                        message_object,
++                        {"role": "assistant", "content": assistant_message.get('content', '')},
++                    )
+```
