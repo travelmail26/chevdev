@@ -40,3 +40,8 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2025-02-14: Reverted message_router.py and telegram_bot.py to original structure per user request.
 2025-02-14: Trimmed message_router tool_map to answer_general_question only; updated instructions and tool handling to remove search and sheet integrations.
 2025-02-14: Added GridFS media helper and wired telegram bot to store audio/photo/video IDs in Mongo.
+2025-10-12T14:23:04+00:00 work: added chef/testscripts/gpt5_vision_media_test.py to download Firebase photo, base64 it, and call gpt-5-vision-preview (execution blocked by missing OPENAI_API_KEY in env).
+2025-10-12T14:27:23+00:00 work: simplified chef/testscripts/gpt5_vision_media_test.py to match docs (gpt-5-vision-preview, Firebase URL, reads OPENAI_API_KEY); run fails because key absent.
+2025-10-12T14:29:51+00:00 work: rewrote chef/testscripts/gpt5_vision_media_test.py to use raw requests.post against /v1/responses (same key handling as message_router) with provided Firebase URL.
+2025-10-12T14:30:39+00:00 work: added error body logging in chef/testscripts/gpt5_vision_media_test.py before raise_for_status for easier debugging.
+2025-10-22T12:59:12Z work: added chef/testscripts/download_mongo_collection.py to export Mongo collection documents to JSON with optional limit/output.

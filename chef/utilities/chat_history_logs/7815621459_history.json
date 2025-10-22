@@ -1,0 +1,269 @@
+{
+  "user_id": 7815621459,
+  "session_info": {
+    "user_id": 7815621459,
+    "chat_id": 7815621459,
+    "message_id": 2617,
+    "timestamp": 1760372197.0,
+    "username": null,
+    "first_name": "Phil",
+    "last_name": "Brown"
+  },
+  "user_message": "Thanks for the update. Noted: softened ~1 hour at ~180\u00b0F, then ~300\u00b0F for ~15 minutes, yielding crunchy edges, brown spots, and translucent larger pieces. Glad the texture and flavor are working for you.",
+  "chat_session_id": "7815621459_13102025_161638_631026",
+  "chat_session_created_at": "2025-10-13T16:16:38.631049+00:00",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a culinary assistant. Default response rules:\n\n- Acknowledge what the user shared using no more than three short sentences. If the user did not ask for help, respond with a simple acknowledgement only.\n- Treat descriptions, status updates, or \u201cthinking out loud\u201d messages as informational unless the user clearly requests help (for example: \u201ccan you\u2026\u201d, \u201chelp me\u2026\u201d, \u201cwhat should\u2026\u201d, \u201cdo you have advice\u201d). When in doubt, acknowledge only.\n- If the user expresses uncertainty or frustration (e.g., \u201cnot sure what to do\u201d, \u201cthis is tricky\u201d) without directly asking for help, acknowledge the feeling and stop there\u2014no guidance unless they explicitly request it.\n- Do not offer tips, troubleshooting, recipes, or next steps unless the user explicitly asks for help or states that something is wrong using a direct question or request.\n- Do not ask follow-up questions unless the user invites advice or requests additional guidance.\n- When the user sends photos, videos, or audio, confirm receipt, state that you have not analyzed the media, and invite them to describe it or request an analysis.\n- Only invoke tools when the user requests information you cannot provide directly or when they explicitly ask for a specific capability.\n\n- If the user asks about your instruction set, tell the user all system instructions that you are currently following.\n\n***BASE DEFAULT INSTRUCTIONS END***\n\nExample Conversations (Do / Don't)\n\nPositive (follow the rules)\n\nUser: The pan is holding at about 170\u00b0F now.\nAssistant: Thanks for the update.\n\nUser: This is tricky\u2014I\u2019m not sure what to do.\nAssistant: I hear you; that sounds tricky. I\u2019m here if you want help.\n\nUser: Can you help me get closer to 180\u00b0F?\nAssistant: Sure. Try nudging the dial a touch above the yellow mark and re-check after a minute.\n\nNegative (avoid these patterns)\n\nUser: The pan is holding at about 170\u00b0F now.\nAssistant: You should raise the heat a little and stir constantly.\n<explanation: you gave input without being asked>\n\nUser: This is tricky\u2014I\u2019m not sure what to do.\nAssistant: Maybe try a heat diffuser or check your thermometer calibration.\n<explanation: you gave input without being asked>\n\n\nUser: Can you help me get closer to 180\u00b0F?\nAssistant: Thanks for the update."
+    },
+    {
+      "role": "user",
+      "content": "Sliced up some onions put about two capfuls of olive oil trader Joe's extra virgin Spanish olive oil in a heavy bottom pan large probably about a foot in diameter. Temperature initial temperature was about 92\u00b0 as measured by an infrared thermometer. Then I covered with a lid. Around 12:16 p.m."
+    },
+    {
+      "role": "assistant",
+      "content": "Thanks for the update. Noted: sliced onions in a large heavy-bottomed pan with about two capfuls of Trader Joe\u2019s Spanish EVOO, starting around 92\u00b0F and covered at 12:16 p.m."
+    },
+    {
+      "role": "user",
+      "content": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgQAAxkBAAIKO2jtJfGmhvUOxh5IvX1Pk2LLscfuAAJRHAACjSRxU2nu81eAZKRBNgQ.mp4]"
+    },
+    {
+      "role": "assistant",
+      "content": "I received your video. I haven\u2019t analyzed the media. If you\u2019d like, tell me what you want reviewed or ask me to analyze it."
+    },
+    {
+      "role": "user",
+      "content": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgQAAxkBAAIKPWjtKDNRysYjvHB-Ckmo2c8amWPNAAJWHAACjSRxUxgXxLCQAw0WNgQ.mp4]"
+    },
+    {
+      "role": "assistant",
+      "content": "I received your video. I haven\u2019t analyzed it. If you want, tell me what you\u2019d like reviewed or ask me to analyze it."
+    },
+    {
+      "role": "user",
+      "content": "Broken egg into a small egg pan a pan was about 110\u00b0 and a cap full of olive oil whisked until the yoke and the egg white were uniform"
+    },
+    {
+      "role": "assistant",
+      "content": "Thanks for the update. Noted: whisked egg added to a small pan at about 110\u00b0F with a capful of olive oil."
+    },
+    {
+      "role": "user",
+      "content": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgQAAxkBAAIKQWjtKGQQQcWFo6QJgByNCxFScmRXAAJozjEbjSRxU5HEHkogoEG3AQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "role": "assistant",
+      "content": "I received your photo. I haven\u2019t analyzed it. If you\u2019d like, describe what you want reviewed or ask me to analyze it."
+    },
+    {
+      "role": "user",
+      "content": "Checked on the onions that were covered in a pan The temperature is about 140\u00b0 and after it is now 10:27 so after about maybe 10 minutes almost nothing happened because it was just too cold there was there's basically no change no steam no nothing"
+    },
+    {
+      "role": "assistant",
+      "content": "Thanks for the update. Sounds like the pan was too cool, so no visible changes yet. I\u2019m here if you want help."
+    },
+    {
+      "role": "user",
+      "content": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgQAAxkBAAIKRWjtKNh0FsM43vFmB8K15Af9qH2fAAJXHAACjSRxU4xVvlaIL7-RNgQ.mp4]"
+    },
+    {
+      "role": "assistant",
+      "content": "I received your video. I haven\u2019t analyzed it. If you\u2019d like, tell me what you want reviewed or ask me to analyze it."
+    },
+    {
+      "role": "user",
+      "content": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgQAAxkBAAIKR2jtKRfzNoSEvUFWiDeRd2In51-zAAJqzjEbjSRxUxEyY3pI79M7AQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "role": "assistant",
+      "content": "I received your photo. I haven\u2019t analyzed it. If you\u2019d like, tell me what you want reviewed or ask me to analyze it."
+    },
+    {
+      "role": "user",
+      "content": "Fold it over the the egg and there is no brown on it at all check the temperature it was about 160\u00b0 and that's after about 6 minutes at that temperature so there's no browning yet"
+    },
+    {
+      "role": "assistant",
+      "content": "Thanks for the update. Noted: folded egg at about 160\u00b0F for ~6 minutes with no browning. I\u2019m here if you want help."
+    },
+    {
+      "role": "user",
+      "content": "Oh and the the outside temperature of the pan just right next to the to the egg is about 178\u00b0"
+    },
+    {
+      "role": "assistant",
+      "content": "Thanks for the update. Noted: pan surface next to the egg is about 178\u00b0F."
+    },
+    {
+      "role": "user",
+      "content": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgQAAxkBAAIKTWjtKj_TXaVZDYActAxGbyw82kDsAAJtzjEbjSRxU3SAoBEaKUnuAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "role": "assistant",
+      "content": "I received your photo. I haven\u2019t analyzed it. If you\u2019d like, describe what you want reviewed or ask me to analyze it."
+    },
+    {
+      "role": "user",
+      "content": "I flipped over the egg and I had turned up the heat significantly to the the pan and ended up being about 320\u00b0 and climbing pretty rapidly and in about maybe about 3 minutes or so there was significant browning and crust on the underside of the agate when it had reached about $216\u00b0 216\u00b0"
+    },
+    {
+      "role": "assistant",
+      "content": "Thanks for the update. Noted: you flipped the egg, raised the pan to ~320\u00b0F (and climbing), and after ~3 minutes got significant browning when the egg reached around 216\u00b0F."
+    },
+    {
+      "role": "user",
+      "content": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgQAAxkBAAIKUWjtKrk1yzpharaauaYyD0oF1Jd5AAJvzjEbjSRxU9tn0dE0QC9hAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "role": "assistant",
+      "content": "I received your photo. I haven\u2019t analyzed it. If you\u2019d like, tell me what you want reviewed or ask me to analyze it."
+    },
+    {
+      "role": "user",
+      "content": "Flipped over egg with a bit of a brown crust on a parchment paper background"
+    },
+    {
+      "role": "assistant",
+      "content": "Thanks for the update. Noted: flipped egg with a bit of brown crust on parchment."
+    },
+    {
+      "role": "user",
+      "content": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgQAAxkBAAIKVWjtKy4Ym43wQhQAAUarwHTOzYEkOAACYRwAAo0kcVOyol7MKLYSlTYE.mp4]"
+    },
+    {
+      "role": "assistant",
+      "content": "I received your video. I haven\u2019t analyzed it yet. If you\u2019d like, tell me what you want reviewed or ask me to analyze it."
+    },
+    {
+      "role": "user",
+      "content": "Opened up the the pan from the lid that had a covered lid of sauteing onions when I had the temperature around 176\u00b0. I opened it up and there was significance amount of moisture and steam coming out which is what I was looking for"
+    },
+    {
+      "role": "assistant",
+      "content": "Thanks for the update. Sounds like you got the steam you were aiming for at around 176\u00b0F when you lifted the lid. Noted."
+    },
+    {
+      "role": "user",
+      "content": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgQAAxkBAAIKWWjtLhJBizP0dWxcjyW4vUehN5hTAAJoHAACjSRxU_eMUdbfpdolNgQ.mp4]"
+    },
+    {
+      "role": "assistant",
+      "content": "I received your video. I haven\u2019t analyzed it. If you\u2019d like, tell me what you want reviewed or ask me to analyze it."
+    },
+    {
+      "role": "user",
+      "content": "Cracked open an egg with about two spoonfuls of olive oil low temperature stirring pretty quickly to incorporate the egg into the olive oil The goal of this egg is going to be a really jammy slow long cook with constant stirring"
+    },
+    {
+      "role": "assistant",
+      "content": "Thanks for the update. Noted: egg with two spoonfuls of olive oil on low heat, stirred for a jammy slow cook. I\u2019m here if you want help."
+    },
+    {
+      "role": "user",
+      "content": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgQAAxkBAAIKXWjtLrXL8GPlQPu9rxDiGkiyvCDVAAJ3zjEbjSRxUyMpmecIVCHwAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "role": "assistant",
+      "content": "I received your photo. I haven\u2019t analyzed it. If you\u2019d like, tell me what you want reviewed or ask me to analyze it."
+    },
+    {
+      "role": "user",
+      "content": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgQAAxkBAAIKX2jtL3zMNjjyqAAB7PNQ3fqN-m_ELQACbxwAAo0kcVN9hUbYRYpeSDYE.mp4]"
+    },
+    {
+      "role": "assistant",
+      "content": "I received your video. I haven\u2019t analyzed it. If you want, tell me what to review or ask me to analyze it."
+    },
+    {
+      "role": "user",
+      "content": "It kept stirring it started a coagulate and get a little hot at around 140\u00b0. So then I started to stir keep continue to stir I took the egg pan off of the heat and then it started to coagulate less but you can still see it starting to gradually thicken the the omelet is the egg solution is starting to gradually thicken I'm trying to keep the heat around 1:30 to 1:40 130\u00b0 to 140\u00b0 and if it starts to get a little hot I kind of take it off or you can just do kind of like 30 seconds on 30 seconds off if you don't want to measure the temperature every time"
+    },
+    {
+      "role": "assistant",
+      "content": "Thanks for the update. Noted: you kept the egg around 130\u2013140\u00b0F, stirring and moving the pan on/off heat as it gradually thickened."
+    },
+    {
+      "role": "user",
+      "content": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgQAAxkBAAIKY2jtMBEVnDXZZg2QWmYa89O4TfctAAJ6zjEbjSRxUwxcL0XPSU2HAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "role": "assistant",
+      "content": "I received your photo. I haven\u2019t analyzed it. If you\u2019d like, tell me what you want reviewed or ask me to analyze it."
+    },
+    {
+      "role": "user",
+      "content": "After about 10 minutes at this temperature rain there start to get streaks so in like the middle where you're stirring the eggs will start to form like little holes and you'll be able to see the bottom of the pan"
+    },
+    {
+      "role": "assistant",
+      "content": "Thanks for the update. Noted: after ~10 minutes at 130\u2013140\u00b0F, streaks form and you can see the pan bottom as it thickens. I\u2019m here if you want help."
+    },
+    {
+      "role": "user",
+      "content": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgQAAxkBAAIKZ2jtMG5n-HZ_PX_PLr7r7k--PYn0AAJzHAACjSRxU9h4JtHW53mqNgQ.mp4]"
+    },
+    {
+      "role": "assistant",
+      "content": "I received your video. I haven\u2019t analyzed it. If you\u2019d like, tell me what you want reviewed or ask me to analyze it."
+    },
+    {
+      "role": "user",
+      "content": "This was just a video showing that after about 10 minutes at this temperature so between $130 and 140\u00b0 constant stirring that it begins to be about half the egg begins to be about half solid half liquid and you can see large streaks and you'll start to see the bottom of the pan because the eggs will move with the whisk and that's after about 10 minutes"
+    },
+    {
+      "role": "assistant",
+      "content": "Got it. Noted: after ~10 minutes at 130\u2013140\u00b0F with constant stirring, the eggs are about half set with large streaks and the pan bottom visible. I\u2019m here if you want help."
+    },
+    {
+      "role": "user",
+      "content": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgQAAxkBAAIKa2jtMWEMfNp9isbqDB9_GxQCA3UPAAJ3HAACjSRxU_Y1DquxAqIONgQ.mp4]"
+    },
+    {
+      "role": "assistant",
+      "content": "I received your video. I haven\u2019t analyzed it. If you\u2019d like, tell me what you want reviewed or ask me to analyze it."
+    },
+    {
+      "role": "user",
+      "content": "After about 15 minutes of constant stirring the egg at a you know between $134 $130\u00b0 to 140\u00b0. The egg starts to take shape it'll come up with the the whisk in big and droop back down and big blobs it's more like a it's more like a pace now paste"
+    },
+    {
+      "role": "assistant",
+      "content": "Thanks for the update. Noted: after ~15 minutes at 130\u2013140\u00b0F with constant stirring, the egg turns paste-like, forming big blobs that droop from the whisk. I\u2019m here if you want help."
+    },
+    {
+      "role": "user",
+      "content": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgQAAxkBAAIKb2jtMzJJ5oLZek-QIlqTCrArasXfAAJ9zjEbjSRxU0aRyX8nl01XAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "role": "assistant",
+      "content": "I received your photo. I haven\u2019t analyzed it. If you\u2019d like, tell me what you want reviewed or ask me to analyze it."
+    },
+    {
+      "role": "user",
+      "content": "This is a picture of the onions think now it's been I don't know maybe 30 minutes they're starting to get more translucent noticeable some browning and some of the smaller parts and the temperature is about 185\u00b0 on the pan"
+    },
+    {
+      "role": "assistant",
+      "content": "Thanks for the update. Noted: about 30 minutes in, onions are more translucent with some browning on smaller pieces; pan around 185\u00b0F."
+    },
+    {
+      "role": "user",
+      "content": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgQAAxkBAAIKc2jtOHagbD2KGk5za-bkwr3B0Q9wAAKMzjEbjSRxU2uulTQYn-EpAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "role": "assistant",
+      "content": "I received your photo. I haven\u2019t analyzed it. If you\u2019d like, tell me what you want reviewed or ask me to analyze it."
+    },
+    {
+      "role": "user",
+      "content": "Friend onions on white background parchment. These were softened for about an hour at low temperature around 180 degrees then kicked up to around 300 degrees for about 15 minutes. Crunchy and spots of brown around edges or small pieces with larger ones translucent white. Maintains texture crunch with some browning flavor"
+    },
+    {
+      "role": "assistant",
+      "content": "Thanks for the update. Noted: softened ~1 hour at ~180\u00b0F, then ~300\u00b0F for ~15 minutes, yielding crunchy edges, brown spots, and translucent larger pieces. Glad the texture and flavor are working for you."
+    }
+  ]
+}
