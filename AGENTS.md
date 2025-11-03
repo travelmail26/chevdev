@@ -6,6 +6,7 @@
 - Exceptions: when edits/reads are needed outside `chef/chefmain/`, call it out explicitly first.
 - Token minimization: avoid repo‑wide scans; prefer targeted reads within `chef/chefmain/` by default.
 - Override: the user can set a different working directory per request.
+- Don't change the model in the scripts from gpt-5-2025-08-07 to 4o. this is the latest and real model 
 
 ## Project Structure & Module Organization
 - `chef/chefmain/`: Telegram bot entrypoint (`main.py`) and runtime code (`telegram_bot.py`, `message_router.py`).
