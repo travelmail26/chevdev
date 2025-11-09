@@ -89,6 +89,32 @@ Key rules:
 - **MongoDB executes**: HOW to filter, sort, and limit efficiently
 - **Never**: Fetch everything and filter in Python/JavaScript code
 
+## Agent Intelligence Philosophy
+**CRITICAL: Prefer agent intelligence over custom functions**
+
+When working with AI agents (OpenAI, Claude, etc.):
+- **Let the agent decide**: Don't write custom Python functions to analyze, filter, or process data
+- **Agent-first approach**: Give the agent access to raw data and let it interpret/analyze
+- **Trust agent intelligence**: The AI model is smart enough to extract insights, patterns, and answers
+- **Avoid over-engineering**: Don't build logic that the agent can handle naturally
+
+### What NOT to do:
+- Writing functions to parse/extract URLs from text (agent can do this)
+- Writing functions to count, filter, or deduplicate data (agent can do this)
+- Writing custom analysis scripts (agent can analyze raw data)
+
+### What to do instead:
+- Provide the agent with database query functions
+- Let the agent see raw data and decide what's relevant
+- Ask the agent questions about the data
+- Let the agent construct queries and interpret results
+
+### Conversation History in Agents
+- Be aware that conversation history persists across turns
+- The agent may reference information from previous responses
+- If seeing duplicates or repeated info, it may be from conversation memory
+- Consider clearing history when starting fresh queries
+
 ## Commands
 (To be updated as development commands are discovered)
 

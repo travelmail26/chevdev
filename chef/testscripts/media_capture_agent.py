@@ -53,6 +53,35 @@ def fetch_conversation_by_id(chat_id):
     return doc
 
 
+def analyze_image_url(url, prompt=None):
+    """
+    Analyze an image from a URL using OpenAI Vision.
+    Works with Firebase, Google Storage, or any publicly accessible image URL.
+    """
+    client = OpenAI()
+
+    if prompt is None:
+        prompt = "What's in this image? Describe it in detail."
+
+    response = client.chat.completions.create(
+        model="gpt-5-2025-08-07",
+        messages=[
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": prompt},
+                    {
+                        "type": "image_url",
+                        "image_url": {"url": url}
+                    }
+                ]
+            }
+        ]
+    )
+
+    return response.choices[0].message.content
+
+
 # Tell the AI what functions it can call
 TOOLS = [
     {
@@ -116,6 +145,21 @@ TOOLS = [
                     "chat_id": {"type": "string", "description": "The conversation ID"}
                 },
                 "required": ["chat_id"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "analyze_image_url",
+            "description": "Analyze an image from a URL using OpenAI Vision. Use this when asked to evaluate, assess, or analyze an image URL from Firebase, Google Storage, or any other source.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "url": {"type": "string", "description": "The image URL to analyze (Firebase, Google Storage, or any public URL)"},
+                    "prompt": {"type": "string", "description": "Optional: specific question or instruction for analyzing the image. Defaults to general description."}
+                },
+                "required": ["url"]
             }
         }
     }
@@ -275,6 +319,8 @@ def talk_to_agent(message, history=None):
                     result = fetch_mongodb_conversations(**args)
                 elif func_name == "fetch_conversation_by_id":
                     result = fetch_conversation_by_id(**args)
+                elif func_name == "analyze_image_url":
+                    result = analyze_image_url(**args)
                 else:
                     result = {"error": "Unknown function"}
                 
