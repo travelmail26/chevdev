@@ -75,3 +75,25 @@ def store_media_file(local_path: str, session_info: Dict, media_type: str) -> Op
         return None
 
     return str(file_id)
+
+
+def create_media_metadata(url: str, indexed_at: str) -> None:
+    """Create metadata entry for media URL in MongoDB."""
+    if MongoClient is None:
+        logging.warning("MongoDB client unavailable; cannot create media metadata")
+        return
+
+    uri = os.environ.get("MONGODB_URI")
+    if not uri:
+        logging.warning("MONGODB_URI not set; skipping media metadata creation")
+        return
+
+    try:
+        client = MongoClient(uri)
+        db_name = os.environ.get("MONGODB_DB_NAME", DEFAULT_DB_NAME)
+        db = client[db_name]
+        collection = db["media_metadata"]
+        collection.insert_one({"url": url, "indexed_at": indexed_at})
+        logging.info("Media metadata created for URL: %s", url)
+    except Exception as exc:
+        logging.warning("Failed to create media metadata: %s", exc)

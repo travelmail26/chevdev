@@ -5,6 +5,7 @@ import sys
 import os
 import signal
 import traceback
+import subprocess
 from threading import Thread
 
 # Add current directory to path for imports
@@ -26,8 +27,33 @@ httpx_logger = logging.getLogger("httpx")
 # Set the logging level to WARNING or higher
 httpx_logger.setLevel(logging.WARNING)
 
+def setup_port_forwarding():
+    """Automatically make port 8080 public in GitHub Codespaces"""
+    if os.getenv('CODESPACES') == 'true':
+        try:
+            logging.info("[Main] Setting port 8080 to public visibility...")
+            subprocess.run(
+                ['gh', 'codespace', 'ports', 'visibility', '8080:public', '-c', os.getenv('CODESPACE_NAME')],
+                check=True,
+                capture_output=True,
+                timeout=10
+            )
+            logging.info("[Main] Port 8080 is now public")
+        except subprocess.TimeoutExpired:
+            logging.warning("[Main] Port setup timed out, continuing anyway...")
+        except subprocess.CalledProcessError as e:
+            logging.warning(f"[Main] Could not set port to public: {e}")
+        except FileNotFoundError:
+            logging.warning("[Main] gh CLI not found, skipping port setup")
+        except Exception as e:
+            logging.warning(f"[Main] Port setup failed: {e}")
+    else:
+        logging.info("[Main] Not running in Codespaces, skipping port setup")
+
 def main():
     logging.info("[Main] Starting up...")
+
+    setup_port_forwarding()
 
 
 

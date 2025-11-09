@@ -137,7 +137,7 @@ class MessageRouter:
 
         if message_object and "user_message" in message_object:
             user_message = message_object["user_message"]
-            full_message_object = message_history_process(message_object, {"role": "user", "content": user_message})  # Process the message object
+            full_message_object = message_history_process(message_object, {"role": "user", "content": user_message})
             # Use the full message history from the updated object
             messages = full_message_object.get("messages", [])
             if messages:

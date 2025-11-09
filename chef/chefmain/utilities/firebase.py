@@ -1,9 +1,14 @@
 
+import sys
+sys.path.insert(0, "/workspaces/chevdev")
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import storage
 import os
 import json
+import time
+import datetime
+from chefmain.utilities.mongo_media import create_media_metadata
 from google.cloud import storage as gcs_storage 
 
 
@@ -70,6 +75,11 @@ def firebase_get_media_url(image_path):
     # Get the public download URL
     url = blob.public_url
     print(f"Image uploaded to: {url}")
+    try:
+        create_media_metadata(url=url, indexed_at=datetime.datetime.now(datetime.timezone.utc).isoformat())
+        print("DEBUG: create_media_metadata succeeded")
+    except Exception as e:
+        print(f"DEBUG: create_media_metadata failed: {e}")
     return url
 
 if __name__ == "__main__":

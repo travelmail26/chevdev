@@ -28,9 +28,6 @@ from telegram.ext import (
     filters,
     ContextTypes
 )
-
-# Import AIHandler again
-#from chefwriter import AIHandler
 from message_router import MessageRouter # Import MessageRouter
 from utilities.firebase import firebase_get_media_url
 
@@ -189,19 +186,12 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             else:
                 user_input = f"[Video saved locally: {local_path}]"
 
-        else:  # Text messages
-            user_input = update.message.text or ""
-            if not user_input.strip():
-                await update.message.reply_text("I received an empty message. Please send text!")
-                return  # Return only if text is empty
-
-        # If user_input is still empty here, it means no handler matched or an issue occurred.
-        if not user_input:
-             logging.warning("handle_message reached agentchat call with no user_input set.")
-             # Avoid sending a message if the initial message was empty text (already handled)
-             if not (update.message.text is not None and not update.message.text.strip()):
-                 await update.message.reply_text("Could not process the message type.")
-             return
+        elif update.message.text:  # Text messages
+            user_input = update.message.text
+        else:
+            # Unknown message type
+            await update.message.reply_text("Could not process the message type.")
+            return
 
         # Centralized call to agentchat and response handling for all types
         #status user handler class agent chat rather than passing the message
@@ -238,7 +228,6 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             
         pass
 
-    
 
 
 
@@ -252,23 +241,23 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # # Process the response generator (synchronous logic)
         # for chunk in response:
         #     if chunk and isinstance(chunk, str) and chunk.strip():
-        #         buffer += chunk
-        #         # Send message parts when buffer reaches a certain size
-        #         while len(buffer) >= 300: # Example threshold
-        #             message_part = buffer[:300]
-        #             try:
-        #                 await update.message.reply_text(message_part)
-        #                 buffer = buffer[300:]
-        #             except Exception as telegram_error:
-        #                 logging.error(f"Telegram API error sending chunk: {telegram_error}")
-        #                 break # Exit the inner while loop on error
+        #                 buffer += chunk
+        #                 # Send message parts when buffer reaches a certain size
+        #             while len(buffer) >= 300: # Example threshold
+        #                 message_part = buffer[:300]
+        #                 try:
+        #                     await update.message.reply_text(message_part)
+        #                     buffer = buffer[300:]
+        #                 except Exception as telegram_error:
+        #                     logging.error(f"Telegram API error sending chunk: {telegram_error}")
+        #                     break # Exit the inner while loop on error
 
         # # Send any remaining part in the buffer
         # if buffer.strip():
         #     try:
-        #         await update.message.reply_text(buffer)
-        #     except Exception as telegram_error:
-        #         logging.error(f"Telegram API error sending final buffer: {telegram_error}")
+        #                 await update.message.reply_text(buffer)
+        #             except Exception as telegram_error:
+        #                 logging.error(f"Telegram API error sending final buffer: {telegram_error}")
 
     except Exception as e:
         error_message = f"Error in handle_message: {e}\n{traceback.format_exc()}"
@@ -343,18 +332,22 @@ def setup_bot() -> Application:
     return application
 
 def run_bot_webhook_set():
+    environment = os.getenv("ENVIRONMENT", "development")
     try:
         app = setup_bot()
-        webhook_url = 'https://expert-spoon-x5976q7wjfvvq7-8080.app.github.dev'
-        if not webhook_url:
-            raise ValueError("TELEGRAM_WEBHOOK_URL not set!")
-        
-        app.run_webhook(
-            listen="0.0.0.0",
-            port=8080,
-            url_path="webhook",
-            webhook_url=f"{webhook_url}/webhook"
-        )
+        if environment == 'production':
+            webhook_url = 'https://expert-spoon-x5976q7wjfvvq7-8080.app.github.dev'
+            if not webhook_url:
+                raise ValueError("TELEGRAM_WEBHOOK_URL not set!")
+            
+            app.run_webhook(
+                listen="0.0.0.0",
+                port=8080,
+                url_path="webhook",
+                webhook_url=f"{webhook_url}/webhook"
+            )
+        else:
+            app.run_polling()
     except Exception as e:
         logging.error(f"Error in run_bot: {e}\n{traceback.format_exc()}")
         raise

@@ -23,6 +23,13 @@ This is a culinary assistant chat/messaging system with:
 - Current working branch: `dev`
 - Always run lint/typecheck commands before finalizing changes (if available)
 
+**CRITICAL: Always ask for permission before making major changes**
+- Before modifying central scripts (main.py, telegram_bot.py, message_router.py, etc.)
+- Before stopping/restarting running processes
+- Before changing configuration that affects production
+- Explain what you want to do and wait for approval
+- Only make changes after explicit user confirmation
+
 ## Key Files and Directories
 - `chef/message_router.py` - Message routing functionality
 - `chef/testscripts/media_capture_agent.py` - AI agent for conversation/media analysis
