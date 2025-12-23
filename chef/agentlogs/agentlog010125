@@ -12,3 +12,7 @@
 2025-10-09: Added positive/negative example conversation section to instructions_base.txt to clarify acknowledgement-only vs help-request responses.
 2025-10-09: Updated message_router to persist base system instructions after empty-history sessions so /restart reloads the prompt; verified by simulating a fresh conversation.
 2025-10-10: Added testscripts/fetch_latest_conversation.py to pull latest Mongo chat snapshot and verified recent user report via CLI helper.
+2025-10-10: Added testscripts/test_mongo_media_metadata.py to verify media_metadata inserts in MongoDB.
+2025-10-10: Updated testscripts/test_mongo_media_metadata.py to add sys.path injection for chefmain imports.
+2025-10-10: Added MongoDB timeout query params in testscripts/test_mongo_media_metadata.py to avoid long hangs.
+2025-10-10: Added SIGALRM timeout guard in testscripts/test_mongo_media_metadata.py to fail fast if create_media_metadata hangs.
