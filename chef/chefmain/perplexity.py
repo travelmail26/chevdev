@@ -47,7 +47,10 @@ def search_perplexity(query):
         "model": "sonar-reasoning-pro",  # Using model that returns reasoning tokens
         "messages": messages,
         "stream": True,  # Enable streaming for reasoning tokens
-        "reasoning_effort": "high"  # Get detailed reasoning tokens
+        "reasoning_effort": "high",
+        "web_search_options": {
+            "search_type": "pro"  # Automatic classification
+        }  # Get detailed reasoning tokens
     }
 
     try:
@@ -142,7 +145,7 @@ def search_perplexity(query):
 
 
 if __name__ == "__main__":
-    test_query = "I want to make a semifreddo that is thick and rich. how should I change the recipe?"
+    test_query = "I want to make a dense savory kouign amann. What's the best way to maximize crunchy outside and rich inside?"
     print(f"Testing Perplexity with query: '{test_query}'")
     result = search_perplexity(test_query)
     print("\n--- Perplexity Result ---")

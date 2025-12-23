@@ -50,3 +50,4 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2025-12-22T22:34:30+00:00 work: updated chef/testscripts/mongo_firebase_vision_listener.py to fetch latest media_metadata image and store ai_description via OpenAI vision.
 2025-12-22T22:36:12+00:00 fix: added HTTP fallback for Responses API in chef/testscripts/mongo_firebase_vision_listener.py when OpenAI SDK lacks client.responses.
 2025-12-22T22:47:59+00:00 fix: improved vision response parsing in chef/testscripts/mongo_firebase_vision_listener.py and added terminal printout plus guard against empty ai_description.
+2025-12-23 18:14:12 - Updated test_stream_responses_demo to handle Responses tool call events and pass previous_response_id for tool output.
