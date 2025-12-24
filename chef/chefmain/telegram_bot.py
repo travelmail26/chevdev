@@ -54,9 +54,28 @@ message_router = None # Add global variable for the router
 # Global dictionary to store user contexts
 user_contexts = {}
 
+def detect_runtime():
+    # Example before/after: K_SERVICE set -> "cloud_run"; CODESPACES=true -> "codespaces"
+    if os.getenv("K_SERVICE"):
+        return "cloud_run"
+    if os.getenv("CODESPACES") == "true":
+        return "codespaces"
+    return "default"
+
+def get_port():
+    # Example before/after: PORT unset -> 8080; PORT=9090 -> 9090
+    return int(os.getenv("PORT", "8080"))
+
+def get_webhook_url():
+    # Example before/after: TELEGRAM_WEBHOOK_URL unset -> error later; set -> https://service.run.app
+    return os.getenv("TELEGRAM_WEBHOOK_URL")
+
 def get_user_handler(user_id, session_info, user_message, application_data=None):
     """
     Creates or retrieves a user context dictionary.
+    
+    curl -s "https://api.telegram.org/bot7912564126:AAHpf0J1Ci1_jkIKuTfyuO6GyJ57v44_m00/setWebhook?url=https://chefdev-209538059512.us-west2.run.app/webhook"
+    
 
     Args:
         user_id: The user's ID.
@@ -302,9 +321,15 @@ async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
 #setup bot loads message handler commands into application
 def setup_bot() -> Application:
     environment = os.getenv("ENVIRONMENT", "development")
+    runtime = detect_runtime()
 
     try: 
-        if environment == 'development':
+        if runtime == "cloud_run":
+            # Example before/after: runtime=cloud_run -> TELEGRAM_KEY; runtime=codespaces -> TELEGRAM_DEV_KEY
+            token = os.getenv('TELEGRAM_KEY')
+        elif runtime == "codespaces":
+            token = os.getenv('TELEGRAM_DEV_KEY')
+        elif environment == 'development':
             token = os.getenv('TELEGRAM_DEV_KEY')
             print(f"DEBUG: Using TELEGRAM_DEV_KEY: {token}")
 
@@ -334,15 +359,29 @@ def setup_bot() -> Application:
 def run_bot_webhook_set():
     environment = os.getenv("ENVIRONMENT", "development")
     try:
+        runtime = detect_runtime()
         app = setup_bot()
-        if environment == 'production':
-            webhook_url = 'https://expert-spoon-x5976q7wjfvvq7-8080.app.github.dev'
+        if runtime == "cloud_run":
+            webhook_url = get_webhook_url()
             if not webhook_url:
                 raise ValueError("TELEGRAM_WEBHOOK_URL not set!")
-            
+
             app.run_webhook(
                 listen="0.0.0.0",
-                port=8080,
+                port=get_port(),
+                url_path="webhook",
+                webhook_url=f"{webhook_url}/webhook"
+            )
+        elif runtime == "codespaces":
+            app.run_polling()
+        elif environment == 'production':
+            webhook_url = get_webhook_url()
+            if not webhook_url:
+                raise ValueError("TELEGRAM_WEBHOOK_URL not set!")
+
+            app.run_webhook(
+                listen="0.0.0.0",
+                port=get_port(),
                 url_path="webhook",
                 webhook_url=f"{webhook_url}/webhook"
             )
