@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import logging
 import os
+import subprocess
+import sys
 from datetime import datetime, timezone
 from typing import Dict, Optional
 
@@ -94,6 +96,29 @@ def create_media_metadata(url: str, indexed_at: str) -> None:
         db = client[db_name]
         collection = db["media_metadata"]
         collection.insert_one({"url": url, "indexed_at": indexed_at})
+        _spawn_vision_listener(url)
         logging.info("Media metadata created for URL: %s", url)
     except Exception as exc:
         logging.warning("Failed to create media metadata: %s", exc)
+
+
+def _spawn_vision_listener(url: str) -> None:
+    """Launch the vision listener as a separate process (non-blocking)."""
+    # Before example: insert_one() finishes and the bot waits for vision work inline.
+    # After example: insert_one() returns immediately and the vision script runs separately.
+    script_path = "/workspaces/chevdev/chef/testscripts/mongo_firebase_vision_listener.py"
+    if not os.path.exists(script_path):
+        logging.warning("Vision listener script not found at %s; skipping spawn.", script_path)
+        return
+
+    try:
+        # Before example: no background process. After example: Popen starts a new process and returns fast.
+        subprocess.Popen(
+            [sys.executable, script_path],
+            env={**os.environ, "VISION_TRIGGER_URL": url},
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        logging.info("Spawned vision listener for URL: %s", url)
+    except Exception as exc:
+        logging.warning("Failed to spawn vision listener: %s", exc)

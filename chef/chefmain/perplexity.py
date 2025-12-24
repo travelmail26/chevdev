@@ -44,12 +44,13 @@ def search_perplexity(query):
     }
 
     data = {
-        "model": "sonar-reasoning-pro",  # Using model that returns reasoning tokens
+        "model": "sonar-pro",  # Using model that returns reasoning tokens
         "messages": messages,
         "stream": True,  # Enable streaming for reasoning tokens
         "reasoning_effort": "high",
         "web_search_options": {
-            "search_type": "pro"  # Automatic classification
+            "search_type": "pro",
+             "search_domain_filter": ["reddit.com"] # Automatic classification
         }  # Get detailed reasoning tokens
     }
 
@@ -145,7 +146,7 @@ def search_perplexity(query):
 
 
 if __name__ == "__main__":
-    test_query = "I want to make a dense savory kouign amann. What's the best way to maximize crunchy outside and rich inside?"
+    test_query = "Best cookie recipe's. only return personal experiences from reddit users"
     print(f"Testing Perplexity with query: '{test_query}'")
     result = search_perplexity(test_query)
     print("\n--- Perplexity Result ---")

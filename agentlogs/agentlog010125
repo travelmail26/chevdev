@@ -51,3 +51,9 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2025-12-22T22:36:12+00:00 fix: added HTTP fallback for Responses API in chef/testscripts/mongo_firebase_vision_listener.py when OpenAI SDK lacks client.responses.
 2025-12-22T22:47:59+00:00 fix: improved vision response parsing in chef/testscripts/mongo_firebase_vision_listener.py and added terminal printout plus guard against empty ai_description.
 2025-12-23 18:14:12 - Updated test_stream_responses_demo to handle Responses tool call events and pass previous_response_id for tool output.
+2025-12-23: chef/chefmain/message_router.py - removed tool-call schema + second-call flow; switched to single OpenAI call using gpt-5-nano-2025-08-07; continues auto history persistence via message_history_process.
+2025-12-23: chef/chefmain/message_router.py - added simple SSE streaming for /v1/chat/completions: buffers tokens and sends to Telegram in ~800-char chunks (no editMessageText); final combined assistant message still saved to history.
+2025-12-23: chef/chefmain/message_router.py - simplified streaming further: still uses SSE internally, but now accumulates and sends a single Telegram message at the end (no partial chunk spam); extracted tiny iter_streamed_chat_content() helper for readability.
+2025-12-23: chef/chefmain/message_router.py - removed the helper function; inlined ~10-line SSE streaming loop and added a simple buffer that flushes partial output to Telegram every ~800 chars.
+2025-12-23: chef/chefmain/message_router.py - switched streaming to OpenAI Python SDK Responses API (client.responses.create(stream=True)); buffer flush to Telegram kept; no tool calls.
+2025-12-24T00:44:42Z work: spawn vision listener process on media_metadata insert; pass VISION_TRIGGER_URL and handle it in mongo_firebase_vision_listener.

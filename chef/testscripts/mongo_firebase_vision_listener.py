@@ -138,7 +138,16 @@ def analyze_latest_image(model: str) -> None:
     client = OpenAI()
     overwrite = os.environ.get("VISION_OVERWRITE", "0") == "1"
 
-    doc = fetch_latest_image_doc(collection)
+    triggered_url = os.environ.get("VISION_TRIGGER_URL")
+    if triggered_url:
+        # Before example: we always scanned for the newest doc.
+        # After example: we use the passed URL and only analyze that one.
+        doc = collection.find_one({"url": triggered_url}, sort=[("_id", -1)])
+        if not doc:
+            logging.info("No media_metadata doc found for VISION_TRIGGER_URL=%s", triggered_url)
+            return
+    else:
+        doc = fetch_latest_image_doc(collection)
     if not doc:
         logging.info("No media URLs found in media_metadata.")
         return
