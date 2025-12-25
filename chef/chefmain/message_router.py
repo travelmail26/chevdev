@@ -31,6 +31,9 @@ class MessageRouter:
         if not self.openai_api_key:
             # Example before/after: missing key -> OpenAI calls fail; key set -> responses stream
             logging.warning("OPENAI_API_KEY is not set; responses will fail.")
+        else:
+            # Example before/after: no key visibility -> unclear auth; now logs masked key suffix.
+            logging.info(f"OPENAI_API_KEY loaded (suffix=...{self.openai_api_key[-4:]})")
 
         # Before: instructions pulled from a helper and combined elsewhere.
         # After example: paste paths below and the function will join them in order.
@@ -126,11 +129,28 @@ class MessageRouter:
             # Before: OpenAI call timing was opaque; after example: log start/end with model + duration.
             openai_start = time.monotonic()
             message_count = len(payload["messages"])
+            last_user_content = None
+            for entry in reversed(payload["messages"]):
+                if entry.get("role") == "user":
+                    last_user_content = entry.get("content")
+                    break
             logging.info(
                 "openai_call start: user_id=%s, model=%s, message_count=%s",
                 user_id,
                 payload["model"],
                 message_count,
+            )
+            # Example before/after: no message visibility -> hard to debug; now logs preview.
+            logging.info(
+                "openai_call payload_preview: user_id=%s, last_user_preview='%s'",
+                user_id,
+                str(last_user_content)[:200] if last_user_content is not None else "",
+            )
+            # Example before/after: token unclear -> now logs masked suffix only.
+            logging.info(
+                "openai_call auth: user_id=%s, key_suffix=...%s",
+                user_id,
+                self.openai_api_key[-4:] if self.openai_api_key else "NONE",
             )
             # Streaming (docs-style) via OpenAI SDK Responses API.
             # Before: manual `requests.post(..., stream=True)` parsing.

@@ -225,6 +225,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         #status user handler class agent chat rather than passing the message
         
         message_object =  get_user_handler(user_id, session_info, user_input)
+        # Example before/after: no user preview -> unclear payload; now logs first 200 chars.
+        logging.info(f"handle_message: user_message_preview='{str(user_input)[:200]}'")
 
 
         #thhe message object dictionary example
