@@ -30,6 +30,7 @@ from telegram.ext import (
 )
 import requests
 from testscripts.openai_simple_ping import call_openai_hi
+from testscripts.xai_simple_ping import call_xai_hi
 from message_router import MessageRouter # Import MessageRouter
 from utilities.firebase import firebase_get_media_url
 
@@ -373,6 +374,19 @@ async def openai_simple(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"openai_simple error: {result.get('error', 'unknown')}"
         )
 
+async def xai_simple(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    logging.info("xai_simple: command received")
+    result = call_xai_hi()
+    if result.get("ok"):
+        text = result.get("text", "")
+        duration_ms = result.get("duration_ms", "unknown")
+        preview = text[:120] if text else "(empty)"
+        await update.message.reply_text(f"xai_simple ok in {duration_ms}ms: {preview}")
+    else:
+        await update.message.reply_text(
+            f"xai_simple error: {result.get('error', 'unknown')}"
+        )
+
 #setup bot loads message handler commands into application
 def setup_bot() -> Application:
     environment = os.getenv("ENVIRONMENT", "development")
@@ -407,6 +421,7 @@ def setup_bot() -> Application:
     application.add_handler(CommandHandler("openai_version", openai_version))
     application.add_handler(CommandHandler("build_version", build_version))
     application.add_handler(CommandHandler("openai_simple", openai_simple))
+    application.add_handler(CommandHandler("xai_simple", xai_simple))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     application.add_handler(MessageHandler(filters.PHOTO, handle_message))
     application.add_handler(MessageHandler(filters.VIDEO, handle_message))

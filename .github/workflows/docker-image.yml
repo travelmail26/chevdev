@@ -72,6 +72,7 @@ jobs:
           PERPLEXITY_KEY: "${{ secrets.PERPLEXITY_KEY }}"
           TELEGRAM_WEBHOOK_URL: "${{ secrets.TELEGRAM_WEBHOOK_URL }}"
           BUILD_TAG: "${{ env.DATE_TAG }}"
+          XAI_AP_KEY: "${{ secrets.XAI_AP_KEY }}"
           FIREBASEJSON: |
             ${{ secrets.FIREBASEJSON }}
           SERVICE_ACCOUNT_FILE: |
