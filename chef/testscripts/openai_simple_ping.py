@@ -12,7 +12,7 @@ def call_openai_hi():
         return {"ok": False, "error": "OPENAI_API_KEY missing"}
 
     payload = {
-        "model": "gpt-5-nano-2025-08-07",
+        "model": "gpt-5-mini-2025-08-07",
         "input": [{"role": "user", "content": "hi"}],
         "max_output_tokens": 64,
     }
