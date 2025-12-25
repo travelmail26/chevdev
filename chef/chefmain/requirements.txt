@@ -11,7 +11,7 @@ urllib3==2.2.3
 requests==2.32.3
 flask==3.0.3
 numpy==2.1.1
-openai==1.45.1
+openai
 replit==4.1.0
 gspread==6.1.2
 aiohttp==3.10.5
