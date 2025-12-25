@@ -63,3 +63,4 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2025-12-24T01:15:00Z work: added webhook URL startup logging in chef/chefmain/telegram_bot.py for cloud_run/production to confirm TELEGRAM_WEBHOOK_URL is set.
 2025-12-24T01:25:00Z work: added pymongo[srv]==4.7.3 to chef/chefmain/requirements.txt to fix Cloud Run missing pymongo.
 2025-12-24T01:32:00Z work: fixed chef/testscripts/simple_mongo_dump.py imports to add repo root to sys.path and fallback to utilities.history_messages when chef package is unavailable in Cloud Run.
+2025-12-24T01:40:00Z work: updated chef/chefmain/message_router.py to use container-safe relative path for instructions_base.txt instead of /workspaces/chevdev.

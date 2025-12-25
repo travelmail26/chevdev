@@ -34,9 +34,10 @@ class MessageRouter:
 
     def load_instructions(self):
         """Load and join instruction files listed below (edit manually)."""
+        base_dir = os.path.dirname(os.path.abspath(__file__))
         instruction_paths = [
             # Before: implicit paths. After example: only this file is loaded; paste more rows to expand.
-            "/workspaces/chevdev/chef/chefmain/utilities/instructions/instructions_base.txt",
+            os.path.join(base_dir, "utilities", "instructions", "instructions_base.txt"),
         ]
 
         collected = []
