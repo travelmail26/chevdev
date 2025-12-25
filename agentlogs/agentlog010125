@@ -85,3 +85,4 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2025-12-24T05:05:00Z work: added XAI_AP_KEY to Cloud Run env vars, created chef/testscripts/xai_simple_ping.py, and added /xai_simple command in chef/chefmain/telegram_bot.py.
 2025-12-24T05:15:00Z work: switched xai_simple_ping default model to grok-3-mini after listing available models from /v1/models.
 2025-12-24T05:25:00Z work: updated workflow env-vars to set XAI_AP_KEY and XAI_API_KEY from secrets.XAI_API_KEY so Cloud Run receives the xAI key.
+2025-12-24T05:35:00Z work: switched xai_simple_ping to use XAI_API_KEY only and default model grok-3; updated workflow env to stop passing XAI_AP_KEY.

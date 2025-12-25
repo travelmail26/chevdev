@@ -6,12 +6,12 @@ import requests
 
 def call_xai_hi(model: str | None = None) -> dict:
     """Simple xAI call using chat completions with a single 'hi' message."""
-    api_key = os.getenv("XAI_AP_KEY") or os.getenv("XAI_API_KEY")
+    api_key = os.getenv("XAI_API_KEY")
     if not api_key:
-        logging.info("xai_simple: missing XAI_AP_KEY/XAI_API_KEY")
-        return {"ok": False, "error": "XAI_AP_KEY missing"}
+        logging.info("xai_simple: missing XAI_API_KEY")
+        return {"ok": False, "error": "XAI_API_KEY missing"}
 
-    chosen_model = model or os.getenv("XAI_MODEL", "grok-3-mini")
+    chosen_model = model or os.getenv("XAI_MODEL", "grok-3")
     payload = {
         "model": chosen_model,
         "messages": [{"role": "user", "content": "hi"}],
