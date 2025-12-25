@@ -11,7 +11,7 @@ def call_xai_hi(model: str | None = None) -> dict:
         logging.info("xai_simple: missing XAI_AP_KEY/XAI_API_KEY")
         return {"ok": False, "error": "XAI_AP_KEY missing"}
 
-    chosen_model = model or os.getenv("XAI_MODEL", "grok-2-latest")
+    chosen_model = model or os.getenv("XAI_MODEL", "grok-3-mini")
     payload = {
         "model": chosen_model,
         "messages": [{"role": "user", "content": "hi"}],
