@@ -78,3 +78,4 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2025-12-24T03:55:00Z work: added chef/testscripts/openai_simple_ping.py and /openai_simple command in chef/chefmain/telegram_bot.py to call OpenAI /v1/responses with 'hi' outside message_router.
 2025-12-24T04:05:00Z work: added logging to chef/testscripts/openai_simple_ping.py and openai_simple command handler to surface start/end/errors in Cloud Run logs.
 2025-12-24T04:15:00Z work: switched openai_simple_ping model to gpt-5-mini-2025-08-07 for isolated test.
+2025-12-24T04:25:00Z work: increased OpenAI client timeout to 180s in chef/chefmain/message_router.py and requests timeout to 180s in chef/testscripts/openai_simple_ping.py for slow Cloud Run responses.

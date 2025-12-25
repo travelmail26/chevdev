@@ -24,7 +24,7 @@ def call_openai_hi():
             "https://api.openai.com/v1/responses",
             headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
             json=payload,
-            timeout=20,
+            timeout=180,
         )
         duration_ms = int((time.monotonic() - start) * 1000)
         if response.status_code != 200:

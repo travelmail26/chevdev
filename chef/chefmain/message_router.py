@@ -159,8 +159,8 @@ class MessageRouter:
             # After example: `for event in stream: ...` (same as docs).
             from openai import OpenAI
 
-            # Example before/after: no timeout -> hanging stream; timeout=60 -> raises on stalls.
-            client = OpenAI(api_key=self.openai_api_key, timeout=60)
+            # Example before/after: short timeout -> premature failure; timeout=180 -> allow slow responses.
+            client = OpenAI(api_key=self.openai_api_key, timeout=180)
             response = client.responses.create(
                 model=payload["model"],
                 input=payload["messages"],
