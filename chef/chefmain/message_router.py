@@ -27,6 +27,9 @@ class MessageRouter:
     def __init__(self, openai_api_key=None):
         """Initialize the MessageRouter with API key"""
         self.openai_api_key = openai_api_key or os.environ.get('OPENAI_API_KEY')
+        if not self.openai_api_key:
+            # Example before/after: missing key -> OpenAI calls fail; key set -> responses stream
+            logging.warning("OPENAI_API_KEY is not set; responses will fail.")
 
         # Before: instructions pulled from a helper and combined elsewhere.
         # After example: paste paths below and the function will join them in order.
@@ -60,6 +63,8 @@ class MessageRouter:
             messages: Optional list of message dictionaries for the conversation history
             message_object: Optional dictionary containing user_message and other data
         """
+        user_id = str(message_object.get("user_id", "unknown")) if message_object else "unknown"
+        logging.info(f"route_message start: user_id={user_id}, has_message_object={bool(message_object)}")
         logging.debug(f"DEBUG: route_message called with messages={messages}, message_object={message_object}")
         
         if messages is None:
@@ -153,15 +158,17 @@ class MessageRouter:
                     process_message_object(partial)
                     buffer_text = ""
 
-            if message_object and buffer_text.strip():
-                partial = message_object.copy()
-                partial["user_message"] = buffer_text
-                process_message_object(partial)
+                if message_object and buffer_text.strip():
+                    partial = message_object.copy()
+                    partial["user_message"] = buffer_text
+                    process_message_object(partial)
 
             # --- Append assistant response to user history ---
             if message_object:
                 message_history_process(message_object, {"role": "assistant", "content": assistant_content})
 
+            # Example before/after: empty response -> troubleshoot logs; non-empty -> user sees reply
+            logging.info(f"route_message end: user_id={user_id}, response_chars={len(assistant_content)}")
             return assistant_content
         except requests.HTTPError as http_err:
             status = getattr(getattr(http_err, "response", None), "status_code", "unknown")

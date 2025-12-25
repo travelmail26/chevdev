@@ -120,6 +120,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         user_id = update.message.from_user.id
         application_data = context.application
         user_input = update.message.text
+        logging.info(f"handle_message start: user_id={user_id}, has_text={bool(update.message.text)}")
 
 
         # Gather session information
@@ -148,6 +149,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if update.message.audio or update.message.voice:
             # Handle audio or voice messages
             audio = update.message.audio or update.message.voice
+            # Example before/after: no audio -> skip; audio present -> download + upload flow
+            logging.info("handle_message: received audio/voice message")
             file = await context.bot.get_file(audio.file_id)
             audio_dir = "saved_audio"
             os.makedirs(audio_dir, exist_ok=True)
@@ -169,6 +172,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         elif update.message.photo:
             photo = update.message.photo[-1]
+            # Example before/after: no photo -> skip; photo present -> download + upload flow
+            logging.info("handle_message: received photo message")
             file = await context.bot.get_file(photo.file_id)
             photo_dir = "saved_photos"
             os.makedirs(photo_dir, exist_ok=True)
@@ -188,6 +193,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         elif update.message.video:
             video = update.message.video
+            # Example before/after: no video -> skip; video present -> download + upload flow
+            logging.info("handle_message: received video message")
             file = await context.bot.get_file(video.file_id)
             video_dir = "saved_videos"
             os.makedirs(video_dir, exist_ok=True)
@@ -207,6 +214,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         elif update.message.text:  # Text messages
             user_input = update.message.text
+            # Example before/after: empty text -> skip; text present -> route_message
+            logging.info("handle_message: received text message")
         else:
             # Unknown message type
             await update.message.reply_text("Could not process the message type.")
@@ -241,6 +250,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
          
 
         router_instance_for_this_call = MessageRouter()
+        # Example before/after: no routing -> no response; routing -> OpenAI + Telegram output
+        logging.info(f"handle_message: routing message for user_id={user_id}")
         router_instance_for_this_call.route_message(message_object=message_object)
         logging.info(f"Message object for user {user_id} passed to message router.")
         
