@@ -34,6 +34,10 @@ class MessageRouter:
         else:
             # Example before/after: no key visibility -> unclear auth; now logs masked key suffix.
             logging.info(f"OPENAI_API_KEY loaded (suffix=...{self.openai_api_key[-4:]})")
+        self.xai_api_key = os.environ.get("XAI_API_KEY")
+        if not self.xai_api_key:
+            # Example before/after: missing xAI key -> xAI calls fail; key set -> Grok responses.
+            logging.warning("XAI_API_KEY is not set; xAI calls will fail.")
 
         # Before: instructions pulled from a helper and combined elsewhere.
         # After example: paste paths below and the function will join them in order.
@@ -117,12 +121,13 @@ class MessageRouter:
         # Clean messages before sending to OpenAI: remove any with content None, but preserve those with tool_calls
         messages = [m for m in messages if m.get('content') is not None or m.get('tool_calls') is not None]
         
+        xai_model = os.getenv("XAI_MODEL", "grok-4-1-fast-non-reasoning-latest")
         payload = {
-            # CRITICAL: keep latest GPT-5 nano model (do not downgrade).
-            'model': 'gpt-5-nano-2025-08-07',
-            'messages': messages,
-            # Fixed: gpt-5-nano expects default temperature (keep 1.0).
-            'temperature': 1.0,
+            # Before: OpenAI GPT-5 nano model. After example: xAI Grok model for router test.
+            "model": xai_model,
+            "messages": messages,
+            "max_tokens": 256,
+            "temperature": 0.7,
         }
 
         try:
@@ -135,45 +140,45 @@ class MessageRouter:
                     last_user_content = entry.get("content")
                     break
             logging.info(
-                "openai_call start: user_id=%s, model=%s, message_count=%s",
+                "xai_call start: user_id=%s, model=%s, message_count=%s",
                 user_id,
                 payload["model"],
                 message_count,
             )
             # Example before/after: no stdout log -> missing in Cloud Run UI; now prints to stdout too.
-            print(f"OPENAI_CALL_START user_id={user_id} model={payload['model']} message_count={message_count}")
+            print(f"XAI_CALL_START user_id={user_id} model={payload['model']} message_count={message_count}")
             # Example before/after: no message visibility -> hard to debug; now logs preview.
             logging.info(
-                "openai_call payload_preview: user_id=%s, last_user_preview='%s'",
+                "xai_call payload_preview: user_id=%s, last_user_preview='%s'",
                 user_id,
                 str(last_user_content)[:200] if last_user_content is not None else "",
             )
             # Example before/after: token unclear -> now logs masked suffix only.
             logging.info(
-                "openai_call auth: user_id=%s, key_suffix=...%s",
+                "xai_call auth: user_id=%s, key_suffix=...%s",
                 user_id,
-                self.openai_api_key[-4:] if self.openai_api_key else "NONE",
-            )
-            # Streaming (docs-style) via OpenAI SDK Responses API.
-            # Before: manual `requests.post(..., stream=True)` parsing.
-            # After example: `for event in stream: ...` (same as docs).
-            from openai import OpenAI
-
-            # Example before/after: short timeout -> premature failure; timeout=180 -> allow slow responses.
-            client = OpenAI(api_key=self.openai_api_key, timeout=180)
-            response = client.responses.create(
-                model=payload["model"],
-                input=payload["messages"],
-                stream=False,
+                self.xai_api_key[-4:] if self.xai_api_key else "NONE",
             )
 
-            # Example before/after: streaming tokens -> full response in one shot.
-            assistant_content = getattr(response, "output_text", "") or ""
-            if not assistant_content:
+            response = requests.post(
+                "https://api.x.ai/v1/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {self.xai_api_key}",
+                    "Content-Type": "application/json",
+                },
+                json=payload,
+                timeout=180,
+            )
+
+            assistant_content = ""
+            if response.status_code == 200:
+                data = response.json()
                 try:
-                    assistant_content = response.model_dump().get("output_text", "")
+                    assistant_content = data["choices"][0]["message"]["content"]
                 except Exception:
                     assistant_content = ""
+            else:
+                logging.error("xai_call http_error status=%s body=%s", response.status_code, response.text[:300])
 
             if message_object and assistant_content:
                 partial = message_object.copy()
@@ -188,20 +193,20 @@ class MessageRouter:
             openai_duration_ms = int((time.monotonic() - openai_start) * 1000)
             logging.info(f"route_message end: user_id={user_id}, response_chars={len(assistant_content)}")
             logging.info(
-                "openai_call end: user_id=%s, model=%s, duration_ms=%s, response_chars=%s",
+                "xai_call end: user_id=%s, model=%s, duration_ms=%s, response_chars=%s",
                 user_id,
                 payload["model"],
                 openai_duration_ms,
                 len(assistant_content),
             )
             print(
-                "OPENAI_CALL_END "
+                "XAI_CALL_END "
                 f"user_id={user_id} model={payload['model']} "
                 f"duration_ms={openai_duration_ms} response_chars={len(assistant_content)}"
             )
             if not assistant_content:
                 # Example before/after: empty reply -> silent; now emits explicit stdout marker.
-                print(f"OPENAI_CALL_EMPTY_RESPONSE user_id={user_id}")
+                print(f"XAI_CALL_EMPTY_RESPONSE user_id={user_id}")
             return assistant_content
         except requests.HTTPError as http_err:
             status = getattr(getattr(http_err, "response", None), "status_code", "unknown")
