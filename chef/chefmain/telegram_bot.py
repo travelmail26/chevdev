@@ -29,6 +29,7 @@ from telegram.ext import (
     ContextTypes
 )
 import requests
+from testscripts.openai_simple_ping import call_openai_hi
 from message_router import MessageRouter # Import MessageRouter
 from utilities.firebase import firebase_get_media_url
 
@@ -358,6 +359,19 @@ async def build_version(update: Update, context: ContextTypes.DEFAULT_TYPE):
     build_tag = os.getenv("BUILD_TAG", "unknown")
     await update.message.reply_text(f"build tag: {build_tag}")
 
+async def openai_simple(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    result = call_openai_hi()
+    if result.get("ok"):
+        text = result.get("text", "")
+        duration_ms = result.get("duration_ms", "unknown")
+        # Example before/after: empty response -> "(empty)"; text -> first 120 chars.
+        preview = text[:120] if text else "(empty)"
+        await update.message.reply_text(f"openai_simple ok in {duration_ms}ms: {preview}")
+    else:
+        await update.message.reply_text(
+            f"openai_simple error: {result.get('error', 'unknown')}"
+        )
+
 #setup bot loads message handler commands into application
 def setup_bot() -> Application:
     environment = os.getenv("ENVIRONMENT", "development")
@@ -391,6 +405,7 @@ def setup_bot() -> Application:
     application.add_handler(CommandHandler("openai_ping", openai_ping))
     application.add_handler(CommandHandler("openai_version", openai_version))
     application.add_handler(CommandHandler("build_version", build_version))
+    application.add_handler(CommandHandler("openai_simple", openai_simple))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     application.add_handler(MessageHandler(filters.PHOTO, handle_message))
     application.add_handler(MessageHandler(filters.VIDEO, handle_message))
