@@ -28,6 +28,7 @@ from telegram.ext import (
     filters,
     ContextTypes
 )
+import requests
 from message_router import MessageRouter # Import MessageRouter
 from utilities.firebase import firebase_get_media_url
 
@@ -331,6 +332,21 @@ async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         await update.message.reply_text(f"Error during restart: {str(e)}")
 
+async def openai_ping(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    key = os.getenv("OPENAI_API_KEY")
+    if not key:
+        await update.message.reply_text("openai ping: missing OPENAI_API_KEY")
+        return
+    try:
+        response = requests.get(
+            "https://api.openai.com/v1/models",
+            headers={"Authorization": f"Bearer {key}"},
+            timeout=10,
+        )
+        await update.message.reply_text(f"openai ping: {response.status_code}")
+    except Exception as exc:
+        await update.message.reply_text(f"openai ping error: {exc}")
+
 #setup bot loads message handler commands into application
 def setup_bot() -> Application:
     environment = os.getenv("ENVIRONMENT", "development")
@@ -361,6 +377,7 @@ def setup_bot() -> Application:
     
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("restart", restart))
+    application.add_handler(CommandHandler("openai_ping", openai_ping))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     application.add_handler(MessageHandler(filters.PHOTO, handle_message))
     application.add_handler(MessageHandler(filters.VIDEO, handle_message))
