@@ -28,3 +28,4 @@ nest_asyncio
 psutil==5.9.5
 python_dotenv==1.0.1
 python-telegram-bot[webhooks]
+pymongo[srv]==4.7.3

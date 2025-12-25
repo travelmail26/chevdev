@@ -61,3 +61,4 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2025-12-24T00:58:00Z work: chef/chefmain/telegram_bot.py now auto-detects cloud_run vs codespaces, picks TELEGRAM_KEY vs TELEGRAM_DEV_KEY, and uses PORT/TELEGRAM_WEBHOOK_URL env vars for webhooks.
 2025-12-24T01:05:00Z work: updated .github/workflows/docker-image.yml to build from root Dockerfile and pass TELEGRAM_WEBHOOK_URL into env-vars for Cloud Run webhook setup.
 2025-12-24T01:15:00Z work: added webhook URL startup logging in chef/chefmain/telegram_bot.py for cloud_run/production to confirm TELEGRAM_WEBHOOK_URL is set.
+2025-12-24T01:25:00Z work: added pymongo[srv]==4.7.3 to chef/chefmain/requirements.txt to fix Cloud Run missing pymongo.
