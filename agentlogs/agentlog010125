@@ -66,3 +66,4 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2025-12-24T01:40:00Z work: updated chef/chefmain/message_router.py to use container-safe relative path for instructions_base.txt instead of /workspaces/chevdev.
 2025-12-24T01:50:00Z work: added more startup and routing logs in chef/chefmain/telegram_bot.py and chef/chefmain/message_router.py to trace message type, routing, and response length; added warning when OPENAI_API_KEY is missing.
 [codex] Added OpenAI call start/end logging with model/message count/duration in chef/chefmain/message_router.py.
+2025-12-24T02:05:00Z work: added OpenAI client timeout and first-delta logging; on OpenAI errors now send a brief error message to the user in chef/chefmain/message_router.py.

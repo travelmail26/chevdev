@@ -137,7 +137,8 @@ class MessageRouter:
             # After example: `for event in stream: ...` (same as docs).
             from openai import OpenAI
 
-            client = OpenAI(api_key=self.openai_api_key)
+            # Example before/after: no timeout -> hanging stream; timeout=60 -> raises on stalls.
+            client = OpenAI(api_key=self.openai_api_key, timeout=60)
             stream = client.responses.create(
                 model=payload["model"],
                 input=payload["messages"],
@@ -147,6 +148,7 @@ class MessageRouter:
             assistant_content = ""
             buffer_text = ""
             buffer_flush_chars = 200  # Send partial output every ~800 chars.
+            first_delta_at = None
 
             for event in stream:
                 # We only care about text deltas.
@@ -158,6 +160,15 @@ class MessageRouter:
                 chunk = getattr(event, "delta", None)
                 if not chunk:
                     continue
+
+                if first_delta_at is None:
+                    first_delta_at = time.monotonic()
+                    # Example before/after: no delta timing -> unclear stalls; now logs first delta ms.
+                    logging.info(
+                        "openai_call first_delta: user_id=%s, elapsed_ms=%s",
+                        user_id,
+                        int((first_delta_at - openai_start) * 1000),
+                    )
 
                 assistant_content += chunk
                 buffer_text += chunk
@@ -193,9 +204,21 @@ class MessageRouter:
             body = getattr(getattr(http_err, "response", None), "text", str(http_err))
             logging.error(f"HTTP Error {status}: {body}")
             logging.error(f"Request payload: {payload}")
+            if message_object:
+                # Example before/after: error swallowed -> user sees nothing; now user gets a brief error.
+                error_message = f"Sorry, I hit an upstream error ({status}). Please try again."
+                partial = message_object.copy()
+                partial["user_message"] = error_message
+                process_message_object(partial)
             return f"HTTP Error {status}: {body}"
         except Exception as e:
             logging.error(f"Error in openai API call in message_router.py: {str(e)}", exc_info=True)
+            if message_object:
+                # Example before/after: exception -> silent; now a short error reply is sent.
+                error_message = "Sorry, I ran into an error while generating a response. Please try again."
+                partial = message_object.copy()
+                partial["user_message"] = error_message
+                process_message_object(partial)
             return f"Error processing your message: {str(e)}"
     
 # Simple command-line interface for testing
