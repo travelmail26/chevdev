@@ -52,6 +52,7 @@ def setup_port_forwarding():
 
 def main():
     logging.info("[Main] Starting up...")
+    logging.info(f"[Main] BUILD_TAG={os.getenv('BUILD_TAG', 'unknown')}")
 
     setup_port_forwarding()
 
@@ -173,4 +174,3 @@ def misc():
     # def health_check():
     #     return {"status": "running"}, 200
     pass
-

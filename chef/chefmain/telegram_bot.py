@@ -354,6 +354,10 @@ async def openai_version(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as exc:
         await update.message.reply_text(f"openai version error: {exc}")
 
+async def build_version(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    build_tag = os.getenv("BUILD_TAG", "unknown")
+    await update.message.reply_text(f"build tag: {build_tag}")
+
 #setup bot loads message handler commands into application
 def setup_bot() -> Application:
     environment = os.getenv("ENVIRONMENT", "development")
@@ -386,6 +390,7 @@ def setup_bot() -> Application:
     application.add_handler(CommandHandler("restart", restart))
     application.add_handler(CommandHandler("openai_ping", openai_ping))
     application.add_handler(CommandHandler("openai_version", openai_version))
+    application.add_handler(CommandHandler("build_version", build_version))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     application.add_handler(MessageHandler(filters.PHOTO, handle_message))
     application.add_handler(MessageHandler(filters.VIDEO, handle_message))

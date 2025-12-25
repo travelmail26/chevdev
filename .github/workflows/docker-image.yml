@@ -71,6 +71,7 @@ jobs:
           OPENAI_API_KEY: "${{ secrets.OPENAI_API_KEY }}"
           PERPLEXITY_KEY: "${{ secrets.PERPLEXITY_KEY }}"
           TELEGRAM_WEBHOOK_URL: "${{ secrets.TELEGRAM_WEBHOOK_URL }}"
+          BUILD_TAG: "${{ env.DATE_TAG }}"
           FIREBASEJSON: |
             ${{ secrets.FIREBASEJSON }}
           SERVICE_ACCOUNT_FILE: |

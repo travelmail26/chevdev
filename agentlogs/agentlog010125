@@ -73,3 +73,4 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2025-12-24T03:00:00Z work: unpinned openai in chef/chefmain/requirements.txt to always pull the latest SDK.
 2025-12-24T03:10:00Z work: added /openai_ping command in chef/chefmain/telegram_bot.py to hit OpenAI /v1/models and reply with status or error.
 2025-12-24T03:20:00Z work: added /openai_version command in chef/chefmain/telegram_bot.py to report installed OpenAI SDK version.
+2025-12-24T03:35:00Z work: added BUILD_TAG env var to Cloud Run env-vars, logged BUILD_TAG on startup in chef/chefmain/main.py, and added /build_version command in chef/chefmain/telegram_bot.py.
