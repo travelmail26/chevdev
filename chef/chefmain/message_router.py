@@ -161,54 +161,24 @@ class MessageRouter:
 
             # Example before/after: no timeout -> hanging stream; timeout=60 -> raises on stalls.
             client = OpenAI(api_key=self.openai_api_key, timeout=60)
-            stream = client.responses.create(
+            response = client.responses.create(
                 model=payload["model"],
                 input=payload["messages"],
-                stream=True,
+                stream=False,
             )
 
-            assistant_content = ""
-            buffer_text = ""
-            buffer_flush_chars = 200  # Send partial output every ~800 chars.
-            first_delta_at = None
+            # Example before/after: streaming tokens -> full response in one shot.
+            assistant_content = getattr(response, "output_text", "") or ""
+            if not assistant_content:
+                try:
+                    assistant_content = response.model_dump().get("output_text", "")
+                except Exception:
+                    assistant_content = ""
 
-            for event in stream:
-                # We only care about text deltas.
-                # Example before/after:
-                # - Before: parsed `choices[0].delta.content`.
-                # - After: capture `response.output_text.delta` events.
-                if getattr(event, "type", None) != "response.output_text.delta":
-                    continue
-                chunk = getattr(event, "delta", None)
-                if not chunk:
-                    continue
-
-                if first_delta_at is None:
-                    first_delta_at = time.monotonic()
-                    # Example before/after: no delta timing -> unclear stalls; now logs first delta ms.
-                    logging.info(
-                        "openai_call first_delta: user_id=%s, elapsed_ms=%s",
-                        user_id,
-                        int((first_delta_at - openai_start) * 1000),
-                    )
-                    print(
-                        f"OPENAI_CALL_FIRST_DELTA user_id={user_id} elapsed_ms="
-                        f"{int((first_delta_at - openai_start) * 1000)}"
-                    )
-
-                assistant_content += chunk
-                buffer_text += chunk
-
-                if message_object and len(buffer_text) >= buffer_flush_chars:
-                    partial = message_object.copy()
-                    partial["user_message"] = buffer_text
-                    process_message_object(partial)
-                    buffer_text = ""
-
-                if message_object and buffer_text.strip():
-                    partial = message_object.copy()
-                    partial["user_message"] = buffer_text
-                    process_message_object(partial)
+            if message_object and assistant_content:
+                partial = message_object.copy()
+                partial["user_message"] = assistant_content
+                process_message_object(partial)
 
             # --- Append assistant response to user history ---
             if message_object:
