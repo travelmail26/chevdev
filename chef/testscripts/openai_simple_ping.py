@@ -15,6 +15,7 @@ def call_openai_hi():
         "model": "gpt-5-mini-2025-08-07",
         "input": [{"role": "user", "content": "hi"}],
         "max_output_tokens": 64,
+        "reasoning": {"effort": "low"},
     }
 
     start = time.monotonic()

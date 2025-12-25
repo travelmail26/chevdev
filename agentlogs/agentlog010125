@@ -81,3 +81,4 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2025-12-24T04:25:00Z work: increased OpenAI client timeout to 180s in chef/chefmain/message_router.py and requests timeout to 180s in chef/testscripts/openai_simple_ping.py for slow Cloud Run responses.
 2025-12-24T04:35:00Z work: added full OpenAI response body logging in chef/testscripts/openai_simple_ping.py for manual inspection.
 2025-12-24T04:45:00Z work: chunked openai_simple response logging into single-line parts in chef/testscripts/openai_simple_ping.py to avoid Cloud Run log truncation.
+2025-12-24T04:55:00Z work: set reasoning.effort=low in chef/testscripts/openai_simple_ping.py to force text output in openai_simple.
