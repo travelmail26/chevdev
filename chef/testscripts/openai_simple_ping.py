@@ -27,7 +27,12 @@ def call_openai_hi():
             timeout=180,
         )
         duration_ms = int((time.monotonic() - start) * 1000)
-        logging.info("openai_simple: response_body=%s", response.text)
+        response_body = response.text.replace("\n", " ")
+        # Example before/after: multiline JSON -> one-line chunks for Cloud Run logs.
+        chunk_size = 900
+        for i in range(0, len(response_body), chunk_size):
+            chunk = response_body[i:i + chunk_size]
+            logging.info("openai_simple: response_body_part=%s", chunk)
         if response.status_code != 200:
             logging.info("openai_simple: non-200 status=%s", response.status_code)
             return {
