@@ -140,6 +140,8 @@ class MessageRouter:
                 payload["model"],
                 message_count,
             )
+            # Example before/after: no stdout log -> missing in Cloud Run UI; now prints to stdout too.
+            print(f"OPENAI_CALL_START user_id={user_id} model={payload['model']} message_count={message_count}")
             # Example before/after: no message visibility -> hard to debug; now logs preview.
             logging.info(
                 "openai_call payload_preview: user_id=%s, last_user_preview='%s'",
@@ -189,6 +191,10 @@ class MessageRouter:
                         user_id,
                         int((first_delta_at - openai_start) * 1000),
                     )
+                    print(
+                        f"OPENAI_CALL_FIRST_DELTA user_id={user_id} elapsed_ms="
+                        f"{int((first_delta_at - openai_start) * 1000)}"
+                    )
 
                 assistant_content += chunk
                 buffer_text += chunk
@@ -218,6 +224,14 @@ class MessageRouter:
                 openai_duration_ms,
                 len(assistant_content),
             )
+            print(
+                "OPENAI_CALL_END "
+                f"user_id={user_id} model={payload['model']} "
+                f"duration_ms={openai_duration_ms} response_chars={len(assistant_content)}"
+            )
+            if not assistant_content:
+                # Example before/after: empty reply -> silent; now emits explicit stdout marker.
+                print(f"OPENAI_CALL_EMPTY_RESPONSE user_id={user_id}")
             return assistant_content
         except requests.HTTPError as http_err:
             status = getattr(getattr(http_err, "response", None), "status_code", "unknown")
