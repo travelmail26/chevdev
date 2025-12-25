@@ -73,6 +73,7 @@ jobs:
           TELEGRAM_WEBHOOK_URL: "${{ secrets.TELEGRAM_WEBHOOK_URL }}"
           BUILD_TAG: "${{ env.DATE_TAG }}"
           XAI_API_KEY: "${{ secrets.XAI_API_KEY }}"
+          MONGODB_URI: "${{ secrets.MONGODB_URI }}"
           FIREBASEJSON: |
             ${{ secrets.FIREBASEJSON }}
           SERVICE_ACCOUNT_FILE: |
