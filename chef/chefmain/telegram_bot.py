@@ -366,6 +366,8 @@ def run_bot_webhook_set():
             if not webhook_url:
                 raise ValueError("TELEGRAM_WEBHOOK_URL not set!")
 
+            # Example before/after: TELEGRAM_WEBHOOK_URL unset -> "None"; set -> "https://service.run.app"
+            logging.info(f"Using TELEGRAM_WEBHOOK_URL: {webhook_url}")
             app.run_webhook(
                 listen="0.0.0.0",
                 port=get_port(),
@@ -379,6 +381,8 @@ def run_bot_webhook_set():
             if not webhook_url:
                 raise ValueError("TELEGRAM_WEBHOOK_URL not set!")
 
+            # Example before/after: TELEGRAM_WEBHOOK_URL unset -> "None"; set -> "https://service.run.app"
+            logging.info(f"Using TELEGRAM_WEBHOOK_URL: {webhook_url}")
             app.run_webhook(
                 listen="0.0.0.0",
                 port=get_port(),
