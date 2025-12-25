@@ -3,6 +3,7 @@ import os
 import sys
 import logging
 import requests
+import time
 try:
     from dotenv import load_dotenv
     # Load default .env
@@ -122,6 +123,15 @@ class MessageRouter:
         }
 
         try:
+            # Before: OpenAI call timing was opaque; after example: log start/end with model + duration.
+            openai_start = time.monotonic()
+            message_count = len(payload["messages"])
+            logging.info(
+                "openai_call start: user_id=%s, model=%s, message_count=%s",
+                user_id,
+                payload["model"],
+                message_count,
+            )
             # Streaming (docs-style) via OpenAI SDK Responses API.
             # Before: manual `requests.post(..., stream=True)` parsing.
             # After example: `for event in stream: ...` (same as docs).
@@ -168,7 +178,15 @@ class MessageRouter:
                 message_history_process(message_object, {"role": "assistant", "content": assistant_content})
 
             # Example before/after: empty response -> troubleshoot logs; non-empty -> user sees reply
+            openai_duration_ms = int((time.monotonic() - openai_start) * 1000)
             logging.info(f"route_message end: user_id={user_id}, response_chars={len(assistant_content)}")
+            logging.info(
+                "openai_call end: user_id=%s, model=%s, duration_ms=%s, response_chars=%s",
+                user_id,
+                payload["model"],
+                openai_duration_ms,
+                len(assistant_content),
+            )
             return assistant_content
         except requests.HTTPError as http_err:
             status = getattr(getattr(http_err, "response", None), "status_code", "unknown")
