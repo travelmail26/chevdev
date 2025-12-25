@@ -360,6 +360,7 @@ async def build_version(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(f"build tag: {build_tag}")
 
 async def openai_simple(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    logging.info("openai_simple: command received")
     result = call_openai_hi()
     if result.get("ok"):
         text = result.get("text", "")
