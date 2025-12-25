@@ -27,6 +27,7 @@ def call_openai_hi():
             timeout=180,
         )
         duration_ms = int((time.monotonic() - start) * 1000)
+        logging.info("openai_simple: response_body=%s", response.text)
         if response.status_code != 200:
             logging.info("openai_simple: non-200 status=%s", response.status_code)
             return {
