@@ -59,3 +59,4 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2025-12-24T00:44:42Z work: spawn vision listener process on media_metadata insert; pass VISION_TRIGGER_URL and handle it in mongo_firebase_vision_listener.
 2025-12-24T00:50:00Z work: added root Dockerfile for Cloud Run container build (runs chef/chefmain/main.py, sets PORT=8080).
 2025-12-24T00:58:00Z work: chef/chefmain/telegram_bot.py now auto-detects cloud_run vs codespaces, picks TELEGRAM_KEY vs TELEGRAM_DEV_KEY, and uses PORT/TELEGRAM_WEBHOOK_URL env vars for webhooks.
+2025-12-24T01:05:00Z work: updated .github/workflows/docker-image.yml to build from root Dockerfile and pass TELEGRAM_WEBHOOK_URL into env-vars for Cloud Run webhook setup.

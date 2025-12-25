@@ -41,7 +41,7 @@ jobs:
       # Step 6: Build the Docker image
       - name: Build Docker image
         run: |
-          docker build --no-cache ./chef --file ./chef/Dockerfile --tag travelmail26/cheftest:${{ env.DATE_TAG }}
+          docker build --no-cache . --file Dockerfile --tag travelmail26/cheftest:${{ env.DATE_TAG }}
 
       # Step 6: Push the Docker image to Docker Hub
       - name: Push Docker image
@@ -70,6 +70,7 @@ jobs:
           FIREBASE_KEY: "${{ secrets.FIREBASE_KEY }}"
           OPENAI_API_KEY: "${{ secrets.OPENAI_API_KEY }}"
           PERPLEXITY_KEY: "${{ secrets.PERPLEXITY_KEY }}"
+          TELEGRAM_WEBHOOK_URL: "${{ secrets.TELEGRAM_WEBHOOK_URL }}"
           FIREBASEJSON: |
             ${{ secrets.FIREBASEJSON }}
           SERVICE_ACCOUNT_FILE: |
