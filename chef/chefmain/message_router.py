@@ -161,6 +161,9 @@ class MessageRouter:
 
             # Example before/after: no timeout -> hanging stream; timeout=60 -> raises on stalls.
             client = OpenAI(api_key=self.openai_api_key, timeout=60)
+            if not hasattr(client, "responses"):
+                raise AttributeError("OpenAI SDK missing responses API")
+
             stream = client.responses.create(
                 model=payload["model"],
                 input=payload["messages"],
@@ -233,6 +236,55 @@ class MessageRouter:
                 # Example before/after: empty reply -> silent; now emits explicit stdout marker.
                 print(f"OPENAI_CALL_EMPTY_RESPONSE user_id={user_id}")
             return assistant_content
+        except AttributeError as attr_err:
+            # Fallback to raw HTTP Responses API when SDK lacks client.responses
+            logging.warning("OpenAI SDK missing responses API: %s", attr_err)
+            try:
+                response = requests.post(
+                    "https://api.openai.com/v1/responses",
+                    headers={
+                        "Authorization": f"Bearer {self.openai_api_key}",
+                        "Content-Type": "application/json",
+                    },
+                    json={
+                        "model": payload["model"],
+                        "input": payload["messages"],
+                    },
+                    timeout=60,
+                )
+                response.raise_for_status()
+                data = response.json()
+                assistant_content = data.get("output_text", "")
+                if message_object and assistant_content:
+                    partial = message_object.copy()
+                    partial["user_message"] = assistant_content
+                    process_message_object(partial)
+                    message_history_process(message_object, {"role": "assistant", "content": assistant_content})
+                logging.info(
+                    "openai_call fallback complete: user_id=%s, response_chars=%s",
+                    user_id,
+                    len(assistant_content),
+                )
+                return assistant_content
+            except requests.HTTPError as http_err:
+                status = getattr(getattr(http_err, "response", None), "status_code", "unknown")
+                body = getattr(getattr(http_err, "response", None), "text", str(http_err))
+                logging.error(f"HTTP Error {status}: {body}")
+                logging.error(f"Request payload: {payload}")
+                if message_object:
+                    error_message = f"Sorry, I hit an upstream error ({status}). Please try again."
+                    partial = message_object.copy()
+                    partial["user_message"] = error_message
+                    process_message_object(partial)
+                return f"HTTP Error {status}: {body}"
+            except Exception as e:
+                logging.error(f"Error in fallback OpenAI call: {str(e)}", exc_info=True)
+                if message_object:
+                    error_message = "Sorry, I ran into an error while generating a response. Please try again."
+                    partial = message_object.copy()
+                    partial["user_message"] = error_message
+                    process_message_object(partial)
+                return f"Error processing your message: {str(e)}"
         except requests.HTTPError as http_err:
             status = getattr(getattr(http_err, "response", None), "status_code", "unknown")
             body = getattr(getattr(http_err, "response", None), "text", str(http_err))

@@ -69,3 +69,4 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2025-12-24T02:05:00Z work: added OpenAI client timeout and first-delta logging; on OpenAI errors now send a brief error message to the user in chef/chefmain/message_router.py.
 2025-12-24T02:20:00Z work: added user message preview logging in chef/chefmain/telegram_bot.py and masked OpenAI key + last user preview logging in chef/chefmain/message_router.py.
 2025-12-24T02:35:00Z work: added stdout markers (OPENAI_CALL_START/FIRST_DELTA/END/EMPTY_RESPONSE) in chef/chefmain/message_router.py so Cloud Run logs show API trigger and completion.
+2025-12-24T02:45:00Z work: added fallback in chef/chefmain/message_router.py to call /v1/responses via requests when OpenAI SDK lacks client.responses.
