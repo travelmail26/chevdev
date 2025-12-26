@@ -24,32 +24,27 @@ Example document written on each call::
 from __future__ import annotations
 
 import os
-import sys
 from datetime import datetime, timezone
 from typing import Any, Dict
 
 from pymongo import MongoClient
 
-# Ensure imports work both in repo root and inside containers.
-# Example before/after: no sys.path update -> "No module named 'chef'"; with update -> import succeeds.
-_repo_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-if _repo_root not in sys.path:
-    sys.path.insert(0, _repo_root)
-
 try:
-    from chef.utilities.history_messages import (
+    # Before example: imported from chef/utilities/history_messages.py.
+    # After example: imported from chefdietlog/utilities/history_messages.py.
+    from utilities.history_messages import (
         add_chat_session_keys,
         get_full_history_message_object,
     )
 except ModuleNotFoundError:
-    # Fallback if "chef" is not a package; import from local utilities instead.
-    from utilities.history_messages import (  # type: ignore
+    # Fallback for direct script runs: import from sibling module in this folder.
+    from history_messages import (  # type: ignore
         add_chat_session_keys,
         get_full_history_message_object,
     )
 
-DEFAULT_DB_NAME = "chef_chatbot"
-DEFAULT_COLLECTION_NAME = "chat_sessions"
+DEFAULT_DB_NAME = "chef_dietlog"
+DEFAULT_COLLECTION_NAME = "chat_dietlog_sessions"
 
 
 def _get_mongo_collection():

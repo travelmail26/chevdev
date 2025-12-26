@@ -16,13 +16,10 @@ except Exception:
 
 # Import necessary modules for tool functions
 # Before example: sys.path hard-coded to /workspaces/chevdev.
-# After example: sys.path uses local repo dirs so Cloud Run/Codespaces both work.
-base_dir = os.path.dirname(os.path.abspath(__file__))
-parent_dir = os.path.dirname(base_dir)
-if base_dir not in sys.path:
-    sys.path.insert(0, base_dir)
-if parent_dir not in sys.path:
-    sys.path.append(parent_dir)
+# After example: sys.path uses the repo root so Cloud Run/Codespaces both work.
+repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if repo_root not in sys.path:
+    sys.path.append(repo_root)
 from message_user import process_message_object
 from utilities.history_messages import message_history_process, archive_message_history
 

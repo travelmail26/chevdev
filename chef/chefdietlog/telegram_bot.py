@@ -3,13 +3,8 @@ import sys
 import logging
 import traceback
 
-# Add current + parent directories to path so local utilities resolve first.
-base_dir = os.path.dirname(os.path.abspath(__file__))
-parent_dir = os.path.dirname(base_dir)
-if base_dir not in sys.path:
-    sys.path.insert(0, base_dir)
-if parent_dir not in sys.path:
-    sys.path.append(parent_dir)
+# Add parent directory to path to import utilities
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from dotenv import load_dotenv, dotenv_values
 from utilities.history_messages import create_session_log_file # Adjust path if necessary
@@ -338,11 +333,6 @@ async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
         conversations.pop(user_id, None)
     except Exception as e:
         await update.message.reply_text(f"Error during restart: {str(e)}")
-
-async def bot_mode_switch_diet_log(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    # Example before/after: BOT_MODE=cheflog -> BOT_MODE=dietlog
-    os.environ["BOT_MODE"] = "dietlog" if os.getenv("BOT_MODE", "cheflog") == "cheflog" else "cheflog"
-    await update.message.reply_text(f"bot mode set to: {os.environ['BOT_MODE']}")
 
 async def openai_ping(update: Update, context: ContextTypes.DEFAULT_TYPE):
     key = os.getenv("OPENAI_API_KEY")

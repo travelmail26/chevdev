@@ -88,3 +88,10 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2025-12-24T05:35:00Z work: switched xai_simple_ping to use XAI_API_KEY only and default model grok-3; updated workflow env to stop passing XAI_AP_KEY.
 2025-12-24T05:45:00Z work: switched chef/chefmain/message_router.py to call xAI chat completions (grok-4-1-fast-non-reasoning-latest by default) using XAI_API_KEY, with updated xai_* logs.
 2025-12-24T05:55:00Z work: added MONGODB_URI to Cloud Run env-vars in .github/workflows/docker-image.yml.
+2025-12-26T00:17:36Z work: added bot_mode toggle in chef/chefmain/telegram_bot.py to read/write chef/utilities/mode.env and set BOT_MODE env.
+2025-12-26T00:20:45Z work: simplified bot_mode switch to a 5-line handler in chef/chefmain/telegram_bot.py (write bot_mode=dietlog).
+2025-12-26T00:34:24Z work: added .env with BOT_MODE=cheflog and simplified /1 toggle to in-process BOT_MODE switch in chef/chefmain/telegram_bot.py.
+2025-12-26: chefdietlog move history + mongo sync helpers into chef/chefdietlog/utilities (history_messages.py, simple_mongo_dump.py); update mongo DB default to chef_dietlog; remove hard-coded /workspaces/chevdev path in message_router; make mongo_media vision listener path portable.
+2025-12-26: chefmain now uses local utilities for history/mongo (copied history_messages.py + simple_mongo_dump.py into chef/chefmain/utilities), updated sys.path in chef/chefmain/telegram_bot.py and chef/chefmain/message_router.py to resolve local utilities first.
+2025-12-26: removed chef/utilities/history_messages.py and chef/testscripts/simple_mongo_dump.py per request; tests/scripts importing those paths now need updates.
+2025-12-26: chefdietlog default Mongo collection now chat_dietlog_sessions in chef/chefdietlog/utilities/simple_mongo_dump.py.

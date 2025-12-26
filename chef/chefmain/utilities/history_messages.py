@@ -1,7 +1,5 @@
 import os
 import json
-from pathlib import Path
-import importlib.util
 
 LOGS_DIR = os.path.join(os.path.dirname(__file__), "chat_history_logs") # Directory relative to utilities folder
 
@@ -10,17 +8,16 @@ from datetime import datetime, timezone
 
 def _load_mongo_helper():
     try:
-        from chef.testscripts.simple_mongo_dump import save_chat_session_to_mongo as helper
+        # Before example: imports pointed at chef/testscripts/simple_mongo_dump.py.
+        # After example: import resolves to chefmain/utilities/simple_mongo_dump.py.
+        from utilities.simple_mongo_dump import save_chat_session_to_mongo as helper
         return helper
     except Exception:
-        simple_mongo_path = Path(__file__).resolve().parents[1] / "testscripts" / "simple_mongo_dump.py"
-        if simple_mongo_path.exists():
-            spec = importlib.util.spec_from_file_location("simple_mongo_dump", str(simple_mongo_path))
-            module = importlib.util.module_from_spec(spec)
-            loader = spec.loader
-            if loader is not None:
-                loader.exec_module(module)
-                return getattr(module, "save_chat_session_to_mongo", None)
+        try:
+            from simple_mongo_dump import save_chat_session_to_mongo as helper
+            return helper
+        except Exception:
+            return None
     return None
 
 

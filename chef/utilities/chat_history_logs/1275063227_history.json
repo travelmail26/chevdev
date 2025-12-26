@@ -9,7 +9,7 @@
     "first_name": "Greg",
     "last_name": "Ferenstein"
   },
-  "user_message": "That sounds disappointing. The cheese clumped and the flavor wasn\u2019t as strong as you hoped.",
+  "user_message": "what is your major function?",
   "chat_session_id": "1275063227_24122025_180941_469794",
   "chat_session_created_at": "2025-12-24T18:09:41.469820+00:00",
   "messages": [
@@ -40,6 +40,26 @@
     {
       "role": "assistant",
       "content": "That sounds disappointing. The cheese clumped and the flavor wasn\u2019t as strong as you hoped."
+    },
+    {
+      "role": "user",
+      "content": "hi"
+    },
+    {
+      "role": "assistant",
+      "content": "Hi there."
+    },
+    {
+      "role": "user",
+      "content": "hi"
+    },
+    {
+      "role": "assistant",
+      "content": "Hi there!"
+    },
+    {
+      "role": "user",
+      "content": "what is your major function?"
     }
   ]
 }
