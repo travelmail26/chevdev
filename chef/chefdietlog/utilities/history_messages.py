@@ -100,6 +100,9 @@ def message_history_process(message_object: dict, message_to_append_history=None
     user_id = str(message_object.get('user_id', 'unknown'))
     filepath = os.path.join(LOGS_DIR, f"{user_id}_history.json")
 
+    # Before example: missing LOGS_DIR -> FileNotFoundError on open(); after: directory is created.
+    os.makedirs(LOGS_DIR, exist_ok=True)
+
     # Try to load existing file, handle empty/corrupt gracefully
     data = None
     if os.path.exists(filepath):

@@ -339,10 +339,29 @@ async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         await update.message.reply_text(f"Error during restart: {str(e)}")
 
+def _reset_history_file(logs_dir: str, user_id: str) -> None:
+    # Before example: missing logs_dir -> FileNotFoundError. After: logs_dir exists with an empty JSON file.
+    os.makedirs(logs_dir, exist_ok=True)
+    filepath = os.path.join(logs_dir, f"{user_id}_history.json")
+    with open(filepath, "w") as handle:
+        pass
+
 async def bot_mode_switch_diet_log(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    # Example before/after: BOT_MODE=cheflog -> BOT_MODE=dietlog
-    os.environ["BOT_MODE"] = "dietlog" if os.getenv("BOT_MODE", "cheflog") == "cheflog" else "cheflog"
-    await update.message.reply_text(f"bot mode set to: {os.environ['BOT_MODE']}")
+    # Example before/after: BOT_MODE=cheflog -> BOT_MODE=dietlog, then execv swaps to chefdietlog/main.py.
+    user_id = update.effective_user.id
+    create_session_log_file(user_id)
+    handlers_per_user.pop(user_id, None)
+    conversations.pop(user_id, None)
+
+    # Before example: dietlog history persisted across modes; after: dietlog history starts fresh per user.
+    dietlog_logs_dir = os.path.join(parent_dir, "chefdietlog", "utilities", "chat_history_logs")
+    _reset_history_file(dietlog_logs_dir, user_id)
+
+    os.environ["BOT_MODE"] = "dietlog"
+    await update.message.reply_text("Switching to diet log mode...")
+    sys.stdout.flush()
+    sys.stderr.flush()
+    os.execv(sys.executable, [sys.executable, "/workspaces/chevdev/chef/chefdietlog/main.py"])
 
 async def openai_ping(update: Update, context: ContextTypes.DEFAULT_TYPE):
     key = os.getenv("OPENAI_API_KEY")

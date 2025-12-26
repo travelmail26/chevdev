@@ -95,3 +95,8 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2025-12-26: chefmain now uses local utilities for history/mongo (copied history_messages.py + simple_mongo_dump.py into chef/chefmain/utilities), updated sys.path in chef/chefmain/telegram_bot.py and chef/chefmain/message_router.py to resolve local utilities first.
 2025-12-26: removed chef/utilities/history_messages.py and chef/testscripts/simple_mongo_dump.py per request; tests/scripts importing those paths now need updates.
 2025-12-26: chefdietlog default Mongo collection now chat_dietlog_sessions in chef/chefdietlog/utilities/simple_mongo_dump.py.
+2025-12-26: chefmain /1 switch now execv's into /workspaces/chevdev/chef/chefdietlog/main.py after setting BOT_MODE=dietlog and flushing stdout/stderr; tested via stubbed execv call.
+2025-12-26: added no-op bot_mode_switch_diet_log in chef/chefdietlog/telegram_bot.py to avoid NameError and acknowledge dietlog mode.
+2025-12-26: chefdietlog history_messages now creates LOGS_DIR before writing to avoid FileNotFoundError on first write.
+2025-12-26: /1 switch now clears memory and resets history files for chefmain + chefdietlog; added _reset_history_file helper in chef/chefmain/telegram_bot.py and updated chefdietlog /1 handler to clear memory; test confirmed both history files created.
+2025-12-26: chefdietlog /1 now clears memory, resets chefmain history file, and execv's back to /workspaces/chevdev/chef/chefmain/main.py; tested with stubbed execv.
