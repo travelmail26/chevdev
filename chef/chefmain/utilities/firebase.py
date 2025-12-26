@@ -1,10 +1,13 @@
-
+import os
 import sys
-sys.path.insert(0, "/workspaces/chevdev")
+# Before example: sys.path hard-coded to /workspaces/chevdev (Codespaces only).
+# After example: sys.path points at the chef/ folder resolved from this file.
+chef_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+if chef_root not in sys.path:
+    sys.path.insert(0, chef_root)
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import storage
-import os
 import json
 import time
 import datetime

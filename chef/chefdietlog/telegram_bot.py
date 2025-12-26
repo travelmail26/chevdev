@@ -357,7 +357,10 @@ async def bot_mode_switch_diet_log(update: Update, context: ContextTypes.DEFAULT
     await update.message.reply_text("Switching back to default mode...")
     sys.stdout.flush()
     sys.stderr.flush()
-    os.execv(sys.executable, [sys.executable, "/workspaces/chevdev/chef/chefmain/main.py"])
+    # Before example: /workspaces/chevdev/chef/chefmain/main.py fails in Cloud Run.
+    # After example: /app/chef/chefmain/main.py resolves from this file at runtime.
+    chefmain_path = os.path.join(parent_dir, "chefmain", "main.py")
+    os.execv(sys.executable, [sys.executable, chefmain_path])
 
 async def openai_ping(update: Update, context: ContextTypes.DEFAULT_TYPE):
     key = os.getenv("OPENAI_API_KEY")

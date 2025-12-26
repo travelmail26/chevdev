@@ -106,7 +106,10 @@ def _spawn_vision_listener(url: str) -> None:
     """Launch the vision listener as a separate process (non-blocking)."""
     # Before example: insert_one() finishes and the bot waits for vision work inline.
     # After example: insert_one() returns immediately and the vision script runs separately.
-    script_path = "/workspaces/chevdev/chef/testscripts/mongo_firebase_vision_listener.py"
+    # Before example: /workspaces/chevdev/chef/testscripts/... fails in Cloud Run.
+    # After example: /app/chef/testscripts/... resolves from this file at runtime.
+    chef_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+    script_path = os.path.join(chef_root, "testscripts", "mongo_firebase_vision_listener.py")
     if not os.path.exists(script_path):
         logging.warning("Vision listener script not found at %s; skipping spawn.", script_path)
         return
