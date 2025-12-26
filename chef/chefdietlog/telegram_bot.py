@@ -360,6 +360,14 @@ async def bot_mode_switch_diet_log(update: Update, context: ContextTypes.DEFAULT
     # Before example: /workspaces/chevdev/chef/chefmain/main.py fails in Cloud Run.
     # After example: /app/chef/chefmain/main.py resolves from this file at runtime.
     chefmain_path = os.path.join(parent_dir, "chefmain", "main.py")
+    # Before example: unclear if execv target exists; after example: logs path + exists + cwd for Cloud Run.
+    logging.info(
+        "mode_switch: target=%s exists=%s cwd=%s bot_mode=%s",
+        chefmain_path,
+        os.path.exists(chefmain_path),
+        os.getcwd(),
+        os.environ.get("BOT_MODE"),
+    )
     os.execv(sys.executable, [sys.executable, chefmain_path])
 
 async def openai_ping(update: Update, context: ContextTypes.DEFAULT_TYPE):

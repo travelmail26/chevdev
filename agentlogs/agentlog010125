@@ -101,3 +101,5 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2025-12-26: /1 switch now clears memory and resets history files for chefmain + chefdietlog; added _reset_history_file helper in chef/chefmain/telegram_bot.py and updated chefdietlog /1 handler to clear memory; test confirmed both history files created.
 2025-12-26: chefdietlog /1 now clears memory, resets chefmain history file, and execv's back to /workspaces/chevdev/chef/chefmain/main.py; tested with stubbed execv.
 2025-12-26: triggered Cloud Run rebuild by pushing an empty commit to main.
+2025-12-26: replaced hard-coded /workspaces/chevdev paths with dynamic paths for mode switches + firebase/mongo_media lookups across chefmain/chefdietlog.
+2025-12-26: added Cloud Run diagnostics for mode switch execv targets and instruction load/model selection in chefmain/chefdietlog routers.

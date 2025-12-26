@@ -45,6 +45,12 @@ class MessageRouter:
         if not self.xai_api_key:
             # Example before/after: missing xAI key -> xAI calls fail; key set -> Grok responses.
             logging.warning("XAI_API_KEY is not set; xAI calls will fail.")
+        # Before example: model/provider unclear; after example: log BOT_MODE + XAI model per init.
+        logging.info(
+            "router_init: bot_mode=%s xai_model=%s",
+            os.getenv("BOT_MODE"),
+            os.getenv("XAI_MODEL", "grok-4-1-fast-non-reasoning-latest"),
+        )
 
         # Before: instructions pulled from a helper and combined elsewhere.
         # After example: paste paths below and the function will join them in order.
@@ -62,7 +68,10 @@ class MessageRouter:
         for path in instruction_paths:
             try:
                 with open(path, 'r') as handle:
-                    collected.append(handle.read().strip())
+                    content = handle.read().strip()
+                collected.append(content)
+                # Before example: instruction source unclear; after example: log path + size.
+                logging.info("instructions_loaded path=%s chars=%s", path, len(content))
             except Exception as exc:
                 logging.warning(f"Could not read instruction file '{path}': {exc}")
         return "\n\n".join(collected)
