@@ -5,6 +5,105 @@ LOGS_DIR = os.path.join(os.path.dirname(__file__), "chat_history_logs") # Direct
 
 from datetime import datetime, timezone
 
+DEFAULT_DB_NAME = "chef_dietlog"
+DEFAULT_COLLECTION_NAME = "chat_dietlog_sessions"
+_mongo_collection = None
+
+
+def _get_bot_mode() -> str:
+    # Before example: BOT_MODE unset -> "chefdietlog"; BOT_MODE=dietlog -> "dietlog".
+    mode = os.environ.get("BOT_MODE")
+    if mode:
+        return mode
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    return os.path.basename(os.path.dirname(base_dir))
+
+
+def _get_mongo_collection():
+    global _mongo_collection
+    if _mongo_collection is not None:
+        return _mongo_collection
+    uri = os.environ.get("MONGODB_URI")
+    if not uri:
+        return None
+    try:
+        from pymongo import MongoClient
+    except Exception:
+        return None
+    client = MongoClient(uri)
+    database_name = os.environ.get("MONGODB_DB_NAME", DEFAULT_DB_NAME)
+    collection_name = os.environ.get("MONGODB_COLLECTION_NAME", DEFAULT_COLLECTION_NAME)
+    _mongo_collection = client[database_name][collection_name]
+    return _mongo_collection
+
+
+def _get_mongo_history(user_id: str):
+    collection = _get_mongo_collection()
+    if collection is None:
+        return None
+    bot_mode = _get_bot_mode()
+    return collection.find_one(
+        {"user_id": user_id, "bot_mode": bot_mode},
+        sort=[("last_updated_at", -1)],
+    )
+
+
+def _upsert_mongo_history(user_id: str, message_object: dict, safe_message: dict | None):
+    collection = _get_mongo_collection()
+    if collection is None:
+        return None
+
+    bot_mode = _get_bot_mode()
+    now = datetime.now(timezone.utc).isoformat()
+    session_seed = add_chat_session_keys({"user_id": user_id})
+
+    # Before: file read/write each turn. After: Mongo upsert returns the latest doc.
+    update_doc = {
+        "$set": {
+            "user_id": user_id,
+            "bot_mode": bot_mode,
+            "last_updated_at": now,
+        },
+        "$setOnInsert": {
+            "_id": session_seed["chat_session_id"],
+            "chat_session_id": session_seed["chat_session_id"],
+            "chat_session_created_at": session_seed["chat_session_created_at"],
+        },
+    }
+
+    session_info = message_object.get("session_info") if isinstance(message_object, dict) else None
+    if isinstance(session_info, dict):
+        update_doc["$setOnInsert"]["session_info"] = session_info
+
+    if safe_message is None:
+        # Before: $setOnInsert + $push on "messages" conflicted; After: only seed when no push.
+        update_doc["$setOnInsert"]["messages"] = session_seed["messages"]
+
+    if safe_message:
+        update_doc["$push"] = {"messages": safe_message}
+        update_doc["$set"]["user_message"] = safe_message.get("content", "")
+
+    try:
+        from pymongo import ReturnDocument
+    except Exception:
+        ReturnDocument = None
+
+    if ReturnDocument:
+        return collection.find_one_and_update(
+            {"user_id": user_id, "bot_mode": bot_mode},
+            update_doc,
+            upsert=True,
+            return_document=ReturnDocument.AFTER,
+            sort=[("last_updated_at", -1)],
+        )
+
+    collection.update_one(
+        {"user_id": user_id, "bot_mode": bot_mode},
+        update_doc,
+        upsert=True,
+    )
+    return _get_mongo_history(user_id)
+
 
 def _load_mongo_helper():
     try:
@@ -57,6 +156,9 @@ def create_session_log_file(user_id: str) -> str | None:
     Returns:
         The full filepath of the created text file, or None if an error occurred.
     """
+    if _get_mongo_collection() is not None:
+        # Before example: wrote chat_history_logs/<user>.json; After: Mongo mode skips local files.
+        return None
     # 1. Ensure the directory exists
     try:
         os.makedirs(LOGS_DIR, exist_ok=True)
@@ -98,6 +200,23 @@ def _sync_history_to_mongo(user_id: str):
 def message_history_process(message_object: dict, message_to_append_history=None) -> dict:
     import json
     user_id = str(message_object.get('user_id', 'unknown'))
+
+    # Remove or stringify non-serializable fields from message_to_append_history
+    def make_json_safe(obj):
+        try:
+            json.dumps(obj)
+            return obj
+        except (TypeError, OverflowError):
+            return str(obj)
+
+    safe_message = None
+    if message_to_append_history:
+        safe_message = {k: make_json_safe(v) for k, v in message_to_append_history.items()}
+
+    mongo_doc = _upsert_mongo_history(user_id, message_object, safe_message)
+    if mongo_doc:
+        return mongo_doc
+
     filepath = os.path.join(LOGS_DIR, f"{user_id}_history.json")
 
     # Before example: missing LOGS_DIR -> FileNotFoundError on open(); after: directory is created.
@@ -123,16 +242,10 @@ def message_history_process(message_object: dict, message_to_append_history=None
     if "messages" not in data or not isinstance(data["messages"], list):
         data["messages"] = []
 
-    # Remove or stringify non-serializable fields from message_to_append_history
-    def make_json_safe(obj):
-        try:
-            json.dumps(obj)
-            return obj
-        except (TypeError, OverflowError):
-            return str(obj)
+    # Before example: bot_mode missing -> hard to split configs; After: bot_mode="chefdietlog"/"dietlog".
+    data["bot_mode"] = _get_bot_mode()
 
-    if message_to_append_history:
-        safe_message = {k: make_json_safe(v) for k, v in message_to_append_history.items()}
+    if safe_message:
         data["messages"].append(safe_message)
         data["user_message"] = safe_message.get("content", "")
 
@@ -150,6 +263,25 @@ def archive_message_history(message_object: dict, user_id: str) -> None:
     """
     Archives the full message object to a file.
     """
+    collection = _get_mongo_collection()
+    if collection is not None:
+        bot_mode = _get_bot_mode()
+        now = datetime.now(timezone.utc).isoformat()
+        session_id = message_object.get("chat_session_id")
+        if not session_id:
+            seed = add_chat_session_keys({"user_id": str(user_id)})
+            session_id = seed["chat_session_id"]
+            message_object.setdefault("chat_session_id", session_id)
+            message_object.setdefault("chat_session_created_at", seed["chat_session_created_at"])
+            message_object.setdefault("messages", seed["messages"])
+        # Before example: archive -> local JSON; After: archive -> Mongo document.
+        message_object["user_id"] = str(message_object.get("user_id", user_id))
+        message_object["bot_mode"] = bot_mode
+        message_object["_id"] = session_id
+        message_object["last_updated_at"] = now
+        collection.update_one({"_id": session_id}, {"$set": message_object}, upsert=True)
+        return
+
     filepath = os.path.join(LOGS_DIR, f"{user_id}_history.json")
     try:
         with open(filepath, 'w') as f:
@@ -164,6 +296,9 @@ def archive_message_history(message_object: dict, user_id: str) -> None:
 
 def get_full_history_message_object(user_id: str) -> dict:
     """Retrieve the entire message object (including all metadata and messages) for a user from their persistent history file."""
+    mongo_doc = _get_mongo_history(str(user_id))
+    if mongo_doc:
+        return mongo_doc
     filepath = os.path.join(LOGS_DIR, f"{user_id}_history.json")
     if os.path.exists(filepath):
         try:

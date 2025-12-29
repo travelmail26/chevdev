@@ -103,3 +103,7 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2025-12-26: triggered Cloud Run rebuild by pushing an empty commit to main.
 2025-12-26: replaced hard-coded /workspaces/chevdev paths with dynamic paths for mode switches + firebase/mongo_media lookups across chefmain/chefdietlog.
 2025-12-26: added Cloud Run diagnostics for mode switch execv targets and instruction load/model selection in chefmain/chefdietlog routers.
+2025-12-26: installed gcloud SDK locally; authenticated with GCLOUD_AUTH to read Cloud Run logs for chef-bot.
+2025-12-28T23:53:16Z work: history_messages now uses Mongo-first per-turn upsert (find_one_and_update) with bot_mode and skips local files when Mongo is set; archive/get_full read from Mongo.
+2025-12-29T02:27:28Z work: fixed Mongo update conflict by only seeding messages on insert when no ; avoids ConflictingUpdateOperators.
+2025-12-29T17:37:27Z work: applied Mongo-first history handling (bot_mode + upsert) to chef/chefdietlog/utilities/history_messages.py to bypass local files when Mongo is set.
