@@ -105,6 +105,8 @@ def get_user_handler(user_id, session_info, user_message, application_data=None)
             #'application': application_data,
             'session_info': session_info,
             'user_message': user_message,  # Add the user's message to the context
+            # Before: stale bot_mode stuck in memory; After: bot_mode is read fresh each message.
+            'bot_mode': get_user_bot_mode(user_id),
             # Add other relevant data here as needed
         }
         user_contexts[user_id] = user_context
@@ -115,6 +117,8 @@ def get_user_handler(user_id, session_info, user_message, application_data=None)
         user_context['session_info'] = session_info
         # Update user message
         user_context['user_message'] = user_message
+        # Before: /1 switch updated Mongo but not in-memory context; After: syncs from Mongo every turn.
+        user_context['bot_mode'] = get_user_bot_mode(user_id)
     return user_context
 
 # def get_user_handler(user_id, application_data, session_info):

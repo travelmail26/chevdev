@@ -110,3 +110,5 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2025-12-29T18:35:24Z work: removed execv mode switch in chefmain; added Mongo bot_mode set/get and per-message instruction selection based on stored bot_mode.
 2025-12-29T18:38:42Z work: adjusted mongo history to single-doc-per-user (no bot_mode filter) and added set/get bot_mode helpers; load instructions per bot_mode; removed execv in /1 switch.
 2025-12-29T18:57:29Z work: centralized bot config in chef/utilities/bot_config.py; chefmain history now uses mode-store collection and per-bot Mongo collections; message_router loads instructions from bot_config; chefdietlog history pulls DB/collection from bot_config.
+2025-12-29T22:17:02Z work: committed + pushed centralized bot_config + mongo routing changes to main (Cloud Run deploy via repo).
+2025-12-29T22:21:28Z work: fix bot_mode switch: sync get_user_handler bot_mode from Mongo each message to avoid stale in-memory mode overriding /1.
