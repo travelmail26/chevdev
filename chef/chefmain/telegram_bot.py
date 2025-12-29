@@ -12,7 +12,11 @@ if parent_dir not in sys.path:
     sys.path.append(parent_dir)
 
 from dotenv import load_dotenv, dotenv_values
-from utilities.history_messages import create_session_log_file # Adjust path if necessary
+from utilities.history_messages import (
+    create_session_log_file,
+    get_user_bot_mode,
+    set_user_bot_mode,
+) # Adjust path if necessary
 
 # Load environment variables early so downstream imports (e.g., perplexity) see keys
 try:
@@ -347,32 +351,27 @@ def _reset_history_file(logs_dir: str, user_id: str) -> None:
         pass
 
 async def bot_mode_switch_diet_log(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    # Example before/after: BOT_MODE=cheflog -> BOT_MODE=dietlog, then execv swaps to chefdietlog/main.py.
+    # Example before/after: execv switch -> Mongo bot_mode switch in-place.
     user_id = update.effective_user.id
-    create_session_log_file(user_id)
     handlers_per_user.pop(user_id, None)
     conversations.pop(user_id, None)
 
-    # Before example: dietlog history persisted across modes; after: dietlog history starts fresh per user.
-    dietlog_logs_dir = os.path.join(parent_dir, "chefdietlog", "utilities", "chat_history_logs")
-    _reset_history_file(dietlog_logs_dir, user_id)
+    session_info = {
+        "user_id": user_id,
+        "chat_id": update.effective_chat.id,
+        "message_id": update.effective_message.message_id,
+        "timestamp": update.effective_message.date.timestamp(),
+        "username": update.effective_user.username,
+        "first_name": update.effective_user.first_name,
+        "last_name": update.effective_user.last_name,
+        "trigger_command": "/1",
+    }
 
-    os.environ["BOT_MODE"] = "dietlog"
-    await update.message.reply_text("Switching to diet log mode...")
-    sys.stdout.flush()
-    sys.stderr.flush()
-    # Before example: /workspaces/chevdev/chef/chefdietlog/main.py fails in Cloud Run.
-    # After example: /app/chef/chefdietlog/main.py resolves from this file at runtime.
-    dietlog_main_path = os.path.join(parent_dir, "chefdietlog", "main.py")
-    # Before example: unclear if execv target exists; after example: logs path + exists + cwd for Cloud Run.
-    logging.info(
-        "mode_switch: target=%s exists=%s cwd=%s bot_mode=%s",
-        dietlog_main_path,
-        os.path.exists(dietlog_main_path),
-        os.getcwd(),
-        os.environ.get("BOT_MODE"),
-    )
-    os.execv(sys.executable, [sys.executable, dietlog_main_path])
+    current_mode = get_user_bot_mode(str(user_id))
+    next_mode = "dietlog" if current_mode not in ("dietlog", "chefdietlog") else "cheflog"
+    set_user_bot_mode(str(user_id), next_mode, session_info=session_info)
+    await update.message.reply_text(f"Switched to {next_mode} mode.")
+    logging.info("mode_switch: user_id=%s from=%s to=%s", user_id, current_mode, next_mode)
 
 async def openai_ping(update: Update, context: ContextTypes.DEFAULT_TYPE):
     key = os.getenv("OPENAI_API_KEY")

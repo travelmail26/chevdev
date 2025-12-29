@@ -107,3 +107,6 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2025-12-28T23:53:16Z work: history_messages now uses Mongo-first per-turn upsert (find_one_and_update) with bot_mode and skips local files when Mongo is set; archive/get_full read from Mongo.
 2025-12-29T02:27:28Z work: fixed Mongo update conflict by only seeding messages on insert when no ; avoids ConflictingUpdateOperators.
 2025-12-29T17:37:27Z work: applied Mongo-first history handling (bot_mode + upsert) to chef/chefdietlog/utilities/history_messages.py to bypass local files when Mongo is set.
+2025-12-29T18:35:24Z work: removed execv mode switch in chefmain; added Mongo bot_mode set/get and per-message instruction selection based on stored bot_mode.
+2025-12-29T18:38:42Z work: adjusted mongo history to single-doc-per-user (no bot_mode filter) and added set/get bot_mode helpers; load instructions per bot_mode; removed execv in /1 switch.
+2025-12-29T18:57:29Z work: centralized bot config in chef/utilities/bot_config.py; chefmain history now uses mode-store collection and per-bot Mongo collections; message_router loads instructions from bot_config; chefdietlog history pulls DB/collection from bot_config.

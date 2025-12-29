@@ -4,6 +4,7 @@ import sys
 import logging
 import requests
 import time
+import importlib.util
 try:
     from dotenv import load_dotenv
     # Load default .env
@@ -25,6 +26,35 @@ if parent_dir not in sys.path:
     sys.path.append(parent_dir)
 from message_user import process_message_object
 from utilities.history_messages import message_history_process, archive_message_history
+
+_bot_config_module = None
+
+
+def _get_bot_config_module():
+    # Before example: instruction paths hard-coded; After: load central bot_config.py once.
+    global _bot_config_module
+    if _bot_config_module is not None:
+        return _bot_config_module
+    config_path = os.path.join(parent_dir, "utilities", "bot_config.py")
+    if not os.path.exists(config_path):
+        return None
+    try:
+        spec = importlib.util.spec_from_file_location("bot_config", config_path)
+        if spec and spec.loader:
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            _bot_config_module = module
+    except Exception:
+        _bot_config_module = None
+    return _bot_config_module
+
+
+def _get_bot_instructions_path(bot_mode: str | None) -> str:
+    # Before example: paths scattered; After: use bot_config when available.
+    module = _get_bot_config_module()
+    if module and hasattr(module, "get_bot_instructions_path"):
+        return module.get_bot_instructions_path(bot_mode)
+    return os.path.join(base_dir, "utilities", "instructions", "instructions_base.txt")
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -56,13 +86,12 @@ class MessageRouter:
         # After example: paste paths below and the function will join them in order.
         self.combined_instructions = self.load_instructions()
 
-    def load_instructions(self):
+    def load_instructions(self, bot_mode: str | None = None):
         """Load and join instruction files listed below (edit manually)."""
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        instruction_paths = [
-            # Before: implicit paths. After example: only this file is loaded; paste more rows to expand.
-            os.path.join(base_dir, "utilities", "instructions", "instructions_base.txt"),
-        ]
+        mode = (bot_mode or "").lower()
+        # Before: per-mode path logic here; After: bot_config.py owns the mapping.
+        instruction_path = _get_bot_instructions_path(mode)
+        instruction_paths = [instruction_path] if instruction_path else []
 
         collected = []
         for path in instruction_paths:
@@ -94,10 +123,6 @@ class MessageRouter:
         if messages is None:
             messages = []
         
-        # Ensure system instructions are present at the start of the messages list
-        system_instruction = {"role": "system", "content": self.combined_instructions}
-    
-        
         # Extract user message from message_object if provided
         full_message_object = None
 
@@ -112,6 +137,17 @@ class MessageRouter:
             else:
                 logging.debug("Messages list is empty!")
                 
+        # Before: instructions chosen before we knew the user's mode; after: mode drives instructions.
+        effective_bot_mode = None
+        if isinstance(full_message_object, dict):
+            effective_bot_mode = full_message_object.get("bot_mode")
+        if not effective_bot_mode and isinstance(message_object, dict):
+            effective_bot_mode = message_object.get("bot_mode")
+        if not effective_bot_mode:
+            effective_bot_mode = os.getenv("BOT_MODE") or "chefmain"
+        self.combined_instructions = self.load_instructions(bot_mode=effective_bot_mode)
+        system_instruction = {"role": "system", "content": self.combined_instructions}
+
         # Ensure messages is a proper list
         if not isinstance(messages, list):
             logging.debug(f"DEBUG: Converting messages from {type(messages)} to list")

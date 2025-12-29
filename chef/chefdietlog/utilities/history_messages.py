@@ -1,5 +1,6 @@
 import os
 import json
+import importlib.util
 
 LOGS_DIR = os.path.join(os.path.dirname(__file__), "chat_history_logs") # Directory relative to utilities folder
 
@@ -8,15 +9,57 @@ from datetime import datetime, timezone
 DEFAULT_DB_NAME = "chef_dietlog"
 DEFAULT_COLLECTION_NAME = "chat_dietlog_sessions"
 _mongo_collection = None
+_bot_config_module = None
 
 
-def _get_bot_mode() -> str:
-    # Before example: BOT_MODE unset -> "chefdietlog"; BOT_MODE=dietlog -> "dietlog".
+def _get_bot_config_module():
+    # Before example: no shared config; After: load central bot_config.py once.
+    global _bot_config_module
+    if _bot_config_module is not None:
+        return _bot_config_module
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    chef_root = os.path.dirname(os.path.dirname(base_dir))
+    config_path = os.path.join(chef_root, "utilities", "bot_config.py")
+    if not os.path.exists(config_path):
+        return None
+    try:
+        spec = importlib.util.spec_from_file_location("bot_config", config_path)
+        if spec and spec.loader:
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            _bot_config_module = module
+    except Exception:
+        _bot_config_module = None
+    return _bot_config_module
+
+
+def _normalize_bot_mode(mode: str | None) -> str:
+    # Before example: "ChefDietLog" -> "chefdietlog"; After: "ChefDietLog" -> "dietlog".
+    module = _get_bot_config_module()
+    if module and hasattr(module, "normalize_bot_mode"):
+        return module.normalize_bot_mode(mode)
+    raw = (mode or "").strip().lower()
+    return raw or "dietlog"
+
+
+def _get_bot_config(mode: str | None) -> dict:
+    # Before example: hard-coded defaults; After: pull from bot_config.py when present.
+    module = _get_bot_config_module()
+    if module and hasattr(module, "get_bot_config"):
+        return module.get_bot_config(mode)
+    return {
+        "mongo_db": os.environ.get("MONGODB_DB_NAME", DEFAULT_DB_NAME),
+        "mongo_collection": os.environ.get("MONGODB_COLLECTION_NAME", DEFAULT_COLLECTION_NAME),
+    }
+
+
+def _get_default_bot_mode() -> str:
+    # Before example: BOT_MODE unset -> derived folder name; After: normalized fallback.
     mode = os.environ.get("BOT_MODE")
     if mode:
-        return mode
+        return _normalize_bot_mode(mode)
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    return os.path.basename(os.path.dirname(base_dir))
+    return _normalize_bot_mode(os.path.basename(os.path.dirname(base_dir)))
 
 
 def _get_mongo_collection():
@@ -31,8 +74,9 @@ def _get_mongo_collection():
     except Exception:
         return None
     client = MongoClient(uri)
-    database_name = os.environ.get("MONGODB_DB_NAME", DEFAULT_DB_NAME)
-    collection_name = os.environ.get("MONGODB_COLLECTION_NAME", DEFAULT_COLLECTION_NAME)
+    config = _get_bot_config(_get_default_bot_mode())
+    database_name = config.get("mongo_db", DEFAULT_DB_NAME)
+    collection_name = config.get("mongo_collection", DEFAULT_COLLECTION_NAME)
     _mongo_collection = client[database_name][collection_name]
     return _mongo_collection
 
@@ -41,9 +85,8 @@ def _get_mongo_history(user_id: str):
     collection = _get_mongo_collection()
     if collection is None:
         return None
-    bot_mode = _get_bot_mode()
     return collection.find_one(
-        {"user_id": user_id, "bot_mode": bot_mode},
+        {"user_id": user_id},
         sort=[("last_updated_at", -1)],
     )
 
@@ -53,7 +96,7 @@ def _upsert_mongo_history(user_id: str, message_object: dict, safe_message: dict
     if collection is None:
         return None
 
-    bot_mode = _get_bot_mode()
+    bot_mode = _get_default_bot_mode()
     now = datetime.now(timezone.utc).isoformat()
     session_seed = add_chat_session_keys({"user_id": user_id})
 
@@ -61,7 +104,7 @@ def _upsert_mongo_history(user_id: str, message_object: dict, safe_message: dict
     update_doc = {
         "$set": {
             "user_id": user_id,
-            "bot_mode": bot_mode,
+            "bot_mode": _normalize_bot_mode(bot_mode),
             "last_updated_at": now,
         },
         "$setOnInsert": {
@@ -90,7 +133,7 @@ def _upsert_mongo_history(user_id: str, message_object: dict, safe_message: dict
 
     if ReturnDocument:
         return collection.find_one_and_update(
-            {"user_id": user_id, "bot_mode": bot_mode},
+            {"user_id": user_id},
             update_doc,
             upsert=True,
             return_document=ReturnDocument.AFTER,
@@ -98,7 +141,7 @@ def _upsert_mongo_history(user_id: str, message_object: dict, safe_message: dict
         )
 
     collection.update_one(
-        {"user_id": user_id, "bot_mode": bot_mode},
+        {"user_id": user_id},
         update_doc,
         upsert=True,
     )
@@ -243,7 +286,7 @@ def message_history_process(message_object: dict, message_to_append_history=None
         data["messages"] = []
 
     # Before example: bot_mode missing -> hard to split configs; After: bot_mode="chefdietlog"/"dietlog".
-    data["bot_mode"] = _get_bot_mode()
+    data["bot_mode"] = _get_default_bot_mode()
 
     if safe_message:
         data["messages"].append(safe_message)
@@ -265,7 +308,7 @@ def archive_message_history(message_object: dict, user_id: str) -> None:
     """
     collection = _get_mongo_collection()
     if collection is not None:
-        bot_mode = _get_bot_mode()
+        bot_mode = _get_default_bot_mode()
         now = datetime.now(timezone.utc).isoformat()
         session_id = message_object.get("chat_session_id")
         if not session_id:
