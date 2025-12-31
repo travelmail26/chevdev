@@ -2,6 +2,7 @@ import os
 import sys
 import logging
 import traceback
+import time
 
 # Add current + parent directories to path so local utilities resolve first.
 base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -167,12 +168,28 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             audio = update.message.audio or update.message.voice
             # Example before/after: no audio -> skip; audio present -> download + upload flow
             logging.info("handle_message: received audio/voice message")
+            get_file_start = time.time()
             file = await context.bot.get_file(audio.file_id)
+            # Example before/after: no timing logs -> "media_timing audio_get_file_ms=42 file_id=abc size=12345"
+            logging.info(
+                "media_timing audio_get_file_ms=%d file_id=%s size=%s",
+                int((time.time() - get_file_start) * 1000),
+                audio.file_id,
+                getattr(audio, "file_size", None),
+            )
             audio_dir = "saved_audio"
             os.makedirs(audio_dir, exist_ok=True)
             local_path = f"{audio_dir}/{audio.file_id}.ogg"
             print(f"DEBUG: Downloading audio file to {local_path}")
+            download_start = time.time()
             await file.download_to_drive(local_path)
+            # Example before/after: no timing logs -> "media_timing audio_download_ms=3500 path=saved_audio/... size=23456"
+            logging.info(
+                "media_timing audio_download_ms=%d path=%s size=%s",
+                int((time.time() - download_start) * 1000),
+                local_path,
+                os.path.getsize(local_path) if os.path.exists(local_path) else None,
+            )
 
             firebase_url = None
             try:
@@ -190,11 +207,27 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             photo = update.message.photo[-1]
             # Example before/after: no photo -> skip; photo present -> download + upload flow
             logging.info("handle_message: received photo message")
+            get_file_start = time.time()
             file = await context.bot.get_file(photo.file_id)
+            # Example before/after: no timing logs -> "media_timing photo_get_file_ms=35 file_id=abc size=12345"
+            logging.info(
+                "media_timing photo_get_file_ms=%d file_id=%s size=%s",
+                int((time.time() - get_file_start) * 1000),
+                photo.file_id,
+                getattr(photo, "file_size", None),
+            )
             photo_dir = "saved_photos"
             os.makedirs(photo_dir, exist_ok=True)
             local_path = f"{photo_dir}/{photo.file_id}.jpg"
+            download_start = time.time()
             await file.download_to_drive(local_path)
+            # Example before/after: no timing logs -> "media_timing photo_download_ms=4200 path=saved_photos/... size=45678"
+            logging.info(
+                "media_timing photo_download_ms=%d path=%s size=%s",
+                int((time.time() - download_start) * 1000),
+                local_path,
+                os.path.getsize(local_path) if os.path.exists(local_path) else None,
+            )
             firebase_url = None
             try:
                 firebase_url = firebase_get_media_url(local_path)
@@ -211,11 +244,27 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             video = update.message.video
             # Example before/after: no video -> skip; video present -> download + upload flow
             logging.info("handle_message: received video message")
+            get_file_start = time.time()
             file = await context.bot.get_file(video.file_id)
+            # Example before/after: no timing logs -> "media_timing video_get_file_ms=55 file_id=abc size=12345"
+            logging.info(
+                "media_timing video_get_file_ms=%d file_id=%s size=%s",
+                int((time.time() - get_file_start) * 1000),
+                video.file_id,
+                getattr(video, "file_size", None),
+            )
             video_dir = "saved_videos"
             os.makedirs(video_dir, exist_ok=True)
             local_path = f"{video_dir}/{video.file_id}.mp4"
+            download_start = time.time()
             await file.download_to_drive(local_path)
+            # Example before/after: no timing logs -> "media_timing video_download_ms=7800 path=saved_videos/... size=789012"
+            logging.info(
+                "media_timing video_download_ms=%d path=%s size=%s",
+                int((time.time() - download_start) * 1000),
+                local_path,
+                os.path.getsize(local_path) if os.path.exists(local_path) else None,
+            )
             firebase_url = None
             try:
                 firebase_url = firebase_get_media_url(local_path)

@@ -112,3 +112,12 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2025-12-29T18:57:29Z work: centralized bot config in chef/utilities/bot_config.py; chefmain history now uses mode-store collection and per-bot Mongo collections; message_router loads instructions from bot_config; chefdietlog history pulls DB/collection from bot_config.
 2025-12-29T22:17:02Z work: committed + pushed centralized bot_config + mongo routing changes to main (Cloud Run deploy via repo).
 2025-12-29T22:21:28Z work: fix bot_mode switch: sync get_user_handler bot_mode from Mongo each message to avoid stale in-memory mode overriding /1.
+2025-12-29T22:29:08Z work: committed + pushed per-turn bot_mode refresh in chef/chefmain/telegram_bot.py (fixes stale in-memory mode after /1).
+2025-12-29T22:31:23Z work: checked Cloud Run logs for chef-bot; saw new revision startup but no user message logs yet.
+2025-12-31T00:58:23Z work: added testscripts/download_chat_sessions.py to dump chat_sessions documents into per-doc JSON files.
+2025-12-31T00:59:26Z work: updated testscripts/download_chat_sessions.py default output to /workspaces/chevdev/mongo_exports to match existing Mongo export folder.
+
+- Updated answer_with_nano to allow interactive guardrail + manual query via --prompt-query.
+- Added MANUAL_QUERY override used only when running answer_with_nano directly; removed prompt flag.
+- Moved guardrail to top-level GUARDRAIL_TEXT and placed MANUAL_QUERY directly under it for manual edits.
+2025-12-31T19:10:00Z work: added media timing logs around Telegram get_file/download_to_drive and Firebase upload/make_public/metadata in chef/chefmain/telegram_bot.py and chef/chefmain/utilities/firebase.py to isolate Cloud Run image delays.

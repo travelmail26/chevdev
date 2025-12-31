@@ -11,6 +11,7 @@ from firebase_admin import storage
 import json
 import time
 import datetime
+import logging
 from chefmain.utilities.mongo_media import create_media_metadata
 from google.cloud import storage as gcs_storage 
 
@@ -70,16 +71,38 @@ def firebase_get_media_url(image_path):
 
     # Upload the image
     blob = bucket.blob(f"telegram_photos/{cloud_storage_filename}")
+    upload_start = time.time()
     blob.upload_from_filename(image_path)
+    # Example before/after: no timing log -> "media_timing firebase_upload_ms=2100 file=foo.jpg bytes=12345"
+    logging.info(
+        "media_timing firebase_upload_ms=%d file=%s bytes=%s",
+        int((time.time() - upload_start) * 1000),
+        cloud_storage_filename,
+        os.path.getsize(image_path) if os.path.exists(image_path) else None,
+    )
 
     # Make the blob publicly accessible
+    make_public_start = time.time()
     blob.make_public()
+    # Example before/after: no timing log -> "media_timing firebase_make_public_ms=120 file=foo.jpg"
+    logging.info(
+        "media_timing firebase_make_public_ms=%d file=%s",
+        int((time.time() - make_public_start) * 1000),
+        cloud_storage_filename,
+    )
 
     # Get the public download URL
     url = blob.public_url
     print(f"Image uploaded to: {url}")
     try:
+        metadata_start = time.time()
         create_media_metadata(url=url, indexed_at=datetime.datetime.now(datetime.timezone.utc).isoformat())
+        # Example before/after: no timing log -> "media_timing firebase_metadata_ms=90 file=foo.jpg"
+        logging.info(
+            "media_timing firebase_metadata_ms=%d file=%s",
+            int((time.time() - metadata_start) * 1000),
+            cloud_storage_filename,
+        )
         print("DEBUG: create_media_metadata succeeded")
     except Exception as e:
         print(f"DEBUG: create_media_metadata failed: {e}")
