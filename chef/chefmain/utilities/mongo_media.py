@@ -81,6 +81,7 @@ def store_media_file(local_path: str, session_info: Dict, media_type: str) -> Op
 
 def create_media_metadata(url: str, indexed_at: str) -> None:
     """Create metadata entry for media URL in MongoDB."""
+    global _client
     if MongoClient is None:
         logging.warning("MongoDB client unavailable; cannot create media metadata")
         return
@@ -91,7 +92,11 @@ def create_media_metadata(url: str, indexed_at: str) -> None:
         return
 
     try:
-        client = MongoClient(uri)
+        # Before example: new MongoClient() per call -> repeated TLS/DNS handshake.
+        # After example: reuse cached client -> faster inserts on Cloud Run.
+        if _client is None:
+            _client = MongoClient(uri)
+        client = _client
         db_name = os.environ.get("MONGODB_DB_NAME", DEFAULT_DB_NAME)
         db = client[db_name]
         collection = db["media_metadata"]
