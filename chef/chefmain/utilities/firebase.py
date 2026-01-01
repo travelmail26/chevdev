@@ -39,7 +39,7 @@ def list_available_buckets():
     print("Available buckets:", bucket_names)
     return bucket_names
 
-def firebase_get_media_url(image_path):
+def firebase_get_media_url(media_path, media_type: str = "photo"):
     print('DEBUG firebase get media url triggered')
 
     # Storage bucket constant
@@ -60,25 +60,35 @@ def firebase_get_media_url(image_path):
     # Get bucket reference
     bucket = storage.bucket()
 
-    # Check if file exists before upload
-    print(f"Path check - exists: {os.path.exists(image_path)}, absolute path: {os.path.abspath(image_path)}")
+    # Before example: videos stored under telegram_photos -> mixed media types.
+    # After example: media_type selects a folder (photo/video/audio) for clarity.
+    folder_map = {
+        "photo": "telegram_photos",
+        "video": "telegram_videos",
+        "audio": "telegram_audio",
+        "voice": "telegram_audio",
+    }
+    storage_folder = folder_map.get(media_type, "telegram_media")
 
-    if not os.path.exists(image_path):
-        raise FileNotFoundError(f"Image file not found at: {image_path}")
+    # Check if file exists before upload
+    print(f"Path check - exists: {os.path.exists(media_path)}, absolute path: {os.path.abspath(media_path)}")
+
+    if not os.path.exists(media_path):
+        raise FileNotFoundError(f"Media file not found at: {media_path}")
 
     # Use the original filename for storage
-    cloud_storage_filename = os.path.basename(image_path)
+    cloud_storage_filename = os.path.basename(media_path)
 
     # Upload the image
-    blob = bucket.blob(f"telegram_photos/{cloud_storage_filename}")
+    blob = bucket.blob(f"{storage_folder}/{cloud_storage_filename}")
     upload_start = time.time()
-    blob.upload_from_filename(image_path)
+    blob.upload_from_filename(media_path)
     # Example before/after: no timing log -> "media_timing firebase_upload_ms=2100 file=foo.jpg bytes=12345"
     logging.info(
         "media_timing firebase_upload_ms=%d file=%s bytes=%s",
         int((time.time() - upload_start) * 1000),
         cloud_storage_filename,
-        os.path.getsize(image_path) if os.path.exists(image_path) else None,
+        os.path.getsize(media_path) if os.path.exists(media_path) else None,
     )
 
     # Make the blob publicly accessible
@@ -93,7 +103,7 @@ def firebase_get_media_url(image_path):
 
     # Get the public download URL
     url = blob.public_url
-    print(f"Image uploaded to: {url}")
+    print(f"Media uploaded to: {url}")
     try:
         metadata_start = time.time()
         create_media_metadata(url=url, indexed_at=datetime.datetime.now(datetime.timezone.utc).isoformat())

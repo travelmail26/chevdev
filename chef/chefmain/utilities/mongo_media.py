@@ -8,6 +8,7 @@ import subprocess
 import sys
 from datetime import datetime, timezone
 from typing import Dict, Optional
+from urllib.parse import urlparse
 
 try:  # pragma: no cover - defer pymongo import errors until runtime
     from pymongo import MongoClient
@@ -114,7 +115,11 @@ def _spawn_vision_listener(url: str) -> None:
     # Before example: /workspaces/chevdev/chef/testscripts/... fails in Cloud Run.
     # After example: /app/chef/testscripts/... resolves from this file at runtime.
     chef_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-    script_path = os.path.join(chef_root, "testscripts", "mongo_firebase_vision_listener.py")
+    # Before example: videos sent to image-only listener -> FAILED_PRECONDITION or empty output.
+    # After example: video URLs route to Gemini video summarizer; images keep OpenAI listener.
+    is_video = _is_video_url(url)
+    script_name = "mongo_gemini_video_summary.py" if is_video else "mongo_firebase_vision_listener.py"
+    script_path = os.path.join(chef_root, "testscripts", script_name)
     if not os.path.exists(script_path):
         logging.warning("Vision listener script not found at %s; skipping spawn.", script_path)
         return
@@ -127,6 +132,13 @@ def _spawn_vision_listener(url: str) -> None:
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         )
-        logging.info("Spawned vision listener for URL: %s", url)
+        logging.info("Spawned %s for URL: %s", script_name, url)
     except Exception as exc:
         logging.warning("Failed to spawn vision listener: %s", exc)
+
+
+def _is_video_url(url: str) -> bool:
+    """Best-effort check for common video URL extensions."""
+    parsed = urlparse(url)
+    path = (parsed.path or "").lower()
+    return path.endswith((".mp4", ".mov", ".webm", ".mkv", ".avi", ".m4v"))

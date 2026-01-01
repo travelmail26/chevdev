@@ -1,6 +1,7 @@
 import os
 import sys
 import logging
+import subprocess
 import traceback
 import time
 
@@ -17,6 +18,7 @@ from utilities.history_messages import (
     create_session_log_file,
     get_user_bot_mode,
     set_user_bot_mode,
+    set_user_active_session,
 ) # Adjust path if necessary
 
 # Load environment variables early so downstream imports (e.g., perplexity) see keys
@@ -82,6 +84,40 @@ def get_port():
 def get_webhook_url():
     # Example before/after: TELEGRAM_WEBHOOK_URL unset -> error later; set -> https://service.run.app
     return os.getenv("TELEGRAM_WEBHOOK_URL")
+
+
+def _spawn_media_description_backfill(limit: int = 20) -> None:
+    """Kick off background backfill for media_metadata.user_description."""
+    # Before example: /restart only cleared sessions; media metadata stayed untouched.
+    # After example:  /restart spawns a background job to fill user_description.
+    if not os.environ.get("MONGODB_URI"):
+        logging.info("media_backfill_skip missing_env=MONGODB_URI")
+        return
+    if not os.environ.get("XAI_API_KEY"):
+        logging.info("media_backfill_skip missing_env=XAI_API_KEY")
+        return
+
+    script_path = os.path.join(parent_dir, "testscripts", "mongo_media_user_description_xai.py")
+    if not os.path.exists(script_path):
+        logging.warning("media_backfill_skip missing_script path=%s", script_path)
+        return
+
+    try:
+        env = {
+            **os.environ,
+            # Before example: model drifted per process.
+            # After example:  xAI model is pinned for the backfill job.
+            "XAI_MODEL": os.environ.get("XAI_MODEL", "grok-4-1-fast-non-reasoning-latest"),
+        }
+        subprocess.Popen(
+            [sys.executable, script_path, "--scan-latest", str(limit)],
+            env=env,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        logging.info("media_backfill_spawned limit=%s script=%s", limit, script_path)
+    except Exception as exc:
+        logging.warning("media_backfill_failed error=%s", exc)
 
 def get_user_handler(user_id, session_info, user_message, application_data=None):
     """
@@ -193,7 +229,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
             firebase_url = None
             try:
-                firebase_url = firebase_get_media_url(local_path)
+                # Before example: audio saved to telegram_photos folder.
+                # After example:  media_type=audio routes to telegram_audio folder.
+                firebase_url = firebase_get_media_url(local_path, media_type="audio")
             except Exception as firebase_error:
                 logging.error(f"Firebase upload failed for audio: {firebase_error}")
 
@@ -230,7 +268,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             firebase_url = None
             try:
-                firebase_url = firebase_get_media_url(local_path)
+                # Before example: photos already go to telegram_photos by default.
+                # After example:  media_type=photo keeps that explicit.
+                firebase_url = firebase_get_media_url(local_path, media_type="photo")
             except Exception as firebase_error:
                 logging.error(f"Firebase upload failed for photo: {firebase_error}")
 
@@ -267,7 +307,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             firebase_url = None
             try:
-                firebase_url = firebase_get_media_url(local_path)
+                # Before example: video stored under telegram_photos; hard to segment.
+                # After example:  media_type=video routes to telegram_videos folder.
+                firebase_url = firebase_get_media_url(local_path, media_type="video")
             except Exception as firebase_error:
                 logging.error(f"Firebase upload failed for video: {firebase_error}")
 
@@ -382,6 +424,16 @@ async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     create_session_log_file(user_id)
     try:
+        # Before example: /restart reused old session id; After: /restart seeds a new chat_session_id.
+        new_session = set_user_active_session(str(user_id), session_info=session_info_for_restart)
+        logging.info(
+            "restart_new_session: user_id=%s chat_session_id=%s",
+            user_id,
+            new_session.get("chat_session_id"),
+        )
+        # Before example: /restart only reset user session state.
+        # After example:  /restart also triggers media description backfill in the background.
+        _spawn_media_description_backfill(limit=20)
         if user_id in handlers_per_user:
             handlers_per_user.pop(user_id)
             await update.message.reply_text(
@@ -542,7 +594,18 @@ def run_bot_webhook_set():
                 webhook_url=f"{webhook_url}/webhook"
             )
         elif runtime == "codespaces":
-            app.run_polling()
+            webhook_url = get_webhook_url()
+            if webhook_url:
+                # Example before/after: TELEGRAM_WEBHOOK_URL unset -> polling; set -> webhook in Codespaces.
+                logging.info(f"Using TELEGRAM_WEBHOOK_URL: {webhook_url}")
+                app.run_webhook(
+                    listen="0.0.0.0",
+                    port=get_port(),
+                    url_path="webhook",
+                    webhook_url=f"{webhook_url}/webhook"
+                )
+            else:
+                app.run_polling()
         elif environment == 'production':
             webhook_url = get_webhook_url()
             if not webhook_url:

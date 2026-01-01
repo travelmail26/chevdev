@@ -122,3 +122,14 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 - Moved guardrail to top-level GUARDRAIL_TEXT and placed MANUAL_QUERY directly under it for manual edits.
 2025-12-31T19:10:00Z work: added media timing logs around Telegram get_file/download_to_drive and Firebase upload/make_public/metadata in chef/chefmain/telegram_bot.py and chef/chefmain/utilities/firebase.py to isolate Cloud Run image delays.
 2025-12-31T21:10:30Z work: reused cached Mongo client in chef/chefmain/utilities/mongo_media.py create_media_metadata to avoid per-call TLS/DNS handshake delays on Cloud Run.
+2026-01-01T00:01:22Z work: /restart now seeds a new active_session_id (stored in mode store) and Mongo upserts use session _id to create new chat documents.
+2026-01-01T00:05:51Z work: added chef/testscripts/mongo_gemini_video_summary.py to summarize latest media_metadata video via gemini-2.5-flash and store ai_description in Mongo.
+2026-01-01T00:10:00Z work: pinned httpx==0.27.2 in chef/chefmain/requirements.txt to fix python-telegram-bot 20.7 proxies arg error with httpx 0.28+.
+2026-01-01T00:12:00Z work: pinned httpx==0.25.2 to satisfy python-telegram-bot 20.7 and reran main.py; got Telegram getUpdates conflict due to another running instance.
+2026-01-01T00:20:00Z work: in chef/chefmain/telegram_bot.py, Codespaces runtime now uses webhook when TELEGRAM_WEBHOOK_URL is set; otherwise falls back to polling.
+2026-01-01T02:25:23Z work: route media_metadata vision spawn to Gemini video summarizer for video URLs in chef/chefmain/utilities/mongo_media.py; images keep OpenAI listener.
+2026-01-01T02:29:40Z work: updated firebase_get_media_url to route uploads into telegram_photos/telegram_videos/telegram_audio via media_type; telegram_bot now passes media_type for photo/video/audio.
+2026-01-01T02:31:17Z work: mongo_gemini_video_summary now accepts GEMINI_KEY_PH as API key fallback env var.
+2026-01-01T03:27:47Z work: added chef/testscripts/mongo_media_user_description_xai.py to backfill media_metadata.user_description via xAI selection from nearby user turns.
+2026-01-01T07:50:24Z work: on /restart, spawn media_metadata user_description backfill (last 20 docs) via mongo_media_user_description_xai.py; script now supports --scan-latest to scan newest N docs and fill missing descriptions.
+2026-01-01T07:55:30Z work: added report/timing stats to mongo_media_user_description_xai.py (counts pending, scan_latest_missing, timing logs per search/xAI call).

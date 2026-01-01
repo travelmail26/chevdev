@@ -197,6 +197,57 @@ def set_user_bot_mode(user_id: str, bot_mode: str, session_info: dict | None = N
     return data
 
 
+def get_user_active_session(user_id: str) -> dict | None:
+    collection = _get_mode_store_collection()
+    if collection is None:
+        return None
+    doc = collection.find_one({"user_id": str(user_id)})
+    if not isinstance(doc, dict):
+        return None
+    session_id = doc.get("active_session_id")
+    if not session_id:
+        return None
+    return {
+        "chat_session_id": session_id,
+        "chat_session_created_at": doc.get("active_session_created_at"),
+    }
+
+
+def set_user_active_session(user_id: str, session_info: dict | None = None) -> dict:
+    # Before example: /restart kept the old session id; After: /restart writes a new active_session_id.
+    seed = add_chat_session_keys({"user_id": str(user_id)})
+    session_id = seed["chat_session_id"]
+    session_created_at = seed["chat_session_created_at"]
+    collection = _get_mode_store_collection()
+    if collection is None:
+        return {
+            "user_id": str(user_id),
+            "chat_session_id": session_id,
+            "chat_session_created_at": session_created_at,
+        }
+    now = datetime.now(timezone.utc).isoformat()
+    update_doc = {
+        "$set": {
+            "user_id": str(user_id),
+            "active_session_id": session_id,
+            "active_session_created_at": session_created_at,
+            "last_updated_at": now,
+        },
+    }
+    if isinstance(session_info, dict):
+        update_doc["$set"]["last_session_info"] = session_info
+    collection.update_one(
+        {"user_id": str(user_id)},
+        update_doc,
+        upsert=True,
+    )
+    return {
+        "user_id": str(user_id),
+        "chat_session_id": session_id,
+        "chat_session_created_at": session_created_at,
+    }
+
+
 def _upsert_mongo_history(
     user_id: str,
     message_object: dict,
@@ -209,6 +260,33 @@ def _upsert_mongo_history(
     normalized_mode = _normalize_bot_mode(bot_mode)
     now = datetime.now(timezone.utc).isoformat()
     session_seed = add_chat_session_keys({"user_id": user_id})
+    session_info = message_object.get("session_info") if isinstance(message_object, dict) else None
+    explicit_session_id = (
+        message_object.get("chat_session_id") if isinstance(message_object, dict) else None
+    )
+    explicit_created_at = (
+        message_object.get("chat_session_created_at") if isinstance(message_object, dict) else None
+    )
+    active_session = None
+    if not explicit_session_id:
+        active_session = get_user_active_session(user_id)
+        if not active_session:
+            active_session = set_user_active_session(user_id, session_info=session_info)
+    session_id = (
+        explicit_session_id
+        or (active_session.get("chat_session_id") if active_session else None)
+        or session_seed["chat_session_id"]
+    )
+    session_created_at = (
+        explicit_created_at
+        or (active_session.get("chat_session_created_at") if active_session else None)
+        or session_seed["chat_session_created_at"]
+    )
+    session_seed["chat_session_id"] = session_id
+    session_seed["chat_session_created_at"] = session_created_at
+    if isinstance(message_object, dict):
+        message_object["chat_session_id"] = session_id
+        message_object["chat_session_created_at"] = session_created_at
 
     # Before: file read/write each turn. After: Mongo upsert returns the latest doc.
     update_doc = {
@@ -224,7 +302,6 @@ def _upsert_mongo_history(
         },
     }
 
-    session_info = message_object.get("session_info") if isinstance(message_object, dict) else None
     if isinstance(session_info, dict):
         update_doc["$setOnInsert"]["session_info"] = session_info
 
@@ -243,15 +320,14 @@ def _upsert_mongo_history(
 
     if ReturnDocument:
         return collection.find_one_and_update(
-            {"user_id": user_id},
+            {"_id": session_seed["chat_session_id"]},
             update_doc,
             upsert=True,
             return_document=ReturnDocument.AFTER,
-            sort=[("last_updated_at", -1)],
         )
 
     collection.update_one(
-        {"user_id": user_id},
+        {"_id": session_seed["chat_session_id"]},
         update_doc,
         upsert=True,
     )
