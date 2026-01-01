@@ -119,7 +119,10 @@ def _spawn_vision_listener(url: str) -> None:
     # After example: video URLs route to Gemini video summarizer; images keep OpenAI listener.
     is_video = _is_video_url(url)
     script_name = "mongo_gemini_video_summary.py" if is_video else "mongo_firebase_vision_listener.py"
-    script_path = os.path.join(chef_root, "testscripts", script_name)
+    if script_name == "mongo_gemini_video_summary.py":
+        script_path = os.path.join(chef_root, "chefmain", "utilities", script_name)
+    else:
+        script_path = os.path.join(chef_root, "testscripts", script_name)
     if not os.path.exists(script_path):
         logging.warning("Vision listener script not found at %s; skipping spawn.", script_path)
         return

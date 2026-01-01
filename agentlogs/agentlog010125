@@ -133,3 +133,8 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2026-01-01T03:27:47Z work: added chef/testscripts/mongo_media_user_description_xai.py to backfill media_metadata.user_description via xAI selection from nearby user turns.
 2026-01-01T07:50:24Z work: on /restart, spawn media_metadata user_description backfill (last 20 docs) via mongo_media_user_description_xai.py; script now supports --scan-latest to scan newest N docs and fill missing descriptions.
 2026-01-01T07:55:30Z work: added report/timing stats to mongo_media_user_description_xai.py (counts pending, scan_latest_missing, timing logs per search/xAI call).
+2026-01-01T15:58:54Z work: video URLs in mongo_media_user_description_xai.py now routed to Gemini summary (summarize_video_url helper added in mongo_gemini_video_summary.py) and stored as user_description.
+2026-01-01T16:00:05Z work: moved mongo_media_user_description_xai.py and mongo_gemini_video_summary.py into chef/chefmain/utilities and updated spawn paths in telegram_bot.py and mongo_media.py.
+
+2026-01-01T16:05:00Z work: get_webhook_url now selects TELEGRAM_WEBHOOK_CODESPACE for codespaces runtime and TELEGRAM_WEBHOOK_URL otherwise; logs/error messages reflect selected env var.
+2026-01-01T16:15:00Z work: updated chef/analysisfolder/answer_with_nano.py to stream Responses API output, add time-range Mongo query tool (days_back/days_ago/start/end), and include UTC "today" in system prompt for date-relative summaries.

@@ -81,9 +81,19 @@ def get_port():
     # Example before/after: PORT unset -> 8080; PORT=9090 -> 9090
     return int(os.getenv("PORT", "8080"))
 
-def get_webhook_url():
-    # Example before/after: TELEGRAM_WEBHOOK_URL unset -> error later; set -> https://service.run.app
+def get_webhook_url(runtime: str | None = None):
+    # Example before/after: runtime=codespaces uses TELEGRAM_WEBHOOK_CODESPACE -> codespaces URL; runtime=cloud_run uses TELEGRAM_WEBHOOK_URL -> Cloud Run URL
+    runtime = runtime or detect_runtime()
+    if runtime == "codespaces":
+        return os.getenv("TELEGRAM_WEBHOOK_CODESPACE")
     return os.getenv("TELEGRAM_WEBHOOK_URL")
+
+def get_webhook_env_var_name(runtime: str | None = None) -> str:
+    # Example before/after: runtime=codespaces -> TELEGRAM_WEBHOOK_CODESPACE; runtime=cloud_run -> TELEGRAM_WEBHOOK_URL
+    runtime = runtime or detect_runtime()
+    if runtime == "codespaces":
+        return "TELEGRAM_WEBHOOK_CODESPACE"
+    return "TELEGRAM_WEBHOOK_URL"
 
 
 def _spawn_media_description_backfill(limit: int = 20) -> None:
@@ -97,7 +107,7 @@ def _spawn_media_description_backfill(limit: int = 20) -> None:
         logging.info("media_backfill_skip missing_env=XAI_API_KEY")
         return
 
-    script_path = os.path.join(parent_dir, "testscripts", "mongo_media_user_description_xai.py")
+    script_path = os.path.join(parent_dir, "chefmain", "utilities", "mongo_media_user_description_xai.py")
     if not os.path.exists(script_path):
         logging.warning("media_backfill_skip missing_script path=%s", script_path)
         return
@@ -581,12 +591,12 @@ def run_bot_webhook_set():
         runtime = detect_runtime()
         app = setup_bot()
         if runtime == "cloud_run":
-            webhook_url = get_webhook_url()
+            webhook_url = get_webhook_url(runtime)
             if not webhook_url:
-                raise ValueError("TELEGRAM_WEBHOOK_URL not set!")
+                raise ValueError(f"{get_webhook_env_var_name(runtime)} not set!")
 
             # Example before/after: TELEGRAM_WEBHOOK_URL unset -> "None"; set -> "https://service.run.app"
-            logging.info(f"Using TELEGRAM_WEBHOOK_URL: {webhook_url}")
+            logging.info(f"Using {get_webhook_env_var_name(runtime)}: {webhook_url}")
             app.run_webhook(
                 listen="0.0.0.0",
                 port=get_port(),
@@ -594,10 +604,10 @@ def run_bot_webhook_set():
                 webhook_url=f"{webhook_url}/webhook"
             )
         elif runtime == "codespaces":
-            webhook_url = get_webhook_url()
+            webhook_url = get_webhook_url(runtime)
             if webhook_url:
-                # Example before/after: TELEGRAM_WEBHOOK_URL unset -> polling; set -> webhook in Codespaces.
-                logging.info(f"Using TELEGRAM_WEBHOOK_URL: {webhook_url}")
+                # Example before/after: TELEGRAM_WEBHOOK_CODESPACE unset -> polling; set -> webhook in Codespaces.
+                logging.info(f"Using {get_webhook_env_var_name(runtime)}: {webhook_url}")
                 app.run_webhook(
                     listen="0.0.0.0",
                     port=get_port(),
@@ -607,12 +617,12 @@ def run_bot_webhook_set():
             else:
                 app.run_polling()
         elif environment == 'production':
-            webhook_url = get_webhook_url()
+            webhook_url = get_webhook_url(runtime)
             if not webhook_url:
-                raise ValueError("TELEGRAM_WEBHOOK_URL not set!")
+                raise ValueError(f"{get_webhook_env_var_name(runtime)} not set!")
 
             # Example before/after: TELEGRAM_WEBHOOK_URL unset -> "None"; set -> "https://service.run.app"
-            logging.info(f"Using TELEGRAM_WEBHOOK_URL: {webhook_url}")
+            logging.info(f"Using {get_webhook_env_var_name(runtime)}: {webhook_url}")
             app.run_webhook(
                 listen="0.0.0.0",
                 port=get_port(),

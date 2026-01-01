@@ -17,6 +17,7 @@ from pymongo import MongoClient
 
 MEDIA_PREFIXES = ("[photo_url:", "[video_url:", "[audio_url:")
 IMAGE_EXTENSIONS = (".jpg", ".jpeg", ".png", ".webp")
+VIDEO_EXTENSIONS = (".mp4", ".mov", ".webm", ".mkv", ".avi", ".m4v")
 XAI_URL = "https://api.x.ai/v1/chat/completions"
 DEFAULT_XAI_MODEL = "grok-4-1-fast-non-reasoning-latest"
 
@@ -45,6 +46,9 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+
+
+
 def is_media_stub(content: str) -> bool:
     """Return True when the content is a media URL stub."""
     return any(content.startswith(prefix) for prefix in MEDIA_PREFIXES)
@@ -55,6 +59,13 @@ def is_image_url(url: str) -> bool:
     parsed = urlparse(url)
     path = (parsed.path or "").lower()
     return path.endswith(IMAGE_EXTENSIONS)
+
+
+def is_video_url(url: str) -> bool:
+    """Best-effort check for common video URL extensions."""
+    parsed = urlparse(url)
+    path = (parsed.path or "").lower()
+    return path.endswith(VIDEO_EXTENSIONS)
 
 
 def get_mongo_client() -> MongoClient:
@@ -134,7 +145,7 @@ def count_missing_in_latest(collection, limit: int, include_all_media: bool) -> 
         url = doc.get("url")
         if not isinstance(url, str) or not url:
             continue
-        if not include_all_media and not is_image_url(url):
+        if not include_all_media and not (is_image_url(url) or is_video_url(url)):
             continue
         if not has_user_description(doc):
             missing += 1
@@ -331,8 +342,34 @@ def process_media_doc(
     if not isinstance(url, str) or not url:
         logging.info("skip_media_doc missing_url _id=%s", doc.get("_id"))
         return
-    if not include_all_media and not is_image_url(url):
+    is_video = is_video_url(url)
+    if not include_all_media and not is_image_url(url) and not is_video:
         logging.info("skip_media_doc non_image_url _id=%s url=%s", doc.get("_id"), url)
+        return
+
+    if is_video:
+        # Before example: video URL sent to xAI (unsupported).
+        # After example:  video URL routed to Gemini summary and stored verbatim.
+        try:
+            from mongo_gemini_video_summary import summarize_video_url
+        except Exception as exc:
+            logging.warning("video_summary_import_failed url=%s error=%s", url, exc)
+            return
+        video_model = os.environ.get("GEMINI_VIDEO_MODEL", "gemini-2.5-flash")
+        video_prompt = os.environ.get(
+            "GEMINI_VIDEO_PROMPT",
+            "Summarize this video in 2-4 sentences. Focus on food, cooking steps, ingredients, "
+            "tools, textures, and doneness if visible.",
+        )
+        summary = summarize_video_url(url, model=video_model, prompt=video_prompt)
+        if not summary:
+            logging.info("video_summary_empty url=%s", url)
+            return
+        update_user_description(media_collection, doc.get("_id"), summary, dry_run)
+        logging.info("user_description_saved url=%s choice_id=gemini_video", url)
+        if timing and doc_start is not None:
+            total_ms = int((time.monotonic() - doc_start) * 1000)
+            logging.info("media_backfill_total url=%s duration_ms=%s", url, total_ms)
         return
 
     escaped = re.escape(url)

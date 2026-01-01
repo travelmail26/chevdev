@@ -195,6 +195,16 @@ def analyze_latest_video(model: str, prompt: str) -> None:
     logging.info("Stored ai_description for %s", url)
 
 
+def summarize_video_url(url: str, model: str, prompt: str) -> str:
+    """Return Gemini's summary text for a single video URL."""
+    client = _require_gemini_client()
+    # Before example: no direct helper for per-URL summaries.
+    # After example:  call this helper and get the raw summary text back.
+    with tempfile.TemporaryDirectory() as tmpdir:
+        local_path = download_video(url, tmpdir)
+        return summarize_video(client, local_path, model, prompt)
+
+
 def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 
