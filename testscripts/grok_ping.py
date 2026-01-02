@@ -13,7 +13,7 @@ def ping_grok():
         "Authorization": f"Bearer {api_key}"
     }
     data = {
-        "model": "grok-3",
+        "model": "grok-4-fast-non-reasoning",
         "messages": [
             {"role": "user", "content": "hi"}
         ]
