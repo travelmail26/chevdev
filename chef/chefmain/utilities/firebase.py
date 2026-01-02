@@ -60,11 +60,11 @@ def firebase_get_media_url(media_path, media_type: str = "photo"):
     # Get bucket reference
     bucket = storage.bucket()
 
-    # Before example: videos stored under telegram_photos -> mixed media types.
-    # After example: media_type selects a folder (photo/video/audio) for clarity.
+    # Before example: videos stored under telegram_videos -> separate folder.
+    # After example:  videos now stored under telegram_photos to share the same folder as photos.
     folder_map = {
         "photo": "telegram_photos",
-        "video": "telegram_videos",
+        "video": "telegram_photos",
         "audio": "telegram_audio",
         "voice": "telegram_audio",
     }

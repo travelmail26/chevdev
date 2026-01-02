@@ -7,9 +7,11 @@ CHEF_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def normalize_bot_mode(mode: str | None) -> str:
     # Before example: "ChefMain" -> "cheflog"; After: "dietlog" stays "dietlog".
     raw = (mode or "").strip().lower()
-    if raw in ("chef", "chefmain", "cheflog", "main"):
+    # Before example: "/cook" stored as "cook" -> unknown; After example: "cook" -> "cheflog".
+    if raw in ("chef", "chefmain", "cheflog", "main", "cook"):
         return "cheflog"
-    if raw in ("diet", "dietlog", "chefdietlog"):
+    # Before example: "/log" stored as "log" -> unknown; After example: "log" -> "dietlog".
+    if raw in ("diet", "dietlog", "chefdietlog", "log"):
         return "dietlog"
     return "cheflog"
 

@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Fill media_metadata.user_description using nearby user turns + xAI selection."""
+"""Fill media_metadata.user_description using nearby user turns + xAI selection.
+
+Video URLs store Gemini summaries in media_metadata.ai_description.
+"""
 
 from __future__ import annotations
 
@@ -9,6 +12,7 @@ import logging
 import os
 import re
 import time
+from datetime import datetime, timezone
 from typing import Dict, Iterable, List, Optional
 from urllib.parse import urlparse
 
@@ -121,6 +125,16 @@ def iter_latest_media(collection, limit: int) -> Iterable[dict]:
 def has_user_description(doc: dict) -> bool:
     """Return True when a user_description already exists on the doc."""
     value = doc.get("user_description")
+    if value is None:
+        return False
+    if isinstance(value, str):
+        return bool(value.strip())
+    return True
+
+
+def has_ai_description(doc: dict) -> bool:
+    """Return True when an ai_description already exists on the doc."""
+    value = doc.get("ai_description")
     if value is None:
         return False
     if isinstance(value, str):
@@ -313,17 +327,46 @@ def parse_choice_id(text: str) -> Optional[str]:
     return None
 
 
-def update_user_description(collection, doc_id, description: str, dry_run: bool) -> None:
+def update_user_description(collection, doc_id, description: str, dry_run: bool) -> bool:
     """Persist user_description on the media doc."""
     if dry_run:
         logging.info("dry_run update _id=%s user_description=%s", doc_id, description)
-        return
+        return False
     # Before example: media_metadata doc missing user_description.
     # After example:  media_metadata doc has user_description set verbatim.
     collection.update_one(
         {"_id": doc_id},
         {"$set": {"user_description": description}},
     )
+    return True
+
+
+def update_ai_description(
+    collection,
+    doc_id,
+    description: str,
+    provider: str,
+    model: str,
+    dry_run: bool,
+) -> bool:
+    """Persist ai_description on the media doc."""
+    if dry_run:
+        logging.info("dry_run update _id=%s ai_description=%s", doc_id, description)
+        return False
+    # Before example: Gemini video text stored as user_description only.
+    # After example:  Gemini video text stored as ai_description + provider/model/timestamp.
+    collection.update_one(
+        {"_id": doc_id},
+        {
+            "$set": {
+                "ai_description": description,
+                "ai_provider": provider,
+                "ai_model": model,
+                "ai_summary_at": datetime.now(timezone.utc).isoformat(),
+            }
+        },
+    )
+    return True
 
 
 def process_media_doc(
@@ -336,25 +379,28 @@ def process_media_doc(
     model: str,
     dry_run: bool,
     timing: bool,
-) -> None:
+) -> bool:
     doc_start = time.monotonic() if timing else None
     url = doc.get("url")
     if not isinstance(url, str) or not url:
         logging.info("skip_media_doc missing_url _id=%s", doc.get("_id"))
-        return
+        return False
     is_video = is_video_url(url)
     if not include_all_media and not is_image_url(url) and not is_video:
         logging.info("skip_media_doc non_image_url _id=%s url=%s", doc.get("_id"), url)
-        return
+        return False
 
     if is_video:
+        if has_ai_description(doc):
+            logging.info("skip_media_doc existing_ai_description _id=%s", doc.get("_id"))
+            return False
         # Before example: video URL sent to xAI (unsupported).
-        # After example:  video URL routed to Gemini summary and stored verbatim.
+        # After example:  video URL routed to Gemini summary and stored as ai_description.
         try:
             from mongo_gemini_video_summary import summarize_video_url
         except Exception as exc:
             logging.warning("video_summary_import_failed url=%s error=%s", url, exc)
-            return
+            return False
         video_model = os.environ.get("GEMINI_VIDEO_MODEL", "gemini-2.5-flash")
         video_prompt = os.environ.get(
             "GEMINI_VIDEO_PROMPT",
@@ -364,13 +410,20 @@ def process_media_doc(
         summary = summarize_video_url(url, model=video_model, prompt=video_prompt)
         if not summary:
             logging.info("video_summary_empty url=%s", url)
-            return
-        update_user_description(media_collection, doc.get("_id"), summary, dry_run)
-        logging.info("user_description_saved url=%s choice_id=gemini_video", url)
+            return False
+        saved = update_ai_description(
+            media_collection,
+            doc.get("_id"),
+            summary,
+            provider="gemini",
+            model=video_model,
+            dry_run=dry_run,
+        )
+        logging.info("ai_description_saved url=%s provider=gemini model=%s", url, video_model)
         if timing and doc_start is not None:
             total_ms = int((time.monotonic() - doc_start) * 1000)
             logging.info("media_backfill_total url=%s duration_ms=%s", url, total_ms)
-        return
+        return saved
 
     escaped = re.escape(url)
     query = {"messages": {"$elemMatch": {"content": {"$regex": escaped}}}}
@@ -387,7 +440,7 @@ def process_media_doc(
         candidates = collect_candidates(messages, stub_index, after_turns)
         if not candidates:
             logging.info("no_candidates url=%s session_id=%s", url, session.get("_id"))
-            return
+            return False
 
         if timing and search_start is not None:
             search_ms = int((time.monotonic() - search_start) * 1000)
@@ -396,14 +449,14 @@ def process_media_doc(
         choice_id = call_xai_select(api_key, model, url, candidates, timing=timing)
         if not choice_id:
             logging.info("no_choice url=%s session_id=%s", url, session.get("_id"))
-            return
+            return False
 
         selected = next((item for item in candidates if item["id"] == choice_id), None)
         if not selected:
             logging.info("choice_missing url=%s choice_id=%s", url, choice_id)
-            return
+            return False
 
-        update_user_description(media_collection, doc.get("_id"), selected["text"], dry_run)
+        saved = update_user_description(media_collection, doc.get("_id"), selected["text"], dry_run)
         logging.info(
             "user_description_saved url=%s choice_id=%s session_id=%s",
             url,
@@ -413,12 +466,13 @@ def process_media_doc(
         if timing and doc_start is not None:
             total_ms = int((time.monotonic() - doc_start) * 1000)
             logging.info("media_backfill_total url=%s duration_ms=%s", url, total_ms)
-        return
+        return saved
 
     logging.info("no_session_match url=%s", url)
     if timing and doc_start is not None:
         total_ms = int((time.monotonic() - doc_start) * 1000)
         logging.info("media_backfill_total url=%s duration_ms=%s", url, total_ms)
+    return False
 
 
 def main() -> None:
@@ -467,6 +521,7 @@ def main() -> None:
         return
 
     processed = 0
+    filled = 0
     if args.scan_latest > 0:
         # Before example: only missing-description docs were queried.
         # After example:  the newest N docs are scanned, and missing ones are filled.
@@ -475,10 +530,14 @@ def main() -> None:
         docs_to_process = iter_pending_media(media_collection, args.limit)
 
     for doc in docs_to_process:
-        if has_user_description(doc):
+        url = doc.get("url")
+        is_video = isinstance(url, str) and is_video_url(url)
+        if not is_video and has_user_description(doc):
             logging.info("skip_media_doc existing_user_description _id=%s", doc.get("_id"))
             continue
-        process_media_doc(
+        # Before example: no visibility into successful fills per run.
+        # After example:  track fills so "done" logging shows what changed.
+        saved = process_media_doc(
             media_collection,
             chat_collection,
             doc,
@@ -489,9 +548,15 @@ def main() -> None:
             args.dry_run,
             args.timing,
         )
+        if saved:
+            filled += 1
         processed += 1
 
-    logging.info("media_enricher done processed=%s", processed)
+    if processed == 0:
+        logging.info("media_backfill_noop reason=no_docs")
+    elif filled == 0:
+        logging.info("media_backfill_noop reason=no_updates processed=%s", processed)
+    logging.info("media_backfill_done processed=%s filled=%s", processed, filled)
 
 
 if __name__ == "__main__":

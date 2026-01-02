@@ -138,3 +138,18 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 
 2026-01-01T16:05:00Z work: get_webhook_url now selects TELEGRAM_WEBHOOK_CODESPACE for codespaces runtime and TELEGRAM_WEBHOOK_URL otherwise; logs/error messages reflect selected env var.
 2026-01-01T16:15:00Z work: updated chef/analysisfolder/answer_with_nano.py to stream Responses API output, add time-range Mongo query tool (days_back/days_ago/start/end), and include UTC "today" in system prompt for date-relative summaries.
+2025-01-01: Enabled backfill script logs to terminal; added filled/processed summary + noop reasons; removed DEVNULL so backfill output is visible.
+2026-01-01T19:28:03Z work: added /cook and /log commands to set cheflog/dietlog modes; normalized cook/log inputs in bot_config.
+2026-01-01T19:39:09Z work: /restart now clears cached user_contexts to avoid reusing old chat_session_id and history after reset.
+2026-01-01T19:45:16Z work: added command-text fallback in handle_message to route /restart,/cook,/log,/1 to handlers instead of router, preventing history append.
+2026-01-01T19:52:29Z work: message_router now intercepts /restart,/cook,/log,/1 and sets active session or bot_mode without writing history; tested new session creation via Mongo for user 1275063227.
+2026-01-01T19:55:13Z work: removed router hard-guard; added regex MessageHandlers for /restart,/cook,/log,/1 and fixed regex to match '/restart now'.
+2026-01-01T20:01:57Z work: expanded /restart,/cook,/log regex handlers to allow leading spaces and @botname; added timestamp_iso to session_info for message and restart.
+2026-01-01T22:57:29Z work: mongo_media_user_description_xai now stores Gemini video summaries in ai_description (provider/model/timestamp) and avoids user_description for videos.
+2026-01-02T01:17:19Z storage: route videos to telegram_photos folder in firebase_get_media_url
+2026-01-02T01:21:14Z work: added chef/testscripts/gemini_video_segment_probe.py to download a Firebase video, upload to Gemini 2.5 Flash, and print two timestamped segments as JSON.
+2026-01-02T01:29:14Z work: updated chef/testscripts/gemini_video_segment_probe.py to set a DEFAULT_PROMPT and allow GEMINI_VIDEO_PROMPT / GEMINI_PROMPT_AS_JSON overrides.
+2026-01-02T01:34:45Z work: added chef/testscripts/gemini_video_key_clip.py to request a single timestamped segment from Gemini and cut the clip with ffmpeg into chef/testscripts/output.
+2026-01-02T01:35:15Z work: improved gemini_video_key_clip JSON parsing to strip fenced code blocks and extract braces.
+2026-01-02T01:42:51Z work: added chef/testscripts/gemini_video_merge_three_clips.py to get two segments from video A and one from video B, cut clips with ffmpeg, and concatenate into a single output video.
+2026-01-02T01:48:53Z work: installed ffmpeg via apt-get for video clipping/concatenation.

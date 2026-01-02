@@ -122,8 +122,6 @@ def _spawn_media_description_backfill(limit: int = 20) -> None:
         subprocess.Popen(
             [sys.executable, script_path, "--scan-latest", str(limit)],
             env=env,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
         )
         logging.info("media_backfill_spawned limit=%s script=%s", limit, script_path)
     except Exception as exc:
@@ -186,12 +184,16 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         logging.info(f"handle_message start: user_id={user_id}, has_text={bool(update.message.text)}")
 
 
+        message_timestamp = update.message.date
+        # Before example: timestamp=1767225871.0 only; After example: timestamp_iso="2026-01-01T19:55:13+00:00".
+        message_timestamp_iso = message_timestamp.isoformat() if message_timestamp else None
         # Gather session information
         session_info = {
             'user_id': user_id,
             'chat_id': update.message.chat_id,
             'message_id': update.message.message_id,
-            'timestamp': update.message.date.timestamp(),
+            'timestamp': message_timestamp.timestamp() if message_timestamp else None,
+            'timestamp_iso': message_timestamp_iso,
             'username': update.message.from_user.username,
             'first_name': update.message.from_user.first_name,
             'last_name': update.message.from_user.last_name
@@ -419,12 +421,16 @@ async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
     chat_id = update.effective_chat.id # Get chat_id
 
+    restart_timestamp = update.effective_message.date
+    # Before example: restart timestamp only epoch; After example: include ISO timestamp too.
+    restart_timestamp_iso = restart_timestamp.isoformat() if restart_timestamp else None
     # Construct session_info from the update object
     session_info_for_restart = {
         'user_id': user_id,
         'chat_id': chat_id,
         'message_id': update.effective_message.message_id, # ID of the /restart message
-        'timestamp': update.effective_message.date.timestamp(), # Timestamp of the /restart message
+        'timestamp': restart_timestamp.timestamp() if restart_timestamp else None, # Timestamp of the /restart message
+        'timestamp_iso': restart_timestamp_iso,
         'username': update.effective_user.username,
         'first_name': update.effective_user.first_name,
         'last_name': update.effective_user.last_name,
@@ -441,6 +447,9 @@ async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
             user_id,
             new_session.get("chat_session_id"),
         )
+        # Before example: cached user_context kept old chat_session_id -> old history resumed.
+        # After example: /restart clears user_context so next message seeds a fresh session.
+        user_contexts.pop(user_id, None)
         # Before example: /restart only reset user session state.
         # After example:  /restart also triggers media description backfill in the background.
         _spawn_media_description_backfill(limit=20)
@@ -465,8 +474,8 @@ def _reset_history_file(logs_dir: str, user_id: str) -> None:
     with open(filepath, "w") as handle:
         pass
 
-async def bot_mode_switch_diet_log(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    # Example before/after: execv switch -> Mongo bot_mode switch in-place.
+async def bot_mode_switch_cook(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    # Before example: /1 toggled modes; After example: /cook forces cheflog every time.
     user_id = update.effective_user.id
     handlers_per_user.pop(user_id, None)
     conversations.pop(user_id, None)
@@ -479,13 +488,37 @@ async def bot_mode_switch_diet_log(update: Update, context: ContextTypes.DEFAULT
         "username": update.effective_user.username,
         "first_name": update.effective_user.first_name,
         "last_name": update.effective_user.last_name,
-        "trigger_command": "/1",
+        "trigger_command": "/cook",
     }
 
     current_mode = get_user_bot_mode(str(user_id))
-    next_mode = "dietlog" if current_mode not in ("dietlog", "chefdietlog") else "cheflog"
+    next_mode = "cheflog"
     set_user_bot_mode(str(user_id), next_mode, session_info=session_info)
-    await update.message.reply_text(f"Switched to {next_mode} mode.")
+    await update.message.reply_text("Switched to cook mode.")
+    logging.info("mode_switch: user_id=%s from=%s to=%s", user_id, current_mode, next_mode)
+
+
+async def bot_mode_switch_log(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    # Before example: /1 toggled modes; After example: /log forces dietlog every time.
+    user_id = update.effective_user.id
+    handlers_per_user.pop(user_id, None)
+    conversations.pop(user_id, None)
+
+    session_info = {
+        "user_id": user_id,
+        "chat_id": update.effective_chat.id,
+        "message_id": update.effective_message.message_id,
+        "timestamp": update.effective_message.date.timestamp(),
+        "username": update.effective_user.username,
+        "first_name": update.effective_user.first_name,
+        "last_name": update.effective_user.last_name,
+        "trigger_command": "/log",
+    }
+
+    current_mode = get_user_bot_mode(str(user_id))
+    next_mode = "dietlog"
+    set_user_bot_mode(str(user_id), next_mode, session_info=session_info)
+    await update.message.reply_text("Switched to dietlog mode.")
     logging.info("mode_switch: user_id=%s from=%s to=%s", user_id, current_mode, next_mode)
 
 async def openai_ping(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -570,8 +603,14 @@ def setup_bot() -> Application:
     application = Application.builder().token(token).build()
     
     application.add_handler(CommandHandler("start", start))
-    application.add_handler(CommandHandler("1", bot_mode_switch_diet_log))
+    application.add_handler(CommandHandler("cook", bot_mode_switch_cook))
+    application.add_handler(CommandHandler("log", bot_mode_switch_log))
+    application.add_handler(CommandHandler("1", bot_mode_switch_log))
     application.add_handler(CommandHandler("restart", restart))
+    # Before example: "/restart@chefbot" or " /restart" skipped; After example: those match too.
+    application.add_handler(MessageHandler(filters.Regex(r"^\s*/restart(?:@\w+)?(\s|$)"), restart))
+    application.add_handler(MessageHandler(filters.Regex(r"^\s*/cook(?:@\w+)?(\s|$)"), bot_mode_switch_cook))
+    application.add_handler(MessageHandler(filters.Regex(r"^\s*/(log|1)(?:@\w+)?(\s|$)"), bot_mode_switch_log))
     application.add_handler(CommandHandler("openai_ping", openai_ping))
     application.add_handler(CommandHandler("openai_version", openai_version))
     application.add_handler(CommandHandler("build_version", build_version))
