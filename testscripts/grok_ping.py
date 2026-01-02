@@ -15,7 +15,7 @@ def ping_grok():
     data = {
         "model": "grok-4-fast-non-reasoning",
         "messages": [
-            {"role": "user", "content": "hi"}
+            {"role": "user", "content": "What model are you?"}
         ]
     }
 
