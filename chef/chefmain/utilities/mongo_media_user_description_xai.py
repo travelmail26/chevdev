@@ -7,6 +7,7 @@ Video URLs store Gemini summaries in media_metadata.ai_description.
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
 import logging
 import os
@@ -24,12 +25,23 @@ IMAGE_EXTENSIONS = (".jpg", ".jpeg", ".png", ".webp")
 VIDEO_EXTENSIONS = (".mp4", ".mov", ".webm", ".mkv", ".avi", ".m4v")
 XAI_URL = "https://api.x.ai/v1/chat/completions"
 DEFAULT_XAI_MODEL = "grok-4-1-fast-non-reasoning-latest"
+GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+DEFAULT_GEMINI_MODEL = "gemini-2.5-flash"
 
 SYSTEM_PROMPT = (
     "You select which user message best describes the media at the given URL. "
     "Return JSON only: {\"choice_id\": \"after_1\"} or {\"choice_id\": \"NONE\"}. "
     "Never rewrite or summarize the user text."
 )
+
+
+def _get_gemini_api_key() -> Optional[str]:
+    # Before example: only XAI_API_KEY supported; After example: GEMINI_API_KEY/GOOGLE_API_KEY used for fallback.
+    return (
+        os.environ.get("GEMINI_API_KEY")
+        or os.environ.get("GOOGLE_API_KEY")
+        or os.environ.get("GEMINI_KEY_PH")
+    )
 
 
 def parse_args() -> argparse.Namespace:
@@ -87,12 +99,81 @@ def get_media_collection(client: MongoClient):
     return client[db_name][collection_name]
 
 
-def get_chat_collection(client: MongoClient):
-    # Before example: chat history collection duplicated in scripts.
-    # After example:  chat history reads MONGODB_COLLECTION_NAME in one place.
-    db_name = os.environ.get("MONGODB_DB_NAME", "chef_chatbot")
-    collection_name = os.environ.get("MONGODB_COLLECTION_NAME", "chat_sessions")
-    return client[db_name][collection_name]
+def _get_bot_config_module():
+    # Before example: backfill only read MONGODB_DB_NAME.
+    # After example:  backfill can load bot_config.py to include dietlog collections.
+    chef_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+    config_path = os.path.join(chef_root, "utilities", "bot_config.py")
+    if not os.path.exists(config_path):
+        return None
+    try:
+        spec = importlib.util.spec_from_file_location("bot_config", config_path)
+        if spec and spec.loader:
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            return module
+    except Exception:
+        return None
+    return None
+
+
+def _collect_chat_configs() -> List[Dict[str, str]]:
+    # Before example: only chef_chatbot.chat_sessions searched.
+    # After example:  include cheflog + dietlog chat collections when configured.
+    configs: List[Dict[str, str]] = []
+    module = _get_bot_config_module()
+    if module and hasattr(module, "BOT_CONFIG"):
+        for mode, config in module.BOT_CONFIG.items():
+            db_name = config.get("mongo_db", "")
+            collection_name = config.get("mongo_collection", "")
+            if db_name and collection_name:
+                configs.append(
+                    {
+                        "label": mode,
+                        "db_name": db_name,
+                        "collection_name": collection_name,
+                    }
+                )
+        return configs
+    configs.append(
+        {
+            "label": "default",
+            "db_name": os.environ.get("MONGODB_DB_NAME", "chef_chatbot"),
+            "collection_name": os.environ.get("MONGODB_COLLECTION_NAME", "chat_sessions"),
+        }
+    )
+    configs.append(
+        {
+            "label": "dietlog",
+            "db_name": os.environ.get("MONGODB_DB_NAME_DIETLOG", "chef_dietlog"),
+            "collection_name": os.environ.get(
+                "MONGODB_COLLECTION_NAME_DIETLOG",
+                "chat_dietlog_sessions",
+            ),
+        }
+    )
+    return configs
+
+
+def get_chat_collections(client: MongoClient) -> List[Dict[str, object]]:
+    # Before example: single chat collection -> missed dietlog sessions.
+    # After example:  iterate all configured chat collections with labels.
+    seen = set()
+    entries: List[Dict[str, object]] = []
+    for config in _collect_chat_configs():
+        db_name = config["db_name"]
+        collection_name = config["collection_name"]
+        key = (db_name, collection_name)
+        if key in seen:
+            continue
+        seen.add(key)
+        entries.append(
+            {
+                "label": f"{config['label']}:{db_name}.{collection_name}",
+                "collection": client[db_name][collection_name],
+            }
+        )
+    return entries
 
 
 def pending_media_query() -> dict:
@@ -254,6 +335,87 @@ def build_user_prompt(url: str, candidates: List[Dict[str, str]]) -> str:
     return "\n".join(lines)
 
 
+def call_gemini_select(
+    api_key: str,
+    model: str,
+    url: str,
+    candidates: List[Dict[str, str]],
+    timing: bool = False,
+) -> Optional[str]:
+    """Call Gemini and return the chosen candidate id."""
+    start = time.monotonic() if timing else None
+    prompt = build_user_prompt(url, candidates)
+    payload = {
+        "contents": [
+            {
+                "role": "user",
+                "parts": [{"text": prompt}],
+            }
+        ],
+        "generationConfig": {
+            "temperature": 0,
+            "maxOutputTokens": 120,
+        },
+    }
+    response = requests.post(
+        GEMINI_URL.format(model=model),
+        params={"key": api_key},
+        json=payload,
+        timeout=60,
+    )
+    if response.status_code != 200:
+        logging.warning(
+            "gemini_select http_error status=%s body=%s",
+            response.status_code,
+            response.text[:300],
+        )
+        return None
+
+    data = response.json()
+    content = ""
+    try:
+        candidates_payload = data.get("candidates", [])
+        if candidates_payload:
+            parts = candidates_payload[0].get("content", {}).get("parts", [])
+            if parts:
+                content = parts[0].get("text", "")
+    except Exception:
+        logging.warning("gemini_select missing content")
+        return None
+
+    choice_id = parse_choice_id(content)
+    if timing and start is not None:
+        duration_ms = int((time.monotonic() - start) * 1000)
+        logging.info(
+            "gemini_select_timing url=%s candidates=%s duration_ms=%s",
+            url,
+            len(candidates),
+            duration_ms,
+        )
+    if not choice_id or choice_id == "NONE":
+        return None
+    return choice_id
+
+
+def _call_gemini_fallback(
+    url: str,
+    candidates: List[Dict[str, str]],
+    timing: bool,
+    reason: str,
+) -> Optional[str]:
+    # Before example: xAI 503 -> hard stop; After example: Gemini fallback attempts selection.
+    api_key = _get_gemini_api_key()
+    if not api_key:
+        logging.info(
+            "gemini_fallback_skip reason=%s missing_env=GEMINI_API_KEY/GOOGLE_API_KEY/GEMINI_KEY_PH",
+            reason,
+        )
+        return None
+    model = os.environ.get("GEMINI_FALLBACK_MODEL", DEFAULT_GEMINI_MODEL)
+    logging.info("gemini_fallback_start reason=%s model=%s", reason, model)
+    return call_gemini_select(api_key, model, url, candidates, timing=timing)
+
+
 def call_xai_select(
     api_key: str,
     model: str,
@@ -283,7 +445,7 @@ def call_xai_select(
     )
     if response.status_code != 200:
         logging.warning("xai_select http_error status=%s body=%s", response.status_code, response.text[:300])
-        return None
+        return _call_gemini_fallback(url, candidates, timing, reason="xai_http_error")
 
     data = response.json()
     content = ""
@@ -291,7 +453,7 @@ def call_xai_select(
         content = data["choices"][0]["message"]["content"]
     except Exception:
         logging.warning("xai_select missing content")
-        return None
+        return _call_gemini_fallback(url, candidates, timing, reason="xai_missing_content")
 
     choice_id = parse_choice_id(content)
     if timing and start is not None:
@@ -302,7 +464,10 @@ def call_xai_select(
             len(candidates),
             duration_ms,
         )
-    if not choice_id or choice_id == "NONE":
+    if not choice_id:
+        logging.warning("xai_select_parse_failed url=%s", url)
+        return _call_gemini_fallback(url, candidates, timing, reason="xai_parse_failed")
+    if choice_id == "NONE":
         return None
     return choice_id
 
@@ -371,7 +536,7 @@ def update_ai_description(
 
 def process_media_doc(
     media_collection,
-    chat_collection,
+    chat_collections,
     doc: dict,
     after_turns: int,
     include_all_media: bool,
@@ -428,45 +593,54 @@ def process_media_doc(
     escaped = re.escape(url)
     query = {"messages": {"$elemMatch": {"content": {"$regex": escaped}}}}
     search_start = time.monotonic() if timing else None
-    session_cursor = chat_collection.find(query, {"messages": 1})
-    for session in session_cursor:
-        messages = session.get("messages", [])
-        if not isinstance(messages, list):
-            continue
-        stub_index = find_media_stub_index(messages, url)
-        if stub_index is None:
-            continue
+    if not chat_collections:
+        logging.info("no_chat_collections url=%s", url)
+        return False
+    # Before example: only chef_chatbot.chat_sessions scanned.
+    # After example:  scan all configured chat collections for the media stub.
+    for entry in chat_collections:
+        chat_collection = entry["collection"]
+        label = entry["label"]
+        session_cursor = chat_collection.find(query, {"messages": 1})
+        for session in session_cursor:
+            messages = session.get("messages", [])
+            if not isinstance(messages, list):
+                continue
+            stub_index = find_media_stub_index(messages, url)
+            if stub_index is None:
+                continue
 
-        candidates = collect_candidates(messages, stub_index, after_turns)
-        if not candidates:
-            logging.info("no_candidates url=%s session_id=%s", url, session.get("_id"))
-            return False
+            candidates = collect_candidates(messages, stub_index, after_turns)
+            if not candidates:
+                logging.info("no_candidates url=%s session_id=%s", url, session.get("_id"))
+                return False
 
-        if timing and search_start is not None:
-            search_ms = int((time.monotonic() - search_start) * 1000)
-            logging.info("media_backfill_search url=%s duration_ms=%s", url, search_ms)
+            if timing and search_start is not None:
+                search_ms = int((time.monotonic() - search_start) * 1000)
+                logging.info("media_backfill_search url=%s duration_ms=%s", url, search_ms)
 
-        choice_id = call_xai_select(api_key, model, url, candidates, timing=timing)
-        if not choice_id:
-            logging.info("no_choice url=%s session_id=%s", url, session.get("_id"))
-            return False
+            choice_id = call_xai_select(api_key, model, url, candidates, timing=timing)
+            if not choice_id:
+                logging.info("no_choice url=%s session_id=%s", url, session.get("_id"))
+                return False
 
-        selected = next((item for item in candidates if item["id"] == choice_id), None)
-        if not selected:
-            logging.info("choice_missing url=%s choice_id=%s", url, choice_id)
-            return False
+            selected = next((item for item in candidates if item["id"] == choice_id), None)
+            if not selected:
+                logging.info("choice_missing url=%s choice_id=%s", url, choice_id)
+                return False
 
-        saved = update_user_description(media_collection, doc.get("_id"), selected["text"], dry_run)
-        logging.info(
-            "user_description_saved url=%s choice_id=%s session_id=%s",
-            url,
-            choice_id,
-            session.get("_id"),
-        )
-        if timing and doc_start is not None:
-            total_ms = int((time.monotonic() - doc_start) * 1000)
-            logging.info("media_backfill_total url=%s duration_ms=%s", url, total_ms)
-        return saved
+            saved = update_user_description(media_collection, doc.get("_id"), selected["text"], dry_run)
+            logging.info(
+                "user_description_saved url=%s choice_id=%s session_id=%s chat_collection=%s",
+                url,
+                choice_id,
+                session.get("_id"),
+                label,
+            )
+            if timing and doc_start is not None:
+                total_ms = int((time.monotonic() - doc_start) * 1000)
+                logging.info("media_backfill_total url=%s duration_ms=%s", url, total_ms)
+            return saved
 
     logging.info("no_session_match url=%s", url)
     if timing and doc_start is not None:
@@ -486,7 +660,11 @@ def main() -> None:
 
     client = get_mongo_client()
     media_collection = get_media_collection(client)
-    chat_collection = get_chat_collection(client)
+    chat_collections = get_chat_collections(client)
+    chat_labels = ", ".join(entry["label"] for entry in chat_collections)
+    # Before example: backfill logs omitted which chat collections were searched.
+    # After example:  logs show all chat collections used for matching.
+    logging.info("media_enricher_chat_collections %s", chat_labels)
 
     logging.info(
         "media_enricher start limit=%s scan_latest=%s after_turns=%s include_all_media=%s model=%s dry_run=%s timing=%s",
@@ -539,7 +717,7 @@ def main() -> None:
         # After example:  track fills so "done" logging shows what changed.
         saved = process_media_doc(
             media_collection,
-            chat_collection,
+            chat_collections,
             doc,
             args.after_turns,
             args.include_all_media,
