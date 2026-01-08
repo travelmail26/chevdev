@@ -153,3 +153,16 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2026-01-02T01:35:15Z work: improved gemini_video_key_clip JSON parsing to strip fenced code blocks and extract braces.
 2026-01-02T01:42:51Z work: added chef/testscripts/gemini_video_merge_three_clips.py to get two segments from video A and one from video B, cut clips with ffmpeg, and concatenate into a single output video.
 2026-01-02T01:48:53Z work: installed ffmpeg via apt-get for video clipping/concatenation.
+
+2026-01-02: Reset main to match dev (forced update). main now at e8ef0bb; removed prior media/export commit from main.
+2026-01-02T19:59:41Z added build_chat_session_chunks.py to embed chat_sessions into chat_session_chunks with incremental update via hash/last_updated_at.
+2026-01-02T20:14:00Z updated build_chat_session_chunks.py chunking to 6-turn window with 2-turn overlap, added args.
+2026-01-02T20:24:54Z added explicit target collection creation in build_chat_session_chunks.py.
+2026-01-02T20:30:19Z updated answer_with_nano.py default collection to chat_session_chunks.
+2026-01-02T20:42:56Z added vector index creation option to build_chat_session_chunks.py.
+2026-01-02T20:46:31Z updated answer_with_nano.py system prompt to require citation bullets with session_id/date/message range.
+2026-01-05T20:43:31Z work: mongo_media_user_description_xai now scans all configured chat collections (via bot_config or dietlog defaults) when matching media stubs; logs chat collections used.
+2026-01-05T20:52:40Z work: installed google-cloud-cli to read Cloud Run logs; confirmed chef-bot logs show media_backfill_spawned and xai_select 503 capacity errors.
+2026-01-05T20:58:31Z work: added Gemini (gemini-2.5-flash) fallback selection in mongo_media_user_description_xai when xAI fails; supports GEMINI_API_KEY/GOOGLE_API_KEY/GEMINI_KEY_PH and GEMINI_FALLBACK_MODEL.
+2026-01-05T21:06:38Z work: added GEMINI_KEY_PH to Cloud Run env-vars file in .github/workflows/docker-image.yml so Gemini fallback has access.
+2026-01-05T21:13:42Z verify: deployed revision chef-bot-00060-peb, sent /restart webhook, logs show media_backfill_spawned and user_description_saved for recent photos.

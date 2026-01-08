@@ -21,7 +21,7 @@ except Exception:  # pragma: no cover - bson may be absent in some environments
 
 
 DEFAULT_DB_NAME = "chef_chatbot"
-DEFAULT_COLLECTION_NAME = "chat_sessions"
+DEFAULT_COLLECTION_NAME = "chat_session_chunks"
 DEFAULT_INDEX_NAME = "chat_session_embeddings"
 DEFAULT_EMBEDDING_MODEL = "text-embedding-3-small"
 DEFAULT_ANALYSIS_MODEL = "gpt-5-nano-2025-08-07"
@@ -40,6 +40,11 @@ SYSTEM_PROMPT_TEMPLATE = (
     "Today's date (UTC) is {today_date}.\n"
     "Always call one tool before answering. Use only the tool output to answer.\n"
     "If the tool returns no results, say you could not find anything.\n\n"
+    "Answer format:\n"
+    "- Provide short bullet points.\n"
+    "- Each bullet MUST include a citation with session_id and date, like:\n"
+    "  [session_id=ABC123 | last_updated_at=2025-01-03T12:00:00Z | messages=4-10]\n"
+    "- If you summarize actions, include who did what and when.\n\n"
     "Tool usage rules:\n"
     "- Use search_mongo_embeddings for semantic questions like \"what did the user say about X?\"\n"
     "- Use fetch_conversations_by_date_range for time-based questions like \"last 3 days\" or \"2 days ago\".\n\n"
@@ -48,7 +53,7 @@ SYSTEM_PROMPT_TEMPLATE = (
     "- Treat those sessions as the authoritative context for your answer.\n\n"
     "Examples:\n"
     "- \"Summarize conversations from the last 3 days\" -> fetch_conversations_by_date_range(days_back=3)\n"
-    "- \"What did the user ask about pasta?\" -> search_mongo_embeddings(query=\"pasta\")"
+    "- \"What did the user ask about eggs?\" -> search_mongo_embeddings(query=\"pasta\")"
 )
 
 
@@ -150,6 +155,12 @@ def run_vector_search(
                 "session_id": f"${session_id_field}",
                 "message_start": f"${message_start_field}",
                 "message_end": f"${message_end_field}",
+                "chunk_type": "$chunk_type",
+                "media_id": "$media_id",
+                "media_url": "$media_url",
+                "media_type": "$media_type",
+                "user_description": "$user_description",
+                "ai_description": "$ai_description",
                 "score": {"$meta": "vectorSearchScore"},
             }
         },

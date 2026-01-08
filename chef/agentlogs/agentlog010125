@@ -16,3 +16,4 @@
 2025-10-10: Updated testscripts/test_mongo_media_metadata.py to add sys.path injection for chefmain imports.
 2025-10-10: Added MongoDB timeout query params in testscripts/test_mongo_media_metadata.py to avoid long hangs.
 2025-10-10: Added SIGALRM timeout guard in testscripts/test_mongo_media_metadata.py to fail fast if create_media_metadata hangs.
+2026-01-02: Added media_metadata embedding pass in build_chat_session_chunks.py to store ai/user descriptions with media_id and URL, and exposed media fields in answer_with_nano vector results.

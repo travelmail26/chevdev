@@ -17,7 +17,7 @@ except Exception:  # pragma: no cover - bson may be absent in some environments
 
 
 DEFAULT_DB_NAME = "chef_chatbot"
-DEFAULT_COLLECTION_NAME = "chat_sessions"
+DEFAULT_COLLECTION_NAME = "chat_sessions_chunks"
 DEFAULT_INDEX_NAME = "chat_session_embeddings"
 DEFAULT_EMBEDDING_MODEL = "text-embedding-3-small"
 DEFAULT_LIMIT = 5
