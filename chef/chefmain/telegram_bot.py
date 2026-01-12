@@ -127,6 +127,28 @@ def _spawn_media_description_backfill(limit: int = 20) -> None:
     except Exception as exc:
         logging.warning("media_backfill_failed error=%s", exc)
 
+def _spawn_chat_session_chunk_backfill() -> None:
+    """Kick off background embedding for chat_session_chunks."""
+    # Before example: /restart only reset sessions; After example: /restart triggers chunk embeddings.
+    if not os.environ.get("MONGODB_URI"):
+        logging.info("chunk_backfill_skip missing_env=MONGODB_URI")
+        return
+    if not os.environ.get("OPENAI_API_KEY"):
+        logging.info("chunk_backfill_skip missing_env=OPENAI_API_KEY")
+        return
+
+    script_path = os.path.join(parent_dir, "analysisfolder", "build_chat_session_chunks.py")
+    if not os.path.exists(script_path):
+        logging.warning("chunk_backfill_skip missing_script path=%s", script_path)
+        return
+
+    try:
+        # Before example: no embeddings on restart; After example: background job builds embeddings.
+        subprocess.Popen([sys.executable, script_path], env=os.environ.copy())
+        logging.info("chunk_backfill_spawned script=%s", script_path)
+    except Exception as exc:
+        logging.warning("chunk_backfill_failed error=%s", exc)
+
 def get_user_handler(user_id, session_info, user_message, application_data=None):
     """
     Creates or retrieves a user context dictionary.
@@ -453,6 +475,8 @@ async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Before example: /restart only reset user session state.
         # After example:  /restart also triggers media description backfill in the background.
         _spawn_media_description_backfill(limit=20)
+        # Before example: /restart left embeddings stale; After example: /restart rebuilds embeddings.
+        _spawn_chat_session_chunk_backfill()
         if user_id in handlers_per_user:
             handlers_per_user.pop(user_id)
             await update.message.reply_text(
