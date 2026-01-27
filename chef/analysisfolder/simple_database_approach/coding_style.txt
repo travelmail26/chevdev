@@ -1,0 +1,429 @@
+# Recipe Bot: Simplified Code & Style Guide
+
+## Overview
+
+This document explains the coding style used in the simplified Recipe Bot and what was removed from the original code to make it beginner-friendly.
+
+---
+
+## The Architecture (3 Simple Files)
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  recipe_bot.py  (The Brain)                                │
+│                                                             │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │  BOT_INSTRUCTIONS (System Prompt)                   │   │
+│  │  - Explains to the LLM what it is                   │   │
+│  │  - Describes available tools                        │   │
+│  │  - Shows example workflow                           │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                                                             │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │  TOOLS (OpenAI Function Calling Format)             │   │
+│  │  - search_conversations                             │   │
+│  │  - build_dictionary                                 │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                                                             │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │  TOOL_FUNCTIONS (Python implementations)            │   │
+│  │  - Actually execute the tool calls                  │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                                                             │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │  run_bot() (The Loop)                               │   │
+│  │  - Sends messages to LLM                            │   │
+│  │  - Executes tool calls                              │   │
+│  │  - Returns final answer                             │   │
+│  └─────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────┘
+          │                           │
+          │ subprocess                │ imports
+          ▼                           ▼
+┌─────────────────────┐    ┌─────────────────────────────────┐
+│  mongo_worker.py    │    │  dictionary_builder.py          │
+│  - Searches MongoDB │    │  - Extracts events from chats   │
+│  - Returns JSON     │    │  - Runs LLM calls in parallel   │
+└─────────────────────┘    └─────────────────────────────────┘
+```
+
+---
+
+## How the Bot Works (Tool Calling)
+
+The bot uses OpenAI's **function calling** feature. Here's the flow:
+
+```
+User: "What temperatures did I cook onions at?"
+                    │
+                    ▼
+┌─────────────────────────────────────────────────────────────┐
+│  LLM receives: BOT_INSTRUCTIONS + User Question            │
+│                                                             │
+│  LLM thinks: "I need to search for onion conversations"    │
+│  LLM responds: tool_call(search_conversations, query=...)  │
+└─────────────────────────────────────────────────────────────┘
+                    │
+                    ▼
+┌─────────────────────────────────────────────────────────────┐
+│  Python executes: tool_search_conversations(query)         │
+│  Result: {sessions: [...], count: 8}                       │
+└─────────────────────────────────────────────────────────────┘
+                    │
+                    ▼
+┌─────────────────────────────────────────────────────────────┐
+│  LLM receives: tool result                                 │
+│                                                             │
+│  LLM thinks: "Now I need to extract events"                │
+│  LLM responds: tool_call(build_dictionary, sessions=...)   │
+└─────────────────────────────────────────────────────────────┘
+                    │
+                    ▼
+┌─────────────────────────────────────────────────────────────┐
+│  Python executes: tool_build_dictionary(sessions, question)│
+│  Result: {events: [...], count: 12}                        │
+└─────────────────────────────────────────────────────────────┘
+                    │
+                    ▼
+┌─────────────────────────────────────────────────────────────┐
+│  LLM receives: tool result                                 │
+│                                                             │
+│  LLM thinks: "I have all the data, time to answer"         │
+│  LLM responds: "Here are all the temperatures..."          │
+└─────────────────────────────────────────────────────────────┘
+```
+
+The key insight: **The LLM decides when to call tools and what arguments to use.**
+We just tell it what tools exist and let it figure out the rest.
+
+---
+
+## Coding Style Principles
+
+### 1. **The bot knows what it is**
+
+The most important part of the code is `BOT_INSTRUCTIONS`. This tells the LLM:
+- What it is ("You are RecipeBot, a cooking history assistant")
+- Why it exists (LLMs lose track of items in long lists)
+- What tools it has (with examples)
+- How to use them (step-by-step workflow)
+
+```python
+BOT_INSTRUCTIONS = """
+You are RecipeBot, a cooking history assistant.
+
+## What You Are
+You help users answer questions about their past cooking experiences...
+
+## Your Tools
+### 1. search_conversations
+Searches MongoDB for conversations matching a text query...
+
+## Your Workflow
+For EVERY user question, follow these steps IN ORDER...
+"""
+```
+
+### 2. **Tools are defined in OpenAI format**
+
+Tools use the standard OpenAI function calling schema:
+
+```python
+TOOLS = [
+    {
+        "type": "function",
+        "function": {
+            "name": "search_conversations",
+            "description": "Search MongoDB for conversations...",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "MongoDB $text search query..."
+                    }
+                },
+                "required": ["query"]
+            }
+        }
+    }
+]
+```
+
+### 3. **Tool implementations are simple functions**
+
+The actual Python code that runs is in simple, standalone functions:
+
+```python
+def tool_search_conversations(query):
+    """Search MongoDB for relevant conversations."""
+    print(f"\n[TOOL] search_conversations")
+    print(f"  Query: {query}")
+    # ... do the work ...
+    return {"sessions": sessions, "count": len(sessions)}
+```
+
+### 4. **Print statements for visibility**
+
+Every tool prints what it's doing. This makes debugging easy.
+
+```python
+print(f"\n[TOOL] search_conversations")
+print(f"  Query: {query}")
+print(f"  Found: {len(sessions)} conversations")
+```
+
+### 5. **The bot loop is simple**
+
+The main loop is just: call LLM → execute tools → repeat until done.
+
+```python
+while True:
+    response = client.chat.completions.create(...)
+    
+    if response has tool_calls:
+        execute each tool
+        add results to messages
+    else:
+        return response.content  # Final answer
+```
+
+### 6. **Rely on LLM intelligence**
+
+The LLM decides:
+- What search query to use (from the user's question)
+- When to call each tool
+- How to format the final answer
+
+We don't need complex parsing logic—the LLM figures it out.
+
+### 7. **Flat is better than nested**
+
+Instead of classes and complex inheritance, we use simple functions and constants.
+
+```python
+# BEFORE (complex)
+class ExtractConfig:
+    model: str
+    max_retries: int = 4
+
+# AFTER (simple)
+EXTRACT_MODEL = "gpt-4o-mini"
+MAX_WORKERS = 8
+```
+
+### 8. **Explicit over implicit**
+
+Variable names are full words, not abbreviations.
+
+```python
+# BEFORE
+cfg = ExtractConfig(model=model)
+resp = client.responses.parse(...)
+
+# AFTER
+extraction_model = "gpt-4o-mini"
+response = client.chat.completions.create(...)
+```
+
+---
+
+## What Was Removed (And Why)
+
+### Removed: Multiple search backends
+
+**Before:** Atlas Search fallback, auto/text/atlas modes, wildcard paths
+**After:** Just MongoDB $text search
+
+**Why:** You have a text index. Use it. If you need Atlas later, add it then.
+
+### Removed: Pydantic models for extraction
+
+**Before:**
+```python
+class Evidence(BaseModel):
+    session_id: str
+    message_index: Optional[int]
+    excerpt: str
+
+class CookEvent(BaseModel):
+    date_iso: Optional[str]
+    focus_terms: List[str]
+    temperature: Optional[str]
+    # ... 8 more fields
+```
+
+**After:** Plain dictionaries with a prompt that says what format to use.
+
+**Why:** Pydantic is great for production, but adds cognitive load. For a simple bot, a well-written prompt achieves the same result.
+
+### Removed: Chunking within conversations
+
+**Before:** Complex logic to split conversations by character budget
+```python
+def chunk_rows_by_session(rows, chunk_char_limit):
+    # 40 lines of chunking logic
+```
+
+**After:** Send one conversation = one LLM call
+
+**Why:** If a conversation is too long, we truncate messages. Simpler than chunking.
+
+### Removed: Code Interpreter for final aggregation
+
+**Before:** Spawns a separate Code Interpreter session to run Python on the dictionary
+
+**After:** Just pass the events JSON to the main LLM
+
+**Why:** 40 events in JSON is tiny. The LLM can read it directly.
+
+### Removed: Retry logic with exponential backoff
+
+**Before:**
+```python
+def backoff_sleep(attempt: int) -> None:
+    base = min(8.0, (2.0 ** attempt))
+    time.sleep(base + random.random())
+
+for attempt in range(cfg.max_retries + 1):
+    try:
+        # ...
+    except Exception:
+        if attempt >= cfg.max_retries:
+            raise
+        backoff_sleep(attempt)
+```
+
+**After:** Just try once. If it fails, print an error.
+
+**Why:** For a personal tool, this complexity isn't needed. Add retries if you start hitting rate limits.
+
+### Removed: Environment variables for everything
+
+**Before:** 9+ environment variables (BOT_MODEL, EXTRACT_MODEL, CI_MODEL, WORKER_MAX_MESSAGES, etc.)
+
+**After:** Hardcoded constants at the top of each file
+
+**Why:** When experimenting, it's easier to edit the file than juggle environment variables.
+
+### Removed: Hardcoded step sequence
+
+**Before:** Python code that enforced step 1 → step 2 → step 3
+```python
+response = expect_tool_call(response, "mongo_text_search")
+# ...
+response = expect_tool_call(response, "build_dictionary_parallel")
+```
+
+**After:** LLM decides when to call each tool based on `BOT_INSTRUCTIONS`
+
+**Why:** The LLM is smart enough to follow instructions. Let it drive.
+
+### Removed: Error collection and statistics
+
+**Before:**
+```python
+"stats": {
+    "rows_scanned": len(rows),
+    "chunks": len(chunks),
+    "events_raw": len(all_events),
+    "events_deduped": len(merged),
+    "errors": len(errors),
+    "elapsed_s": round(time.time() - start, 2),
+    # ...
+},
+"errors": errors[:50],
+```
+
+**After:** Print statements during execution
+
+**Why:** For debugging, watching the prints is more useful than a stats JSON.
+
+---
+
+## Line Count Comparison
+
+| File | Before | After | Reduction |
+|------|--------|-------|-----------|
+| mongo_worker.py | 230 lines | 95 lines | 59% smaller |
+| dictionary_builder.py (was chunk_scanner_parallel.py) | 250 lines | 130 lines | 48% smaller |
+| recipe_bot.py | 310 lines | 270 lines | 13% smaller* |
+| **Total** | **790 lines** | **495 lines** | **37% smaller** |
+
+*recipe_bot.py is larger now because it includes comprehensive `BOT_INSTRUCTIONS` that explain what the bot is and how it works. This is intentional—the instructions ARE the logic.
+
+---
+
+## What We Kept (And Why)
+
+### Kept: OpenAI function calling
+
+This lets the LLM decide when to call tools. The bot loop is simple and generic.
+
+### Kept: Parallel LLM calls
+
+Processing 20 conversations sequentially would take ~40 seconds. In parallel, it takes ~5 seconds. Worth the small added complexity.
+
+```python
+with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+    futures = {executor.submit(extract_events, session): session for session in sessions}
+    for future in as_completed(futures):
+        events = future.result()
+```
+
+### Kept: Separate worker script
+
+Clean separation of concerns. The bot orchestrates; the worker just queries Mongo.
+
+### Kept: The dictionary extraction step
+
+This is the core insight: LLMs lose items in long lists. By extracting to structured data first, we guarantee completeness.
+
+### Kept: Message trimming
+
+Without this, a single huge message could blow up the token budget.
+
+---
+
+## How to Read This Code
+
+1. **Start with `recipe_bot.py`**
+   - Read `BOT_INSTRUCTIONS` first—this explains what the bot does
+   - Look at `TOOLS`—this defines what tools are available
+   - Look at `TOOL_FUNCTIONS`—this is the Python that executes
+   - Look at `run_bot()`—this is the main loop
+
+2. **Then `dictionary_builder.py`**
+   - `EXTRACTION_PROMPT`—what we ask the LLM to extract
+   - `build_dictionary()`—the parallel processing logic
+
+3. **Finally `mongo_worker.py`**
+   - The simplest file—just a MongoDB query
+
+---
+
+## Extending This Code
+
+Want to add features? Here's how:
+
+| Want to... | Do this |
+|------------|---------|
+| Search a different collection | Change `COLLECTION_NAME` in mongo_worker.py |
+| Use a different LLM | Change `EXTRACT_MODEL` or `SMART_MODEL` constants |
+| Add retry logic | Wrap the OpenAI call in a for loop with try/except |
+| Save results to file | Add `json.dump(events, open("output.json", "w"))` |
+| Add Atlas Search | Add a second search function in mongo_worker.py |
+
+---
+
+## Summary
+
+The original code was built for production robustness. This simplified version is built for **readability and experimentation**. 
+
+When you're ready for production, you can add back:
+- Pydantic validation
+- Retry logic
+- Error collection
+- Environment-based configuration
+
+But for learning and iterating, simple wins.

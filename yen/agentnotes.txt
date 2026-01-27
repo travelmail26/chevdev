@@ -1,0 +1,38 @@
+YEN BOT NOTES (for the next LLM)
+
+Purpose
+- This folder hosts a minimal, fully working Telegram bot named "Yen".
+- It stores conversation history in MongoDB (Cluster0) under the database "yen".
+
+File Map
+- yen/main.py: small entrypoint that starts the bot via telegram_bot.run_bot_webhook_set().
+- yen/telegram_bot.py: Telegram handlers (/start, /restart) and message routing.
+- yen/message_router.py: builds context, calls OpenAI Chat Completions, and stores replies.
+- yen/mongo_store.py: Mongo helpers (ensure DB, start session, append messages, fetch latest).
+
+How a message flows
+1) Telegram update arrives in yen/telegram_bot.py:handle_message().
+2) It builds message_object {user_id, user_message, session_info}.
+3) yen/message_router.py:route_message() loads/starts a Mongo session.
+4) The user message is appended to Mongo, the model is called, and the reply is stored.
+5) The reply is sent back to Telegram.
+
+MongoDB notes
+- Database name: "yen" (override with YEN_MONGODB_DB_NAME).
+- Collection name: "chat_sessions" (override with YEN_MONGODB_COLLECTION_NAME).
+- Running `python yen/mongo_store.py` will create the DB/collection if MONGODB_URI is set.
+
+Environment variables
+- TELEGRAM_DEV_KEY: Telegram token for development polling.
+- TELEGRAM_KEY: Telegram token for production.
+- TELEGRAM_WEBHOOK_URL or TELEGRAM_WEBHOOK_CODESPACE: optional webhook URL.
+- MONGODB_URI: required to store conversations in Cluster0.
+- OPENAI_API_KEY: required for LLM replies.
+- OPENAI_MODEL: defaults to gpt-5-2025-08-07 (do not change to 4o).
+- YEN_SYSTEM_PROMPT: override the default bot instructions.
+
+Run (development polling)
+- ENVIRONMENT=development TELEGRAM_DEV_KEY=... MONGODB_URI=... OPENAI_API_KEY=... python yen/main.py
+
+Run (webhook)
+- ENVIRONMENT=production TELEGRAM_KEY=... TELEGRAM_WEBHOOK_URL=... MONGODB_URI=... OPENAI_API_KEY=... python yen/main.py

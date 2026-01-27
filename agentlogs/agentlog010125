@@ -168,3 +168,33 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2026-01-05T21:13:42Z verify: deployed revision chef-bot-00060-peb, sent /restart webhook, logs show media_backfill_spawned and user_description_saved for recent photos.
 - Added analysis/nano_mongo_hollandaise_scan.py to scan Mongo chat_sessions for hollandaise/butter/sous vide messages with simple keyword filtering.
 - On /restart, spawn build_chat_session_chunks.py to backfill chat_session_chunks embeddings (skips when env or script missing).
+- Updated AGENTS.md with embeddings/backfill/answer_with_nano and nano Mongo scan context.
+2026-01-12T21:11:12Z work: created chef/chefnano bot (copied from chefdietlog) with /nano command wired to answer_with_nano, updated chefnano defaults to recipe DB, and added nano mode mapping in chef/utilities/bot_config.py.
+2026-01-12T21:19:30Z work: fixed chefnano message_router nano_collection None check to avoid pymongo truthiness error.
+2026-01-12T21:31:05Z work: added nano mode handling in chef/chefmain/message_router.py (answer_with_nano branch + recipe DB args) and /nano switch command in chef/chefmain/telegram_bot.py.
+2026-01-12T21:43:28Z work: updated nano defaults to recipe_chats (log folder + Mongo collection) and created chef/chefnano/utilities/recipe_chats directory; updated bot_config nano mapping and nano query defaults.
+2026-01-12T22:01:49Z work: separated nano embeddings collection from nano chat logs by adding MONGODB_DB_NAME_RECIPE_EMBEDDINGS/MONGODB_COLLECTION_NAME_RECIPE_EMBEDDINGS defaults and wiring message_router to use recipe_embeddings.
+2026-01-12T22:08:44Z work: removed nano handling from chefmain (router + /nano switch) and reset chefnano to use answer_with_nano defaults while keeping recipe_chats logging.
+2026-01-13T23:32:20Z work: created yen/ bot (mongo_store.py, message_router.py, telegram_bot.py, main.py) + agentnotes.txt for Mongo-backed Telegram assistant.
+2026-01-15T22:01:16Z - Added keyword scan tool in answer_with_nano to exhaustively search chat_sessions by regex when user asks for all mentions.
+2026-01-15T22:16:34Z - Reverted keyword scan tool changes in answer_with_nano per user request.
+2026-01-15 22:29 UTC - Exported MongoDB chef_chatbot.chat_sessions to /workspaces/chevdev/mongo_exports/chat_sessions_20260115T222902Z/chat_sessions.jsonl (51 docs).
+2026-01-21T14:51:04Z recipe_bot: simplified main bot flow (no argparse/config), direct Mongo $text in bot, single mongo_text_search tool first; removed extra simple bots; updated AGENTS.md guidance for simpler scripts.
+2026-01-21T15:56:52Z analysisfolder: added nano_entity_worker.py (gpt-5-nano-2025-08-07) for simple NLP entity extraction from sessions with instruction + example.
+2026-01-21T19:50:44Z recipe_bot: removed window params, set EXTRACT_MODEL default to gpt-5-nano-2025-08-07, updated AGENTS.md with model + mongo simplicity rules.
+2026-01-21T20:09:42Z recipe_bot: removed window params, fixed tool schemas (no model overrides), hardcoded EXTRACT_MODEL gpt-5-nano, CI_MODEL constant, chunk_char_limit 4000, updated AGENTS simplicity rules.
+2026-01-21T20:18:10Z chunk_scanner_parallel: added CHUNK_LIMIT env for debug limiting; imported os.
+2026-01-21T20:21:51Z recipe_bot/chunk_scanner: set chunk_char_limit 50000 (target 1 chunk per session), clamp worker_count to chunk count.
+2025-02-14: simple_database_approach now writes Mongo sessions to temp folder; recipe_bot passes sessions_dir; dictionary_builder reads per-file in parallel; fixed prompt braces and removed temperature param for gpt-5-nano; BOT_MODEL set to gpt-5-2025-08-07.
+2025-02-14: recipe_bot now trims search queries to 1-2 keywords; added Mongo cache (cook_events_cache) with cache_id + summary; added load_dictionary tool; BOT_INSTRUCTIONS updated for short summaries and follow-ups; fixed cache datetime to timezone-aware.
+2025-02-14: fixed cache collection truthiness check and updated cache timestamp to timezone-aware datetime; run shows query phrase returns 10 sessions, 16 events.
+2025-02-14: enforced single-word search queries; added mandatory embedding worker (mongo_worker_embedding.py) and merged lexical+embedding session dirs; search tool now reports lexical/embedding/merged counts.
+2025-02-14: fixed embedding worker session lookup to match chat_sessions _id/chat_session_id fields; embedding now returns sessions for 'fish'.
+2026-01-25T15:15:17Z work: updated AGENTS.md to reference coding_style.txt for goals when working in simple_database_approach.
+2026-01-25T15:22:23Z work: updated AGENTS.md to require reporting exact query terms and results back to the user.
+2026-01-25T15:43:04Z work: checked embedding searches in simple_database_approach (queries onions/salmon/salmon temperature/temperature/egg yolk/butter/sauce all returned 0); verified chat_session_sentence_chunks has docs but no search indexes listed.
+2026-01-25T15:49:44Z work: ran build_chat_session_chunks.py --ensure-index to create vector index; verified chat_session_embeddings index READY; embedding searches now return sessions (e.g., onions 8, salmon 3, hollandaise 4).
+2026-01-25T16:51:34Z work: added Voyage embedding MVP scripts (build_chat_session_chunks_voyage.py, mongo_worker_embedding_voyage.py) and installed voyageai; Voyage build failed because VOYAGE_API_KEY/MONGODB_ATLAS not set in env.
+2026-01-25T17:06:26Z work: Voyage MVP build limited by rate limits; added VOYAGE_BATCH_SIZE/VOYAGE_SESSION_LIMIT/VOYAGE_CHUNK_LIMIT envs to build_chat_session_chunks_voyage.py; embedded 1 session (20 chunks) and ran voyage vs openai query counts.
+2026-01-25T17:18:25Z work: updated dictionary_builder extraction prompt to capture equipment; updated recipe_bot instructions to map solution type (ingredients/equipment/technique) with a non-hollandaise example.
+2026-01-25T17:30:54Z work: adjusted recipe_bot summary sampling to prefer equipment/technique hints; removed extra equipment_hints field to rely on instructions + summary samples.

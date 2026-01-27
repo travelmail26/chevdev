@@ -1,0 +1,205 @@
+{
+  "schema": "recipe_dictionary.v1",
+  "created_at": "2026-01-20T20:56:44.981936+00:00",
+  "question": "Extract EVERY instance where onions were cooked and a specific temperature is mentioned. Capture: date, temperature value and unit (F or C), cooking method/context (e.g., oven roast, saut\u00e9, grill, confit, caramelize), and outcome/notes (e.g., browned, burned, jammy, underdone). Include ranges if present. Include both whole onions and sliced/diced onions. Ignore non-onion items unless onions are part of the cook. We want chronological coverage across all retrieved sessions/messages.",
+  "source_candidates_path": "chef/analysisfolder/bot_runs/candidates_20260120T205605Z.json",
+  "events": [
+    {
+      "date_iso": "2026-01-05T22:20:58.985397+00:00",
+      "focus_terms": [
+        "onions",
+        "caramelized onions"
+      ],
+      "temperature": "about 165\u00b0F (unit not stated in message; Fahrenheit inferred from sous vide context)",
+      "method": "sous vide (onions reheated/infused in bag with butter)",
+      "outcome": "Sauce/result was \"OK\"; almost none of the onion flavor came out despite strong aromatics in the bag",
+      "evidence": {
+        "session_id": "1275063227_05012026_211245_266950",
+        "message_index": 1,
+        "excerpt": "I put them in a sous vide in about 165 with some butter and then I put that through a sieve and I mixed it in with some egg and mustard and it was OK but like the taste was OK but almost none of the onion flavor came out"
+      },
+      "confidence": 0.8
+    },
+    {
+      "date_iso": "2026-01-01T22:49:53.494582+00:00",
+      "focus_terms": [
+        "caramelized onions"
+      ],
+      "temperature": "141\u00b0F",
+      "method": "jar in a water bath (bain-marie)",
+      "outcome": "Caramelized onions placed in jar with egg yolks and honey, jar put into 141\u00b0F water bath (no final result reported)",
+      "evidence": {
+        "session_id": "1275063227_01012026_223838_785890",
+        "message_index": 6,
+        "excerpt": "Thanks for describing the videos\u2014sounds like you're making sweet hollandaise with caramelized onions, egg yolks, and honey in a jar on a 141\u00b0F water bath. Got it logged."
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2025-10-10T18:19:55.509711+00:00",
+      "focus_terms": [
+        "caramelized onions"
+      ],
+      "temperature": "141.5\u00b0F",
+      "method": "sous vide (bagged with egg and caramelized onions)",
+      "outcome": "Resulting bag was too loose and did not smell or taste very good",
+      "evidence": {
+        "session_id": "1275063227_10102025_181726_554112",
+        "message_index": 3,
+        "excerpt": "both of the bags with caramelized onions were put in sous vide for about more than six hours overnight. One was cooked at 141.5\u00b0"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2025-10-10T18:19:55.509711+00:00",
+      "focus_terms": [
+        "caramelized onions"
+      ],
+      "temperature": "145.5\u00b0F",
+      "method": "sous vide (bagged with egg and caramelized onions)",
+      "outcome": "Much thicker texture; flavor and smell were nicer",
+      "evidence": {
+        "session_id": "1275063227_10102025_181726_554112",
+        "message_index": 4,
+        "excerpt": "the 145.5\u00b0F batch turned out thicker with a nicer aroma and flavor than the 141.5\u00b0F one."
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2025-12-31T23:59:07.084347+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "145\u00b0F",
+      "method": "caramelize (part of Spanish tortilla preparation; pan-cooked/fried)",
+      "outcome": "onions caramelized; finished omelette/tortilla reached ~145\u00b0F internal (eggs) with carryover; overall judged 'pretty good'",
+      "evidence": {
+        "session_id": "1275063227_29122025_175446_951513",
+        "message_index": 23,
+        "excerpt": "First we caramelized onions ... internal temperature of the egg was about 145\u00b0"
+      },
+      "confidence": 0.7
+    },
+    {
+      "date_iso": "2026-01-13T15:33:46.381728+00:00",
+      "focus_terms": [
+        "caramelized onions",
+        "onions"
+      ],
+      "temperature": "141\u00b0F",
+      "method": "low-temperature hollandaise (warm/low-temp emulsion with caramelized onions)",
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_12012026_155916_795289",
+        "message_index": 6,
+        "excerpt": "Thanks for the update on your caramelized onion hollandaise setup\u20143 cubes onions, 1 yolk, 3.5 tbsp butter, 1 tbsp water, pinch of sugar, and aiming for 141\u00b0F longer this time."
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2025-10-12T16:11:11.470553+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "\u2248180\u00b0F (user: 'below about 180\u00b0' prevents caramelization); target 180\u2013200\u00b0F",
+      "method": "Stovetop caramelizing in a heavy-bottom pan (right-bottom burner)",
+      "outcome": "Onions do not caramelize well if temperature drops below ~180\u00b0F; user has been cooking ~1\u20131.5 hours and finds it difficult to keep the pan in the 180\u2013200\u00b0F range",
+      "evidence": {
+        "session_id": "1275063227_12102025_122338_874397",
+        "message_index": 23,
+        "excerpt": "most of these photos, deal with me trying to caramelize some onions on the right bottom burner of the heavy bottom pan. Been cooking for about an hour maybe an hour and a half if the temperature drops below about 180\u00b0 then the caramel then the onions don\u2019t seem to caramelize very well, but it\u2019s difficult to keep the panin the 180 to 200 range"
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2025-10-12T16:11:11.470553+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "over 200\u00b0F",
+      "method": "pan (saut\u00e9 / caramelizing) \u2014 uneven pan surface temps",
+      "outcome": "Some onions beginning to brown while others remain translucent/pale yellow; uneven heat risking faster burning; user wants a slower caramelization over hours.",
+      "evidence": {
+        "session_id": "1275063227_12102025_122338_874397|2025-10-12T16:11:11.470553+00:00",
+        "message_index": 27,
+        "excerpt": "in this photo, some parts of the pan are over 200\u00b0 ... you can see from the photo that some of the onions begin to get brown while others stay more translucent, pale yellow."
+      },
+      "confidence": 0.75
+    },
+    {
+      "date_iso": "2025-10-12T16:11:11.470553+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "\u2248184\u00b0F",
+      "method": "pan (saut\u00e9 / caramelizing) \u2014 uneven pan surface temps",
+      "outcome": "Some onions beginning to brown while others remain translucent/pale yellow; uneven heat causing uneven caramelization and burn risk.",
+      "evidence": {
+        "session_id": "1275063227_12102025_122338_874397|2025-10-12T16:11:11.470553+00:00",
+        "message_index": 27,
+        "excerpt": "I think it was around 184\u00b0 ... some of the onions begin to get brown while others stay more translucent, pale yellow."
+      },
+      "confidence": 0.75
+    },
+    {
+      "date_iso": "2025-10-12T16:11:11.470553+00:00",
+      "focus_terms": [
+        "caramelized onions",
+        "onion\u2013yolk mixture"
+      ],
+      "temperature": "145.5\u00b0F",
+      "method": "sous vide in a Ziploc bag (about 3 hours)",
+      "outcome": "Not quite jammy but a thick jam; dark orange color; holds its shape; viscous and smooth; onion flavor more pronounced; could use salt.",
+      "evidence": {
+        "session_id": "1275063227_12102025_122338_874397|2025-10-12T16:11:11.470553+00:00",
+        "message_index": 31,
+        "excerpt": "It was sous vide in a Ziploc bag at 145.5\u00b0 for about three hours. It\u2019s not quite jammy ... kind of a thick jam ... The onion flavor is more pronounced and need some salt."
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2025-11-13T15:00:05.025885+00:00",
+      "focus_terms": [
+        "caramelized onions",
+        "egg"
+      ],
+      "temperature": "145\u00b0 (assumed \u00b0F)",
+      "method": "sous-vide (\"sous\" stated)",
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_04112025_202010_540895",
+        "message_index": 43,
+        "excerpt": "cooking at 145 degrees egg blended with caramelized onions. sous about 4 hours"
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2025-11-13T15:00:05.025885+00:00",
+      "focus_terms": [
+        "caramelized onions",
+        "egg"
+      ],
+      "temperature": "142.5\u00b0 (assumed \u00b0F)",
+      "method": "sous-vide (continuation of prior sous cook; \"cooked all three for about another hour and 142.5\u00b0\" )",
+      "outcome": "Cooked ~1 more hour at 142.5\u00b0. Adding a teaspoon of avocado oil brought out the sweetness of the onion; flavors remained distinct when mixed with salmon/other fats.",
+      "evidence": {
+        "session_id": "1275063227_04112025_202010_540895",
+        "message_index": 49,
+        "excerpt": "I cooked the caramelized onions and eggs and two more types of fat. ... i cooked all three for about another hour and 142.5\u00b0. Adding the avocado oil really brought out the sweetness in the onion."
+      },
+      "confidence": 0.9
+    }
+  ],
+  "stats": {
+    "rows_scanned": 193,
+    "chunks": 13,
+    "events_raw": 12,
+    "events_deduped": 12,
+    "errors": 0,
+    "elapsed_s": 31.5,
+    "max_workers": 16,
+    "chunk_char_limit": 7000,
+    "model": "gpt-5-mini-2025-08-07"
+  },
+  "errors": []
+}

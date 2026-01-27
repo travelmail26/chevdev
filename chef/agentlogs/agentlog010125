@@ -17,3 +17,8 @@
 2025-10-10: Added MongoDB timeout query params in testscripts/test_mongo_media_metadata.py to avoid long hangs.
 2025-10-10: Added SIGALRM timeout guard in testscripts/test_mongo_media_metadata.py to fail fast if create_media_metadata hangs.
 2026-01-02: Added media_metadata embedding pass in build_chat_session_chunks.py to store ai/user descriptions with media_id and URL, and exposed media fields in answer_with_nano vector results.
+2026-01-02: Switched build_chat_session_chunks.py to sentence-level chunking into chat_session_sentence_chunks collection (one sentence per turn, fallback to whole turn).
+2026-01-02: Commented out legacy multi-turn chunking at end of build_chat_session_chunks.py for reference only.
+2026-01-02: Removed turn_window/turn_overlap args/constants from build_chat_session_chunks.py now that sentence chunking is used.
+2026-01-02: Added embedding batch support in build_chat_session_chunks.py to reduce API calls (embedding-batch-size).
+2026-01-02: Pointed simple_database_approach/mongo_worker_embedding.py to chat_session_sentence_chunks for vector search.

@@ -1,0 +1,1363 @@
+{
+  "schema": "recipe_dictionary.v1",
+  "created_at": "2026-01-20T23:16:51.525018+00:00",
+  "question": "List all the different temperatures that a user has cooked onions. Include explicit numeric temps (F/C), ranges, and qualitative burner settings only if paired with onions (e.g., medium-high, low). Deduplicate and report unique temps.",
+  "source_candidates_path": "chef/analysisfolder/bot_runs/candidates_20260120T231528Z.json",
+  "events": [
+    {
+      "date_iso": "2026-01-01T22:49:53.494582+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "141\u00b0F",
+      "method": "water bath (in a jar)",
+      "outcome": "caramelized",
+      "evidence": {
+        "session_id": "1275063227_01012026_223838_785890",
+        "message_index": 6,
+        "excerpt": "caramelized onions... in a jar on a 141\u00b0F water bath."
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-09T22:35:09.040764+00:00",
+      "focus_terms": [
+        "organic yellow onions"
+      ],
+      "temperature": null,
+      "method": "caramelization",
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_08012026_214021_023976",
+        "message_index": 5,
+        "excerpt": "rough cutting some organic yellow onions before caramelization. The RADIAL vertical cut around the center"
+      },
+      "confidence": 0.4
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": null,
+      "method": "in a pan; added water and oil",
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 7,
+        "excerpt": "putting some onions in a pan then adding water and oil"
+      },
+      "confidence": 0.7
+    },
+    {
+      "date_iso": "2026-01-05T22:20:58.985397+00:00",
+      "focus_terms": [
+        "caramelized onions",
+        "onions"
+      ],
+      "temperature": "about 165 (units not specified)",
+      "method": "sous vide",
+      "outcome": "onion flavor muted; sauce was OK",
+      "evidence": {
+        "session_id": "1275063227_05012026_211245_266950",
+        "message_index": 1,
+        "excerpt": "I put them in a sous vide in about 165 with some butter"
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2026-01-02T16:53:40.555621+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "150\u00b0F (surface temperature of the pan)",
+      "method": "surface temperature of the pan; cooked with motion",
+      "outcome": "thickened up pretty nicely",
+      "evidence": {
+        "session_id": "1275063227_02012026_162148_369044",
+        "message_index": 29,
+        "excerpt": "I actually let it cook at around 150\u00b0 on the on the surface temperature of the pan and it actually with enough speed in motion it thickened up pretty nicely"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-02T16:53:40.555621+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "180\u00b0F (surface temperature of the pan)",
+      "method": "surface temperature of the pan; briefly increased",
+      "outcome": "gave it some nice color and doneness",
+      "evidence": {
+        "session_id": "1275063227_02012026_162148_369044",
+        "message_index": 31,
+        "excerpt": "and then I briefly took it to 180\u00b0 on the surface of the pan just to give it some nice color and done ness"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2025-11-13T15:00:05.025885+00:00",
+      "focus_terms": [
+        "caramelized onions",
+        "onions"
+      ],
+      "temperature": "142.5\u00b0 (unit not specified)",
+      "method": "cooked / caramelized",
+      "outcome": "Avocado oil boosted the onion\u2019s sweetness",
+      "evidence": {
+        "session_id": "1275063227_04112025_202010_540895",
+        "message_index": 49,
+        "excerpt": "I cooked the caramelized onions ... I cooked all three for about another hour and 142.5\u00b0. Adding the avocado oil really brought out the sweetness in the onion."
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2026-01-05T22:20:58.985397+00:00",
+      "focus_terms": [
+        "onions",
+        "caramelized onions",
+        "hollandaise"
+      ],
+      "temperature": null,
+      "method": "caramelized; sous vide",
+      "outcome": "Onions lost punch after a few days in the fridge; sieving plus sous vide muted the aromatics",
+      "evidence": {
+        "session_id": "1275063227_05012026_211245_266950",
+        "message_index": 2,
+        "excerpt": "Thanks for sharing the details of your caramelized onion hollandaise experiment... the onions lost some punch after a few days in the fridge, and the sieving plus sous vide might have muted the aromatics"
+      },
+      "confidence": 0.4
+    },
+    {
+      "date_iso": "2025-10-10T18:16:23.945461+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": null,
+      "method": "caramelized",
+      "outcome": "Frozen in a manually vacuumed Ziploc for ~4+ days; refrigerated defrost ~24 hours; flavor and smell described as pretty good",
+      "evidence": {
+        "session_id": "1275063227_10102025_181530_475424",
+        "message_index": 3,
+        "excerpt": "I froze some caramelized onions and I had them in the freezer in a manually vacuumed Ziploc bag for about maybe four or more days opened it up and the flavor and smell was pretty good and that was after about 24 hours of refrigeration defrost"
+      },
+      "confidence": 0.7
+    },
+    {
+      "date_iso": "2025-10-10T18:19:55.509711+00:00",
+      "focus_terms": [
+        "onion",
+        "egg",
+        "olive oil"
+      ],
+      "temperature": null,
+      "method": null,
+      "outcome": "Onion paired with egg but the dish needed additional fat; adding olive oil improved the flavor.",
+      "evidence": {
+        "session_id": "1275063227_10102025_181726_554112",
+        "message_index": 5,
+        "excerpt": "One of the things that I noticed was that even though that the egg and the onion paired well together, it still needed another fat and so I kind of poured in a little bit of olive oil and that improved the flavor..."
+      },
+      "confidence": 0.5
+    },
+    {
+      "date_iso": "2026-01-12T15:54:48.096390+00:00",
+      "focus_terms": [
+        "onion"
+      ],
+      "temperature": null,
+      "method": "coated the pan/bottom of the pot with a little olive oil; onion described as raw",
+      "outcome": "raw",
+      "evidence": {
+        "session_id": "1275063227_11012026_190407_465110",
+        "message_index": 3,
+        "excerpt": "planning on making a braised beef red wine reduction. Here\u2019s some raw oxtail short rib and onion with a little bit of olive oil just to coat the pan or the bottom of the pot"
+      },
+      "confidence": 0.7
+    },
+    {
+      "date_iso": "2026-01-12T15:54:48.096390+00:00",
+      "focus_terms": [
+        "onion",
+        "caramelized onion"
+      ],
+      "temperature": "139.5\u00b0F",
+      "method": "sous vide",
+      "outcome": "caramelized onion with egg yolk (held in sous vide ~15 hours)",
+      "evidence": {
+        "session_id": "1275063227_11012026_190407_465110",
+        "message_index": 21,
+        "excerpt": "The onion and egg the caramelized onion and egg yolk has been in the sous vide for about 15 hours at 139.5\u00b0"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-02T16:53:40.555621+00:00",
+      "focus_terms": [
+        "caramelized onion"
+      ],
+      "temperature": "about 140.5\u00b0",
+      "method": "sous vide circulator",
+      "outcome": "cooked for maybe 4 to 5 hours, then refrigerated overnight",
+      "evidence": {
+        "session_id": "1275063227_02012026_162148_369044",
+        "message_index": 3,
+        "excerpt": "This had been in a sous vide circulator at about 140.5\u00b0 for maybe 4 to 5 hours."
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-02T16:53:40.555621+00:00",
+      "focus_terms": [
+        "caramelized onion"
+      ],
+      "temperature": "around 105\u00b0",
+      "method": "sous vide bath (reheating)",
+      "outcome": "reheating from refrigerated overnight",
+      "evidence": {
+        "session_id": "1275063227_02012026_162148_369044",
+        "message_index": 3,
+        "excerpt": "I\u2019m reheating it in a sous vide bath at around 105\u00b0 because I was already making some yogurt"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-12T15:54:48.096390+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": null,
+      "method": null,
+      "outcome": "No cooking temperature, range, or burner setting for onions mentioned in the provided snippets.",
+      "evidence": {
+        "session_id": "1275063227_11012026_190407_465110",
+        "message_index": 11,
+        "excerpt": "I completely forgot to add some sweet tomatoes. The last time I made this sauce I added some ketchup and I think it made a bit of a difference. So this is a picture of cherry tomatoes the sugar bomb flavor rocks sunset variety from Whole Foods I just tore them in half with my bare hands and added a little bit of extra-virgin olive oil and I\u2019m gonna roast them and I plan on adding them to the sauce because"
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": null,
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "steaming",
+      "method": "steaming",
+      "outcome": "onions somewhat translucent, pliable",
+      "evidence": {
+        "session_id": "1275063227_08012026_214021_023976",
+        "message_index": 23,
+        "excerpt": "after about 20 minutes with the pot mostly on the heat and steaming and boiling at the bottom there appears to be more liquid and the onions are somewhat translucent pliable"
+      },
+      "confidence": 0.75
+    },
+    {
+      "date_iso": null,
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "boiling (at the bottom)",
+      "method": "boiling",
+      "outcome": "onions somewhat translucent, pliable",
+      "evidence": {
+        "session_id": "1275063227_08012026_214021_023976",
+        "message_index": 23,
+        "excerpt": "after about 20 minutes with the pot mostly on the heat and steaming and boiling at the bottom there appears to be more liquid and the onions are somewhat translucent pliable"
+      },
+      "confidence": 0.75
+    },
+    {
+      "date_iso": null,
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "pot mostly on the heat",
+      "method": "stovetop heating",
+      "outcome": "onions somewhat translucent, pliable",
+      "evidence": {
+        "session_id": "1275063227_08012026_214021_023976",
+        "message_index": 23,
+        "excerpt": "after about 20 minutes with the pot mostly on the heat and steaming and boiling at the bottom there appears to be more liquid and the onions are somewhat translucent pliable"
+      },
+      "confidence": 0.5
+    },
+    {
+      "date_iso": "2025-10-12T16:11:11.470553+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": null,
+      "method": null,
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_12102025_122338_874397",
+        "message_index": 1,
+        "excerpt": "i\u2019m going to make some onions and maybe some eggs"
+      },
+      "confidence": 0.3
+    },
+    {
+      "date_iso": "2026-01-01T22:49:53.494582+00:00",
+      "focus_terms": [
+        "caramelized onions",
+        "onions"
+      ],
+      "temperature": null,
+      "method": "caramelizing",
+      "outcome": "caramelized onions placed in a jar with egg yolks and honey",
+      "evidence": {
+        "session_id": "1275063227_01012026_223838_785890",
+        "message_index": 5,
+        "excerpt": "The first video is me putting the caramelized onions and egg yolks for a little bit of honey in a jar."
+      },
+      "confidence": 0.7
+    },
+    {
+      "date_iso": "2026-01-01T22:49:53.494582+00:00",
+      "focus_terms": [
+        "caramelized onions",
+        "onions"
+      ],
+      "temperature": "141\u00b0 (unit not specified)",
+      "method": "water bath",
+      "outcome": "jar (containing caramelized onions and egg yolks) placed in a water bath at ~141\u00b0",
+      "evidence": {
+        "session_id": "1275063227_01012026_223838_785890",
+        "message_index": 5,
+        "excerpt": "the second video was me putting that jar in a water bath at 140 something degrees at 141\u00b0"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "steam and light sizzling (lid on)",
+      "method": "cooking with lid on",
+      "outcome": "not translucent",
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 11,
+        "excerpt": "checking the temperature of the onions after the after they\u2019ve been cooking with the lid on. There\u2019s some steam and a little bit of sizzling but not quite translucent at all"
+      },
+      "confidence": 0.7
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "about 182\u00b0F",
+      "method": "cooking (lid removed)",
+      "outcome": "starting to become a little translucent; shrunk slightly",
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 15,
+        "excerpt": "cooking at about 182 degrees onions are starting to become a little translucent and I think they have shrunk just a little bit. I removed the pot lid"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-09T22:35:09.040764+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "steaming",
+      "method": "steamed in a pot with a very small amount of water to generate steam",
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_08012026_214021_023976",
+        "message_index": 9,
+        "excerpt": "place the onions in a pot because I didn\u2019t have a lid big enough for a pan and placed just maybe at most a few milliliters not a few milliliters of a very tiny amount of water in the bottom of the pan just enough to start some steam"
+      },
+      "confidence": 0.5
+    },
+    {
+      "date_iso": "2026-01-09T22:35:09.040764+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": null,
+      "method": "rough cutting (radial vertical cut) in preparation for caramelization",
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_08012026_214021_023976",
+        "message_index": 6,
+        "excerpt": "Got it, you're rough cutting organic yellow onions using the radial vertical cut around the center for caramelization."
+      },
+      "confidence": 0.4
+    },
+    {
+      "date_iso": "2026-01-09T22:35:09.040764+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "190\u00b0F",
+      "method": "pan saut\u00e9 / direct contact (faint sizzling)",
+      "outcome": "faint sizzling after dumping excess water to allow direct pan contact",
+      "evidence": {
+        "session_id": "1275063227_08012026_214021_023976",
+        "message_index": 37,
+        "excerpt": "depends about I think about 190\u00b0 and I can hear some faint sizzling"
+      },
+      "confidence": 0.92
+    },
+    {
+      "date_iso": "2026-01-09T22:35:09.040764+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "steaming/boiling",
+      "method": "steaming / boiling in pot",
+      "outcome": "onions somewhat translucent and pliable; excess liquid present",
+      "evidence": {
+        "session_id": "1275063227_08012026_214021_023976",
+        "message_index": 29,
+        "excerpt": "after about 20 minutes with the pot mostly on the heat and steaming and boiling at the bottom there appears to be more liquid and the onions are somewhat translucent pliable"
+      },
+      "confidence": 0.7
+    },
+    {
+      "date_iso": "2026-01-02T16:53:40.555621+00:00",
+      "focus_terms": [
+        "onion",
+        "onion-egg mixture",
+        "sous-vide caramelized onion"
+      ],
+      "temperature": "around 130\u00b0F (130\u00b0 range)",
+      "method": "pan (while incorporating warmed sous-vide onion-egg mixture)",
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_02012026_162148_369044",
+        "message_index": 19,
+        "excerpt": "I scooped out the onion egg mixture ... around and 130\u00b0 range and 140\u00b0 range of a pan"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-02T16:53:40.555621+00:00",
+      "focus_terms": [
+        "onion",
+        "onion-egg mixture",
+        "sous-vide caramelized onion"
+      ],
+      "temperature": "around 140\u00b0F (140\u00b0 range)",
+      "method": "pan (while incorporating warmed sous-vide onion-egg mixture)",
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_02012026_162148_369044",
+        "message_index": 19,
+        "excerpt": "I scooped out the onion egg mixture ... around and 130\u00b0 range and 140\u00b0 range of a pan"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-02T16:53:40.555621+00:00",
+      "focus_terms": [
+        "onion",
+        "onion-egg mixture",
+        "sous-vide caramelized onion"
+      ],
+      "temperature": "briefly up to 150\u00b0F (about 150\u00b0)",
+      "method": "pan (brief temperature spike)",
+      "outcome": "took pan off the heat after brief spike",
+      "evidence": {
+        "session_id": "1275063227_02012026_162148_369044",
+        "message_index": 23,
+        "excerpt": "it briefly got up to 150\u00b0"
+      },
+      "confidence": 0.97
+    },
+    {
+      "date_iso": "2026-01-12T15:54:48.096390+00:00",
+      "focus_terms": [
+        "onion",
+        "egg"
+      ],
+      "temperature": "145\u00b0F",
+      "method": "heated in pan",
+      "outcome": "mixture thickened; onion and egg taste was very subtle",
+      "evidence": {
+        "session_id": "1275063227_11012026_190407_465110",
+        "message_index": 29,
+        "excerpt": "I put it on about 145\u00b0 pan and it got pretty thick but the onion and egg tastes was really subtle"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "210\u00b0F",
+      "method": null,
+      "outcome": "onions became much more brown",
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 21,
+        "excerpt": "The onions have become much more brown at times they were cooking at about 210\u00b0"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "180\u00b0F (average)",
+      "method": null,
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 21,
+        "excerpt": "then I turned the heat down on average it\u2019s been around 180\u00b0"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "165\u00b0F (approx)",
+      "method": null,
+      "outcome": "stepped away while on low; some pieces still translucent",
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 25,
+        "excerpt": "it was on low and it was around and I think it was maybe around 165\u00b0"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "\u2248270\u00b0F (spiked to ~270\u00b0 / 270\u00b0 range)",
+      "method": null,
+      "outcome": "significant browning on some pieces",
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 25,
+        "excerpt": "it started to go up to like 270 or somewhere in the 270\u00b0 range"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "low (burner setting)",
+      "method": null,
+      "outcome": "pan was on low when user stepped away",
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 25,
+        "excerpt": "I stepped away from the pan because it was on low"
+      },
+      "confidence": 0.7
+    },
+    {
+      "date_iso": "2026-01-13T15:33:46.381728+00:00",
+      "focus_terms": [
+        "caramelized onions"
+      ],
+      "temperature": "141\u00b0F",
+      "method": "lower temperature, longer cook",
+      "outcome": "aiming for longer cook at lower temp",
+      "evidence": {
+        "session_id": "1275063227_12012026_155916_795289",
+        "message_index": 5,
+        "excerpt": "OK for this next round of caramelized onion hollandaise sauce ... Going to be this time for longer at a lower temperature about 141\u00b0"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2025-10-10T18:19:55.509711+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": null,
+      "method": "caramelized",
+      "outcome": "caramelized for about two hours",
+      "evidence": {
+        "session_id": "1275063227_10102025_181726_554112",
+        "message_index": 3,
+        "excerpt": "caramelized onions that have been caramelized for about two hours"
+      },
+      "confidence": 0.7
+    },
+    {
+      "date_iso": "2025-10-10T18:19:55.509711+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "141.5\u00b0F",
+      "method": "sous vide",
+      "outcome": "sous-vide cooked >6 hours overnight; final texture too loose and did not smell or taste very good",
+      "evidence": {
+        "session_id": "1275063227_10102025_181726_554112",
+        "message_index": 3,
+        "excerpt": "both of the bags with caramelized onions were put in sous vide ... One was cooked at 141.5\u00b0 ... the bag that was 141.5 was too loose and did not smell very good or taste very good"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2025-10-10T18:19:55.509711+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "145.5\u00b0F",
+      "method": "sous vide",
+      "outcome": "sous-vide cooked >6 hours overnight; much thicker with nicer flavor and smell",
+      "evidence": {
+        "session_id": "1275063227_10102025_181726_554112",
+        "message_index": 3,
+        "excerpt": "the other one was cooked at ... 145.5 ... the 145.5 was much thicker and the flavor and smell was nicer"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": null,
+      "focus_terms": [
+        "triple caramelized onions",
+        "onions"
+      ],
+      "temperature": null,
+      "method": "caramelized",
+      "outcome": "Made a hollandaise containing triple caramelized onions; frozen for slightly less than a day, then warmed \u2014 sauce was noticeably thicker after warming but a splash of cream restored color and ~80% of the flavor.",
+      "evidence": {
+        "session_id": "1275063227_12012026_155916_795289",
+        "message_index": 11,
+        "excerpt": "I also ended up freezing the latest batch of hollandaise with the triple caramelized onions and more butter. I only froze it for a little less than a day and when it came out it was noticeably thicker in the pan even after being warmed, but a little splash of cream and the color came back and the taste was probably about 80% there compared to what it was"
+      },
+      "confidence": 0.7
+    },
+    {
+      "date_iso": "2025-10-09T21:31:26.148533+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "160\u2013200\u00b0C",
+      "method": "caramelizing",
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_09102025_212452_597702",
+        "message_index": 7,
+        "excerpt": "you\u2019ve been caramelizing onions for about 40 minutes, with the pan around 160\u2013200\u00b0C"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2025-10-09T21:31:26.148533+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "213\u00b0",
+      "method": "caramelizing",
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_09102025_212452_597702",
+        "message_index": 8,
+        "excerpt": "the surface temperature of the pan gets hotter. It\u2019s 213\u00b0."
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2025-10-09T21:31:26.148533+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "LO (below 2 on the left bottom burner)",
+      "method": "caramelizing",
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_09102025_212452_597702",
+        "message_index": 8,
+        "excerpt": "when I have the pan set to the LO setting that\u2019s below two on the left bottom burner"
+      },
+      "confidence": 0.65
+    },
+    {
+      "date_iso": "2025-10-12T16:11:11.470553+00:00",
+      "focus_terms": [
+        "caramelized onions",
+        "onions"
+      ],
+      "temperature": "145.5\u00b0 (unit not stated; likely \u00b0F)",
+      "method": "sous vide (in a Ziploc bag)",
+      "outcome": "Thick jam-like (not quite jammy), dark orange, holds its shape, viscous and smooth; onion flavor more pronounced and needs salt.",
+      "evidence": {
+        "session_id": "1275063227_12102025_122338_874397",
+        "message_index": 31,
+        "excerpt": "It was sous vide in a Ziploc bag at 145.5\u00b0 for about three hours."
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2025-11-13T15:00:05.025885+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "145\u00b0",
+      "method": "sous-vide",
+      "outcome": "Egg blended with caramelized onions cooked sous-vide ~4 hours (grainy/coarse); flavor improved after ~10 hours.",
+      "evidence": {
+        "session_id": "1275063227_04112025_202010_540895",
+        "message_index": 43,
+        "excerpt": "cooking at 145 degrees egg blended with caramelized onions. sous about 4 hours"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2025-10-09T21:31:26.148533+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "160\u2013200\u00b0F",
+      "method": "caramelizing",
+      "outcome": "in progress (user reports turning heat down)",
+      "evidence": {
+        "session_id": "1275063227_09102025_212452_597702",
+        "message_index": 4,
+        "excerpt": "I\u2019m caramelizing some onions. ... Temperature of the pan goes between 160 and 200. That\u2019s a little too high so I\u2019m gonna turn it down."
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": null,
+      "focus_terms": [
+        "onion"
+      ],
+      "temperature": "278\u00b0F",
+      "method": null,
+      "outcome": "some onion burned / removed",
+      "evidence": {
+        "session_id": "1275063227_14012026_225501_280682",
+        "message_index": 25,
+        "excerpt": "the side of the pan reached to 78 278 it reached 278\u00b0"
+      },
+      "confidence": 0.7
+    },
+    {
+      "date_iso": "2025-11-17T19:45:52.173567+00:00",
+      "focus_terms": [
+        "onion"
+      ],
+      "temperature": "142.5\u00b0F",
+      "method": "sous vide",
+      "outcome": "turning translucent",
+      "evidence": {
+        "session_id": "1275063227_17112025_184551_109019",
+        "message_index": 29,
+        "excerpt": "sous vide in pot at 142.5 degreedegreess turning translucent"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2025-12-31T23:59:07.084347+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": null,
+      "method": "caramelized",
+      "outcome": "caramelized; used in Spanish tortilla",
+      "evidence": {
+        "session_id": "1275063227_29122025_175446_951513",
+        "message_index": 19,
+        "excerpt": "i\u2019m making a Spanish tortilla. First we caramelized onions and then fried and potatoes."
+      },
+      "confidence": 0.8
+    },
+    {
+      "date_iso": "2025-12-31T23:59:07.084347+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": null,
+      "method": "chopping",
+      "outcome": "preparation (chopped)",
+      "evidence": {
+        "session_id": "1275063227_29122025_175446_951513",
+        "message_index": 27,
+        "excerpt": "chopping some onions"
+      },
+      "confidence": 0.5
+    },
+    {
+      "date_iso": "2025-10-13T17:37:31.473218+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "176\u00b0F",
+      "method": "saut\u00e9ing (covered with lid)",
+      "outcome": "Significant moisture/steam released when lid opened (desired outcome)",
+      "evidence": {
+        "session_id": "7815621459_13102025_161638_631026",
+        "message_index": 31,
+        "excerpt": "Opened up the the pan from the lid that had a covered lid of sauteing onions when I had the temperature around 176\u00b0. I opened it up and there was significance amount of moisture and steam coming out which is what I was looking for"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2025-12-31T23:59:07.084347+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": null,
+      "method": "placed onions in a pan, added water and oil",
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_29122025_175446_951513",
+        "message_index": 31,
+        "excerpt": "putting some onions in a pan then adding water and oil"
+      },
+      "confidence": 0.5
+    },
+    {
+      "date_iso": "2025-12-31T23:59:07.084347+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": null,
+      "method": "onions in a pan on a stovetop, covered with a lid",
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_29122025_175446_951513",
+        "message_index": 35,
+        "excerpt": "putting the onions with the pan in the pan on a stove top and covering it with a lid"
+      },
+      "confidence": 0.5
+    },
+    {
+      "date_iso": "2025-10-17T12:13:15.925230+00:00",
+      "focus_terms": [
+        "onions",
+        "caramelized onions"
+      ],
+      "temperature": null,
+      "method": "caramelized (long, slow-cook)",
+      "outcome": "caramelized onions (cooked ~10 hours)",
+      "evidence": {
+        "session_id": "1275063227_17102025_120722_920821",
+        "message_index": 7,
+        "excerpt": "I had sous vide eggs and caramelized onions for eight hours no for about 10 hours"
+      },
+      "confidence": 0.75
+    },
+    {
+      "date_iso": "2025-10-13T17:37:31.473218+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "about 140\u00b0",
+      "method": "covered in a pan",
+      "outcome": "after ~10 minutes, almost no change (no steam)",
+      "evidence": {
+        "session_id": "7815621459_13102025_161638_631026",
+        "message_index": 11,
+        "excerpt": "Checked on the onions that were covered in a pan The temperature is about 140\u00b0 ... after about maybe 10 minutes almost nothing happened because it was just too cold ... no steam"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-15T19:38:52.347998+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "about 250\u00b0 (unit not stated)",
+      "method": "small pan; cooked in butter",
+      "outcome": "foamed heavily then browned (frying-like) without burning; produced a sweet, nutty butter after straining",
+      "evidence": {
+        "session_id": "1275063227_14012026_225501_280682",
+        "message_index": 3,
+        "excerpt": "try to keep the temperature to about 250\u00b0"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-15T19:38:52.347998+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "around 183\u00b0 (unit not stated); also described as 'very high heat' during the cook",
+      "method": "sous vide in a Ziploc bag (with a little butter)",
+      "outcome": "after ~21\u201322 hours, generally not noticeably brown though a few very brown spots; browned very slowly",
+      "evidence": {
+        "session_id": "1275063227_14012026_225501_280682",
+        "message_index": 7,
+        "excerpt": "put raw onions in a Ziploc bag and sous vide at around 183\u00b0"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-15T23:34:59.334051+00:00",
+      "focus_terms": [
+        "onion"
+      ],
+      "temperature": "375\u00b0F (approx)",
+      "method": "covered in foil (dome) with butter and water",
+      "outcome": "significant browning and softening",
+      "evidence": {
+        "session_id": "1275063227_15012026_224055_878930",
+        "message_index": 3,
+        "excerpt": "I cooked it on 375\u00b0 for maybe three hours ... And there was a significant browning and softening"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2025-10-12T16:11:11.470553+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "below about 180\u00b0F",
+      "method": "caramelizing",
+      "outcome": "Onions do not caramelize very well when temperature drops below this",
+      "evidence": {
+        "session_id": "1275063227_12102025_122338_874397",
+        "message_index": 23,
+        "excerpt": "if the temperature drops below about 180\u00b0 then the caramel then the onions don\u2019t seem to caramelize very well"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2025-10-12T16:11:11.470553+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "180\u2013200\u00b0F",
+      "method": "caramelizing",
+      "outcome": "Target range the user is trying to hold for slow caramelization (difficult to keep the pan in this range)",
+      "evidence": {
+        "session_id": "1275063227_12102025_122338_874397",
+        "message_index": 23,
+        "excerpt": "but it\u2019s difficult to keep the panin the 180 to 200 range"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2025-10-12T16:11:11.470553+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "around 184\u00b0F",
+      "method": "caramelizing",
+      "outcome": "Some onions begin to get brown while others stay more translucent (uneven caramelization)",
+      "evidence": {
+        "session_id": "1275063227_12102025_122338_874397",
+        "message_index": 27,
+        "excerpt": "I think it was around 184\u00b0 this you can see from the photo that some of the onions begin to get brown while others stay more translucent, pale yellow"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2025-10-12T16:11:11.470553+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "over 200\u00b0F",
+      "method": "caramelizing",
+      "outcome": "Some parts of the pan exceed this, causing uneven browning and risk of burning",
+      "evidence": {
+        "session_id": "1275063227_12102025_122338_874397",
+        "message_index": 27,
+        "excerpt": "in this photo, some parts of the pan are over 200\u00b0"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2025-10-13T17:37:31.473218+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "92\u00b0 (reported by user; assistant previously restated as 92\u00b0F)",
+      "method": "Onions in a heavy-bottom pan with ~2 capfuls olive oil, covered with a lid",
+      "outcome": null,
+      "evidence": {
+        "session_id": "7815621459_13102025_161638_631026",
+        "message_index": 1,
+        "excerpt": "Sliced up some onions ... Temperature initial temperature was about 92\u00b0 as measured by an infrared thermometer. Then I covered with a lid."
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2025-11-17T19:45:52.173567+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": null,
+      "method": "softened with about 1/2 cup water",
+      "outcome": "softened",
+      "evidence": {
+        "session_id": "1275063227_17112025_184551_109019",
+        "message_index": 3,
+        "excerpt": "onions were softened with about half cup of water"
+      },
+      "confidence": 0.7
+    },
+    {
+      "date_iso": "2025-11-17T19:45:52.173567+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "around 240 degrees (user) \u2014 assistant restated as ~240\u00b0F; described as higher heat",
+      "method": "after ~19 minutes, added ~1 tbsp butter and increased heat with more regular stirring",
+      "outcome": "turned translucent with slight browning",
+      "evidence": {
+        "session_id": "1275063227_17112025_184551_109019",
+        "message_index": 3,
+        "excerpt": "after about 19 minutes with about a tablespoon of butter and higher heat showed at around 240 degrees turning translucent and slight brown"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-12T15:54:48.096390+00:00",
+      "focus_terms": [
+        "onion"
+      ],
+      "temperature": "143\u00b0F",
+      "method": "held the egg-onion hollandaise sauce at about 143\u00b0F",
+      "outcome": "sieved into pan; viscosity high enough to hold a streak; emulsified but a little watery",
+      "evidence": {
+        "session_id": "1275063227_11012026_190407_465110",
+        "message_index": 45,
+        "excerpt": "after being at about 143\u00b0 the egg onion hollandaise sauce ... I put it through a sieve into a pan"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-12T15:54:48.096390+00:00",
+      "focus_terms": [
+        "onion"
+      ],
+      "temperature": "about 152\u00b0F",
+      "method": "heated the pan up to about 152\u00b0 very briefly (taking it on and off the heat)",
+      "outcome": "noticeably thickened the sauce to a nicer consistency; holds shape; flavor improved slightly; onion described as a little too subtle",
+      "evidence": {
+        "session_id": "1275063227_11012026_190407_465110",
+        "message_index": 49,
+        "excerpt": "I heated the pan up about 152\u00b0 very briefly taking it on and off the heat ... that has noticeably thickened up the sauce ... The Onion ... is a little too subtle"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-12T15:54:48.096390+00:00",
+      "focus_terms": [
+        "onion"
+      ],
+      "temperature": "around 140\u00b0F",
+      "method": "attempted to keep the pan/sauce at around 140\u00b0",
+      "outcome": "helped thicken the sauce (part of the heating process noted to improve consistency)",
+      "evidence": {
+        "session_id": "1275063227_11012026_190407_465110",
+        "message_index": 49,
+        "excerpt": "trying to keep it at around 140\u00b0 and that has noticeably thickened up the sauce"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-12T15:54:48.096390+00:00",
+      "focus_terms": [
+        "onion"
+      ],
+      "temperature": "around 140\u2013152\u00b0F",
+      "method": "gently heating the sauce to a range of temperatures",
+      "outcome": "thickened the sauce to hold shape and improved flavor slightly",
+      "evidence": {
+        "session_id": "1275063227_11012026_190407_465110",
+        "message_index": 50,
+        "excerpt": "gently heating the sauce to around 140-152\u00b0F, which thickened it nicely"
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2026-01-15T19:38:52.347998+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "270",
+      "method": "electric burner / pan (sides)",
+      "outcome": "burnt parts in the onions; uneven browning",
+      "evidence": {
+        "session_id": "1275063227_14012026_225501_280682",
+        "message_index": 17,
+        "excerpt": "I put it on a much much higher heat the sides of the pan got up to about 270 but then they started to be burnt parts in the onions"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-15T19:38:52.347998+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "much much higher heat",
+      "method": "electric burner / pan",
+      "outcome": "increased bubbling, more moisture release; uneven browning and burnt parts",
+      "evidence": {
+        "session_id": "1275063227_14012026_225501_280682",
+        "message_index": 17,
+        "excerpt": "I put it on a much much higher heat ... but then they started to be burnt parts in the onions"
+      },
+      "confidence": 0.5
+    },
+    {
+      "date_iso": "2025-11-17T19:45:52.173567+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "250\u00b0F",
+      "method": null,
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_17112025_184551_109019",
+        "message_index": 9,
+        "excerpt": "pan temperature closer to 250 degrees"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2025-11-17T19:45:52.173567+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": null,
+      "method": null,
+      "outcome": "noticeable softening and brown streaks; had to change pans",
+      "evidence": {
+        "session_id": "1275063227_17112025_184551_109019",
+        "message_index": 7,
+        "excerpt": "another 20 minutes noticeable softening and brown streaks in onions. had to change pans"
+      },
+      "confidence": 0.7
+    },
+    {
+      "date_iso": "2025-11-17T19:45:52.173567+00:00",
+      "focus_terms": [
+        "onions",
+        "onion mix"
+      ],
+      "temperature": null,
+      "method": "steaming",
+      "outcome": "at ~50 minutes after steaming, added ~1/16 tsp baking soda",
+      "evidence": {
+        "session_id": "1275063227_17112025_184551_109019",
+        "message_index": 13,
+        "excerpt": "at point 50 minutes after steaming added about 1/16th tsp of baking soda to onion mix"
+      },
+      "confidence": 0.8
+    },
+    {
+      "date_iso": "2025-11-17T19:45:52.173567+00:00",
+      "focus_terms": [
+        "onions",
+        "Vidalia"
+      ],
+      "temperature": null,
+      "method": null,
+      "outcome": "after ~8 minutes post-baking soda: significant browning; smaller, oilier; somewhat sweet",
+      "evidence": {
+        "session_id": "1275063227_17112025_184551_109019",
+        "message_index": 17,
+        "excerpt": "after about 8 minutes after baking soda added. significant browning of onions. smaller oilier. taste somewhat sweet but less so i think than a really slow process. i used a farmers market vadalia onion"
+      },
+      "confidence": 0.7
+    },
+    {
+      "date_iso": "2025-10-13T17:37:31.473218+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "about 185\u00b0F (pan)",
+      "method": "pan cooking / softening",
+      "outcome": "After ~30 minutes onions more translucent with some browning on smaller pieces",
+      "evidence": {
+        "session_id": "7815621459_13102025_161638_631026",
+        "message_index": 57,
+        "excerpt": "This is a picture of the onions... maybe 30 minutes they're starting to get more translucent noticeable some browning... the temperature is about 185\u00b0 on the pan"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2025-10-13T17:37:31.473218+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "about 180\u00b0F (low)",
+      "method": "softened at low heat (~1 hour)",
+      "outcome": "Softened over ~1 hour",
+      "evidence": {
+        "session_id": "7815621459_13102025_161638_631026",
+        "message_index": 61,
+        "excerpt": "These were softened for about an hour at low temperature around 180 degrees"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2025-10-13T17:37:31.473218+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "about 300\u00b0F",
+      "method": "heat increased (higher heat) for browning",
+      "outcome": "Cooked ~15 minutes at higher heat; crunchy with brown spots around edges and translucent larger pieces",
+      "evidence": {
+        "session_id": "7815621459_13102025_161638_631026",
+        "message_index": 61,
+        "excerpt": "then kicked up to around 300 degrees for about 15 minutes. Crunchy and spots of brown around edges or small pieces with larger ones translucent white"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-15T19:38:52.347998+00:00",
+      "focus_terms": [
+        "onions",
+        "butter"
+      ],
+      "temperature": "183\u00b0F",
+      "method": "sous vide",
+      "outcome": "uneven results and potential boil-dry pause",
+      "evidence": {
+        "session_id": "1275063227_14012026_225501_280682",
+        "message_index": 8,
+        "excerpt": "Thanks for describing your sous vide onion experiment\u201421-22 hours at 183\u00b0F with butter sounds like a patient approach to browning."
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-15T19:38:52.347998+00:00",
+      "focus_terms": [
+        "onions",
+        "butter"
+      ],
+      "temperature": "around 320\u00b0",
+      "method": null,
+      "outcome": "burned",
+      "evidence": {
+        "session_id": "1275063227_14012026_225501_280682",
+        "message_index": 11,
+        "excerpt": "this was a fail the temperature ended up getting at some point around 320\u00b0 I think more than once in a larger batch of onions and butter and that just burned it."
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-15T19:38:52.347998+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "over 200\u00b0",
+      "method": "electric burner",
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_14012026_225501_280682",
+        "message_index": 15,
+        "excerpt": "you have to be really really diligent because you have to keep it on a really high hint to begin with to get it over 200\u00b0"
+      },
+      "confidence": 0.75
+    },
+    {
+      "date_iso": "2026-01-15T19:38:52.347998+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "really high (burner setting)",
+      "method": "electric burner",
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_14012026_225501_280682",
+        "message_index": 15,
+        "excerpt": "you have to be really really diligent because you have to keep it on a really high hint to begin with"
+      },
+      "confidence": 0.7
+    },
+    {
+      "date_iso": "2026-01-15T23:34:59.334051+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "220\u00b0 (as reported)",
+      "method": "pan (started in pan after oven)",
+      "outcome": "nice browning",
+      "evidence": {
+        "session_id": "1275063227_15012026_224055_878930",
+        "message_index": 7,
+        "excerpt": "I started out at around 220\u00b0 and that had some nice browning"
+      },
+      "confidence": 0.92
+    },
+    {
+      "date_iso": "2026-01-15T23:34:59.334051+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "about 280\u00b0\u2013300\u00b0",
+      "method": "pan (higher-heat phase, stirring/frying)",
+      "outcome": "deep brown / frying color",
+      "evidence": {
+        "session_id": "1275063227_15012026_224055_878930",
+        "message_index": 7,
+        "excerpt": "I really kicked it up the heat to about between 280 and around 300\u00b0"
+      },
+      "confidence": 0.92
+    },
+    {
+      "date_iso": "2026-01-15T23:34:59.334051+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "375\u00b0F",
+      "method": "oven (initial oven-cook)",
+      "outcome": "oven-cooked (about three hours)",
+      "evidence": {
+        "session_id": "1275063227_15012026_224055_878930",
+        "message_index": 9,
+        "excerpt": "that\u2019s about three hours in the oven at 375\u00b0"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-15T23:34:59.334051+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "lower heat / low (qualitative)",
+      "method": "pan (first phase of pan finishing)",
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_15012026_224055_878930",
+        "message_index": 9,
+        "excerpt": "the pan does in two phases one a lower heat cook"
+      },
+      "confidence": 0.7
+    },
+    {
+      "date_iso": "2026-01-15T23:34:59.334051+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "higher heat / high (qualitative)",
+      "method": "pan (second phase of pan finishing)",
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_15012026_224055_878930",
+        "message_index": 9,
+        "excerpt": "and then a higher heat cook"
+      },
+      "confidence": 0.7
+    }
+  ],
+  "stats": {
+    "rows_scanned": 521,
+    "chunks": 72,
+    "events_raw": 88,
+    "events_deduped": 88,
+    "errors": 0,
+    "elapsed_s": 75.18,
+    "max_workers": 24,
+    "chunk_char_limit": 2600,
+    "model": "gpt-5-mini-2025-08-07"
+  },
+  "errors": []
+}

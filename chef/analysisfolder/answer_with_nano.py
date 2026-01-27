@@ -25,7 +25,7 @@ DEFAULT_COLLECTION_NAME = "chat_session_chunks"
 DEFAULT_INDEX_NAME = "chat_session_embeddings"
 DEFAULT_EMBEDDING_MODEL = "text-embedding-3-small"
 DEFAULT_ANALYSIS_MODEL = "gpt-5-nano-2025-08-07"
-DEFAULT_LIMIT = 5
+DEFAULT_LIMIT = 50
 DEFAULT_EMBEDDING_PATH = "embedding"
 DEFAULT_TEXT_FIELD = "text"
 DEFAULT_SESSION_ID_FIELD = "session_id"
@@ -47,7 +47,8 @@ SYSTEM_PROMPT_TEMPLATE = (
     "- If you summarize actions, include who did what and when.\n\n"
     "Tool usage rules:\n"
     "- Use search_mongo_embeddings for semantic questions like \"what did the user say about X?\"\n"
-    "- Use fetch_conversations_by_date_range for time-based questions like \"last 3 days\" or \"2 days ago\".\n\n"
+    "- Use fetch_conversations_by_date_range for time-based questions like \"last 3 days\" or \"2 days ago\".\n"
+    "\n"
     "Tool output guidance:\n"
     "- Embedding results include the hit metadata plus full session documents for those hits.\n"
     "- Treat those sessions as the authoritative context for your answer.\n\n"
@@ -295,6 +296,7 @@ def fetch_conversations_by_date_range(
         "count": len(sessions),
         "sessions": sessions,
     }
+
 
 
 def search_mongo_embeddings(

@@ -1,0 +1,20 @@
+{
+  "sessions": [],
+  "summary": {
+    "sessions": 0,
+    "window_before": 300,
+    "window_after": 300,
+    "window_applied": false,
+    "limit": 200,
+    "lexical_query": "onions onion \"caramelized onions\" saut\u00e9 sauteed sweating browned \"onion confit\" temp temperature \"medium-low\" \"medium heat\" \"low heat\" \"high heat\" \"\u00b0F\" \"\u00b0C\" 325 350 375 400 425 450 160C 180C 200C roast grilled",
+    "collection": "chat_sessions",
+    "search_backend": "atlas",
+    "atlas_index": "default",
+    "atlas_paths": [
+      "messages.content"
+    ],
+    "lexical_mode": "auto",
+    "text_error": "text index required for $text query, full error: {'ok': 0.0, 'errmsg': 'text index required for $text query', 'code': 27, 'codeName': 'IndexNotFound', '$clusterTime': {'clusterTime': Timestamp(1768601792, 378), 'signature': {'hash': b'\\xdbp\\x89::r\\xf0\\xeb\\xfat%\\xb4@\\xc7\\t\\xdbssr\\x9b', 'keyId': 7549286581937373185}}, 'operationTime': Timestamp(1768601792, 378)}",
+    "atlas_error": null
+  }
+}

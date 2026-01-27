@@ -1,0 +1,253 @@
+{
+  "schema": "recipe_dictionary.v1",
+  "created_at": "2026-01-21T20:23:07.450003+00:00",
+  "question": "List all the different temperatures that a user has cooked onions. List them with date, temp, and outcome if available.",
+  "source_candidates_path": "chef/analysisfolder/bot_runs/candidates_20260121T200428Z.json",
+  "events": [
+    {
+      "date_iso": "2026-01-01T22:49:53.494582+00:00",
+      "focus_terms": [
+        "onions",
+        "caramelized onions"
+      ],
+      "temperature": "caramelizing",
+      "method": null,
+      "outcome": "caramelized onions prepared in a jar (with egg yolks and honey for hollandaise).",
+      "evidence": {
+        "session_id": "1275063227_01012026_223838_785890",
+        "message_index": 5,
+        "excerpt": "first video is me putting the caramelized onions and egg yolks for a little bit of honey in a jar."
+      },
+      "confidence": 0.65
+    },
+    {
+      "date_iso": "2026-01-01T22:49:53.494582+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "141\u00b0F",
+      "method": "water bath",
+      "outcome": "jar containing caramelized onions placed in a water bath.",
+      "evidence": {
+        "session_id": "1275063227_01012026_223838_785890",
+        "message_index": 5,
+        "excerpt": "second video was me putting that jar in a water bath at 140 something degrees at 141\u00b0"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "182\u00b0F",
+      "method": "pan cooking",
+      "outcome": "onions starting to become translucent and have shrunk slightly; lid removed.",
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 15,
+        "excerpt": "cooking onions at 182\u00b0F, getting a bit translucent and shrinking slightly, lid now off"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "210\u00b0F",
+      "method": "pan cooking",
+      "outcome": "onions browned at times when cooking around 210\u00b0F.",
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 21,
+        "excerpt": "the onions have become much more brown at times they were cooking at about 210\u00b0 but then I turned the heat down on average it\u2019s been around 180\u00b0"
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "180\u00b0F",
+      "method": "pan cooking",
+      "outcome": "average around 180\u00b0F; onions still cooking.",
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 21,
+        "excerpt": "but then I turned the heat down on average it\u2019s been around 180\u00b0"
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "165\u00b0F",
+      "method": "pan cooking",
+      "outcome": "initial low heat around 165\u00b0F; heat later increased to ~270\u00b0F.",
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 25,
+        "excerpt": "i\u2019ve stepped away from the pan because it was on low and it was around and I think it was maybe around 165\u00b0 so then I turned up the heat a little bit from maybe like 2 to 4 on the dial and I stepped away from the pan  and I got real hot real quick and it started to go up to like 270 or somewhere in the 270\u00b0 range"
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "270\u00b0F",
+      "method": "pan cooking",
+      "outcome": "heat spiked to ~270\u00b0F; some onions browned significantly while others remained translucent.",
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 26,
+        "excerpt": "turned heat up from around 165\u00b0F (dial 2 to 4), spiked to ~270\u00b0F, with some onions significantly browned and others still translucent."
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "229\u00b0F",
+      "method": "pan cooking",
+      "outcome": "temps around 229\u00b0F; Kerrygold butter and water added; burning slowed and heat distributed more evenly.",
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 29,
+        "excerpt": "i\u2019ve added some keri gold butter and water probably about 2 tablespoons on the first round and then I just did it again I think the first round was about a half an hour ago but I\u2019m not sure. I think it helped slow some of the burning and more evenly distributed some of the heat temperatures are still around 229\u00b0 when I checked it and it could\u2019ve been that way for up to a half an hour around then"
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2026-01-02T16:53:40.555621+00:00",
+      "focus_terms": [
+        "onion",
+        "caramelized onion"
+      ],
+      "temperature": "140.5\u00b0",
+      "method": "sous vide circulator",
+      "outcome": null,
+      "evidence": {
+        "session_id": "1275063227_02012026_162148_369044",
+        "message_index": 3,
+        "excerpt": "I had I put the jar of egg and sous vide egg yolk and caramelized onion in the refrigerator overnight. This had been in a sous vide circulator at about 140.5\u00b0 for maybe 4 to 5 hours. A refrigerated overnight and I\u2019m reheating it in a sous vide bath at around 105\u00b0 because I was already making some yogurt"
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2026-01-02T16:53:40.555621+00:00",
+      "focus_terms": [
+        "onion",
+        "caramelized onion"
+      ],
+      "temperature": "136\u00b0F",
+      "method": "pan cooking",
+      "outcome": "reduced heat on pan surface",
+      "evidence": {
+        "session_id": "1275063227_02012026_162148_369044",
+        "message_index": 13,
+        "excerpt": "he reduced the heat to about 136\u00b0 surface on the pan"
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2026-01-02T16:53:40.555621+00:00",
+      "focus_terms": [
+        "onion",
+        "caramelized onion"
+      ],
+      "temperature": "130-140\u00b0F",
+      "method": "pan temperature during heating",
+      "outcome": "onion mixture warmed; briefly spiked to 150\u00b0 before heat was removed and mixture integrated with eggs",
+      "evidence": {
+        "session_id": "1275063227_02012026_162148_369044",
+        "message_index": 19,
+        "excerpt": "I scooped out the onion egg mixture the sous vide caramelized onion mixture after it had warmed up and I scooped it directly into the eggs after they were cooked a little bit that around and 130\u00b0 range and 140\u00b0 range of a pan was a little bit hot it briefly got up to what I tested it about 150\u00b0 so I took it off the heat and then incorporating and stirred more of the mixture in"
+      },
+      "confidence": 0.75
+    },
+    {
+      "date_iso": "2026-01-02T16:53:40.555621+00:00",
+      "focus_terms": [
+        "onion",
+        "caramelized onion"
+      ],
+      "temperature": "150\u00b0F",
+      "method": "pan cooking",
+      "outcome": "brief spike to 150\u00b0; thickening observed",
+      "evidence": {
+        "session_id": "1275063227_02012026_162148_369044",
+        "message_index": 25,
+        "excerpt": "about 150\u00b0"
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2026-01-02T16:53:40.555621+00:00",
+      "focus_terms": [
+        "onion",
+        "caramelized onion"
+      ],
+      "temperature": "150\u00b0F",
+      "method": "pan cooking",
+      "outcome": "mixture thickened during cooking at 150\u00b0 surface temp",
+      "evidence": {
+        "session_id": "1275063227_02012026_162148_369044",
+        "message_index": 29,
+        "excerpt": "I actually let it cook at around 150\u00b0 on the on the surface temperature of the pan and it actually with enough speed in motion it thickened up pretty nicely"
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2026-01-02T16:53:40.555621+00:00",
+      "focus_terms": [
+        "onion",
+        "caramelized onion"
+      ],
+      "temperature": "180\u00b0F",
+      "method": "pan cooking",
+      "outcome": "color and doneness achieved",
+      "evidence": {
+        "session_id": "1275063227_02012026_162148_369044",
+        "message_index": 31,
+        "excerpt": "and then I briefly took it to 180\u00b0 on the surface of the pan just to give it some nice color and done ness"
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2026-01-02T16:53:40.555621+00:00",
+      "focus_terms": [
+        "onion",
+        "caramelized onion"
+      ],
+      "temperature": "105\u00b0F",
+      "method": "sous vide reheating",
+      "outcome": "reheating of onion mixture in sous vide bath",
+      "evidence": {
+        "session_id": "1275063227_02012026_162148_369044",
+        "message_index": 5,
+        "excerpt": "I had I put the jar of egg and sous vide egg yolk and caramelized onion in the refrigerator overnight. This had been in a sous vide circulator at about 140.5\u00b0 for maybe 4 to 5 hours. A refrigerated overnight and I\u2019m reheating it in a sous vide bath at around 105\u00b0 because I was already making some yogurt"
+      },
+      "confidence": 0.9
+    }
+  ],
+  "stats": {
+    "rows_scanned": 750,
+    "chunks": 3,
+    "events_raw": 15,
+    "events_deduped": 15,
+    "errors": 0,
+    "elapsed_s": 65.84,
+    "max_workers": 8,
+    "chunk_char_limit": 50000,
+    "model": "gpt-5-nano-2025-08-07"
+  },
+  "errors": []
+}

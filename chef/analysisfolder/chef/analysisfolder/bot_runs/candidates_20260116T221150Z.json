@@ -1,0 +1,20 @@
+{
+  "sessions": [],
+  "summary": {
+    "sessions": 0,
+    "window_before": 400,
+    "window_after": 400,
+    "window_applied": false,
+    "limit": null,
+    "lexical_query": "onion onions \"cooked onions\" \"caramelized onions\" \"saute onions\" \"saut\u00e9 onions\" \"roast onions\" \"roasted onions\" \"grilled onions\" \"fried onions\" \"onion confit\" \"onion jam\" temperature temp \"\u00b0F\" \"\u00b0C\" degrees oven stovetop skillet pan grill broil bake \"air fryer\" \"air-fryer\" \"sous vide\" \"pressure cooker\"",
+    "collection": "chat_sessions",
+    "search_backend": "atlas",
+    "atlas_index": "default",
+    "atlas_paths": [
+      "messages.content"
+    ],
+    "lexical_mode": "auto",
+    "text_error": "text index required for $text query, full error: {'ok': 0.0, 'errmsg': 'text index required for $text query', 'code': 27, 'codeName': 'IndexNotFound', '$clusterTime': {'clusterTime': Timestamp(1768601511, 665), 'signature': {'hash': b'&\\xd3\\x8d9\\x9b\\xef\\xdd\\xf6S\\xfb\\xd4I\\x8c\\x069\\xe3\\xb9\\x00\\x98e', 'keyId': 7549286581937373185}}, 'operationTime': Timestamp(1768601511, 665)}",
+    "atlas_error": null
+  }
+}

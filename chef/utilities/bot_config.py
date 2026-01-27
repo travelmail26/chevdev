@@ -13,6 +13,9 @@ def normalize_bot_mode(mode: str | None) -> str:
     # Before example: "/log" stored as "log" -> unknown; After example: "log" -> "dietlog".
     if raw in ("diet", "dietlog", "chefdietlog", "log"):
         return "dietlog"
+    # Before example: "Nano" -> unknown; After example: "Nano" -> "nano".
+    if raw in ("nano", "chefnano", "recipe"):
+        return "nano"
     return "cheflog"
 
 
@@ -36,6 +39,15 @@ BOT_CONFIG = {
         "mongo_collection": os.environ.get(
             "MONGODB_COLLECTION_NAME_DIETLOG", "chat_dietlog_sessions"
         ),
+    },
+    "nano": {
+        # Before: nano had no entry; After: nano uses its own instructions + recipe DB.
+        "instructions_path": os.path.join(
+            CHEF_ROOT, "chefnano", "utilities", "instructions", "instructions_base.txt"
+        ),
+        # Example: nano -> recipe.recipe_chats.
+        "mongo_db": os.environ.get("MONGODB_DB_NAME_RECIPE", "recipe"),
+        "mongo_collection": os.environ.get("MONGODB_COLLECTION_NAME_RECIPE", "recipe_chats"),
     },
 }
 

@@ -6,6 +6,8 @@
 - Exceptions: when edits/reads are needed outside `chef/chefmain/`, call it out explicitly first.
 - Token minimization: avoid repo‑wide scans; prefer targeted reads within `chef/chefmain/` by default.
 - Override: the user can set a different working directory per request.
+- When working in `chef/analysisfolder/simple_database_approach`, refer to `chef/analysisfolder/simple_database_approach/coding_style.txt` for goals and instructions.
+- When running queries during tasks, report the exact query terms used and the results back to the user.
 - Don't change the model in the scripts from gpt-5-2025-08-07 to 4o. this is the latest and real model 
 
 ## Project Structure & Module Organization
@@ -14,6 +16,12 @@
 - `chef/testscripts/`: Test scripts and scenario-based tests (`test_*.py`).
 - Generated assets: `chat_history_logs/`, `saved_audio/`, `saved_photos/`, `saved_videos/`.
 - Node/TS (optional): `package.json`, `tsconfig.json` target `chef/mcp/**/*` → compiled to `dist/`.
+
+## Embeddings & Analysis Tools
+- `chef/analysisfolder/build_chat_session_chunks.py`: builds `chat_session_chunks` from `chat_sessions` using OpenAI embeddings; incremental via `source_text_hash` + `source_last_updated_at` (skips unchanged unless `--force`).
+- `chef/analysisfolder/answer_with_nano.py`: answers questions using `chat_session_chunks` only (vector search + date range), not raw `chat_sessions`.
+- `/restart` in `chef/chefmain/telegram_bot.py` now spawns a background backfill (`_spawn_chat_session_chunk_backfill`) so prior sessions become searchable; requires `MONGODB_URI` and `OPENAI_API_KEY`.
+- `analysis/nano_mongo_hollandaise_scan.py` (repo root): direct Mongo keyword scan over `chat_sessions` for quick checks when embeddings lag; outside default working dir.
 
 ## Build, Test, and Development Commands
 - Python deps (uv): `uv sync` in repo root (uses `pyproject.toml`).
@@ -36,6 +44,10 @@
 
 - CRITICAL: keep code simple and readable. It is better to create multiple functions that use simple code that something more complex, even if its efficient.
  - NEVER NEVER change major code structure or approach without approval. The user must know exactly how the code works and changing major strategies or variables confuses the user. Do not do without approval. 
+- Keep bot scripts flat and easy to follow: avoid argparse/Config boilerplate, avoid deep helper stacks, and keep the flow in a single top-to-bottom sequence.
+- Prefer one obvious section for instructions, one for tools/functions, and one for execution/output in bot scripts.
+- Dictionary extraction defaults to `gpt-5-nano-2025-08-07` (no gpt-4 models unless explicitly approved). Keep model choices visible near the top of scripts.
+- Mongo lexical search must be simple: $text on `messages.content` only, with include/exclude keyword lists (no regex, no boolean operators, no before/after windowing). Keep the parameters minimal and obvious.
 
 - Add inline comments that show concrete before/after examples so the user can follow each step easily.
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Create/update chat_session_chunks with embeddings from chat_sessions.
+Create/update chat_session_sentence_chunks with embeddings from chat_sessions.
 Very small, single-purpose script for initial backfill and incremental updates.
 """
 
@@ -19,13 +19,12 @@ from pymongo import MongoClient
 
 DEFAULT_DB_NAME = "chef_chatbot"
 DEFAULT_SOURCE_COLLECTION = "chat_sessions"
-DEFAULT_TARGET_COLLECTION = "chat_session_chunks"
+DEFAULT_TARGET_COLLECTION = "chat_session_sentence_chunks"
 DEFAULT_EMBEDDING_MODEL = "text-embedding-3-small"
 DEFAULT_INDEX_NAME = "chat_session_embeddings"
 DEFAULT_MAX_CHARS = 1200
 DEFAULT_MAX_MESSAGES = 200
-DEFAULT_TURN_WINDOW = 6
-DEFAULT_TURN_OVERLAP = 2
+DEFAULT_EMBEDDING_BATCH_SIZE = 64
 DEFAULT_MEDIA_COLLECTION = "media_metadata"
 
 MEDIA_PREFIXES = ("[photo_url:", "[video_url:", "[audio_url:")
@@ -38,7 +37,7 @@ def setup_logging() -> None:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Build/update chat_session_chunks embeddings.")
+    parser = argparse.ArgumentParser(description="Build/update chat_session_sentence_chunks embeddings.")
     parser.add_argument("--db-name", default=DEFAULT_DB_NAME)
     parser.add_argument("--source-collection", default=DEFAULT_SOURCE_COLLECTION)
     parser.add_argument("--target-collection", default=DEFAULT_TARGET_COLLECTION)
@@ -46,8 +45,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--index-name", default=DEFAULT_INDEX_NAME)
     parser.add_argument("--max-chars", type=int, default=DEFAULT_MAX_CHARS)
     parser.add_argument("--max-messages", type=int, default=DEFAULT_MAX_MESSAGES)
-    parser.add_argument("--turn-window", type=int, default=DEFAULT_TURN_WINDOW)
-    parser.add_argument("--turn-overlap", type=int, default=DEFAULT_TURN_OVERLAP)
+    parser.add_argument("--embedding-batch-size", type=int, default=DEFAULT_EMBEDDING_BATCH_SIZE)
     parser.add_argument("--since", help="ISO datetime to only process recent sessions.")
     parser.add_argument(
         "--media-db-name",
@@ -167,46 +165,44 @@ def _find_media_session(chat_collection, url: str) -> Tuple[Optional[Any], Optio
     return None, None, 0
 
 
+def _split_into_sentences(text: str) -> List[str]:
+    if not text:
+        return []
+    # Before: "Hi there" -> After: ["Hi there"]; Before: "Yes. No?" -> After: ["Yes.", "No?"].
+    parts = re.split(r"(?<=[.!?])\s+", text.strip())
+    cleaned = [part.strip() for part in parts if part.strip()]
+    return cleaned
+
+
 def _chunk_messages(
     messages: List[Dict[str, Any]],
     max_chars: int,
     max_messages: int,
-    turn_window: int,
-    turn_overlap: int,
-) -> Iterable[Tuple[int, int, str]]:
-    if turn_window <= 0:
+) -> Iterable[Tuple[int, int, int, str]]:
+    # Before: multi-turn windows -> After: sentence chunks per message, no windowing needed.
+    if max_messages <= 0:
         return
-    if turn_overlap >= turn_window:
-        raise ValueError("turn_overlap must be smaller than turn_window")
 
     limited = messages[:max_messages]
-    stride = max(turn_window - turn_overlap, 1)
+    for message_index, message in enumerate(limited):
+        role = str(message.get("role") or "").strip()
+        content = str(message.get("content") or "").strip()
+        if not content:
+            continue
 
-    for start_idx in range(0, len(limited), stride):
-        end_idx = min(start_idx + turn_window, len(limited))
-        window = limited[start_idx:end_idx]
-        lines: List[str] = []
-        for message in window:
-            role = str(message.get("role") or "").strip()
-            content = str(message.get("content") or "").strip()
-            line = f"{role}: {content}".strip()
+        sentences = _split_into_sentences(content)
+        if not sentences:
+            continue
+
+        for sentence_index, sentence in enumerate(sentences, start=1):
+            line = f"{role}: {sentence}".strip()
             if not line:
                 continue
             if max_chars and len(line) > max_chars:
-                # Before: 3000-char message -> After: 1200-char truncated line.
+                # Before: 3000-char sentence -> After: 1200-char truncated sentence.
                 line = line[:max_chars].rstrip() + "..."
-            lines.append(line)
-
-        if not lines:
-            continue
-
-        chunk_text = "\n".join(lines)
-        if max_chars and len(chunk_text) > max_chars:
-            # Before: 2000-char chunk -> After: 1200-char truncated chunk.
-            chunk_text = chunk_text[:max_chars].rstrip() + "..."
-
-        # Before: 6 turns [0..5], overlap 2 -> After: next chunk starts at 4.
-        yield start_idx, end_idx, chunk_text
+            # Before: message_index=2 -> After: start=2 end=3 for sentence chunks.
+            yield message_index, message_index + 1, sentence_index, line
 
 
 def _parse_since(since_value: Optional[str]) -> Optional[str]:
@@ -268,6 +264,14 @@ def _media_needs_update(
 def _embed_text(client: OpenAI, model: str, text: str) -> List[float]:
     response = client.embeddings.create(model=model, input=text)
     return response.data[0].embedding
+
+
+def _embed_texts(client: OpenAI, model: str, texts: List[str]) -> List[List[float]]:
+    if not texts:
+        return []
+    # Before: 64 sentences -> 64 API calls; After: 64 sentences -> 1 batched call.
+    response = client.embeddings.create(model=model, input=texts)
+    return [item.embedding for item in response.data]
 
 
 def _ensure_vector_index(collection, index_name: str) -> None:
@@ -355,25 +359,22 @@ def main() -> None:
         target.delete_many({"session_id": session_id, "chunk_type": {"$ne": "media"}})
 
         chunk_docs: List[Dict[str, Any]] = []
-        for chunk_index, (start_idx, end_idx, text) in enumerate(
+        for chunk_index, (start_idx, end_idx, sentence_index, text) in enumerate(
             _chunk_messages(
                 messages,
                 args.max_chars,
                 args.max_messages,
-                args.turn_window,
-                args.turn_overlap,
             ),
             start=1,
         ):
-            embedding = _embed_text(client, args.embedding_model, text)
             chunk_docs.append(
                 {
                     "session_id": session_id,
                     "message_start": start_idx,
                     "message_end": end_idx,
                     "chunk_index": chunk_index,
+                    "sentence_index": sentence_index,
                     "text": text,
-                    "embedding": embedding,
                     "source_last_updated_at": source_last_updated_at,
                     "source_message_count": len(messages),
                     "source_text_hash": source_text_hash,
@@ -382,6 +383,14 @@ def main() -> None:
             )
 
         if chunk_docs:
+            batch_size = max(args.embedding_batch_size, 1)
+            # Before: 128 sentences -> 128 calls; After: 128 sentences -> 2 calls at batch_size=64.
+            for start in range(0, len(chunk_docs), batch_size):
+                batch = chunk_docs[start : start + batch_size]
+                texts = [doc["text"] for doc in batch]
+                embeddings = _embed_texts(client, args.embedding_model, texts)
+                for doc, embedding in zip(batch, embeddings):
+                    doc["embedding"] = embedding
             target.insert_many(chunk_docs)
             embedded_chunks += len(chunk_docs)
         processed_sessions += 1
@@ -471,3 +480,47 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+
+# NOTE: Legacy multi-turn chunking (disabled).
+# This is kept for reference only; sentence-level chunks are now used.
+# def _chunk_messages(
+#     messages: List[Dict[str, Any]],
+#     max_chars: int,
+#     max_messages: int,
+#     turn_window: int,
+#     turn_overlap: int,
+# ) -> Iterable[Tuple[int, int, str]]:
+#     if turn_window <= 0:
+#         return
+#     if turn_overlap >= turn_window:
+#         raise ValueError("turn_overlap must be smaller than turn_window")
+#
+#     limited = messages[:max_messages]
+#     stride = max(turn_window - turn_overlap, 1)
+#
+#     for start_idx in range(0, len(limited), stride):
+#         end_idx = min(start_idx + turn_window, len(limited))
+#         window = limited[start_idx:end_idx]
+#         lines: List[str] = []
+#         for message in window:
+#             role = str(message.get("role") or "").strip()
+#             content = str(message.get("content") or "").strip()
+#             line = f"{role}: {content}".strip()
+#             if not line:
+#                 continue
+#             if max_chars and len(line) > max_chars:
+#                 # Before: 3000-char message -> After: 1200-char truncated line.
+#                 line = line[:max_chars].rstrip() + "..."
+#             lines.append(line)
+#
+#         if not lines:
+#             continue
+#
+#         chunk_text = "\n".join(lines)
+#         if max_chars and len(chunk_text) > max_chars:
+#             # Before: 2000-char chunk -> After: 1200-char truncated chunk.
+#             chunk_text = chunk_text[:max_chars].rstrip() + "..."
+#
+#         # Before: 6 turns [0..5], overlap 2 -> After: next chunk starts at 4.
+#         yield start_idx, end_idx, chunk_text
