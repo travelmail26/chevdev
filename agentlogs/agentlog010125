@@ -198,3 +198,4 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2026-01-25T17:06:26Z work: Voyage MVP build limited by rate limits; added VOYAGE_BATCH_SIZE/VOYAGE_SESSION_LIMIT/VOYAGE_CHUNK_LIMIT envs to build_chat_session_chunks_voyage.py; embedded 1 session (20 chunks) and ran voyage vs openai query counts.
 2026-01-25T17:18:25Z work: updated dictionary_builder extraction prompt to capture equipment; updated recipe_bot instructions to map solution type (ingredients/equipment/technique) with a non-hollandaise example.
 2026-01-25T17:30:54Z work: adjusted recipe_bot summary sampling to prefer equipment/technique hints; removed extra equipment_hints field to rely on instructions + summary samples.
+2026-01-28T13:56:46Z work: added chef/chefmain/status_api.py Flask endpoint with STATUS_API_KEY auth and Mongo latest_status lookup.
