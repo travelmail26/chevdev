@@ -1,0 +1,325 @@
+{
+  "candidates_count": 40,
+  "candidates": [
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 23,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIMQWlV2_zsTiOSHBkHLOrxB958FxllAAKlC2sbiwWwRjDIddRiX3t4AQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 23,
+      "role": "user",
+      "temp_raw": "958F",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIMQWlV2_zsTiOSHBkHLOrxB958FxllAAKlC2sbiwWwRjDIddRiX3t4AQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 25,
+      "role": "user",
+      "temp_raw": "165\u00b0",
+      "message": "I stepped away from the pan because it was on low and it was around and I think it was maybe around 165\u00b0 so then I turned up the heat a little bit from maybe like 2 to 4 on the dial and I stepped away from the pan  and I got real hot real quick and it started to go up to like 270 or somewhere in the 270\u00b0 range and as you can see there\u2019s significant browning..."
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 25,
+      "role": "user",
+      "temp_raw": "270\u00b0",
+      "message": "I stepped away from the pan because it was on low and it was around and I think it was maybe around 165\u00b0 so then I turned up the heat a little bit from maybe like 2 to 4 on the dial and I stepped away from the pan  and I got real hot real quick and it started to go up to like 270 or somewhere in the 270\u00b0 range and as you can see there\u2019s significant browning..."
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 26,
+      "role": "assistant",
+      "temp_raw": "165\u00b0F",
+      "message": "Thanks for the update\u2014turned heat up from ~165\u00b0F (dial 2 to 4), spiked to ~270\u00b0F, with some onions significantly browned and others still translucent. Sounds like uneven cooking. Let me know if you need any help!"
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 26,
+      "role": "assistant",
+      "temp_raw": "270\u00b0F",
+      "message": "Thanks for the update\u2014turned heat up from ~165\u00b0F (dial 2 to 4), spiked to ~270\u00b0F, with some onions significantly browned and others still translucent. Sounds like uneven cooking. Let me know if you need any help!"
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 27,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIMRWlV43zlsGkb8BH0PZTgVF8fFLviAAKnC2sbiwWwRpfxBlk5R77jAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2025-12-31T23:59:07.084347+00:00",
+      "session_id": "1275063227_29122025_175446_951513",
+      "message_index": 17,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAITNWlTBYsoHA2XIZErpjehrKiwfpN6AALYC2sbvCOZRqHrLBpAWBbUAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-12-31T23:59:07.084347+00:00",
+      "session_id": "1275063227_29122025_175446_951513",
+      "message_index": 21,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAITOWlTCltEFmWVVdyTBIOfNfc3mDANAALoC2sbvCOZRpE59dWXSbCyAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-12-31T23:59:07.084347+00:00",
+      "session_id": "1275063227_29122025_175446_951513",
+      "message_index": 23,
+      "role": "user",
+      "temp_raw": "145\u00b0",
+      "message": "it was pretty good that\u2019s the finished omelette. Ended up pouring a little too much oil in and so to cover it it really only needed about 2 tablespoons in an 8 1/2 inch pan I think it was about that size. And I think we used 43 or four eggs two onions and two potatoes. The we could flip it just with a spatula and the internal temperature of the egg was about..."
+    },
+    {
+      "date": "2025-12-31T23:59:07.084347+00:00",
+      "session_id": "1275063227_29122025_175446_951513",
+      "message_index": 24,
+      "role": "assistant",
+      "temp_raw": "145\u00b0F",
+      "message": "Thanks for sharing the details on your finished Spanish tortilla\u2014it sounds like a success despite the extra oil. Noted the pan size, ingredient amounts (3-4 eggs, two onions, two potatoes), easy flip, and 145\u00b0F internal temp with good carryover. Great job!"
+    },
+    {
+      "date": "2025-12-31T23:59:07.084347+00:00",
+      "session_id": "1275063227_29122025_175446_951513",
+      "message_index": 25,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgEAAxkBAAIMG2lVsVbhbU1JqTRWm094hXRNNBYSAALABgACiwWwRttQj3tRULPCOAQ.mp4]"
+    },
+    {
+      "date": "2025-12-31T23:59:07.084347+00:00",
+      "session_id": "1275063227_29122025_175446_951513",
+      "message_index": 29,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgEAAxkBAAIMH2lVtSg-HYKKJkgPojbODXIzSMqtAALEBgACiwWwRoxUWft59dFkOAQ.mp4]"
+    },
+    {
+      "date": "2025-12-31T23:59:07.084347+00:00",
+      "session_id": "1275063227_29122025_175446_951513",
+      "message_index": 33,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgEAAxkBAAIMI2lVtbgdYbfKjJ6b2iLAn4pf3EIGAALHBgACiwWwRvHqf62T9qOhOAQ.mp4]"
+    },
+    {
+      "date": "2025-12-31T23:59:07.084347+00:00",
+      "session_id": "1275063227_29122025_175446_951513",
+      "message_index": 37,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgEAAxkBAAIMJ2lVuMVLEwU4bdA4Y8XfdOtBwZ7BAALSBgACiwWwRtGDmFA8nK_fOAQ.mp4]"
+    },
+    {
+      "date": "2025-11-17T19:45:52.173567+00:00",
+      "session_id": "1275063227_17112025_184551_109019",
+      "message_index": 1,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIShGkbbVwn7kirJv1UWrYtyUHKGVwMAAJEC2sbyGTYRHtTOad-LBwGAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-11-17T19:45:52.173567+00:00",
+      "session_id": "1275063227_17112025_184551_109019",
+      "message_index": 3,
+      "role": "user",
+      "temp_raw": "240 degrees",
+      "message": "onions were softened with about half cup of water then after about 19 minutes with about a tablespoon of butter and higher heat showed at around 240 degrees turning translucent and slight brown. more regular stirring"
+    },
+    {
+      "date": "2025-11-17T19:45:52.173567+00:00",
+      "session_id": "1275063227_17112025_184551_109019",
+      "message_index": 4,
+      "role": "assistant",
+      "temp_raw": "240\u00b0F",
+      "message": "Thanks for the update. Noted: after ~19 minutes, adding a tablespoon of butter and increasing heat to ~240\u00b0F with more stirring led to translucent onions with slight browning."
+    },
+    {
+      "date": "2025-11-17T19:45:52.173567+00:00",
+      "session_id": "1275063227_17112025_184551_109019",
+      "message_index": 5,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAISiGkbcexuMDCb_nurkGlbFC50WC5mAAIGC2sbyGTgRI8sxZftae1UAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-11-17T19:45:52.173567+00:00",
+      "session_id": "1275063227_17112025_184551_109019",
+      "message_index": 9,
+      "role": "user",
+      "temp_raw": "250 degrees",
+      "message": "pan temperature closer to 250 degrees"
+    },
+    {
+      "date": "2025-11-17T19:45:52.173567+00:00",
+      "session_id": "1275063227_17112025_184551_109019",
+      "message_index": 10,
+      "role": "assistant",
+      "temp_raw": "250\u00b0F",
+      "message": "Thanks for the update. Noted: pan temperature around 250\u00b0F."
+    },
+    {
+      "date": "2025-11-17T19:45:52.173567+00:00",
+      "session_id": "1275063227_17112025_184551_109019",
+      "message_index": 11,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAISjmkbdTLW0U6rmMGzOJ0feipWDd7QAAIJC2sbyGTgRN26L58aV1abAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-11-17T19:45:52.173567+00:00",
+      "session_id": "1275063227_17112025_184551_109019",
+      "message_index": 15,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAISkmkbdwHUPGhvZdSUM7uEZ_CrvV0EAAIOC2sbyGTgRP-mTD4f3m1lAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-11-17T19:45:52.173567+00:00",
+      "session_id": "1275063227_17112025_184551_109019",
+      "message_index": 19,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAISlmkbenbvGIzxFkcdUkWiqIIToxT5AAIPC2sbyGTgRJnSrdOCPtf5AQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-11-17T19:45:52.173567+00:00",
+      "session_id": "1275063227_17112025_184551_109019",
+      "message_index": 23,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAISmmkbetcvY0iUI7xtLI_UJ0YqSi1ZAAIQC2sbyGTgRHmrDPKxW-MtAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-11-13T15:00:05.025885+00:00",
+      "session_id": "1275063227_04112025_202010_540895",
+      "message_index": 41,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAISWGkT3e0WvHpiN94mo8Efl5pGc09eAAIUC2sbeiygRAqunqPj_v0vAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-11-13T15:00:05.025885+00:00",
+      "session_id": "1275063227_04112025_202010_540895",
+      "message_index": 43,
+      "role": "user",
+      "temp_raw": "145 degrees",
+      "message": "cooking at 145 degrees egg blended with caramelized onions. sous about 4 hours"
+    },
+    {
+      "date": "2025-11-13T15:00:05.025885+00:00",
+      "session_id": "1275063227_04112025_202010_540895",
+      "message_index": 44,
+      "role": "assistant",
+      "temp_raw": "145\u00b0 f",
+      "message": "Thanks for the update. Noted: egg blended with caramelized onions, sous-vide at 145\u00b0 for about 4 hours."
+    },
+    {
+      "date": "2025-11-13T15:00:05.025885+00:00",
+      "session_id": "1275063227_04112025_202010_540895",
+      "message_index": 47,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAISXmkUg7_zTebIhJDeKBP_JT_CfHGCAAI6C2sbeiygRNyHDNOlIlARAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-11-13T15:00:05.025885+00:00",
+      "session_id": "1275063227_04112025_202010_540895",
+      "message_index": 49,
+      "role": "user",
+      "temp_raw": "142",
+      "message": "I cooked the caramelized onions and eggs and two more types of fat. I believe the one on the very left is with about a teaspoon of avocado and just having adding the avocado oil so I cooked all three for about another hour and 142.5\u00b0. Adding the avocado oil really brought out the sweetness in the onion. And the one I mashed up some or cut up some salmon on t..."
+    },
+    {
+      "date": "2025-11-13T15:00:05.025885+00:00",
+      "session_id": "1275063227_04112025_202010_540895",
+      "message_index": 51,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgEAAxkBAAISYmkUmB1FP4bCXxcpf2U-XNbOEWFvAAKbBgACeiygRNtWoWj10kV1NgQ.mp4]"
+    },
+    {
+      "date": "2025-10-17T12:13:15.925230+00:00",
+      "session_id": "1275063227_17102025_120722_920821",
+      "message_index": 5,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIKvWjyMopq8LIqvxUCjjXQx41bMuYQAAKCC2sbXuSRR6pdnPdbqtZVAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 1,
+      "role": "user",
+      "temp_raw": "92\u00b0",
+      "message": "Sliced up some onions put about two capfuls of olive oil trader Joe's extra virgin Spanish olive oil in a heavy bottom pan large probably about a foot in diameter. Temperature initial temperature was about 92\u00b0 as measured by an infrared thermometer. Then I covered with a lid. Around 12:16 p.m."
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 2,
+      "role": "assistant",
+      "temp_raw": "92\u00b0F",
+      "message": "Thanks for the update. Noted: sliced onions in a large heavy-bottomed pan with about two capfuls of Trader Joe\u2019s Spanish EVOO, starting around 92\u00b0F and covered at 12:16 p.m."
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 3,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgQAAxkBAAIKO2jtJfGmhvUOxh5IvX1Pk2LLscfuAAJRHAACjSRxU2nu81eAZKRBNgQ.mp4]"
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 9,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgQAAxkBAAIKQWjtKGQQQcWFo6QJgByNCxFScmRXAAJozjEbjSRxU5HEHkogoEG3AQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 11,
+      "role": "user",
+      "temp_raw": "140\u00b0",
+      "message": "Checked on the onions that were covered in a pan The temperature is about 140\u00b0 and after it is now 10:27 so after about maybe 10 minutes almost nothing happened because it was just too cold there was there's basically no change no steam no nothing"
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 13,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgQAAxkBAAIKRWjtKNh0FsM43vFmB8K15Af9qH2fAAJXHAACjSRxU4xVvlaIL7-RNgQ.mp4]"
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 29,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgQAAxkBAAIKVWjtKy4Ym43wQhQAAUarwHTOzYEkOAACYRwAAo0kcVOyol7MKLYSlTYE.mp4]"
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 31,
+      "role": "user",
+      "temp_raw": "176\u00b0",
+      "message": "Opened up the the pan from the lid that had a covered lid of sauteing onions when I had the temperature around 176\u00b0. I opened it up and there was significance amount of moisture and steam coming out which is what I was looking for"
+    }
+  ]
+}

@@ -1,0 +1,1245 @@
+{
+  "candidates_count": 155,
+  "candidates": [
+    {
+      "date": "2026-01-15T23:34:59.334051+00:00",
+      "session_id": "1275063227_15012026_224055_878930",
+      "message_index": 1,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIUi2lpbSt8BNAsy-YJlB-9nurP3763AAKYC2sbpJZIR1KiNPgF5n8FAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-15T23:34:59.334051+00:00",
+      "session_id": "1275063227_15012026_224055_878930",
+      "message_index": 3,
+      "role": "user",
+      "temp_raw": "375\u00b0 f",
+      "message": "I sliced half a large medium onion fried diced dip and I put it probably about a tablespoon of butter and maybe 2 tablespoons of water maybe a little bit more and I cooked it on 375\u00b0 for maybe three hours although I\u2019m not quite sure and I covered it up in foil with a little but not too tightly wrapped just kind of like a dome at the top. And there was a sign..."
+    },
+    {
+      "date": "2026-01-15T23:34:59.334051+00:00",
+      "session_id": "1275063227_15012026_224055_878930",
+      "message_index": 4,
+      "role": "assistant",
+      "temp_raw": "375\u00b0F",
+      "message": "Thanks for the update on your onion cooking\u2014sounds like it browned and softened nicely after that long cook. Noted on the half large onion, butter, water, foil dome, and 375\u00b0F for about three hours. I'm here if you need help with next steps."
+    },
+    {
+      "date": "2026-01-15T23:34:59.334051+00:00",
+      "session_id": "1275063227_15012026_224055_878930",
+      "message_index": 5,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIUj2lpeRi5X4Zor8KuOOzjmmBjQDCSAAKhC2sbpJZIR6ZlgZSJlivtAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-15T23:34:59.334051+00:00",
+      "session_id": "1275063227_15012026_224055_878930",
+      "message_index": 7,
+      "role": "user",
+      "temp_raw": "220\u00b0",
+      "message": "so I cooked it for about an hour after putting the oven cooked onions into the pan I started out at around 220\u00b0 and that had some nice browning I had to stir probably about every couple minutes and add a little splash of water probably about a teaspoon while I was doing it to keep them hydrated but then the color stopped moving much about a half an hour mark..."
+    },
+    {
+      "date": "2026-01-15T23:34:59.334051+00:00",
+      "session_id": "1275063227_15012026_224055_878930",
+      "message_index": 7,
+      "role": "user",
+      "temp_raw": "300\u00b0",
+      "message": "so I cooked it for about an hour after putting the oven cooked onions into the pan I started out at around 220\u00b0 and that had some nice browning I had to stir probably about every couple minutes and add a little splash of water probably about a teaspoon while I was doing it to keep them hydrated but then the color stopped moving much about a half an hour mark..."
+    },
+    {
+      "date": "2026-01-15T23:34:59.334051+00:00",
+      "session_id": "1275063227_15012026_224055_878930",
+      "message_index": 9,
+      "role": "user",
+      "temp_raw": "375\u00b0",
+      "message": "so overall I really like that approach because that\u2019s about three hours in the oven at 375\u00b0 and then it\u2019s an hour of cooking and the pan does in two phases one a lower heat cook and then a higher heat cook"
+    },
+    {
+      "date": "2026-01-15T23:34:59.334051+00:00",
+      "session_id": "1275063227_15012026_224055_878930",
+      "message_index": 10,
+      "role": "assistant",
+      "temp_raw": "375\u00b0F",
+      "message": "Glad to hear you really like that two-phase approach\u2014three hours at 375\u00b0F in the oven followed by an hour in the pan with low then high heat. Sounds like a winner for those onions."
+    },
+    {
+      "date": "2026-01-15T19:38:52.347998+00:00",
+      "session_id": "1275063227_14012026_225501_280682",
+      "message_index": 1,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIUY2loHtb0fnvedUeSMBVNIlbQ1JYGAAJ1C2sbpJZARwMpOVNsHGvuAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-15T19:38:52.347998+00:00",
+      "session_id": "1275063227_14012026_225501_280682",
+      "message_index": 3,
+      "role": "user",
+      "temp_raw": "250\u00b0",
+      "message": "I had a little bit of inspiration after reading that some people use pressure cookers to get onions to a caramelization point in water. I did not do that I figured that fat could get to a similar temperature so I diced up some onions and put it in a small pan and try to keep the temperature to about 250\u00b0 although it did very quite a bit during that process a..."
+    },
+    {
+      "date": "2026-01-15T19:38:52.347998+00:00",
+      "session_id": "1275063227_14012026_225501_280682",
+      "message_index": 5,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIUZ2loH07hrjWk0auBCI4lFeh2mOUMAAJ2C2sbpJZARwRCHUE9zk1kAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-15T19:38:52.347998+00:00",
+      "session_id": "1275063227_14012026_225501_280682",
+      "message_index": 7,
+      "role": "user",
+      "temp_raw": "183\u00b0",
+      "message": "this is another experiment where I put raw onions in a Ziploc bag and sous vide at around 183\u00b0 it\u2019s been cooking for about probably 21 to 22 hours and I didn\u2019t pour out some liquid test over that period of time not noticeably brown there\u2019s also a few onions which are the very brown spots taste great and I think I also put a little bit of butter just to insid..."
+    },
+    {
+      "date": "2026-01-15T19:38:52.347998+00:00",
+      "session_id": "1275063227_14012026_225501_280682",
+      "message_index": 8,
+      "role": "assistant",
+      "temp_raw": "183\u00b0F",
+      "message": "Thanks for describing your sous vide onion experiment\u201421-22 hours at 183\u00b0F with butter sounds like a patient approach to browning. The uneven results and potential boil-dry pause make sense given the long cook. I'm here if you want help refining it."
+    },
+    {
+      "date": "2026-01-15T19:38:52.347998+00:00",
+      "session_id": "1275063227_14012026_225501_280682",
+      "message_index": 9,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIUa2loO1wblZ84aMHZ8QfRQYFCtyD1AAJ6C2sbpJZAR7i64OLYbmfQAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-15T19:38:52.347998+00:00",
+      "session_id": "1275063227_14012026_225501_280682",
+      "message_index": 11,
+      "role": "user",
+      "temp_raw": "320\u00b0",
+      "message": "this was a fail the temperature ended up getting at some point around 320\u00b0 I think more than once in a larger batch of onions and butter and that just burned it. Also I think there was way too much butter per onion it was probably I\u2019m still doing a one-to-one ratio maybe that\u2019s that\u2019s a really rough estimate"
+    },
+    {
+      "date": "2026-01-15T19:38:52.347998+00:00",
+      "session_id": "1275063227_14012026_225501_280682",
+      "message_index": 12,
+      "role": "assistant",
+      "temp_raw": "320\u00b0F",
+      "message": "Thanks for sharing the photo and details of this experiment\u2014sorry to hear it burned at 320\u00b0F with the larger batch. The high butter-to-onion ratio likely contributed to that. I'm here if you want help troubleshooting or adjusting ratios."
+    },
+    {
+      "date": "2026-01-15T19:38:52.347998+00:00",
+      "session_id": "1275063227_14012026_225501_280682",
+      "message_index": 15,
+      "role": "user",
+      "temp_raw": "200\u00b0",
+      "message": "it\u2019s hard to control temperature because in a larger pan I think the evaporated water keeps the temperature cooler but I think on an electric burner so for whatever reason at some point it starts to heat up very quickly maybe because there\u2019s moisture loss and you have to be really really diligent because you have to keep it on a really high hint to begin wit..."
+    },
+    {
+      "date": "2026-01-15T19:38:52.347998+00:00",
+      "session_id": "1275063227_14012026_225501_280682",
+      "message_index": 18,
+      "role": "assistant",
+      "temp_raw": "270\u00b0F",
+      "message": "I hear you; that sounds frustrating with the pan sides hitting 270\u00b0F and burning spots forming despite quick stirring. Thanks for the update on the challenge. I'm here if you want help stabilizing the heat."
+    },
+    {
+      "date": "2026-01-15T19:38:52.347998+00:00",
+      "session_id": "1275063227_14012026_225501_280682",
+      "message_index": 21,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIUd2loPzHJhsFiwE3At2Ao9tD03NZ-AAJ_C2sbpJZARzXqxhdIb1FDAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-15T19:38:52.347998+00:00",
+      "session_id": "1275063227_14012026_225501_280682",
+      "message_index": 25,
+      "role": "user",
+      "temp_raw": "278\u00b0",
+      "message": "see yeah as there is started to get more foam the temperature the side of the pan reached to 78 278 it reached 278\u00b0 and so I think that is one of the dangers as it starts to leak out moisture the temperature climbs very quickly so I\u2019m gonna reduce the heat"
+    },
+    {
+      "date": "2026-01-15T19:38:52.347998+00:00",
+      "session_id": "1275063227_14012026_225501_280682",
+      "message_index": 26,
+      "role": "assistant",
+      "temp_raw": "278\u00b0F",
+      "message": "Thanks for the update\u2014smart call reducing the heat as the foam increases and pan sides hit 278\u00b0F with that rapid temp climb from moisture loss. I hear the danger in that shift. I'm here if you want heat management tips."
+    },
+    {
+      "date": "2026-01-15T19:38:52.347998+00:00",
+      "session_id": "1275063227_14012026_225501_280682",
+      "message_index": 27,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIUfWloQhol1V_6mchvtH6HgHxSmvhyAAKAC2sbpJZAR7-4rh9jz1KJAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-13T15:33:46.381728+00:00",
+      "session_id": "1275063227_12012026_155916_795289",
+      "message_index": 3,
+      "role": "user",
+      "temp_raw": "104\u00b0 f",
+      "message": "I did a sous vide of yogurt in a Ziploc bag. I did about a 2 to 1 ratio milk to cream. Maybe about 2.5 milk cream I also scraped some vanilla bean and sous vide for about 104\u00b0 for about 12 hours. Reasonable viscosity and then the video is me pouring it into a paper towel lined sieve to take out the moisture"
+    },
+    {
+      "date": "2026-01-13T15:33:46.381728+00:00",
+      "session_id": "1275063227_12012026_155916_795289",
+      "message_index": 5,
+      "role": "user",
+      "temp_raw": "141\u00b0",
+      "message": "OK for this next round of caramelized onion hollandaise sauce I\u2019m adding three cubes of frozen caramelized onions so about maybe 6 tablespoons. I kept one large egg yolk and I did about 3 1/2 tablespoons of butter and about a tablespoon of water and added a big pinch of sugar. Going to be this time for longer at a lower temperature about 141\u00b0"
+    },
+    {
+      "date": "2026-01-13T15:33:46.381728+00:00",
+      "session_id": "1275063227_12012026_155916_795289",
+      "message_index": 6,
+      "role": "assistant",
+      "temp_raw": "141\u00b0F",
+      "message": "Thanks for the update on your caramelized onion hollandaise setup\u20143 cubes onions, 1 yolk, 3.5 tbsp butter, 1 tbsp water, pinch of sugar, and aiming for 141\u00b0F longer this time. Sounds like a tasty variation. I'm here if you need help."
+    },
+    {
+      "date": "2026-01-13T15:33:46.381728+00:00",
+      "session_id": "1275063227_12012026_155916_795289",
+      "message_index": 9,
+      "role": "user",
+      "temp_raw": "120\u00b0",
+      "message": "I also worked on the red wine bone broth Manischewitz braise sauce after separating the fan from the liquid I then I tried to add a little bit of mustard and honey and just a little bit of fat but it was still separating it probably around 120\u00b0 or so even though it would become liquid then tried to reduce it even more by boiling it very quickly get to I thin..."
+    },
+    {
+      "date": "2026-01-13T15:33:46.381728+00:00",
+      "session_id": "1275063227_12012026_155916_795289",
+      "message_index": 9,
+      "role": "user",
+      "temp_raw": "160\u00b0",
+      "message": "I also worked on the red wine bone broth Manischewitz braise sauce after separating the fan from the liquid I then I tried to add a little bit of mustard and honey and just a little bit of fat but it was still separating it probably around 120\u00b0 or so even though it would become liquid then tried to reduce it even more by boiling it very quickly get to I thin..."
+    },
+    {
+      "date": "2026-01-13T15:33:46.381728+00:00",
+      "session_id": "1275063227_12012026_155916_795289",
+      "message_index": 10,
+      "role": "assistant",
+      "temp_raw": "160\u00b0F",
+      "message": "Thanks for the detailed update on your red wine bone broth Manischewitz braise sauce\u2014great workaround reducing to syrup at 160\u00b0F then emulsifying with cold fat cubes for that nice consistency. Sounds like a win despite some flavor loss from boiling. Let me know if you want help refining it further."
+    },
+    {
+      "date": "2026-01-12T15:54:48.096390+00:00",
+      "session_id": "1275063227_11012026_190407_465110",
+      "message_index": 1,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIUIWlj9DaskApGaX5nJJ_yI83hmtSBAAJUDGsbHj0gR_N1ZRGWlgLVAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-12T15:54:48.096390+00:00",
+      "session_id": "1275063227_11012026_190407_465110",
+      "message_index": 5,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgEAAxkBAAIUJWlj9kxkBPGI03PW72JCSqOUlJY7AALCBQACHj0gRymjOYExmzCbOAQ.mp4]"
+    },
+    {
+      "date": "2026-01-12T15:54:48.096390+00:00",
+      "session_id": "1275063227_11012026_190407_465110",
+      "message_index": 19,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIUM2lk8ZzqoehJ7pTq0MQxI-48QQ6hAAJUC2sbHj0oRyWiBXyC7cYjAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-12T15:54:48.096390+00:00",
+      "session_id": "1275063227_11012026_190407_465110",
+      "message_index": 21,
+      "role": "user",
+      "temp_raw": "139",
+      "message": "The onion and egg the caramelized onion and egg yolk has been in the sous vide for about 15 hours at 139.5\u00b0 this is a picture I just emptied some mustard glass jar there\u2019s only one egg yolk in about a tablespoon and a half of caramelized onion"
+    },
+    {
+      "date": "2026-01-12T15:54:48.096390+00:00",
+      "session_id": "1275063227_11012026_190407_465110",
+      "message_index": 22,
+      "role": "assistant",
+      "temp_raw": "139",
+      "message": "Thanks for sharing the photo and details on the sous vide caramelized onion and egg yolk (one yolk with about 1.5 tbsp onion) after 15 hours at 139.5\u00b0F in the emptied mustard jar. Noted. Let me know if you need help."
+    },
+    {
+      "date": "2026-01-12T15:54:48.096390+00:00",
+      "session_id": "1275063227_11012026_190407_465110",
+      "message_index": 23,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgEAAxkBAAIUN2lk8nSqA125EJF_h0vbfoDECrnQAAL-BAACHj0oRxDfS_qp3X1OOAQ.mp4]"
+    },
+    {
+      "date": "2026-01-12T15:54:48.096390+00:00",
+      "session_id": "1275063227_11012026_190407_465110",
+      "message_index": 25,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIUOWlk8qqsOtC5leYuN05o17lToFUgAAJVC2sbHj0oR83xL_W_o5nXAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-12T15:54:48.096390+00:00",
+      "session_id": "1275063227_11012026_190407_465110",
+      "message_index": 29,
+      "role": "user",
+      "temp_raw": "145\u00b0",
+      "message": "so it wasn\u2019t tasting very good it was I added about a teaspoon of honey and a teaspoon of POMMERY mustard. And I mixed it and it got pretty thick and then I put it on about 145\u00b0 pan and it got pretty thick but the onion and egg tastes was really subtle it just wasn\u2019t that good and then I realized that my butter and my butter ratio was off so I added this is..."
+    },
+    {
+      "date": "2026-01-12T15:54:48.096390+00:00",
+      "session_id": "1275063227_11012026_190407_465110",
+      "message_index": 30,
+      "role": "assistant",
+      "temp_raw": "145\u00b0F",
+      "message": "Thanks for sharing the tasting notes and adjustments\u2014adding honey, Pommery mustard, heating in a 145\u00b0F pan, and extra butter to improve the subtle onion/egg flavor. Noted that more butter helped balance it when the ratio was off. I'm here if you want help refining it further."
+    },
+    {
+      "date": "2026-01-12T15:54:48.096390+00:00",
+      "session_id": "1275063227_11012026_190407_465110",
+      "message_index": 43,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIUS2llF7fDW6CFJzu8itw86oZEQD9aAAKiC2sbHj0oRxB6gl3hq5yRAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-12T15:54:48.096390+00:00",
+      "session_id": "1275063227_11012026_190407_465110",
+      "message_index": 45,
+      "role": "user",
+      "temp_raw": "143\u00b0",
+      "message": "so after being in a after being at about 143\u00b0 the egg onion hollandaise sauce with a lot more butter and water I put it through a sieve into a pan and you can see that the viscosity is already high enough or thick enough to hold a streak when I pass a a spatula through it and it taste pretty good. It\u2019s also holding up with some emulsification so I mean it\u2019s..."
+    },
+    {
+      "date": "2026-01-12T15:54:48.096390+00:00",
+      "session_id": "1275063227_11012026_190407_465110",
+      "message_index": 46,
+      "role": "assistant",
+      "temp_raw": "143\u00b0F",
+      "message": "Thanks for the update on the egg-onion hollandaise sauce (with extra butter and water) at 143\u00b0F, sieved into a pan, showing good viscosity, emulsification, and improved flavor with a pinch of sugar. Noted that it's holding a streak and tasting pretty good, though a bit watery. Let me know if you need help tweaking it."
+    },
+    {
+      "date": "2026-01-12T15:54:48.096390+00:00",
+      "session_id": "1275063227_11012026_190407_465110",
+      "message_index": 47,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIUT2llGRXCJ3tci1RBQ72-1QUmQ4pgAAKnC2sbHj0oR614nl3Cu31RAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-12T15:54:48.096390+00:00",
+      "session_id": "1275063227_11012026_190407_465110",
+      "message_index": 49,
+      "role": "user",
+      "temp_raw": "152\u00b0",
+      "message": "I heated the pan up about 152\u00b0 very briefly taking it on and off the heat trying to keep it at around 140\u00b0 and that has noticeably thickened up the sauce to a much nicer consistency where it holds a shape and doesn\u2019t completely spread out on the pan the flavor is also improved a little bit but The Onion The Onion is a little too subtle we had about one ice c..."
+    },
+    {
+      "date": "2026-01-12T15:54:48.096390+00:00",
+      "session_id": "1275063227_11012026_190407_465110",
+      "message_index": 49,
+      "role": "user",
+      "temp_raw": "140\u00b0",
+      "message": "I heated the pan up about 152\u00b0 very briefly taking it on and off the heat trying to keep it at around 140\u00b0 and that has noticeably thickened up the sauce to a much nicer consistency where it holds a shape and doesn\u2019t completely spread out on the pan the flavor is also improved a little bit but The Onion The Onion is a little too subtle we had about one ice c..."
+    },
+    {
+      "date": "2026-01-12T15:54:48.096390+00:00",
+      "session_id": "1275063227_11012026_190407_465110",
+      "message_index": 50,
+      "role": "assistant",
+      "temp_raw": "152\u00b0F",
+      "message": "Thanks for the update on gently heating the sauce to around 140-152\u00b0F, which thickened it nicely to hold shape, improved flavor slightly, but left the onion too subtle despite using about one ice cube tray's worth per egg. Noted on considering more onion next time. I'm here if you want help boosting that flavor."
+    },
+    {
+      "date": "2026-01-09T22:35:09.040764+00:00",
+      "session_id": "1275063227_08012026_214021_023976",
+      "message_index": 3,
+      "role": "user",
+      "temp_raw": "170\u00b0 f",
+      "message": "I lightly salted some salmon skin and placed it in the oven at 170\u00b0 for warm. It has some fat and skin on the top it has some fat and a little bit of meat in parts. I\u2019m trying to dehydrated and eventually turn it into a chip and get it super crispy"
+    },
+    {
+      "date": "2026-01-09T22:35:09.040764+00:00",
+      "session_id": "1275063227_08012026_214021_023976",
+      "message_index": 7,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIT9WlhWhxhSzEuO-M0n4IZYHDFiqvaAALBDGsbvo8JR3IQ1Fd5L2hlAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-09T22:35:09.040764+00:00",
+      "session_id": "1275063227_08012026_214021_023976",
+      "message_index": 13,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIT_GlhXq3zHgjMhv1A3qT9BCdvC0LMAALCDGsbvo8JR5LterIaYkawAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-09T22:35:09.040764+00:00",
+      "session_id": "1275063227_08012026_214021_023976",
+      "message_index": 25,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIUBWlhYAX08QuyoNPfcyD4enqianRgAALFDGsbvo8JR0Us6LHVy7uMAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-09T22:35:09.040764+00:00",
+      "session_id": "1275063227_08012026_214021_023976",
+      "message_index": 27,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIUBWlhYAX08QuyoNPfcyD4enqianRgAALFDGsbvo8JR0Us6LHVy7uMAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-09T22:35:09.040764+00:00",
+      "session_id": "1275063227_08012026_214021_023976",
+      "message_index": 35,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIUD2lhYr_jxnMU_5ae9f9ewH2ZIXTHAALGDGsbvo8JR67oFZSVaRJFAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-09T22:35:09.040764+00:00",
+      "session_id": "1275063227_08012026_214021_023976",
+      "message_index": 37,
+      "role": "user",
+      "temp_raw": "190\u00b0",
+      "message": "there was too much water because after the onion started to heat up that is they started to release more water and so I had to dump almost all of it out into the pot that I used earlier so that there could be some direct contact with the pan. Now starting to hear the right kind of sizzle on the pan without the water. depends about I think about 190\u00b0 and I ca..."
+    },
+    {
+      "date": "2026-01-09T22:35:09.040764+00:00",
+      "session_id": "1275063227_08012026_214021_023976",
+      "message_index": 38,
+      "role": "assistant",
+      "temp_raw": "190\u00b0F",
+      "message": "Smart call dumping the excess water to get that direct pan contact and the right sizzle going at around 190\u00b0F. Thanks for the update. I'm here if you need help."
+    },
+    {
+      "date": "2026-01-09T22:35:09.040764+00:00",
+      "session_id": "1275063227_08012026_214021_023976",
+      "message_index": 39,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIUE2lhaNusH3WCZgFOy1w3qdIj92pRAALKDGsbvo8JRwzoju8zu5WYAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-02T16:53:40.555621+00:00",
+      "session_id": "1275063227_02012026_162148_369044",
+      "message_index": 1,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgEAAxkBAAIMfGlX76PQSunNr8IUBhtdy_logSJpAAK-CAACrujBRnYUnyhxDy6OOAQ.mp4]"
+    },
+    {
+      "date": "2026-01-02T16:53:40.555621+00:00",
+      "session_id": "1275063227_02012026_162148_369044",
+      "message_index": 3,
+      "role": "user",
+      "temp_raw": "105\u00b0",
+      "message": "I had I put the jar of egg and sous vide egg yolk and caramelized onion in the refrigerator overnight. This had been in a sous vide circulator at about 140.5\u00b0 for maybe 4 to 5 hours. A refrigerated overnight and I\u2019m reheating it in a sous vide bath at around 105\u00b0 because I was already making some yogurt"
+    },
+    {
+      "date": "2026-01-02T16:53:40.555621+00:00",
+      "session_id": "1275063227_02012026_162148_369044",
+      "message_index": 5,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIMk2lX9BEUSPN-e9-m5y2xk_rHMgtRAALSC2sbrujBRsMyLnwGi9jVAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-02T16:53:40.555621+00:00",
+      "session_id": "1275063227_02012026_162148_369044",
+      "message_index": 17,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgEAAxkBAAIMn2lX9XWV5i00E8il6-tui5yxBVYuAALCCAACrujBRmYgY7OsMk49OAQ.mp4]"
+    },
+    {
+      "date": "2026-01-02T16:53:40.555621+00:00",
+      "session_id": "1275063227_02012026_162148_369044",
+      "message_index": 19,
+      "role": "user",
+      "temp_raw": "130\u00b0",
+      "message": "I scooped out the onion egg mixture the sous vide caramelized onion egg mixture after it had warmed up and I scooped it directly into the eggs after they were cooked a little bit that around and 130\u00b0 range and 140\u00b0 range of a pan was a little bit hot it briefly got up to what I tested it about 150\u00b0 so I took it off the heat and then incorporating and stirred..."
+    },
+    {
+      "date": "2026-01-02T16:53:40.555621+00:00",
+      "session_id": "1275063227_02012026_162148_369044",
+      "message_index": 19,
+      "role": "user",
+      "temp_raw": "140\u00b0",
+      "message": "I scooped out the onion egg mixture the sous vide caramelized onion egg mixture after it had warmed up and I scooped it directly into the eggs after they were cooked a little bit that around and 130\u00b0 range and 140\u00b0 range of a pan was a little bit hot it briefly got up to what I tested it about 150\u00b0 so I took it off the heat and then incorporating and stirred..."
+    },
+    {
+      "date": "2026-01-02T16:53:40.555621+00:00",
+      "session_id": "1275063227_02012026_162148_369044",
+      "message_index": 19,
+      "role": "user",
+      "temp_raw": "150\u00b0",
+      "message": "I scooped out the onion egg mixture the sous vide caramelized onion egg mixture after it had warmed up and I scooped it directly into the eggs after they were cooked a little bit that around and 130\u00b0 range and 140\u00b0 range of a pan was a little bit hot it briefly got up to what I tested it about 150\u00b0 so I took it off the heat and then incorporating and stirred..."
+    },
+    {
+      "date": "2026-01-02T16:53:40.555621+00:00",
+      "session_id": "1275063227_02012026_162148_369044",
+      "message_index": 20,
+      "role": "assistant",
+      "temp_raw": "140\u00b0F",
+      "message": "Thanks for the update on scooping the warmed sous vide onion-egg mixture into the eggs at around 130-140\u00b0F pan temp. Good call adjusting after the brief spike to 150\u00b0F. I'm here if you need any help!"
+    },
+    {
+      "date": "2026-01-02T16:53:40.555621+00:00",
+      "session_id": "1275063227_02012026_162148_369044",
+      "message_index": 20,
+      "role": "assistant",
+      "temp_raw": "150\u00b0F",
+      "message": "Thanks for the update on scooping the warmed sous vide onion-egg mixture into the eggs at around 130-140\u00b0F pan temp. Good call adjusting after the brief spike to 150\u00b0F. I'm here if you need any help!"
+    },
+    {
+      "date": "2026-01-02T16:53:40.555621+00:00",
+      "session_id": "1275063227_02012026_162148_369044",
+      "message_index": 21,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIMo2lX9fpzUHb1msOxJlOFGoQAAaFF-AAC1QtrG67owUYxZr0xNqMWnQEAAwIAA3kAAzgE.jpg]"
+    },
+    {
+      "date": "2026-01-02T16:53:40.555621+00:00",
+      "session_id": "1275063227_02012026_162148_369044",
+      "message_index": 31,
+      "role": "user",
+      "temp_raw": "180\u00b0",
+      "message": "and then I briefly took it to 180\u00b0 on the surface of the pan just to give it some nice color and done ness"
+    },
+    {
+      "date": "2026-01-02T16:53:40.555621+00:00",
+      "session_id": "1275063227_02012026_162148_369044",
+      "message_index": 32,
+      "role": "assistant",
+      "temp_raw": "180\u00b0F",
+      "message": "Thanks for the update on briefly hitting 180\u00b0F for color and doneness. Sounds like a solid finish. I'm here if you need any help!"
+    },
+    {
+      "date": "2026-01-01T22:49:53.494582+00:00",
+      "session_id": "1275063227_01012026_223838_785890",
+      "message_index": 3,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_videos/BAACAgEAAxkBAAIMcmlW-dKH0wMzxRP8gJGDFmBDzLmGAAKDBgACiwW4RhsRXo0wGwumOAQ.mp4]"
+    },
+    {
+      "date": "2026-01-01T22:49:53.494582+00:00",
+      "session_id": "1275063227_01012026_223838_785890",
+      "message_index": 5,
+      "role": "user",
+      "temp_raw": "141\u00b0",
+      "message": "making a sweet hollandaise sauce. The first video is me putting the caramelized onions and egg yolks for a little bit of honey in a jar. And then the second video was me putting that jar in a water bath at 140 something degrees at 141\u00b0"
+    },
+    {
+      "date": "2026-01-01T22:49:53.494582+00:00",
+      "session_id": "1275063227_01012026_223838_785890",
+      "message_index": 6,
+      "role": "assistant",
+      "temp_raw": "141\u00b0F",
+      "message": "Thanks for describing the videos\u2014sounds like you're making sweet hollandaise with caramelized onions, egg yolks, and honey in a jar on a 141\u00b0F water bath. Got it logged."
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 1,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgEAAxkBAAIMG2lVsVbhbU1JqTRWm094hXRNNBYSAALABgACiwWwRttQj3tRULPCOAQ.mp4]"
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 5,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgEAAxkBAAIMH2lVtSg-HYKKJkgPojbODXIzSMqtAALEBgACiwWwRoxUWft59dFkOAQ.mp4]"
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 9,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgEAAxkBAAIMJ2lVuMVLEwU4bdA4Y8XfdOtBwZ7BAALSBgACiwWwRtGDmFA8nK_fOAQ.mp4]"
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 13,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIMN2lVu6sn3D83YDPDgwsUhrc6NAABJgACnwtrG4sFsEb6pM_bmcPB-AEAAwIAA3kAAzgE.jpg]"
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 15,
+      "role": "user",
+      "temp_raw": "182 degrees",
+      "message": "cooking at about 182 degrees onions are starting to become a little translucent and I think they have shrunk just a little bit. I removed the pot lid"
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 16,
+      "role": "assistant",
+      "temp_raw": "182\u00b0F",
+      "message": "Thanks for the update\u2014cooking onions at 182\u00b0F, getting a bit translucent and shrinking slightly, lid now off. Let me know if you need any help!"
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 17,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIMO2lVxOf6y7jFbmfbFZzLLNtdpaN7AAKhC2sbiwWwRqiNpR1P1nl5AQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 19,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIMPWlV015IUTt4KZ8EunYUenCFrFAdAAKjC2sbiwWwRrIAAeDNCWtfIQEAAwIAA3kAAzgE.jpg]"
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 21,
+      "role": "user",
+      "temp_raw": "210\u00b0",
+      "message": "I took a little bit of a break cause I had to step away from the stove. The onions have become much more brown at times they were cooking at about 210\u00b0 but then I turned the heat down on average it\u2019s been around 180\u00b0 I don\u2019t know how much time it\u2019s been cooking for though I think less than two total hours"
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 21,
+      "role": "user",
+      "temp_raw": "180\u00b0",
+      "message": "I took a little bit of a break cause I had to step away from the stove. The onions have become much more brown at times they were cooking at about 210\u00b0 but then I turned the heat down on average it\u2019s been around 180\u00b0 I don\u2019t know how much time it\u2019s been cooking for though I think less than two total hours"
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 22,
+      "role": "assistant",
+      "temp_raw": "210\u00b0F",
+      "message": "Thanks for the update\u2014stepped away briefly, onions browning more after hitting 210\u00b0F at times (now averaging 180\u00b0F), under 2 hours total cook time. Let me know if you need any help!"
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 22,
+      "role": "assistant",
+      "temp_raw": "180\u00b0F",
+      "message": "Thanks for the update\u2014stepped away briefly, onions browning more after hitting 210\u00b0F at times (now averaging 180\u00b0F), under 2 hours total cook time. Let me know if you need any help!"
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 23,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIMQWlV2_zsTiOSHBkHLOrxB958FxllAAKlC2sbiwWwRjDIddRiX3t4AQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 23,
+      "role": "user",
+      "temp_raw": "958F",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIMQWlV2_zsTiOSHBkHLOrxB958FxllAAKlC2sbiwWwRjDIddRiX3t4AQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 25,
+      "role": "user",
+      "temp_raw": "165\u00b0",
+      "message": "I stepped away from the pan because it was on low and it was around and I think it was maybe around 165\u00b0 so then I turned up the heat a little bit from maybe like 2 to 4 on the dial and I stepped away from the pan  and I got real hot real quick and it started to go up to like 270 or somewhere in the 270\u00b0 range and as you can see there\u2019s significant browning..."
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 25,
+      "role": "user",
+      "temp_raw": "270\u00b0",
+      "message": "I stepped away from the pan because it was on low and it was around and I think it was maybe around 165\u00b0 so then I turned up the heat a little bit from maybe like 2 to 4 on the dial and I stepped away from the pan  and I got real hot real quick and it started to go up to like 270 or somewhere in the 270\u00b0 range and as you can see there\u2019s significant browning..."
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 26,
+      "role": "assistant",
+      "temp_raw": "165\u00b0F",
+      "message": "Thanks for the update\u2014turned heat up from ~165\u00b0F (dial 2 to 4), spiked to ~270\u00b0F, with some onions significantly browned and others still translucent. Sounds like uneven cooking. Let me know if you need any help!"
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 26,
+      "role": "assistant",
+      "temp_raw": "270\u00b0F",
+      "message": "Thanks for the update\u2014turned heat up from ~165\u00b0F (dial 2 to 4), spiked to ~270\u00b0F, with some onions significantly browned and others still translucent. Sounds like uneven cooking. Let me know if you need any help!"
+    },
+    {
+      "date": "2026-01-01T19:16:18.418365+00:00",
+      "session_id": "1275063227_01012026_000356_495097",
+      "message_index": 27,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIMRWlV43zlsGkb8BH0PZTgVF8fFLviAAKnC2sbiwWwRpfxBlk5R77jAQADAgADeQADOAQ.jpg]"
+    },
+    {
+      "date": "2025-12-31T23:59:07.084347+00:00",
+      "session_id": "1275063227_29122025_175446_951513",
+      "message_index": 17,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAITNWlTBYsoHA2XIZErpjehrKiwfpN6AALYC2sbvCOZRqHrLBpAWBbUAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-12-31T23:59:07.084347+00:00",
+      "session_id": "1275063227_29122025_175446_951513",
+      "message_index": 21,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAITOWlTCltEFmWVVdyTBIOfNfc3mDANAALoC2sbvCOZRpE59dWXSbCyAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-12-31T23:59:07.084347+00:00",
+      "session_id": "1275063227_29122025_175446_951513",
+      "message_index": 23,
+      "role": "user",
+      "temp_raw": "145\u00b0",
+      "message": "it was pretty good that\u2019s the finished omelette. Ended up pouring a little too much oil in and so to cover it it really only needed about 2 tablespoons in an 8 1/2 inch pan I think it was about that size. And I think we used 43 or four eggs two onions and two potatoes. The we could flip it just with a spatula and the internal temperature of the egg was about..."
+    },
+    {
+      "date": "2025-12-31T23:59:07.084347+00:00",
+      "session_id": "1275063227_29122025_175446_951513",
+      "message_index": 24,
+      "role": "assistant",
+      "temp_raw": "145\u00b0F",
+      "message": "Thanks for sharing the details on your finished Spanish tortilla\u2014it sounds like a success despite the extra oil. Noted the pan size, ingredient amounts (3-4 eggs, two onions, two potatoes), easy flip, and 145\u00b0F internal temp with good carryover. Great job!"
+    },
+    {
+      "date": "2025-12-31T23:59:07.084347+00:00",
+      "session_id": "1275063227_29122025_175446_951513",
+      "message_index": 25,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgEAAxkBAAIMG2lVsVbhbU1JqTRWm094hXRNNBYSAALABgACiwWwRttQj3tRULPCOAQ.mp4]"
+    },
+    {
+      "date": "2025-12-31T23:59:07.084347+00:00",
+      "session_id": "1275063227_29122025_175446_951513",
+      "message_index": 29,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgEAAxkBAAIMH2lVtSg-HYKKJkgPojbODXIzSMqtAALEBgACiwWwRoxUWft59dFkOAQ.mp4]"
+    },
+    {
+      "date": "2025-12-31T23:59:07.084347+00:00",
+      "session_id": "1275063227_29122025_175446_951513",
+      "message_index": 33,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgEAAxkBAAIMI2lVtbgdYbfKjJ6b2iLAn4pf3EIGAALHBgACiwWwRvHqf62T9qOhOAQ.mp4]"
+    },
+    {
+      "date": "2025-12-31T23:59:07.084347+00:00",
+      "session_id": "1275063227_29122025_175446_951513",
+      "message_index": 37,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgEAAxkBAAIMJ2lVuMVLEwU4bdA4Y8XfdOtBwZ7BAALSBgACiwWwRtGDmFA8nK_fOAQ.mp4]"
+    },
+    {
+      "date": "2025-11-17T19:45:52.173567+00:00",
+      "session_id": "1275063227_17112025_184551_109019",
+      "message_index": 1,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIShGkbbVwn7kirJv1UWrYtyUHKGVwMAAJEC2sbyGTYRHtTOad-LBwGAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-11-17T19:45:52.173567+00:00",
+      "session_id": "1275063227_17112025_184551_109019",
+      "message_index": 3,
+      "role": "user",
+      "temp_raw": "240 degrees",
+      "message": "onions were softened with about half cup of water then after about 19 minutes with about a tablespoon of butter and higher heat showed at around 240 degrees turning translucent and slight brown. more regular stirring"
+    },
+    {
+      "date": "2025-11-17T19:45:52.173567+00:00",
+      "session_id": "1275063227_17112025_184551_109019",
+      "message_index": 4,
+      "role": "assistant",
+      "temp_raw": "240\u00b0F",
+      "message": "Thanks for the update. Noted: after ~19 minutes, adding a tablespoon of butter and increasing heat to ~240\u00b0F with more stirring led to translucent onions with slight browning."
+    },
+    {
+      "date": "2025-11-17T19:45:52.173567+00:00",
+      "session_id": "1275063227_17112025_184551_109019",
+      "message_index": 5,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAISiGkbcexuMDCb_nurkGlbFC50WC5mAAIGC2sbyGTgRI8sxZftae1UAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-11-17T19:45:52.173567+00:00",
+      "session_id": "1275063227_17112025_184551_109019",
+      "message_index": 9,
+      "role": "user",
+      "temp_raw": "250 degrees",
+      "message": "pan temperature closer to 250 degrees"
+    },
+    {
+      "date": "2025-11-17T19:45:52.173567+00:00",
+      "session_id": "1275063227_17112025_184551_109019",
+      "message_index": 10,
+      "role": "assistant",
+      "temp_raw": "250\u00b0F",
+      "message": "Thanks for the update. Noted: pan temperature around 250\u00b0F."
+    },
+    {
+      "date": "2025-11-17T19:45:52.173567+00:00",
+      "session_id": "1275063227_17112025_184551_109019",
+      "message_index": 11,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAISjmkbdTLW0U6rmMGzOJ0feipWDd7QAAIJC2sbyGTgRN26L58aV1abAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-11-17T19:45:52.173567+00:00",
+      "session_id": "1275063227_17112025_184551_109019",
+      "message_index": 15,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAISkmkbdwHUPGhvZdSUM7uEZ_CrvV0EAAIOC2sbyGTgRP-mTD4f3m1lAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-11-17T19:45:52.173567+00:00",
+      "session_id": "1275063227_17112025_184551_109019",
+      "message_index": 19,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAISlmkbenbvGIzxFkcdUkWiqIIToxT5AAIPC2sbyGTgRJnSrdOCPtf5AQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-11-17T19:45:52.173567+00:00",
+      "session_id": "1275063227_17112025_184551_109019",
+      "message_index": 23,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAISmmkbetcvY0iUI7xtLI_UJ0YqSi1ZAAIQC2sbyGTgRHmrDPKxW-MtAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-11-13T15:00:05.025885+00:00",
+      "session_id": "1275063227_04112025_202010_540895",
+      "message_index": 41,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAISWGkT3e0WvHpiN94mo8Efl5pGc09eAAIUC2sbeiygRAqunqPj_v0vAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-11-13T15:00:05.025885+00:00",
+      "session_id": "1275063227_04112025_202010_540895",
+      "message_index": 43,
+      "role": "user",
+      "temp_raw": "145 degrees",
+      "message": "cooking at 145 degrees egg blended with caramelized onions. sous about 4 hours"
+    },
+    {
+      "date": "2025-11-13T15:00:05.025885+00:00",
+      "session_id": "1275063227_04112025_202010_540895",
+      "message_index": 44,
+      "role": "assistant",
+      "temp_raw": "145\u00b0 f",
+      "message": "Thanks for the update. Noted: egg blended with caramelized onions, sous-vide at 145\u00b0 for about 4 hours."
+    },
+    {
+      "date": "2025-11-13T15:00:05.025885+00:00",
+      "session_id": "1275063227_04112025_202010_540895",
+      "message_index": 47,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAISXmkUg7_zTebIhJDeKBP_JT_CfHGCAAI6C2sbeiygRNyHDNOlIlARAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-11-13T15:00:05.025885+00:00",
+      "session_id": "1275063227_04112025_202010_540895",
+      "message_index": 49,
+      "role": "user",
+      "temp_raw": "142",
+      "message": "I cooked the caramelized onions and eggs and two more types of fat. I believe the one on the very left is with about a teaspoon of avocado and just having adding the avocado oil so I cooked all three for about another hour and 142.5\u00b0. Adding the avocado oil really brought out the sweetness in the onion. And the one I mashed up some or cut up some salmon on t..."
+    },
+    {
+      "date": "2025-11-13T15:00:05.025885+00:00",
+      "session_id": "1275063227_04112025_202010_540895",
+      "message_index": 51,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgEAAxkBAAISYmkUmB1FP4bCXxcpf2U-XNbOEWFvAAKbBgACeiygRNtWoWj10kV1NgQ.mp4]"
+    },
+    {
+      "date": "2025-10-17T12:13:15.925230+00:00",
+      "session_id": "1275063227_17102025_120722_920821",
+      "message_index": 5,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIKvWjyMopq8LIqvxUCjjXQx41bMuYQAAKCC2sbXuSRR6pdnPdbqtZVAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 1,
+      "role": "user",
+      "temp_raw": "92\u00b0",
+      "message": "Sliced up some onions put about two capfuls of olive oil trader Joe's extra virgin Spanish olive oil in a heavy bottom pan large probably about a foot in diameter. Temperature initial temperature was about 92\u00b0 as measured by an infrared thermometer. Then I covered with a lid. Around 12:16 p.m."
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 2,
+      "role": "assistant",
+      "temp_raw": "92\u00b0F",
+      "message": "Thanks for the update. Noted: sliced onions in a large heavy-bottomed pan with about two capfuls of Trader Joe\u2019s Spanish EVOO, starting around 92\u00b0F and covered at 12:16 p.m."
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 3,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgQAAxkBAAIKO2jtJfGmhvUOxh5IvX1Pk2LLscfuAAJRHAACjSRxU2nu81eAZKRBNgQ.mp4]"
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 9,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgQAAxkBAAIKQWjtKGQQQcWFo6QJgByNCxFScmRXAAJozjEbjSRxU5HEHkogoEG3AQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 11,
+      "role": "user",
+      "temp_raw": "140\u00b0",
+      "message": "Checked on the onions that were covered in a pan The temperature is about 140\u00b0 and after it is now 10:27 so after about maybe 10 minutes almost nothing happened because it was just too cold there was there's basically no change no steam no nothing"
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 13,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgQAAxkBAAIKRWjtKNh0FsM43vFmB8K15Af9qH2fAAJXHAACjSRxU4xVvlaIL7-RNgQ.mp4]"
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 29,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgQAAxkBAAIKVWjtKy4Ym43wQhQAAUarwHTOzYEkOAACYRwAAo0kcVOyol7MKLYSlTYE.mp4]"
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 31,
+      "role": "user",
+      "temp_raw": "176\u00b0",
+      "message": "Opened up the the pan from the lid that had a covered lid of sauteing onions when I had the temperature around 176\u00b0. I opened it up and there was significance amount of moisture and steam coming out which is what I was looking for"
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 32,
+      "role": "assistant",
+      "temp_raw": "176\u00b0F",
+      "message": "Thanks for the update. Sounds like you got the steam you were aiming for at around 176\u00b0F when you lifted the lid. Noted."
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 33,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgQAAxkBAAIKWWjtLhJBizP0dWxcjyW4vUehN5hTAAJoHAACjSRxU_eMUdbfpdolNgQ.mp4]"
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 55,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgQAAxkBAAIKb2jtMzJJ5oLZek-QIlqTCrArasXfAAJ9zjEbjSRxU0aRyX8nl01XAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 57,
+      "role": "user",
+      "temp_raw": "185\u00b0",
+      "message": "This is a picture of the onions think now it's been I don't know maybe 30 minutes they're starting to get more translucent noticeable some browning and some of the smaller parts and the temperature is about 185\u00b0 on the pan"
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 58,
+      "role": "assistant",
+      "temp_raw": "185\u00b0F",
+      "message": "Thanks for the update. Noted: about 30 minutes in, onions are more translucent with some browning on smaller pieces; pan around 185\u00b0F."
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 59,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgQAAxkBAAIKc2jtOHagbD2KGk5za-bkwr3B0Q9wAAKMzjEbjSRxU2uulTQYn-EpAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 61,
+      "role": "user",
+      "temp_raw": "180 degrees",
+      "message": "Friend onions on white background parchment. These were softened for about an hour at low temperature around 180 degrees then kicked up to around 300 degrees for about 15 minutes. Crunchy and spots of brown around edges or small pieces with larger ones translucent white. Maintains texture crunch with some browning flavor"
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 61,
+      "role": "user",
+      "temp_raw": "300 degrees",
+      "message": "Friend onions on white background parchment. These were softened for about an hour at low temperature around 180 degrees then kicked up to around 300 degrees for about 15 minutes. Crunchy and spots of brown around edges or small pieces with larger ones translucent white. Maintains texture crunch with some browning flavor"
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 62,
+      "role": "assistant",
+      "temp_raw": "180\u00b0F",
+      "message": "Thanks for the update. Noted: softened ~1 hour at ~180\u00b0F, then ~300\u00b0F for ~15 minutes, yielding crunchy edges, brown spots, and translucent larger pieces. Glad the texture and flavor are working for you."
+    },
+    {
+      "date": "2025-10-13T17:37:31.473218+00:00",
+      "session_id": "7815621459_13102025_161638_631026",
+      "message_index": 62,
+      "role": "assistant",
+      "temp_raw": "300\u00b0F",
+      "message": "Thanks for the update. Noted: softened ~1 hour at ~180\u00b0F, then ~300\u00b0F for ~15 minutes, yielding crunchy edges, brown spots, and translucent larger pieces. Glad the texture and flavor are working for you."
+    },
+    {
+      "date": "2025-10-12T16:11:11.470553+00:00",
+      "session_id": "1275063227_12102025_122338_874397",
+      "message_index": 3,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[video_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/BAACAgEAAxkBAAIJ9Wjrn2ctnEAQeckHQH71gtT_l6b5AALhBAACCgpgR7dChDWe7VajNgQ.mp4]"
+    },
+    {
+      "date": "2025-10-12T16:11:11.470553+00:00",
+      "session_id": "1275063227_12102025_122338_874397",
+      "message_index": 21,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIKB2jrs9GCPq5UoKXUFE47hzOOFdsUAAI1C2sbCgpgR25TxOwQxiByAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-10-12T16:11:11.470553+00:00",
+      "session_id": "1275063227_12102025_122338_874397",
+      "message_index": 23,
+      "role": "user",
+      "temp_raw": "180\u00b0",
+      "message": "most of these photos, deal with me trying to caramelize some onions on the right bottom burner of the heavy bottom pan. Been cooking for about an hour maybe an hour and a half if the temperature drops below about 180\u00b0 then the caramel then the onions don\u2019t seem to caramelize very well, but it\u2019s difficult to keep the panin the 180 to 200 range"
+    },
+    {
+      "date": "2025-10-12T16:11:11.470553+00:00",
+      "session_id": "1275063227_12102025_122338_874397",
+      "message_index": 24,
+      "role": "assistant",
+      "temp_raw": "200\u00b0F",
+      "message": "Thanks for the detailed update. Holding a steady 180\u2013200\u00b0F on a burner can definitely be tricky. I\u2019m here if you want help dialing it in or analyzing anything."
+    },
+    {
+      "date": "2025-10-12T16:11:11.470553+00:00",
+      "session_id": "1275063227_12102025_122338_874397",
+      "message_index": 25,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIKC2jrtcylXOfWngrHcngIAAFxdhlgDgACNwtrGwoKYEcBMaJVOyc4iQEAAwIAA3kAAzYE.jpg]"
+    },
+    {
+      "date": "2025-10-12T16:11:11.470553+00:00",
+      "session_id": "1275063227_12102025_122338_874397",
+      "message_index": 27,
+      "role": "user",
+      "temp_raw": "200\u00b0",
+      "message": "in this photo, some parts of the pan are over 200\u00b0 some parts of the pan are around. I think it was around 184\u00b0 this you can see from the photo that some of the onions begin to get brown while others stay more translucent, pale yellow. And this matters because some of them could start to burn more quickly and I wanna keep it I want the caramelization process..."
+    },
+    {
+      "date": "2025-10-12T16:11:11.470553+00:00",
+      "session_id": "1275063227_12102025_122338_874397",
+      "message_index": 27,
+      "role": "user",
+      "temp_raw": "184\u00b0",
+      "message": "in this photo, some parts of the pan are over 200\u00b0 some parts of the pan are around. I think it was around 184\u00b0 this you can see from the photo that some of the onions begin to get brown while others stay more translucent, pale yellow. And this matters because some of them could start to burn more quickly and I wanna keep it I want the caramelization process..."
+    },
+    {
+      "date": "2025-10-12T16:11:11.470553+00:00",
+      "session_id": "1275063227_12102025_122338_874397",
+      "message_index": 29,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIKD2jr0ruAg108ROmd662ZycYVbUsBAAJJC2sbCgpgR3WOYJ9wWwt2AQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-10-12T16:11:11.470553+00:00",
+      "session_id": "1275063227_12102025_122338_874397",
+      "message_index": 31,
+      "role": "user",
+      "temp_raw": "145",
+      "message": "The previous image shows what caramelized onions, previously caramelized onions that were previously frozen and then placed into a bag with egg yolk probably about a one to one ratio of eggs to caramelized onions. It was sous vide in a Ziploc bag at 145.5\u00b0 for about three hours. It\u2019s not quite jammy but that actually no it\u2019s kind of a thick jam. The orange i..."
+    },
+    {
+      "date": "2025-10-10T18:19:55.509711+00:00",
+      "session_id": "1275063227_10102025_181726_554112",
+      "message_index": 1,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIJ6WjpTbOY-hgoWkXxQrBtmsAw_Y36AAIeC2sb871JRyvctI9AxejkAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-10-10T18:19:55.509711+00:00",
+      "session_id": "1275063227_10102025_181726_554112",
+      "message_index": 3,
+      "role": "user",
+      "temp_raw": "141",
+      "message": "I tried a different experiment. I put three different bags of eggs, one a full egg in a Ziploc bag one egg with caramelized onions that have been caramelized for about two hours maybe if I recall right and that was one yolk and both of the bags with caramelized onions were put in sous vide for about more than six hours overnight. One was cooked at 141.5\u00b0 the..."
+    },
+    {
+      "date": "2025-10-10T18:19:55.509711+00:00",
+      "session_id": "1275063227_10102025_181726_554112",
+      "message_index": 3,
+      "role": "user",
+      "temp_raw": "145",
+      "message": "I tried a different experiment. I put three different bags of eggs, one a full egg in a Ziploc bag one egg with caramelized onions that have been caramelized for about two hours maybe if I recall right and that was one yolk and both of the bags with caramelized onions were put in sous vide for about more than six hours overnight. One was cooked at 141.5\u00b0 the..."
+    },
+    {
+      "date": "2025-10-10T18:19:55.509711+00:00",
+      "session_id": "1275063227_10102025_181726_554112",
+      "message_index": 4,
+      "role": "assistant",
+      "temp_raw": "145",
+      "message": "Thanks for sharing your experiment. It sounds like the 145.5\u00b0F batch turned out thicker with a nicer aroma and flavor than the 141.5\u00b0F one."
+    },
+    {
+      "date": "2025-10-10T18:19:55.509711+00:00",
+      "session_id": "1275063227_10102025_181726_554112",
+      "message_index": 4,
+      "role": "assistant",
+      "temp_raw": "141",
+      "message": "Thanks for sharing your experiment. It sounds like the 145.5\u00b0F batch turned out thicker with a nicer aroma and flavor than the 141.5\u00b0F one."
+    },
+    {
+      "date": "2025-10-10T18:16:23.945461+00:00",
+      "session_id": "1275063227_10102025_181530_475424",
+      "message_index": 1,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIJ42jpTT-GyWMYsQdktimPUW5P575NAAIdC2sb871JR1tisaWX-AdiAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-10-09T21:31:26.148533+00:00",
+      "session_id": "1275063227_09102025_212452_597702",
+      "message_index": 1,
+      "role": "user",
+      "temp_raw": "174c",
+      "message": "[photo_url: https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIJmWjoKCABkoCj8SaFfjJBW_C7vJH3AAISC2sb871BRwOHDSjJwdieAQADAgADeQADNgQ.jpg]"
+    },
+    {
+      "date": "2025-10-09T21:31:26.148533+00:00",
+      "session_id": "1275063227_09102025_212452_597702",
+      "message_index": 2,
+      "role": "assistant",
+      "temp_raw": "200\u00b0F",
+      "message": "[media_description: I\u2019m caramelizing some onions. They\u2019ve been cooking about 40 minutes; the pan\u2019s surface temperature has ranged 160\u2013200\u00b0F, which is a bit high, so I\u2019m turning it down.]"
+    },
+    {
+      "date": "2025-10-09T21:31:26.148533+00:00",
+      "session_id": "1275063227_09102025_212452_597702",
+      "message_index": 4,
+      "role": "user",
+      "temp_raw": "160",
+      "message": "I\u2019m caramelizing some onions. They\u2019ve probably been cooking for about. I don\u2019t know maybe 40 minutes surface. Temperature of the pan goes between 160 and 200. That\u2019s a little too high so I\u2019m gonna turn it down."
+    },
+    {
+      "date": "2025-10-09T21:31:26.148533+00:00",
+      "session_id": "1275063227_09102025_212452_597702",
+      "message_index": 4,
+      "role": "user",
+      "temp_raw": "200",
+      "message": "I\u2019m caramelizing some onions. They\u2019ve probably been cooking for about. I don\u2019t know maybe 40 minutes surface. Temperature of the pan goes between 160 and 200. That\u2019s a little too high so I\u2019m gonna turn it down."
+    },
+    {
+      "date": "2025-10-09T21:31:26.148533+00:00",
+      "session_id": "1275063227_09102025_212452_597702",
+      "message_index": 5,
+      "role": "assistant",
+      "temp_raw": "200\u00b0C",
+      "message": "Nice work checking the heat. A gentle, slow caramelization will give you deeper flavor.\n\nQuick tips if you want to salvage and finish nicely:\n- Lower the heat to low or medium-low for a steady, light sizzle (around a gentle simmer). If you\u2019re at 160\u2013200\u00b0C, try closer to low heat and adjust as needed.\n- Stir every few minutes early on to prevent sticking, the..."
+    },
+    {
+      "date": "2025-10-09T21:31:26.148533+00:00",
+      "session_id": "1275063227_09102025_212452_597702",
+      "message_index": 6,
+      "role": "user",
+      "temp_raw": "160",
+      "message": "I\u2019m caramelizing some onions. They\u2019ve probably been cooking for about. I don\u2019t know maybe 40 minutes surface. Temperature of the pan goes between 160 and 200. That\u2019s a little too high so I\u2019m gonna turn it down."
+    },
+    {
+      "date": "2025-10-09T21:31:26.148533+00:00",
+      "session_id": "1275063227_09102025_212452_597702",
+      "message_index": 6,
+      "role": "user",
+      "temp_raw": "200",
+      "message": "I\u2019m caramelizing some onions. They\u2019ve probably been cooking for about. I don\u2019t know maybe 40 minutes surface. Temperature of the pan goes between 160 and 200. That\u2019s a little too high so I\u2019m gonna turn it down."
+    },
+    {
+      "date": "2025-10-09T21:31:26.148533+00:00",
+      "session_id": "1275063227_09102025_212452_597702",
+      "message_index": 7,
+      "role": "assistant",
+      "temp_raw": "200\u00b0C",
+      "message": "Got it \u2014 you\u2019ve been caramelizing onions for about 40 minutes, with the pan around 160\u2013200\u00b0C, and you\u2019re turning the heat down."
+    },
+    {
+      "date": "2025-10-09T21:31:26.148533+00:00",
+      "session_id": "1275063227_09102025_212452_597702",
+      "message_index": 8,
+      "role": "user",
+      "temp_raw": "213\u00b0",
+      "message": "Getting the pan right when I getting the pan right is a little tricky so when I have the pan set to the LO setting that\u2019s below two on the left bottom burner the surface temperature of the pan gets hotter. It\u2019s 213\u00b0. I think there\u2019s a lower setting that I\u2019m gonna try but that\u2019s way too hot and this is the this is the heavy large pan."
+    },
+    {
+      "date": "2025-10-09T21:31:26.148533+00:00",
+      "session_id": "1275063227_09102025_212452_597702",
+      "message_index": 9,
+      "role": "assistant",
+      "temp_raw": "213\u00b0",
+      "message": "Got it \u2014 you\u2019re trying to dial in heat on a heavy pan while caramelizing onions, and the surface is around 213\u00b0 even on LO.\n\nHere are a few quick ways to stabilize the heat, if you\u2019d like to try:\n- Use a heat diffuser or move the pan to a cooler area of the burner to reduce direct heat, aiming for a gentle simmer rather than a sizzle.\n- Stir more frequently..."
+    }
+  ]
+}

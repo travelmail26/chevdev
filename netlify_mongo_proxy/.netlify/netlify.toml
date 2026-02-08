@@ -1,0 +1,30 @@
+functionsDirectory = "/workspaces/chevdev/netlify_mongo_proxy/netlify/functions"
+functionsDirectoryOrigin = "config-v1"
+plugins = []
+headers = []
+redirects = []
+
+[build]
+publish = "/workspaces/chevdev/netlify_mongo_proxy"
+publishOrigin = "default"
+base = "/workspaces/chevdev/netlify_mongo_proxy"
+functions = "/workspaces/chevdev/netlify_mongo_proxy/netlify/functions"
+
+[build.environment]
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
+
+[functions]
+
+[functions."*"]
+node_bundler = "esbuild"

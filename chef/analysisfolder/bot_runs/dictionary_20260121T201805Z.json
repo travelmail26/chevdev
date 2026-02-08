@@ -1,0 +1,172 @@
+{
+  "schema": "recipe_dictionary.v1",
+  "created_at": "2026-01-21T20:18:05.029739+00:00",
+  "question": "List all the different temperatures that a user has cooked onions. List them with date, temp, and outcome if available.",
+  "source_candidates_path": "chef/analysisfolder/bot_runs/candidates_20260121T200428Z.json",
+  "events": [
+    {
+      "date_iso": "2026-01-01T22:49:53.494582+00:00",
+      "focus_terms": [
+        "onions",
+        "caramelized onions"
+      ],
+      "temperature": "141\u00b0F",
+      "method": "water bath",
+      "outcome": "sweet hollandaise sauce",
+      "evidence": {
+        "session_id": "1275063227_01012026_223838_785890",
+        "message_index": 5,
+        "excerpt": "making a sweet hollandaise sauce. The first video is me putting the caramelized onions and egg yolks for a little bit of honey in a jar. And then the second video was me putting that jar in a water bath at 140 something degrees at 141\u00b0"
+      },
+      "confidence": 0.95
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "229\u00b0",
+      "method": null,
+      "outcome": "burning slowed; heat more evenly distributed",
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 29,
+        "excerpt": "i\u2019ve added some keri gold butter and water probably about 2 tablespoons on the first round and then I just did it again I think the first round was about a half an hour ago but I\u2019m not sure. I think it helped slow some of the burning and more evenly distributed some of the heat temperatures are still around 229\u00b0 when I checked it and it could\u2019ve been that way for up to a half an hour around then"
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "low to medium heat; steam and light sizzling; lid on",
+      "method": null,
+      "outcome": "onions not translucent yet",
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 12,
+        "excerpt": "checking the temperature of the onions after the after they\u2019ve been cooking with the lid on. There\u2019s some steam and a little bit of sizzling but not quite translucent at all"
+      },
+      "confidence": 0.75
+    },
+    {
+      "date_iso": "2026-01-02T16:53:40.555621+00:00",
+      "focus_terms": [
+        "onion",
+        "caramelized onion"
+      ],
+      "temperature": "140.5",
+      "method": "sous vide circulator",
+      "outcome": "caramelized onion; refrigerated overnight",
+      "evidence": {
+        "session_id": "1275063227_02012026_162148_369044",
+        "message_index": 3,
+        "excerpt": "I had I put the jar of egg and sous vide egg yolk and caramelized onion in the refrigerator overnight. This had been in a sous vide circulator at about 140.5\u00b0 for maybe 4 to 5 hours."
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2026-01-02T16:53:40.555621+00:00",
+      "focus_terms": [
+        "onion"
+      ],
+      "temperature": "",
+      "method": "sous vide bath",
+      "outcome": "reheating in sous vide bath; final state not stated",
+      "evidence": {
+        "session_id": "1275063227_02012026_162148_369044",
+        "message_index": 3,
+        "excerpt": "A refrigerated overnight and I\u2019m reheating it in a sous vide bath at around 105\u00b0 because I was already making some yogurt"
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "182\u00b0F",
+      "method": null,
+      "outcome": "onions starting to become a little translucent and they have shrunk slightly; lid removed",
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 15,
+        "excerpt": "cooking at about 182 degrees onions are starting to become a little translucent and I think they have shrunk just a little bit. I removed the pot lid"
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "210\u00b0F",
+      "method": null,
+      "outcome": "onions becoming brown at times",
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 21,
+        "excerpt": "I took a little bit of a break cause I had to step away from the stove. The onions have become much more brown at times they were cooking at about 210\u00b0 but then I turned the heat down on average it\u2019s been around 180\u00b0 I don\u2019t know how much time it\u2019s been cooking for though I think less than two total hours"
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "180\u00b0F",
+      "method": null,
+      "outcome": "average around 180\u00b0F; cooking duration likely under two total hours",
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 21,
+        "excerpt": "I took a little bit of a break cause I had to step away from the stove. The onions have become much more brown at times they were cooking at about 210\u00b0 but then I turned the heat down on average it\u2019s been around 180\u00b0 I don\u2019t know how much time it\u2019s been cooking for though I think less than two total hours"
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "165\u00b0F",
+      "method": null,
+      "outcome": "heat started low; browning began as heat rose toward 270\u00b0F; some translucent pieces",
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 25,
+        "excerpt": "I stepped away from the pan because it was on low and it was around and I think it was maybe around 165\u00b0 so then I turned up the heat a little bit from maybe like 2 to 4 on the dial and I stepped away from the pan  and I got real hot real quick and it started to go up to like 270 or somewhere in the 270\u00b0 range and as you can see there\u2019s significant browning in some of the pieces and still translucent and not very brown in some of the larger pieces"
+      },
+      "confidence": 0.9
+    },
+    {
+      "date_iso": "2026-01-01T19:16:18.418365+00:00",
+      "focus_terms": [
+        "onions"
+      ],
+      "temperature": "270\u00b0F",
+      "method": null,
+      "outcome": "onions significantly browned; some pieces still translucent; not very brown in larger pieces",
+      "evidence": {
+        "session_id": "1275063227_01012026_000356_495097",
+        "message_index": 25,
+        "excerpt": "I stepped away from the pan because it was on low and it was around and I think it was maybe around 165\u00b0 so then I turned up the heat a little bit from maybe like 2 to 4 on the dial and I stepped away from the pan  and I got real hot real quick and it started to go up to like 270 or somewhere in the 270\u00b0 range and as you can see there\u2019s significant browning in some of the pieces and still translucent and not very brown in some of the larger pieces"
+      },
+      "confidence": 0.9
+    }
+  ],
+  "stats": {
+    "rows_scanned": 750,
+    "chunks": 5,
+    "events_raw": 10,
+    "events_deduped": 10,
+    "errors": 0,
+    "elapsed_s": 52.68,
+    "max_workers": 5,
+    "chunk_char_limit": 4000,
+    "model": "gpt-5-nano-2025-08-07"
+  },
+  "errors": []
+}

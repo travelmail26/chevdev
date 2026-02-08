@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Codespace Gemini Browser Demo</title>
+  <style>
+    :root {
+      --bg: #f3f8ff;
+      --card: #ffffff;
+      --ink: #111827;
+      --line: #dbe5f2;
+      --accent: #0f6feb;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(160deg, #eef5ff 0%, #f9fcff 50%, #ecfff8 100%);
+      color: var(--ink);
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 24px auto;
+      padding: 0 16px 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 10px 24px rgba(19, 47, 89, 0.08);
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 1.4rem;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 10px 14px;
+      background: var(--accent);
+      color: #fff;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    button.secondary {
+      background: #1f2937;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    video {
+      width: 100%;
+      max-width: 640px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: #000;
+    }
+
+    .chat {
+      height: 230px;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      background: #fbfdff;
+      font-family: Consolas, Menlo, monospace;
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+      line-height: 1.45;
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 1rem;
+    }
+
+    .hint {
+      margin-top: 8px;
+      color: #3f4b5a;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Browser Webcam -> Codespace -> Gemini</h1>
+      <div class="actions">
+        <button id="startCameraBtn">1) Start Camera</button>
+        <button id="connectBtn" class="secondary">2) Connect Backend</button>
+      </div>
+      <video id="preview" autoplay muted playsinline></video>
+      <p class="hint">
+        The browser captures camera locally. Frames are sent to `/ws` and backend logs appear in the Codespace terminal.
+      </p>
+    </div>
+
+    <div class="card">
+      <div id="chat" class="chat"></div>
+      <div class="row">
+        <input id="textInput" type="text" placeholder="Type a prompt, then press Send" />
+        <button id="sendBtn">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="hiddenCanvas" width="640" height="360" style="display:none;"></canvas>
+
+  <script>
+    const preview = document.getElementById("preview");
+    const hiddenCanvas = document.getElementById("hiddenCanvas");
+    const chat = document.getElementById("chat");
+    const startCameraBtn = document.getElementById("startCameraBtn");
+    const connectBtn = document.getElementById("connectBtn");
+    const sendBtn = document.getElementById("sendBtn");
+    const textInput = document.getElementById("textInput");
+
+    const state = {
+      stream: null,
+      ws: null,
+      frameTimer: null,
+    };
+
+    function logLine(text) {
+      const now = new Date().toLocaleTimeString();
+      chat.textContent += `[${now}] ${text}\n`;
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    async function startCamera() {
+      try {
+        state.stream = await navigator.mediaDevices.getUserMedia({
+          video: { width: 640, height: 360 },
+          audio: false
+        });
+        preview.srcObject = state.stream;
+        logLine("Camera started in browser.");
+        startCameraBtn.disabled = true;
+      } catch (error) {
+        logLine(`Camera error: ${error.message}`);
+      }
+    }
+
+    function connectBackend() {
+      if (state.ws && state.ws.readyState === WebSocket.OPEN) {
+        logLine("WebSocket already connected.");
+        return;
+      }
+
+      const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+      const wsUrl = `${protocol}://${window.location.host}/ws`;
+      state.ws = new WebSocket(wsUrl);
+
+      state.ws.onopen = () => {
+        logLine("Connected to backend websocket.");
+        connectBtn.disabled = true;
+        startFrameLoop();
+      };
+
+      state.ws.onmessage = (event) => {
+        const payload = JSON.parse(event.data);
+        if (payload.type === "assistant_text") {
+          logLine(`Gemini: ${payload.text}`);
+        } else if (payload.type === "echo_user") {
+          logLine(`You: ${payload.text}`);
+        } else {
+          logLine(`Status: ${payload.text}`);
+        }
+      };
+
+      state.ws.onclose = () => {
+        logLine("WebSocket closed.");
+        connectBtn.disabled = false;
+        stopFrameLoop();
+      };
+
+      state.ws.onerror = () => {
+        logLine("WebSocket error.");
+      };
+    }
+
+    function startFrameLoop() {
+      stopFrameLoop();
+      state.frameTimer = setInterval(sendVideoFrame, 700);
+    }
+
+    function stopFrameLoop() {
+      if (state.frameTimer) {
+        clearInterval(state.frameTimer);
+      }
+      state.frameTimer = null;
+    }
+
+    function sendVideoFrame() {
+      if (!state.stream) {
+        return;
+      }
+      if (!state.ws || state.ws.readyState !== WebSocket.OPEN) {
+        return;
+      }
+
+      const ctx = hiddenCanvas.getContext("2d");
+      ctx.drawImage(preview, 0, 0, hiddenCanvas.width, hiddenCanvas.height);
+
+      // Before example: send full-resolution PNG every frame (very heavy).
+      // After example: send resized JPEG every ~700ms (much easier for beginners).
+      const dataUrl = hiddenCanvas.toDataURL("image/jpeg", 0.65);
+      state.ws.send(JSON.stringify({ type: "video_frame", data: dataUrl }));
+    }
+
+    function sendUserText() {
+      const text = textInput.value.trim();
+      if (!text) {
+        return;
+      }
+      if (!state.ws || state.ws.readyState !== WebSocket.OPEN) {
+        logLine("Connect backend first.");
+        return;
+      }
+      state.ws.send(JSON.stringify({ type: "user_text", text }));
+      textInput.value = "";
+    }
+
+    startCameraBtn.addEventListener("click", startCamera);
+    connectBtn.addEventListener("click", connectBackend);
+    sendBtn.addEventListener("click", sendUserText);
+    textInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        sendUserText();
+      }
+    });
+  </script>
+</body>
+</html>
