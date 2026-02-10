@@ -13,6 +13,9 @@ def normalize_bot_mode(mode: str | None) -> str:
     # Before example: "/log" stored as "log" -> unknown; After example: "log" -> "dietlog".
     if raw in ("diet", "dietlog", "chefdietlog", "log"):
         return "dietlog"
+    # Before example: "/general" stored as "general" -> unknown; After example: "general" -> "general".
+    if raw in ("general", "brainstorm", "chat_general"):
+        return "general"
     return "cheflog"
 
 
@@ -36,6 +39,16 @@ BOT_CONFIG = {
         "mongo_collection": os.environ.get(
             "MONGODB_COLLECTION_NAME_DIETLOG", "chat_dietlog_sessions"
         ),
+    },
+    "general": {
+        # Before: no dedicated general prompt; After: /general uses a brainstorming instruction file.
+        "instructions_path": os.path.join(
+            CHEF_ROOT, "chefmain", "utilities", "instructions", "instructions_general.txt"
+        ),
+        # Before: general chats mixed into cheflog collection.
+        # After:  general chats route to chat_general.* by default.
+        "mongo_db": os.environ.get("MONGODB_DB_NAME_GENERAL", "chat_general"),
+        "mongo_collection": os.environ.get("MONGODB_COLLECTION_NAME_GENERAL", "chat_general"),
     },
 }
 

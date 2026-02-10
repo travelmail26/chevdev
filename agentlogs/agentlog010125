@@ -158,3 +158,6 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2026-02-08T00:00:00Z git: validated remote branch visibility issue handoff; current repo already has origin configured and multiple remotes present.
 2026-02-08T00:00:00Z git: created local tracking branches for origin/{claude/incomplete-description-011CUrz3tgbbky2BoHhRVugz,replit,safetest}; observed and ignored harmless origin/origin symbolic-ref upstream error.
 2026-02-08T14:57:36Z git: committing staged local workspace additions/updates on dev as requested (analysisfolder, chefnano, yen, proxies, and logs).
+2026-02-10: Created MongoDB collection 'chat_general' in database 'chef_chatbot' using MONGODB_URI; verified exists_now=True.
+2026-02-10: Correction - created top-level MongoDB database 'chat_general' (same level as 'chef_chatbot') by creating seed collection 'init_marker'; verified db_exists=True.
+2026-02-10T17:22:00Z work: added /general mode switch (telegram handlers + bot_config normalization), new general brainstorming instructions file, and Mongo routing defaults to chat_general.chat_general; validated mode switch and message persistence via local simulation.

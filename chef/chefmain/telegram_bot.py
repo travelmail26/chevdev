@@ -521,6 +521,31 @@ async def bot_mode_switch_log(update: Update, context: ContextTypes.DEFAULT_TYPE
     await update.message.reply_text("Switched to dietlog mode.")
     logging.info("mode_switch: user_id=%s from=%s to=%s", user_id, current_mode, next_mode)
 
+
+async def bot_mode_switch_general(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    # Before example: /general fell through to normal chat mode.
+    # After example:  /general forces general mode every time.
+    user_id = update.effective_user.id
+    handlers_per_user.pop(user_id, None)
+    conversations.pop(user_id, None)
+
+    session_info = {
+        "user_id": user_id,
+        "chat_id": update.effective_chat.id,
+        "message_id": update.effective_message.message_id,
+        "timestamp": update.effective_message.date.timestamp(),
+        "username": update.effective_user.username,
+        "first_name": update.effective_user.first_name,
+        "last_name": update.effective_user.last_name,
+        "trigger_command": "/general",
+    }
+
+    current_mode = get_user_bot_mode(str(user_id))
+    next_mode = "general"
+    set_user_bot_mode(str(user_id), next_mode, session_info=session_info)
+    await update.message.reply_text("Switched to general mode.")
+    logging.info("mode_switch: user_id=%s from=%s to=%s", user_id, current_mode, next_mode)
+
 async def openai_ping(update: Update, context: ContextTypes.DEFAULT_TYPE):
     key = os.getenv("OPENAI_API_KEY")
     if not key:
@@ -605,12 +630,14 @@ def setup_bot() -> Application:
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("cook", bot_mode_switch_cook))
     application.add_handler(CommandHandler("log", bot_mode_switch_log))
+    application.add_handler(CommandHandler("general", bot_mode_switch_general))
     application.add_handler(CommandHandler("1", bot_mode_switch_log))
     application.add_handler(CommandHandler("restart", restart))
     # Before example: "/restart@chefbot" or " /restart" skipped; After example: those match too.
     application.add_handler(MessageHandler(filters.Regex(r"^\s*/restart(?:@\w+)?(\s|$)"), restart))
     application.add_handler(MessageHandler(filters.Regex(r"^\s*/cook(?:@\w+)?(\s|$)"), bot_mode_switch_cook))
     application.add_handler(MessageHandler(filters.Regex(r"^\s*/(log|1)(?:@\w+)?(\s|$)"), bot_mode_switch_log))
+    application.add_handler(MessageHandler(filters.Regex(r"^\s*/general(?:@\w+)?(\s|$)"), bot_mode_switch_general))
     application.add_handler(CommandHandler("openai_ping", openai_ping))
     application.add_handler(CommandHandler("openai_version", openai_version))
     application.add_handler(CommandHandler("build_version", build_version))
