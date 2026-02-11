@@ -546,6 +546,12 @@ async def bot_mode_switch_general(update: Update, context: ContextTypes.DEFAULT_
     await update.message.reply_text("Switched to general mode.")
     logging.info("mode_switch: user_id=%s from=%s to=%s", user_id, current_mode, next_mode)
 
+
+async def general_perplexity_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    # Before example: /pplx was treated as an unknown command and skipped by text handler.
+    # After example:  /pplx routes into the normal handle_message path.
+    await handle_message(update, context)
+
 async def openai_ping(update: Update, context: ContextTypes.DEFAULT_TYPE):
     key = os.getenv("OPENAI_API_KEY")
     if not key:
@@ -631,6 +637,8 @@ def setup_bot() -> Application:
     application.add_handler(CommandHandler("cook", bot_mode_switch_cook))
     application.add_handler(CommandHandler("log", bot_mode_switch_log))
     application.add_handler(CommandHandler("general", bot_mode_switch_general))
+    application.add_handler(CommandHandler("pplx", general_perplexity_command))
+    application.add_handler(CommandHandler("perplexity", general_perplexity_command))
     application.add_handler(CommandHandler("1", bot_mode_switch_log))
     application.add_handler(CommandHandler("restart", restart))
     # Before example: "/restart@chefbot" or " /restart" skipped; After example: those match too.
@@ -638,6 +646,7 @@ def setup_bot() -> Application:
     application.add_handler(MessageHandler(filters.Regex(r"^\s*/cook(?:@\w+)?(\s|$)"), bot_mode_switch_cook))
     application.add_handler(MessageHandler(filters.Regex(r"^\s*/(log|1)(?:@\w+)?(\s|$)"), bot_mode_switch_log))
     application.add_handler(MessageHandler(filters.Regex(r"^\s*/general(?:@\w+)?(\s|$)"), bot_mode_switch_general))
+    application.add_handler(MessageHandler(filters.Regex(r"^\s*/(pplx|perplexity)(?:@\w+)?(\s|$)"), general_perplexity_command))
     application.add_handler(CommandHandler("openai_ping", openai_ping))
     application.add_handler(CommandHandler("openai_version", openai_version))
     application.add_handler(CommandHandler("build_version", build_version))

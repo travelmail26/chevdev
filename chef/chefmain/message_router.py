@@ -148,6 +148,33 @@ class MessageRouter:
         self.combined_instructions = self.load_instructions(bot_mode=effective_bot_mode)
         system_instruction = {"role": "system", "content": self.combined_instructions}
 
+        # --- SIMPLE GENERAL MODE PERPLEXITY BLOCK (easy to remove) ---
+        # Before example: "/pplx latest ai news" in general mode went through xAI.
+        # After example:  "/pplx latest ai news" in general mode calls utilities.perplexity directly.
+        if effective_bot_mode == "general" and isinstance(message_object, dict):
+            raw_user_message = str(message_object.get("user_message", "") or "").strip()
+            perplexity_query = None
+            if raw_user_message.lower().startswith("/pplx "):
+                perplexity_query = raw_user_message[6:].strip()
+            elif raw_user_message.lower().startswith("/perplexity "):
+                perplexity_query = raw_user_message[12:].strip()
+
+            if perplexity_query:
+                assistant_content = ""
+                try:
+                    from utilities.perplexity import search_perplexity
+                    assistant_content = search_perplexity(perplexity_query)
+                except Exception as exc:
+                    assistant_content = f"Perplexity error: {exc}"
+
+                # Return Perplexity output verbatim.
+                if message_object and assistant_content:
+                    partial = message_object.copy()
+                    partial["user_message"] = assistant_content
+                    process_message_object(partial)
+                    message_history_process(message_object, {"role": "assistant", "content": assistant_content})
+                return assistant_content
+
         # Ensure messages is a proper list
         if not isinstance(messages, list):
             logging.debug(f"DEBUG: Converting messages from {type(messages)} to list")

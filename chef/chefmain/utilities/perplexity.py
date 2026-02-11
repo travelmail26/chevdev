@@ -44,7 +44,8 @@ def search_perplexity(query):
     }
 
     data = {
-        "model": "sonar-pro",  # Using model that returns reasoning tokens
+        # Before example: used sonar-pro. After example: use lower-cost sonar.
+        "model": "sonar",
         "messages": messages,
         "stream": True,  # Enable streaming for reasoning tokens
         "reasoning_effort": "high",
@@ -152,5 +153,4 @@ if __name__ == "__main__":
     print("\n--- Perplexity Result ---")
     print(result)
     print("------------------------")
-
 
