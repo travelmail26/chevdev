@@ -21,6 +21,7 @@ if CURRENT_DIR not in sys.path:
 
 from quick_apis import quick_openai_message, quick_perplexity_search
 from quick_apis import quick_openai_message_stream
+from quick_apis import quick_perplexity_stream_existing_app
 from telegram_raw import TelegramRawClient
 
 
@@ -75,7 +76,7 @@ def menu_keyboard() -> InlineKeyboardMarkup:
         [
             [
                 InlineKeyboardButton("1) Quick + Typing", callback_data="run:quick"),
-                InlineKeyboardButton("2) Search + Progress", callback_data="run:search"),
+                InlineKeyboardButton("2) PPLX Stream (sonar)", callback_data="run:search"),
             ],
             [
                 InlineKeyboardButton("3) Edit-Streaming", callback_data="run:stream"),
@@ -227,7 +228,8 @@ async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "Interface test lab is running on this bot.\n\n"
         "Try one by one:\n"
         "- /demo_quick <message>\n"
-        "- /demo_search <query>\n"
+        "- /demo_search <query>  (Perplexity stream, sonar)\n"
+        "- /demo_pplx_stream <query>\n"
         "- /demo_stream <message>\n"
         "- /demo_cookie_stop\n"
         "- /demo_draft <message>\n"
@@ -308,6 +310,117 @@ async def run_search_demo(message, context: ContextTypes.DEFAULT_TYPE, query: st
         f"Search complete ({duration}ms, {model})\n\n{headline}",
         reply_markup=search_result_keyboard(),
     )
+
+
+async def run_perplexity_stream_demo(message, context: ContextTypes.DEFAULT_TYPE, query: str) -> None:
+    chat_id = message.chat_id
+    state = get_state(chat_id)
+    state.stop_requested = False
+    state.last_search_query = query
+    state.stream_phase = "generating"
+
+    status_msg = await message.reply_text(
+        "Perplexity stream (sonar) connected.\n\nWaiting for first tokens...\n\nYou can press Stop now.",
+        reply_markup=stop_keyboard(),
+    )
+    state.active_stream_message_id = status_msg.message_id
+
+    full_text = ""
+    citations: List[str] = []
+    last_flushed_chars = 0
+    last_edit_at = 0.0
+    last_typing_at = 0.0
+    saw_first_delta = False
+
+    try:
+        async for event in quick_perplexity_stream_existing_app(query):
+            if state.stop_requested:
+                state.stream_phase = "paused"
+                state.last_search_text = full_text
+                state.last_search_citations = citations
+                if full_text.strip():
+                    await safe_edit(
+                        status_msg,
+                        "Perplexity stream stopped and acknowledged.\n\n"
+                        + clip_telegram_text(full_text)
+                        + "\n\n(Partial output kept.)",
+                        reply_markup=search_result_keyboard(),
+                    )
+                else:
+                    await safe_edit(
+                        status_msg,
+                        "Stopped before first token.\n\nNo partial output yet.",
+                        reply_markup=search_result_keyboard(),
+                    )
+                return
+
+            if event.get("type") == "delta":
+                full_text = str(event.get("full_text") or full_text)
+                event_citations = event.get("citations")
+                if isinstance(event_citations, list):
+                    citations = [str(url) for url in event_citations if isinstance(url, str)]
+
+                now = time.monotonic()
+                if not saw_first_delta:
+                    saw_first_delta = True
+                    await safe_edit(
+                        status_msg,
+                        "Perplexity streaming started (model=sonar).\n\n"
+                        + clip_telegram_text(full_text + " ▌"),
+                        reply_markup=stop_keyboard(),
+                    )
+                    last_flushed_chars = len(full_text)
+                    last_edit_at = now
+                    continue
+
+                new_chars_since_flush = len(full_text) - last_flushed_chars
+                enough_chars = new_chars_since_flush >= STREAM_CHARS_PER_EDIT
+                enough_time = (now - last_edit_at) >= STREAM_MIN_EDIT_SECONDS
+                punctuation_break = full_text.endswith((".", "!", "?", "\n"))
+
+                if (enough_chars and enough_time) or (punctuation_break and enough_time):
+                    await safe_edit(
+                        status_msg,
+                        "Perplexity streaming (model=sonar)...\n\n"
+                        + clip_telegram_text(full_text + " ▌"),
+                        reply_markup=stop_keyboard(),
+                    )
+                    last_flushed_chars = len(full_text)
+                    last_edit_at = now
+
+                if now - last_typing_at >= 4.0:
+                    await context.bot.send_chat_action(chat_id=chat_id, action=ChatAction.TYPING)
+                    last_typing_at = now
+
+            if event.get("type") == "done":
+                done_citations = event.get("citations")
+                if isinstance(done_citations, list):
+                    citations = [str(url) for url in done_citations if isinstance(url, str)]
+                break
+
+        if not full_text.strip():
+            state.stream_phase = "idle"
+            await safe_edit(
+                status_msg,
+                "Perplexity stream ended with empty output.\n\nTry a different query.",
+            )
+            return
+
+        state.last_search_text = full_text
+        state.last_search_citations = citations
+        state.stream_phase = "idle"
+        final_text = "Perplexity streaming complete (model=sonar).\n\n" + clip_telegram_text(full_text)
+        if citations:
+            citation_lines = "\n".join(f"[{idx}] {url}" for idx, url in enumerate(citations[:12], start=1))
+            final_text += "\n\nSources:\n" + citation_lines
+        await safe_edit(
+            status_msg,
+            final_text,
+            reply_markup=search_result_keyboard(),
+        )
+    except Exception as exc:
+        state.stream_phase = "idle"
+        await safe_edit(status_msg, f"Perplexity stream failed: {exc}")
 
 
 async def run_stream_demo(message, context: ContextTypes.DEFAULT_TYPE, prompt: str) -> None:
@@ -445,7 +558,12 @@ async def cmd_demo_quick(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
 async def cmd_demo_search(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = " ".join(context.args).strip() or "latest AI model releases this week"
-    await run_search_demo(update.effective_message, context, query)
+    await run_perplexity_stream_demo(update.effective_message, context, query)
+
+
+async def cmd_demo_pplx_stream(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    query = " ".join(context.args).strip() or "best cookie recipes from reddit this month"
+    await run_perplexity_stream_demo(update.effective_message, context, query)
 
 
 async def cmd_demo_stream(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -479,6 +597,15 @@ async def cmd_demo_draft(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     await run_draft_demo(update.effective_message, context, prompt)
 
 
+async def cmd_plain_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    text = (update.effective_message.text or "").strip()
+    if not text:
+        return
+    # Before example: users needed explicit /demo_search command.
+    # After example: plain text like "find me cookie recipes" streams through Perplexity sonar.
+    await run_perplexity_stream_demo(update.effective_message, context, text)
+
+
 async def cb_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await safe_answer_callback(query)
@@ -509,8 +636,8 @@ async def cb_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
         return
 
     if data == "run:search":
-        await query.message.reply_text("Running search demo with sample query...")
-        await run_search_demo(query.message, context, "latest improvements in Telegram bot UX")
+        await query.message.reply_text("Running Perplexity streaming demo with sample query...")
+        await run_perplexity_stream_demo(query.message, context, "latest improvements in Telegram bot UX")
         return
 
     if data == "run:stream":
@@ -570,7 +697,7 @@ async def cb_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
         if not state.last_search_query:
             await query.message.reply_text("No previous search query found.")
             return
-        await run_search_demo(query.message, context, state.last_search_query)
+        await run_perplexity_stream_demo(query.message, context, state.last_search_query)
         return
 
 
@@ -600,11 +727,13 @@ def main() -> None:
     app.add_handler(CommandHandler("uimenu", cmd_uimenu))
     app.add_handler(CommandHandler("demo_quick", cmd_demo_quick))
     app.add_handler(CommandHandler("demo_search", cmd_demo_search))
+    app.add_handler(CommandHandler("demo_pplx_stream", cmd_demo_pplx_stream))
     app.add_handler(CommandHandler("demo_stream", cmd_demo_stream))
     app.add_handler(CommandHandler("demo_cookie_stop", cmd_demo_cookie_stop))
     app.add_handler(CommandHandler("stop", cmd_stop))
     app.add_handler(CommandHandler("demo_draft", cmd_demo_draft))
     app.add_handler(MessageHandler(filters.Regex(re.compile(r"^\s*stop\s*$", re.IGNORECASE)), cmd_stop))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, cmd_plain_query))
     app.add_handler(CallbackQueryHandler(cb_handler))
 
     # This script is a local demo harness, so polling keeps setup simple.

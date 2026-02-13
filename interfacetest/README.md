@@ -36,14 +36,16 @@ python interfacetest/ui_lab_bot.py
 2. `/demo_quick give me a 2 sentence answer about hydration`
 3. `/demo_stream explain how edit-based streaming improves UX`
 4. `/demo_search latest updates to Telegram bot api`
-5. `/demo_draft testing draft method`
-6. `/uimenu` and tap each button
+5. `/demo_pplx_stream best cookie recipes from reddit this month`
+6. `/demo_draft testing draft method`
+7. `/uimenu` and tap each button
 
 ## What each demo shows
 
 - `demo_quick`: immediate typing + placeholder + fast final answer with controls.
 - `demo_stream`: edit-based streaming with throttle and `Stop/Continue`.
-- `demo_search`: progress steps for web search + progressive disclosure (`Headline/Details/Sources`).
+- `demo_search`: Perplexity `sonar` live streaming response + progressive disclosure (`Headline/Details/Sources`).
+- `demo_pplx_stream`: explicit Perplexity `sonar` streaming command (same streaming function call path).
 - `demo_draft`: tries `sendMessageDraft`; if unsupported, falls back to edit-streaming.
 
 ## Quick API smoke tests
@@ -52,4 +54,3 @@ python interfacetest/ui_lab_bot.py
 python interfacetest/api_smoke.py --quick "say hi in one sentence"
 python interfacetest/api_smoke.py --search "top AI safety headlines this week"
 ```
-

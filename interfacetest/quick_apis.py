@@ -109,6 +109,93 @@ async def quick_openai_message_stream(prompt: str, model: str | None = None):
     yield {"type": "done", "full_text": full_text}
 
 
+async def quick_perplexity_stream_existing_app(query: str):
+    """Yield Perplexity streaming deltas using the existing app pattern and sonar model."""
+    api_key = os.getenv("PERPLEXITY_KEY")
+    if not api_key:
+        raise RuntimeError("PERPLEXITY_KEY missing")
+
+    # Keep this pinned to sonar per request.
+    model = "sonar"
+    payload = {
+        # Before example: model could drift by environment config.
+        # After example: force sonar for this UI stream path.
+        "model": model,
+        "messages": [
+            {
+                "role": "system",
+                "content": (
+                    "Answer clearly with concise facts and include citations when available."
+                ),
+            },
+            {"role": "user", "content": query},
+        ],
+        "stream": True,
+        "reasoning_effort": "high",
+        "web_search_options": {
+            "search_type": "pro",
+            "search_domain_filter": ["reddit.com"],
+        },
+    }
+
+    timeout = httpx.Timeout(connect=20.0, read=300.0, write=30.0, pool=30.0)
+    headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+    full_text = ""
+    seen_citations = set()
+    citations: List[str] = []
+
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        async with client.stream("POST", PERPLEXITY_URL, headers=headers, json=payload) as response:
+            if response.status_code != 200:
+                body = await response.aread()
+                raise RuntimeError(
+                    f"Perplexity stream error {response.status_code}: "
+                    f"{body[:500].decode('utf-8', errors='ignore')}"
+                )
+
+            async for raw_line in response.aiter_lines():
+                if not raw_line:
+                    continue
+                if raw_line.startswith("data:"):
+                    raw_line = raw_line[5:].strip()
+                if not raw_line:
+                    continue
+                if raw_line == "[DONE]":
+                    break
+
+                try:
+                    event = json.loads(raw_line)
+                except json.JSONDecodeError:
+                    continue
+
+                if isinstance(event.get("citations"), list):
+                    for url in event["citations"]:
+                        if isinstance(url, str) and url and url not in seen_citations:
+                            seen_citations.add(url)
+                            citations.append(url)
+
+                delta = ""
+                choices = event.get("choices")
+                if isinstance(choices, list) and choices:
+                    delta = str(((choices[0] or {}).get("delta") or {}).get("content") or "")
+
+                if delta:
+                    full_text += delta
+                    yield {
+                        "type": "delta",
+                        "delta": delta,
+                        "full_text": full_text,
+                        "citations": citations,
+                        "model": model,
+                    }
+
+                if (choices and isinstance(choices, list) and
+                        str((choices[0] or {}).get("finish_reason") or "") == "stop"):
+                    break
+
+    yield {"type": "done", "full_text": full_text, "citations": citations, "model": model}
+
+
 def quick_openai_message(prompt: str, model: str | None = None) -> Dict[str, Any]:
     """Fast one-shot text response for quick message UX demos."""
     api_key = os.getenv("OPENAI_API_KEY")
