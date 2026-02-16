@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 60 9% 98%;      /* #FCFCF9 */
+  --foreground: 189 51% 15%;    /* #13343B */
+  
+  --card: 0 0% 100%;
+  --card-foreground: 189 51% 15%;
+  
+  --popover: 0 0% 100%;
+  --popover-foreground: 189 51% 15%;
+  
+  --primary: 189 51% 15%;       /* #13343B */
+  --primary-foreground: 60 9% 98%;
+  
+  --secondary: 190 16% 92%;
+  --secondary-foreground: 189 51% 15%;
+  
+  --muted: 190 16% 94%;
+  --muted-foreground: 190 16% 36%; /* #4D666B */
+  
+  --accent: 190 20% 96%;
+  --accent-foreground: 189 51% 15%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 60 9.1% 97.8%;
+
+  --border: 190 10% 90%;
+  --input: 190 10% 90%;
+  --ring: 189 51% 15%;
+
+  --radius: 0.75rem;
+
+  --font-serif: 'Merriweather', serif;
+  --font-sans: 'Inter', sans-serif;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-primary/20;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    @apply tracking-tight font-medium;
+  }
+
+  html {
+    height: -webkit-fill-available;
+  }
+}
+
+@layer utilities {
+  .font-serif {
+    font-family: var(--font-serif);
+  }
+  
+  .prose-custom {
+    @apply text-foreground leading-7;
+  }
+  .prose-custom p {
+    @apply mb-4;
+  }
+  .prose-custom h1, .prose-custom h2, .prose-custom h3 {
+    @apply font-serif text-primary mt-6 mb-3 font-bold;
+  }
+  .prose-custom h1 {
+    @apply text-xl sm:text-2xl;
+  }
+  .prose-custom h2 {
+    @apply text-lg sm:text-xl;
+  }
+  .prose-custom h3 {
+    @apply text-base sm:text-lg;
+  }
+  .prose-custom ul {
+    @apply list-disc list-outside ml-5 mb-4 space-y-1;
+  }
+  .prose-custom ol {
+    @apply list-decimal list-outside ml-5 mb-4 space-y-1;
+  }
+  .prose-custom li {
+    @apply text-sm sm:text-base;
+  }
+  .prose-custom code {
+    @apply bg-muted px-1.5 py-0.5 rounded text-sm font-mono text-primary;
+  }
+  .prose-custom pre {
+    @apply bg-muted/50 p-3 sm:p-4 rounded-lg overflow-x-auto mb-4 border border-border/50 text-sm;
+  }
+  .prose-custom pre code {
+    @apply bg-transparent p-0 text-inherit;
+  }
+  .prose-custom a {
+    @apply text-primary underline underline-offset-4 decoration-primary/30 hover:decoration-primary transition-colors;
+  }
+  .prose-custom strong {
+    @apply font-semibold text-primary;
+  }
+  .prose-custom blockquote {
+    @apply border-l-2 border-primary/20 pl-4 italic text-muted-foreground my-4;
+  }
+  .prose-custom table {
+    @apply w-full text-sm border-collapse my-4;
+  }
+  .prose-custom th {
+    @apply text-left font-semibold p-2 border-b border-border;
+  }
+  .prose-custom td {
+    @apply p-2 border-b border-border/50;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .touch-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+  }
+
+  .touch-scroll > * {
+    scroll-snap-align: start;
+  }
+}
+
+@supports (height: 100dvh) {
+  .h-dvh {
+    height: 100dvh;
+  }
+}
+
+@media (max-width: 640px) {
+  .prose-custom {
+    @apply leading-6 text-[15px];
+  }
+}

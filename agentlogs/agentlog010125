@@ -226,3 +226,121 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 2026-02-16T01:18:00Z fix+prompt(dev): updated message_router and instructions_general to reduce unwanted follow-up search calls and preserve topic context when search is called. Tool description/instructions now say follow-up explanation questions should use conversation context unless user explicitly asks to search again. search_perplexity now receives a compact recent user/assistant message list instead of only the last query string.
 2026-02-16T01:30:00Z fix(dev): message_router Perplexity context now uses turn-based window (last 8 turns = up to 16 user/assistant messages), trims leading assistant after truncation, and normalizes payload to strict {role,content} dicts for API consistency.
 2026-02-16T01:33:00Z test+prompt(dev): telegram webhook E2E test on PORT=18080 with /restart then 4-turn sequence (general -> internet search -> general follow-up -> internet search again). Verified tool-call behavior: turns 2 and 4 triggered search_perplexity; turn 3 ('why do you think thickness matters') stayed in-model with no tool call. Also confirmed Perplexity received turn-by-turn context payload lists (role/content) on search turns.
+2026-02-16T14:34:16Z fix(dev): removed Telegram slash-command aliases /pplx and /perplexity from chef/chefmain/telegram_bot.py (deleted handler function and command/regex registrations); internet lookup remains available via search_perplexity function calls.
+2026-02-16T14:43:39Z refactor(dev): unified restart/session reset into _apply_restart_flow in chef/chefmain/telegram_bot.py; /cook, /log, and /general now run the same reset path as /restart (new active session id, clear in-memory context, trigger media backfill) before setting bot mode.
+2026-02-16T14:59:19Z feat+test(dev): added interfacetest-style general-mode single-message edit streaming with /stop in chef/chefmain/telegram_bot.py + callback/stop streaming hooks in chef/chefmain/message_router.py and chef/chefmain/utilities/perplexity.py; added rollback doc chef/chefmain/GENERAL_EDIT_STREAMING_ROLLBACK.md. Live Telegram handler tests used fresh /restart per scenario and validated: progressive edits on general+Perplexity flow, preserved Perplexity context payloads, and /stop acknowledged with stopped marker in stream output.
+2026-02-16T15:04:14Z test(dev): ran chef/testscripts/verify_general_edit_streaming_live.py with fresh /restart before each scenario; generated evidence under chef/testscripts/output/general_streaming_verify/ including JSON/log/text and PNG screenshots. Verified single-message edit streaming in general mode (non-tool edits=4 on one message id), function-call streaming via search_perplexity (edits=8 across turns with tool logs), and stop behavior (stopped marker true). Also ran extra mid-stream stop check (stop_midstream_extra.txt): edits=5 on one message id with stopped_seen=True.
+[2026-02-16 15:34 UTC] Added isolated lab scaffold under interfacetest/session_switch_lab.
+- Copied Perplexity clone into interfacetest/session_switch_lab/perplexity_clone_lab (no .git/.local).
+- Added shared backend: interfacetest/session_switch_lab/shared_session_backend.py (single canonical session store, chat/mode/session APIs, offline deterministic research+generic replies).
+- Added Telegram simulator CLI: interfacetest/session_switch_lab/telegram_sim_cli.py.
+- Rewired cloned web server route to shared backend by updating interfacetest/session_switch_lab/perplexity_clone_lab/server/routes.ts and adding interfacetest/session_switch_lab/perplexity_clone_lab/server/shared-backend.ts.
+- Note: outbound DNS is blocked in this environment, so this lab uses offline deterministic responses for verification.
+[2026-02-16 15:40 UTC] Completed session-switch lab verification in interfacetest/session_switch_lab.
+- Validation script: interfacetest/session_switch_lab/run_lab_validation.sh (PASS).
+- API continuity test: interfacetest/session_switch_lab/test_lab_api.py (PASS; shared web<->telegram session continuity verified, message_count>=6).
+- Telegram simulator sanity: interfacetest/session_switch_lab/telegram_sim_cli.py (PASS).
+- Screenshot capture: interfacetest/session_switch_lab/capture_lab_screenshots.mjs (PASS).
+- Screenshot artifacts:
+  - interfacetest/session_switch_lab/runtime/screenshots/01_web_research.png
+  - interfacetest/session_switch_lab/runtime/screenshots/02_web_after_telegram.png
+- Logs:
+  - interfacetest/session_switch_lab/runtime/logs/backend.log
+  - interfacetest/session_switch_lab/runtime/logs/web.log
+- Important note: this lab currently uses deterministic offline responses by design; the shared-session architecture is the tested target.
+[2026-02-16 15:43 UTC] Upgraded session-switch lab backend to real web research mode.
+- Updated interfacetest/session_switch_lab/shared_session_backend.py:
+  - Added live Perplexity path (default ON via LAB_ENABLE_REAL_WEB_RESEARCH=1) with fallback to deterministic mode.
+  - Added optional live xAI generic path for telegram adapter (default OFF; enable via LAB_ENABLE_REAL_TELEGRAM_GENERIC=1).
+  - Kept continuity marker injection so cross-interface carryover is explicit.
+- Updated interfacetest/session_switch_lab/capture_lab_screenshots.mjs wait condition to marker-based matching.
+- Re-ran full validation script successfully after upgrade.
+[2026-02-16 15:49 UTC] Added single-entry runner for lab cycling.
+- New file: interfacetest/session_switch_lab/main.py
+  - Starts shared backend + web clone from one command.
+  - Provides interactive commands: new, mode, telegram, session, quit.
+  - Uses one canonical user id across both interfaces.
+- Updated interfacetest/session_switch_lab/README.md with one-command usage (`python main.py`).
+- Verified live cycle:
+  - Sent web research message via web API while main.py running.
+  - Sent telegram recap command in main.py console.
+  - Telegram response reflected web context, confirming shared session continuity.
+[2026-02-16 15:53 UTC] Fixed Codespaces 404 scenario for single-run lab.
+- Changed interfacetest/session_switch_lab/main.py defaults:
+  - Web UI port -> 9001
+  - Backend API port -> 9002
+- Added backend root route in interfacetest/session_switch_lab/shared_session_backend.py so hitting backend root no longer returns 404.
+- Updated interfacetest/session_switch_lab/README.md with new default port mapping.
+- Verified scenario:
+  - `python main.py` launches web on 9001 and backend on 9002.
+  - `http://127.0.0.1:9001` returns web UI HTML.
+  - Telegram command in same main.py session returns recap using web context.
+[2026-02-16 16:05 UTC] Wired session-switch lab to real cheftestdev Telegram bot.
+- Added interfacetest/session_switch_lab/telegram_bridge_bot.py:
+  - Uses TELEGRAM_DEV_KEY/TELEGRAM_KEY.
+  - Commands: /start, /web, /new, /mode, /session, /health.
+  - Sends Telegram text turns to shared backend (/api/chat source=telegram).
+  - /web returns user-specific URL with uid query (`...?uid=tg_<telegram_user_id>`).
+- Added browser uid binding in web client:
+  - New file: interfacetest/session_switch_lab/perplexity_clone_lab/client/src/lib/canonical-user.ts
+  - Updated client/src/main.tsx to bootstrap uid from URL and persist to localStorage.
+  - Updated hooks to send x-canonical-user-id header:
+    - client/src/hooks/use-chat-stream.ts
+    - client/src/hooks/use-threads.ts
+- Updated server routing for user-scoped thread ownership in interfacetest/session_switch_lab/perplexity_clone_lab/server/routes.ts.
+- Simplified launcher interfacetest/session_switch_lab/main.py:
+  - Starts backend (9002), web UI (9001), and telegram bridge automatically.
+  - Prints exact Codespaces UI URL and Telegram instructions.
+  - Improved graceful shutdown (no PTB coroutine warning on Ctrl+C).
+- Updated interfacetest/session_switch_lab/README.md to real Telegram flow.
+- Verification:
+  - main.py startup: backend/web/telegram bridge all alive.
+  - Telegram bot token check: cheftestdevbot reachable; webhook empty.
+  - Playwright test confirmed uid link propagation (`Shared session lookup for tg_test_uid_999`).
+[2026-02-16 16:08 UTC] Fixed weird Telegram recap output in session-switch lab.
+- Updated interfacetest/session_switch_lab/shared_session_backend.py recap path:
+  - Recap now uses last web assistant answer (dynamic), not last web user question + hardcoded hashbrown sentence.
+  - Added fallback recap behavior if only web user message exists.
+[2026-02-16 16:13 UTC] Fixed Telegram recap/follow-up logic and conflict handling.
+- Updated interfacetest/session_switch_lab/shared_session_backend.py:
+  - Added better Telegram handling for:
+    - "what did i just ask" (echo previous Telegram user message)
+    - SKU explanation queries
+    - "first mistake" extraction from latest web assistant answer (bullets/numbered lists)
+  - Kept recap behavior based on latest web assistant answer.
+- Updated interfacetest/session_switch_lab/main.py:
+  - Startup now blocks if conflicting chef main bot process is running (chef/chefmain/main.py or telegram_bot.py), with explicit stop command.
+- Verified:
+  - Local function checks return expected outputs for your exact problematic prompts.
+  - Launcher now correctly reports and blocks on conflicting bot process.
+  - After stopping conflict, launcher starts backend+web+telegram bridge normally.
+[2026-02-16 16:16 UTC] Added automatic memory reset on lab startup.
+- Updated interfacetest/session_switch_lab/main.py:
+  - Clears runtime/session_store.json by default before launching services.
+  - Added --keep-memory flag to opt out.
+  - Startup banner now states memory policy explicitly.
+- Updated interfacetest/session_switch_lab/README.md with new default + --keep-memory override.
+- Verified with restart test: session_store.json resets to {"users": {}}.
+[2026-02-16 16:22 UTC] Improved "what did i just ask" behavior for shared-session Telegram bridge.
+- Updated interfacetest/session_switch_lab/shared_session_backend.py:
+  - If no prior Telegram question exists, fallback now checks prior web question and reports it.
+  - Final fallback message now says no prior question in session (not Telegram-only wording).
+- Verified with local simulation: "what did i just ask about?" now returns last web ask when present.
+[2026-02-16 16:26 UTC] Simplified Telegram logic to reduce special-case handling.
+- Updated interfacetest/session_switch_lab/shared_session_backend.py:
+  - Removed multiple one-off Telegram exception branches (SKU, first-mistake, etc.).
+  - Kept one simple recap path + simple fallback message.
+  - Telegram now defaults to real xAI replies; fallback used only if model call fails.
+- Updated interfacetest/session_switch_lab/main.py:
+  - Real Telegram model now default ON.
+  - Added --no-real-telegram flag (kept --real-telegram as deprecated alias).
+- Updated interfacetest/session_switch_lab/README.md to match new default.
+[2026-02-16 16:35 UTC] Radically simplified cross-frontend behavior to instruction-driven model.
+- Updated interfacetest/session_switch_lab/shared_session_backend.py:
+  - Added single shared instruction set (`SHARED_FRONTEND_INSTRUCTION`) and source-aware builder (`_build_frontend_instruction`).
+  - Removed continuity-note injection into web responses.
+  - Removed branchy Telegram fallback logic; kept one minimal fallback message only when model path is unavailable.
+  - Telegram and web model calls now use the same instruction framework with frontend-specific tool constraints.
+  - Telegram model call now receives latest known web sources in instruction context for source grounding.
+[2026-02-16 18:10 UTC] session_switch_lab: simplified shared prompt in interfacetest/session_switch_lab/shared_session_backend.py. Removed Telegram 'known web sources' injection; now both frontends rely on shared turn history only. Added ambiguity rule so short unclear inputs (e.g., 'code 11') trigger clarification instead of invented output. Validated via local backend scenario tests (web->telegram continuity + ambiguity handling).
+[2026-02-16 18:31 UTC] session_switch_lab UI duplicate fix: thread page rendered both transient stream bubble and persisted assistant message, causing two answers in a row. Updated perplexity_clone_lab/client/src/pages/Thread.tsx to call chat stream reset() once persisted assistant content matches streamed content at phase=done. Build passed (npm run build). Playwright check: 1 submit -> chatPosts=1, assistantCount=1.
