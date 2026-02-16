@@ -10,7 +10,7 @@ try:
 except KeyError:
     raise ValueError("The 'PERPLEXITY_KEY' environment variable is not set.")
 
-def search_perplexity(query):
+def search_perplexity(query, stream_callback=None, should_stop=None):
     """
     Performs a search using the Perplexity API and returns the summarized result with citations.
     Use this tool for general web searches, finding explanations, or getting summaries on topics.
@@ -70,8 +70,12 @@ def search_perplexity(query):
         full_content = ""
         seen_citations = set()  # Use a set to track unique citations
         citations = []
+        stopped_early = False
         
         for line in response.iter_lines():
+            if callable(should_stop) and should_stop():
+                stopped_early = True
+                break
             if line:
                 try:
                     # Remove 'data: ' prefix and parse JSON
@@ -84,6 +88,10 @@ def search_perplexity(query):
                             # Print just the new content tokens
                             print(delta['content'], end='', flush=True)
                             full_content += delta['content']
+                            if callable(stream_callback):
+                                # Before example: streaming output lived only in local stdout.
+                                # After example:  streaming output can update a Telegram-edited message.
+                                stream_callback(full_content)
                         # Handle citations - only add new ones
                         if 'citations' in decoded_line:
                             for citation in decoded_line['citations']:
@@ -98,6 +106,12 @@ def search_perplexity(query):
                     continue
         
         print("\n=== End of reasoning tokens ===\n")
+
+        if stopped_early:
+            partial_text = full_content.strip()
+            if not partial_text:
+                return "Stopped by user before first token.\n\n[Stopped by user]"
+            return f"{partial_text}\n\n[Stopped by user]"
         
         # Create response_data structure matching the non-streaming format
         response_data = {
@@ -153,4 +167,3 @@ if __name__ == "__main__":
     print("\n--- Perplexity Result ---")
     print(result)
     print("------------------------")
-

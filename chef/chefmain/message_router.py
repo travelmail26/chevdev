@@ -194,6 +194,8 @@ class MessageRouter:
         tool_call,
         verbatim_user_query: str | None = None,
         conversation_messages: list | None = None,
+        stream_callback=None,
+        should_stop=None,
     ):
         # Before example: command-prefix routing called Perplexity directly in route_message.
         # After example: tool execution is centralized and tied to tool_call payload.
@@ -233,7 +235,53 @@ class MessageRouter:
         )
 
         from utilities.perplexity import search_perplexity
-        return search_perplexity(perplexity_query_payload)
+        return search_perplexity(
+            perplexity_query_payload,
+            stream_callback=stream_callback,
+            should_stop=should_stop,
+        )
+
+    # === INTERFACETEST-STYLE STREAMING BLOCK START (easy to undo) ===
+    def _emit_text_stream(self, text, stream_callback=None, should_stop=None):
+        """
+        Emit progressive text updates for a single-message edit UI.
+        Returns (final_text_to_keep, stopped_early).
+        """
+        full_text = str(text or "")
+        if not full_text:
+            return "", False
+
+        if not callable(stream_callback):
+            return full_text, False
+
+        words = full_text.split()
+        if not words:
+            stream_callback(full_text)
+            return full_text, False
+
+        built_words = []
+        last_emitted_chars = 0
+        for index, word in enumerate(words):
+            if callable(should_stop) and should_stop():
+                partial = " ".join(built_words).strip()
+                if partial:
+                    stream_callback(partial)
+                return partial, True
+
+            built_words.append(word)
+            preview = " ".join(built_words)
+            is_last = index == len(words) - 1
+            punctuated = word.endswith((".", "!", "?", ",", ";", ":"))
+            grew_enough = (len(preview) - last_emitted_chars) >= 80
+            if is_last or punctuated or grew_enough:
+                stream_callback(preview)
+                last_emitted_chars = len(preview)
+                # Before example: all chunks arrived instantly.
+                # After example:  tiny pause creates visible progressive edits.
+                time.sleep(0.03)
+
+        return " ".join(built_words).strip(), False
+    # === INTERFACETEST-STYLE STREAMING BLOCK END ===
 
     def _call_model(self, model, messages, tools=None):
         # Before example: request/response parsing was duplicated in multiple places.
@@ -264,7 +312,7 @@ class MessageRouter:
             return {}
         return choices[0].get("message") or {}
     
-    def route_message(self, messages=None, message_object=None):
+    def route_message(self, messages=None, message_object=None, stream=False, stream_callback=None, should_stop=None):
         """Route a message from a user to OpenAI, persist history, and return the response.
 
         Tool calling behavior:
@@ -275,6 +323,9 @@ class MessageRouter:
         Args:
             messages: Optional list of message dictionaries for the conversation history
             message_object: Optional dictionary containing user_message and other data
+            stream: If True, emit progressive updates through stream_callback
+            stream_callback: Callable that receives full partial text for single-message edits
+            should_stop: Callable that returns True when generation should stop safely
         """
         user_id = str(message_object.get("user_id", "unknown")) if message_object else "unknown"
         logging.info(f"route_message start: user_id={user_id}, has_message_object={bool(message_object)}")
@@ -341,6 +392,16 @@ class MessageRouter:
         search_tools = self._build_search_tool_schema() if effective_bot_mode == "general" else []
 
         try:
+            if callable(should_stop) and should_stop():
+                assistant_content = "Stopped by user before generation started."
+                if message_object:
+                    message_history_process(message_object, {"role": "assistant", "content": assistant_content})
+                if message_object and (not stream or not callable(stream_callback)):
+                    partial = message_object.copy()
+                    partial["user_message"] = assistant_content
+                    process_message_object(partial)
+                return assistant_content
+
             # Before: OpenAI call timing was opaque; after example: log start/end with model + duration.
             openai_start = time.monotonic()
             message_count = len(messages)
@@ -412,6 +473,8 @@ class MessageRouter:
                         tool_call,
                         verbatim_user_query=str(last_user_content or ""),
                         conversation_messages=tool_context_messages,
+                        stream_callback=stream_callback if stream else None,
+                        should_stop=should_stop if stream else None,
                     )
                 except Exception as tool_exc:
                     tool_output = f"Tool execution error: {tool_exc}"
@@ -428,7 +491,18 @@ class MessageRouter:
                 # User preference: return Perplexity output verbatim (no rewrite, no trim).
                 assistant_content = tool_output if isinstance(tool_output, str) else str(tool_output)
 
-            if message_object and assistant_content:
+            # Stream non-tool model text via progressive single-message updates.
+            if stream and assistant_content and effective_bot_mode == "general" and not tool_calls:
+                streamed_text, stopped_early = self._emit_text_stream(
+                    assistant_content,
+                    stream_callback=stream_callback,
+                    should_stop=should_stop,
+                )
+                assistant_content = streamed_text
+                if stopped_early:
+                    assistant_content = (assistant_content + "\n\n[Stopped by user]").strip()
+
+            if message_object and assistant_content and (not stream or not callable(stream_callback)):
                 partial = message_object.copy()
                 partial["user_message"] = assistant_content
                 process_message_object(partial)

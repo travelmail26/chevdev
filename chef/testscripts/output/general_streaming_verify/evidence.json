@@ -1,0 +1,98 @@
+{
+  "started_at": "2026-02-16T15:02:36.861166+00:00",
+  "chat_id": 1275063227,
+  "scenarios": [
+    {
+      "name": "general_brainstorm_non_tool",
+      "turns": [
+        "without searching, give me 20 detailed hashbrown brainstorming ideas for a brunch menu"
+      ],
+      "edit_event_count": 4,
+      "unique_message_ids": [
+        3419
+      ],
+      "first_edit": {
+        "ts": 1771254163.586477,
+        "chat_id": 1275063227,
+        "message_id": 3419,
+        "text_preview": "1. \u258c",
+        "text_len": 4
+      },
+      "last_edit": {
+        "ts": 1771254165.425434,
+        "chat_id": 1275063227,
+        "message_id": 3419,
+        "text_preview": "1. **Classic Crispy Shredded**: Thinly shredded russet potatoes, par-cooked in boiling water for fluffiness, fried golden with butter and salt\u2014pair with poached eggs and hollandaise for a Benedict twist. 2. **Loaded Nach",
+        "text_len": 1107
+      },
+      "stopped_marker_seen": false
+    },
+    {
+      "name": "general_with_perplexity_then_followup",
+      "turns": [
+        "search the internet for best hashbrown thickness and cite two sources",
+        "without searching again, explain in 2 sentences why thickness affects crispness"
+      ],
+      "edit_event_count": 8,
+      "unique_message_ids": [
+        3422,
+        3423
+      ],
+      "first_edit": {
+        "ts": 1771254169.9048026,
+        "chat_id": 1275063227,
+        "message_id": 3422,
+        "text_preview": "**The best thickness for hash browns is a thin layer of about 1/2 inch to maximize crispiness by ensuring maximum surface contact with the \u258c",
+        "text_len": 140
+      },
+      "last_edit": {
+        "ts": 1771254175.3237677,
+        "chat_id": 1275063227,
+        "message_id": 3423,
+        "text_preview": "Thinner hashbrowns (about 1/2 inch) maximize contact with the hot pan surface, promoting rapid moisture evaporation and browning for crispiness. Thicker layers trap steam inside, keeping the center soggy and preventing e",
+        "text_len": 231
+      },
+      "stopped_marker_seen": false
+    },
+    {
+      "name": "general_stop_midstream",
+      "turns": [
+        "search the internet for detailed hashbrown technique comparisons and include key quotes"
+      ],
+      "edit_event_count": 1,
+      "unique_message_ids": [
+        3426
+      ],
+      "first_edit": {
+        "ts": 1771254179.8294823,
+        "chat_id": 1275063227,
+        "message_id": 3426,
+        "text_preview": "Stopped by user before first token.  [Stopped by user]",
+        "text_len": 54
+      },
+      "last_edit": {
+        "ts": 1771254179.8294823,
+        "chat_id": 1275063227,
+        "message_id": 3426,
+        "text_preview": "Stopped by user before first token.  [Stopped by user]",
+        "text_len": 54
+      },
+      "stopped_marker_seen": true
+    }
+  ],
+  "log_lines": [
+    "2026-02-16 15:02:39,101 INFO route_message start: user_id=1275063227, has_message_object=True",
+    "2026-02-16 15:02:44,872 INFO route_message end: user_id=1275063227, response_chars=1107",
+    "2026-02-16 15:02:46,838 INFO route_message start: user_id=1275063227, has_message_object=True",
+    "2026-02-16 15:02:48,530 INFO xai_tool_round start: user_id=1275063227 round=1 tool_calls=1",
+    "2026-02-16 15:02:48,530 INFO tool_context_messages: function=search_perplexity count=1 first_role=user last_role=user",
+    "2026-02-16 15:02:51,721 INFO route_message end: user_id=1275063227, response_chars=1406",
+    "2026-02-16 15:02:52,757 INFO route_message start: user_id=1275063227, has_message_object=True",
+    "2026-02-16 15:02:54,622 INFO route_message end: user_id=1275063227, response_chars=231",
+    "2026-02-16 15:02:56,757 INFO route_message start: user_id=1275063227, has_message_object=True",
+    "2026-02-16 15:02:58,365 INFO xai_tool_round start: user_id=1275063227 round=1 tool_calls=1",
+    "2026-02-16 15:02:58,365 INFO tool_context_messages: function=search_perplexity count=1 first_role=user last_role=user",
+    "2026-02-16 15:02:59,793 INFO route_message end: user_id=1275063227, response_chars=54"
+  ],
+  "finished_at": "2026-02-16T15:03:00.099645+00:00"
+}

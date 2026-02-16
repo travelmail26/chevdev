@@ -1,0 +1,24 @@
+Started: 2026-02-16T15:02:36.861166+00:00
+Finished: 2026-02-16T15:03:00.099645+00:00
+
+Scenario: general_brainstorm_non_tool
+  edit_event_count=4
+  unique_message_ids=[3419]
+  stopped_marker_seen=False
+  first_edit=1. ▌
+  last_edit=1. **Classic Crispy Shredded**: Thinly shredded russet potatoes, par-cooked in boiling water for fluffiness, fried golden with butter and salt—pair with poached eggs and hollandaise for a Benedict twist. 2. **Loaded Nach
+
+Scenario: general_with_perplexity_then_followup
+  edit_event_count=8
+  unique_message_ids=[3422, 3423]
+  stopped_marker_seen=False
+  first_edit=**The best thickness for hash browns is a thin layer of about 1/2 inch to maximize crispiness by ensuring maximum surface contact with the ▌
+  last_edit=Thinner hashbrowns (about 1/2 inch) maximize contact with the hot pan surface, promoting rapid moisture evaporation and browning for crispiness. Thicker layers trap steam inside, keeping the center soggy and preventing e
+
+Scenario: general_stop_midstream
+  edit_event_count=1
+  unique_message_ids=[3426]
+  stopped_marker_seen=True
+  first_edit=Stopped by user before first token.  [Stopped by user]
+  last_edit=Stopped by user before first token.  [Stopped by user]
+

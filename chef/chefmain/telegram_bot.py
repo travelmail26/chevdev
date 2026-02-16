@@ -1,9 +1,11 @@
 import os
 import sys
+import asyncio
 import logging
 import subprocess
 import traceback
 import time
+import threading
 
 # Add current + parent directories to path so local utilities resolve first.
 base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -33,6 +35,7 @@ except Exception:
 
 
 from telegram import Update
+from telegram.constants import ChatAction
 from telegram.ext import (
     Application,
     CommandHandler,
@@ -68,6 +71,177 @@ message_router = None # Add global variable for the router
 
 # Global dictionary to store user contexts
 user_contexts = {}
+
+# === INTERFACETEST-STYLE STREAMING BLOCK START (easy to undo) ===
+_general_stream_state_lock = threading.Lock()
+_general_stream_state_by_user = {}
+
+
+def _is_general_edit_streaming_enabled() -> bool:
+    # Toggle off quickly by setting GENERAL_EDIT_STREAMING=0.
+    return os.getenv("GENERAL_EDIT_STREAMING", "1").strip().lower() not in {"0", "false", "no", "off"}
+
+
+def _stream_start_run(user_id: int) -> int:
+    with _general_stream_state_lock:
+        state = _general_stream_state_by_user.get(user_id) or {"run_id": 0, "active": False, "stop_requested": False}
+        run_id = int(state.get("run_id", 0)) + 1
+        _general_stream_state_by_user[user_id] = {
+            "run_id": run_id,
+            "active": True,
+            "stop_requested": False,
+        }
+        return run_id
+
+
+def _stream_request_stop(user_id: int) -> bool:
+    with _general_stream_state_lock:
+        state = _general_stream_state_by_user.get(user_id)
+        if not state or not state.get("active"):
+            return False
+        state["stop_requested"] = True
+        _general_stream_state_by_user[user_id] = state
+        return True
+
+
+def _stream_should_stop(user_id: int, run_id: int) -> bool:
+    with _general_stream_state_lock:
+        state = _general_stream_state_by_user.get(user_id)
+        if not state:
+            return True
+        # Stop if a newer run started or user requested stop.
+        return int(state.get("run_id", 0)) != int(run_id) or bool(state.get("stop_requested"))
+
+
+def _stream_finish_run(user_id: int, run_id: int) -> None:
+    with _general_stream_state_lock:
+        state = _general_stream_state_by_user.get(user_id)
+        if not state:
+            return
+        if int(state.get("run_id", 0)) == int(run_id):
+            state["active"] = False
+            _general_stream_state_by_user[user_id] = state
+
+
+def _clip_telegram_text(text: str, limit: int = 3900) -> str:
+    content = str(text or "")
+    if len(content) <= limit:
+        return content
+    # Before example: long streams failed edit with Telegram 4096-char cap.
+    # After example:  long streams are clipped safely with an explicit suffix.
+    return content[: limit - 26] + "\n\n[truncated for Telegram]"
+
+
+async def _safe_edit_stream_message(bot, chat_id: int, message_id: int, text: str) -> None:
+    try:
+        await bot.edit_message_text(chat_id=chat_id, message_id=message_id, text=_clip_telegram_text(text))
+    except Exception as exc:
+        # Ignore "message is not modified" edit races while streaming.
+        if "message is not modified" not in str(exc).lower():
+            logging.warning("stream_edit_failed chat_id=%s message_id=%s error=%s", chat_id, message_id, exc)
+
+
+async def _handle_general_single_message_stream(update: Update, context: ContextTypes.DEFAULT_TYPE, message_object: dict) -> None:
+    user_id = update.effective_user.id
+    chat_id = update.effective_chat.id
+    run_id = _stream_start_run(user_id)
+    status_msg = await update.message.reply_text(
+        "Thinking... streaming in one message. Send /stop to stop."
+    )
+
+    stream_state = {
+        "latest_text": "",
+        "final_text": "",
+        "done": False,
+        "error": None,
+    }
+    state_lock = threading.Lock()
+
+    def stream_callback(partial_text: str) -> None:
+        with state_lock:
+            stream_state["latest_text"] = str(partial_text or "")
+
+    def should_stop() -> bool:
+        return _stream_should_stop(user_id, run_id)
+
+    router_instance = MessageRouter()
+
+    def worker() -> None:
+        try:
+            final = router_instance.route_message(
+                message_object=message_object,
+                stream=True,
+                stream_callback=stream_callback,
+                should_stop=should_stop,
+            )
+            with state_lock:
+                stream_state["final_text"] = str(final or "")
+        except Exception as exc:
+            with state_lock:
+                stream_state["error"] = str(exc)
+        finally:
+            with state_lock:
+                stream_state["done"] = True
+
+    worker_task = asyncio.create_task(asyncio.to_thread(worker))
+
+    last_sent = ""
+    last_typing_at = 0.0
+    while True:
+        await asyncio.sleep(0.35)
+        now = time.monotonic()
+        with state_lock:
+            latest_text = stream_state["latest_text"]
+            done = bool(stream_state["done"])
+            error = stream_state["error"]
+            final_text = stream_state["final_text"]
+
+        if latest_text and latest_text != last_sent:
+            await _safe_edit_stream_message(
+                context.bot,
+                chat_id,
+                status_msg.message_id,
+                latest_text + (" ▌" if not done else ""),
+            )
+            last_sent = latest_text
+
+        if now - last_typing_at >= 4.0 and not done:
+            try:
+                await context.bot.send_chat_action(chat_id=chat_id, action=ChatAction.TYPING)
+            except Exception:
+                pass
+            last_typing_at = now
+
+        if done:
+            await worker_task
+            if error:
+                await _safe_edit_stream_message(
+                    context.bot,
+                    chat_id,
+                    status_msg.message_id,
+                    f"Streaming failed: {error}",
+                )
+            else:
+                final_display = final_text or latest_text or "No output was generated."
+                await _safe_edit_stream_message(
+                    context.bot,
+                    chat_id,
+                    status_msg.message_id,
+                    final_display,
+                )
+            break
+
+    _stream_finish_run(user_id, run_id)
+
+
+async def stop_stream(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_user.id
+    stopped = _stream_request_stop(user_id)
+    if stopped:
+        await update.message.reply_text("Stop requested. I will stop at the next safe checkpoint.")
+    else:
+        await update.message.reply_text("No active stream to stop.")
+# === INTERFACETEST-STYLE STREAMING BLOCK END ===
 
 def detect_runtime():
     # Example before/after: K_SERVICE set -> "cloud_run"; CODESPACES=true -> "codespaces"
@@ -373,7 +547,15 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         router_instance_for_this_call = MessageRouter()
         # Example before/after: no routing -> no response; routing -> OpenAI + Telegram output
         logging.info(f"handle_message: routing message for user_id={user_id}")
-        router_instance_for_this_call.route_message(message_object=message_object)
+        # Before example: general mode sent a single final message only.
+        # After example:  general mode can stream by editing one Telegram message.
+        if (
+            _is_general_edit_streaming_enabled()
+            and str(message_object.get("bot_mode", "")).strip().lower() == "general"
+        ):
+            await _handle_general_single_message_stream(update, context, message_object)
+        else:
+            router_instance_for_this_call.route_message(message_object=message_object)
         logging.info(f"Message object for user {user_id} passed to message router.")
         
             
@@ -416,45 +598,60 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("An error occurred while processing your message.")
 
 async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_id = update.effective_user.id
+    try:
+        await _apply_restart_flow(update, trigger_command="/restart", send_restart_reply=True)
+    except Exception as e:
+        await update.message.reply_text(f"Error during restart: {str(e)}")
 
-    user_id = update.effective_user.id
-    chat_id = update.effective_chat.id # Get chat_id
 
-    restart_timestamp = update.effective_message.date
-    # Before example: restart timestamp only epoch; After example: include ISO timestamp too.
-    restart_timestamp_iso = restart_timestamp.isoformat() if restart_timestamp else None
-    # Construct session_info from the update object
-    session_info_for_restart = {
-        'user_id': user_id,
-        'chat_id': chat_id,
-        'message_id': update.effective_message.message_id, # ID of the /restart message
-        'timestamp': restart_timestamp.timestamp() if restart_timestamp else None, # Timestamp of the /restart message
-        'timestamp_iso': restart_timestamp_iso,
-        'username': update.effective_user.username,
-        'first_name': update.effective_user.first_name,
-        'last_name': update.effective_user.last_name,
-        'trigger_command': '/restart' # You can add custom info like this
+def _build_session_info_from_update(update: Update, trigger_command: str) -> dict:
+    command_timestamp = update.effective_message.date
+    # Before example: command session had only epoch timestamps.
+    # After example:  command session stores both epoch and ISO timestamp.
+    command_timestamp_iso = command_timestamp.isoformat() if command_timestamp else None
+    return {
+        "user_id": update.effective_user.id,
+        "chat_id": update.effective_chat.id,
+        "message_id": update.effective_message.message_id,
+        "timestamp": command_timestamp.timestamp() if command_timestamp else None,
+        "timestamp_iso": command_timestamp_iso,
+        "username": update.effective_user.username,
+        "first_name": update.effective_user.first_name,
+        "last_name": update.effective_user.last_name,
+        "trigger_command": trigger_command,
     }
-    logging.info(f"Restart command received. Session info for restart: {session_info_for_restart}")
+
+
+async def _apply_restart_flow(
+    update: Update,
+    trigger_command: str,
+    send_restart_reply: bool = False,
+) -> dict:
+    user_id = update.effective_user.id
+    session_info = _build_session_info_from_update(update, trigger_command)
+    logging.info("%s command received. Session info: %s", trigger_command, session_info)
 
     create_session_log_file(user_id)
-    try:
-        # Before example: /restart reused old session id; After: /restart seeds a new chat_session_id.
-        new_session = set_user_active_session(str(user_id), session_info=session_info_for_restart)
-        logging.info(
-            "restart_new_session: user_id=%s chat_session_id=%s",
-            user_id,
-            new_session.get("chat_session_id"),
-        )
-        # Before example: cached user_context kept old chat_session_id -> old history resumed.
-        # After example: /restart clears user_context so next message seeds a fresh session.
-        user_contexts.pop(user_id, None)
-        # Before example: /restart only reset user session state.
-        # After example:  /restart also triggers media description backfill in the background.
-        _spawn_media_description_backfill(limit=20)
-        if user_id in handlers_per_user:
-            handlers_per_user.pop(user_id)
+    # Before example: mode switches did not create a new active chat session.
+    # After example:  mode switches and /restart both seed a fresh chat_session_id.
+    new_session = set_user_active_session(str(user_id), session_info=session_info)
+    logging.info(
+        "reset_new_session: user_id=%s trigger=%s chat_session_id=%s",
+        user_id,
+        trigger_command,
+        new_session.get("chat_session_id"),
+    )
+
+    # Before example: mode switch only dropped in-memory conversation list.
+    # After example:  mode switch runs the same full reset path as /restart.
+    user_contexts.pop(user_id, None)
+    had_handler = user_id in handlers_per_user
+    handlers_per_user.pop(user_id, None)
+    conversations.pop(user_id, None)
+    _spawn_media_description_backfill(limit=20)
+
+    if send_restart_reply:
+        if had_handler:
             await update.message.reply_text(
                 "Bot memory cleared for you. Restarting our conversation."
             )
@@ -463,9 +660,8 @@ async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text(
                 "No conversation history found for you to clear."
             )
-        conversations.pop(user_id, None)
-    except Exception as e:
-        await update.message.reply_text(f"Error during restart: {str(e)}")
+
+    return session_info
 
 def _reset_history_file(logs_dir: str, user_id: str) -> None:
     # Before example: missing logs_dir -> FileNotFoundError. After: logs_dir exists with an empty JSON file.
@@ -477,80 +673,57 @@ def _reset_history_file(logs_dir: str, user_id: str) -> None:
 async def bot_mode_switch_cook(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Before example: /1 toggled modes; After example: /cook forces cheflog every time.
     user_id = update.effective_user.id
-    handlers_per_user.pop(user_id, None)
-    conversations.pop(user_id, None)
-
-    session_info = {
-        "user_id": user_id,
-        "chat_id": update.effective_chat.id,
-        "message_id": update.effective_message.message_id,
-        "timestamp": update.effective_message.date.timestamp(),
-        "username": update.effective_user.username,
-        "first_name": update.effective_user.first_name,
-        "last_name": update.effective_user.last_name,
-        "trigger_command": "/cook",
-    }
-
     current_mode = get_user_bot_mode(str(user_id))
     next_mode = "cheflog"
-    set_user_bot_mode(str(user_id), next_mode, session_info=session_info)
-    await update.message.reply_text("Switched to cook mode.")
-    logging.info("mode_switch: user_id=%s from=%s to=%s", user_id, current_mode, next_mode)
+    try:
+        session_info = await _apply_restart_flow(
+            update,
+            trigger_command="/cook",
+            send_restart_reply=False,
+        )
+        set_user_bot_mode(str(user_id), next_mode, session_info=session_info)
+        await update.message.reply_text("Switched to cook mode.")
+        logging.info("mode_switch: user_id=%s from=%s to=%s", user_id, current_mode, next_mode)
+    except Exception as e:
+        await update.message.reply_text(f"Error during mode switch: {str(e)}")
 
 
 async def bot_mode_switch_log(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Before example: /1 toggled modes; After example: /log forces dietlog every time.
     user_id = update.effective_user.id
-    handlers_per_user.pop(user_id, None)
-    conversations.pop(user_id, None)
-
-    session_info = {
-        "user_id": user_id,
-        "chat_id": update.effective_chat.id,
-        "message_id": update.effective_message.message_id,
-        "timestamp": update.effective_message.date.timestamp(),
-        "username": update.effective_user.username,
-        "first_name": update.effective_user.first_name,
-        "last_name": update.effective_user.last_name,
-        "trigger_command": "/log",
-    }
-
     current_mode = get_user_bot_mode(str(user_id))
     next_mode = "dietlog"
-    set_user_bot_mode(str(user_id), next_mode, session_info=session_info)
-    await update.message.reply_text("Switched to dietlog mode.")
-    logging.info("mode_switch: user_id=%s from=%s to=%s", user_id, current_mode, next_mode)
+    try:
+        session_info = await _apply_restart_flow(
+            update,
+            trigger_command="/log",
+            send_restart_reply=False,
+        )
+        set_user_bot_mode(str(user_id), next_mode, session_info=session_info)
+        await update.message.reply_text("Switched to dietlog mode.")
+        logging.info("mode_switch: user_id=%s from=%s to=%s", user_id, current_mode, next_mode)
+    except Exception as e:
+        await update.message.reply_text(f"Error during mode switch: {str(e)}")
 
 
 async def bot_mode_switch_general(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Before example: /general fell through to normal chat mode.
     # After example:  /general forces general mode every time.
     user_id = update.effective_user.id
-    handlers_per_user.pop(user_id, None)
-    conversations.pop(user_id, None)
-
-    session_info = {
-        "user_id": user_id,
-        "chat_id": update.effective_chat.id,
-        "message_id": update.effective_message.message_id,
-        "timestamp": update.effective_message.date.timestamp(),
-        "username": update.effective_user.username,
-        "first_name": update.effective_user.first_name,
-        "last_name": update.effective_user.last_name,
-        "trigger_command": "/general",
-    }
-
     current_mode = get_user_bot_mode(str(user_id))
     next_mode = "general"
-    set_user_bot_mode(str(user_id), next_mode, session_info=session_info)
-    await update.message.reply_text("Switched to general mode.")
-    logging.info("mode_switch: user_id=%s from=%s to=%s", user_id, current_mode, next_mode)
+    try:
+        session_info = await _apply_restart_flow(
+            update,
+            trigger_command="/general",
+            send_restart_reply=False,
+        )
+        set_user_bot_mode(str(user_id), next_mode, session_info=session_info)
+        await update.message.reply_text("Switched to general mode.")
+        logging.info("mode_switch: user_id=%s from=%s to=%s", user_id, current_mode, next_mode)
+    except Exception as e:
+        await update.message.reply_text(f"Error during mode switch: {str(e)}")
 
-
-async def general_perplexity_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    # Before example: /pplx was treated as an unknown command and skipped by text handler.
-    # After example:  /pplx routes into the normal handle_message path.
-    await handle_message(update, context)
 
 async def openai_ping(update: Update, context: ContextTypes.DEFAULT_TYPE):
     key = os.getenv("OPENAI_API_KEY")
@@ -631,22 +804,26 @@ def setup_bot() -> Application:
         raise ValueError("No Telegram token found; check environment variables.")
     
     global application, message_router # Add message_router to global declaration
-    application = Application.builder().token(token).build()
+    builder = Application.builder().token(token)
+    if _is_general_edit_streaming_enabled():
+        # Before example: updates were handled one-by-one, delaying /stop during streaming.
+        # After example:  concurrent updates allow /stop while a stream is in progress.
+        builder = builder.concurrent_updates(8)
+    application = builder.build()
     
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("cook", bot_mode_switch_cook))
     application.add_handler(CommandHandler("log", bot_mode_switch_log))
     application.add_handler(CommandHandler("general", bot_mode_switch_general))
-    application.add_handler(CommandHandler("pplx", general_perplexity_command))
-    application.add_handler(CommandHandler("perplexity", general_perplexity_command))
     application.add_handler(CommandHandler("1", bot_mode_switch_log))
     application.add_handler(CommandHandler("restart", restart))
+    application.add_handler(CommandHandler("stop", stop_stream))
     # Before example: "/restart@chefbot" or " /restart" skipped; After example: those match too.
     application.add_handler(MessageHandler(filters.Regex(r"^\s*/restart(?:@\w+)?(\s|$)"), restart))
     application.add_handler(MessageHandler(filters.Regex(r"^\s*/cook(?:@\w+)?(\s|$)"), bot_mode_switch_cook))
     application.add_handler(MessageHandler(filters.Regex(r"^\s*/(log|1)(?:@\w+)?(\s|$)"), bot_mode_switch_log))
     application.add_handler(MessageHandler(filters.Regex(r"^\s*/general(?:@\w+)?(\s|$)"), bot_mode_switch_general))
-    application.add_handler(MessageHandler(filters.Regex(r"^\s*/(pplx|perplexity)(?:@\w+)?(\s|$)"), general_perplexity_command))
+    application.add_handler(MessageHandler(filters.Regex(r"^\s*/stop(?:@\w+)?(\s|$)"), stop_stream))
     application.add_handler(CommandHandler("openai_ping", openai_ping))
     application.add_handler(CommandHandler("openai_version", openai_version))
     application.add_handler(CommandHandler("build_version", build_version))
