@@ -70,21 +70,6 @@ button:hover {
   background: var(--accent-soft);
 }
 
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-.btn-warn {
-  border-color: #e4b596;
-  color: #6f2f00;
-  background: #fff5ee;
-}
-
-.btn-warn:hover:not(:disabled) {
-  background: #ffece0;
-}
-
 .status-grid {
   display: grid;
   gap: 6px;

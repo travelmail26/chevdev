@@ -6,6 +6,8 @@ import os
 import signal
 import traceback
 import subprocess
+import time
+from urllib.parse import urlparse
 from threading import Thread
 
 # Add current directory to path for imports
@@ -27,28 +29,137 @@ httpx_logger = logging.getLogger("httpx")
 # Set the logging level to WARNING or higher
 httpx_logger.setLevel(logging.WARNING)
 
-def setup_port_forwarding():
-    """Automatically make port 8080 public in GitHub Codespaces"""
-    if os.getenv('CODESPACES') == 'true':
+PORT_NUMBER = os.getenv("PORT", "8080")
+
+
+def _resolve_codespace_name() -> str | None:
+    """Resolve codespace name without interactive gh prompts."""
+    name_from_env = os.getenv("CODESPACE_NAME")
+    if name_from_env:
+        return name_from_env
+
+    webhook_url = os.getenv("TELEGRAM_WEBHOOK_CODESPACE", "").strip()
+    if webhook_url:
         try:
-            logging.info("[Main] Setting port 8080 to public visibility...")
-            subprocess.run(
-                ['gh', 'codespace', 'ports', 'visibility', '8080:public', '-c', os.getenv('CODESPACE_NAME')],
-                check=True,
-                capture_output=True,
-                timeout=10
-            )
-            logging.info("[Main] Port 8080 is now public")
-        except subprocess.TimeoutExpired:
-            logging.warning("[Main] Port setup timed out, continuing anyway...")
-        except subprocess.CalledProcessError as e:
-            logging.warning(f"[Main] Could not set port to public: {e}")
-        except FileNotFoundError:
-            logging.warning("[Main] gh CLI not found, skipping port setup")
-        except Exception as e:
-            logging.warning(f"[Main] Port setup failed: {e}")
-    else:
+            host = (urlparse(webhook_url).hostname or "").strip()
+            # Before example: no CODESPACE_NAME -> gh tried interactive selection and failed in non-tty.
+            # After example:  derive "ominous-halibut-... " from webhook host and call gh with -c directly.
+            if host.endswith(".app.github.dev"):
+                subdomain = host[: -len(".app.github.dev")]
+                dash_port = f"-{PORT_NUMBER}"
+                if subdomain.endswith(dash_port):
+                    candidate = subdomain[: -len(dash_port)]
+                    if candidate:
+                        return candidate
+        except Exception:
+            pass
+
+    try:
+        result = subprocess.run(
+            ["gh", "codespace", "list", "--json", "name", "--limit", "1"],
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        raw = (result.stdout or "").strip()
+        if raw.startswith("[") and '"name"' in raw:
+            # Keep this parser intentionally simple to avoid extra dependencies.
+            marker = '"name":"'
+            start = raw.find(marker)
+            if start != -1:
+                start += len(marker)
+                end = raw.find('"', start)
+                if end != -1:
+                    return raw[start:end]
+    except Exception:
+        pass
+
+    return None
+
+
+def _run_port_visibility_command(port: str, codespace_name: str | None, timeout_seconds: int = 10):
+    """Run one gh visibility command, optionally with explicit codespace name."""
+    cmd = ["gh", "codespace", "ports", "visibility", f"{port}:public"]
+    if codespace_name:
+        cmd.extend(["-c", codespace_name])
+    return subprocess.run(
+        cmd,
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=timeout_seconds,
+    )
+
+
+def _set_codespaces_port_public(port: str, timeout_seconds: int = 10) -> tuple[bool, str]:
+    """Try once to set a Codespaces forwarded port visibility to public."""
+    codespace_name = _resolve_codespace_name()
+    if not codespace_name:
+        return False, "codespace_name_missing"
+
+    try:
+        result = _run_port_visibility_command(port, codespace_name, timeout_seconds=timeout_seconds)
+        stdout = (result.stdout or "").strip()
+        if stdout:
+            logging.info("[Main] Port %s visibility command output: %s", port, stdout)
+        return True, ""
+    except subprocess.TimeoutExpired:
+        return False, "timeout"
+    except subprocess.CalledProcessError as exc:
+        stderr = (exc.stderr or "").strip()
+        stdout = (exc.stdout or "").strip()
+        error_message = (
+            f"exit={exc.returncode}, target={codespace_name}, stdout={stdout or '<empty>'}, stderr={stderr or '<empty>'}"
+        )
+        return False, error_message
+    except FileNotFoundError:
+        return False, "gh_cli_missing"
+    except Exception as exc:
+        return False, f"unexpected_error={exc}"
+
+
+def setup_port_forwarding():
+    """Keep Codespaces port 8080 public and re-apply periodically."""
+    if os.getenv("CODESPACES") != "true":
         logging.info("[Main] Not running in Codespaces, skipping port setup")
+        return
+
+    # Before example: startup might run before the forwarded port exists -> 404 Not Found once.
+    # After example:  we retry for a while, then keep re-applying visibility every 5 minutes.
+    def _keep_codespaces_port_public():
+        last_error_message = ""
+        for attempt in range(1, 31):
+            success, error_message = _set_codespaces_port_public(PORT_NUMBER)
+            if success:
+                logging.info("[Main] Port %s set to public (attempt %s).", PORT_NUMBER, attempt)
+                break
+            # Deduplicate repeated startup warnings so logs stay readable.
+            if error_message and error_message != last_error_message:
+                if "404 Not Found" in error_message or "port_not_ready" in error_message:
+                    logging.info("[Main] Port %s not ready yet (%s). Retrying...", PORT_NUMBER, error_message)
+                elif error_message == "gh_cli_missing":
+                    logging.warning("[Main] gh CLI not found, skipping port setup.")
+                    return
+                elif error_message == "codespace_name_missing":
+                    logging.warning("[Main] Could not resolve codespace name; skipping port setup.")
+                    return
+                else:
+                    logging.warning("[Main] Could not set port %s public (%s)", PORT_NUMBER, error_message)
+                last_error_message = error_message
+            time.sleep(min(2 * attempt, 15))
+
+        while True:
+            time.sleep(300)
+            success, error_message = _set_codespaces_port_public(PORT_NUMBER)
+            if not success and error_message and error_message != last_error_message:
+                logging.warning("[Main] Keepalive could not confirm public port %s (%s)", PORT_NUMBER, error_message)
+                last_error_message = error_message
+            elif success:
+                last_error_message = ""
+
+    Thread(target=_keep_codespaces_port_public, daemon=True).start()
+    logging.info("[Main] Started Codespaces port visibility keepalive for port %s.", PORT_NUMBER)
 
 def main():
     logging.info("[Main] Starting up...")
@@ -174,4 +285,3 @@ def misc():
     # def health_check():
     #     return {"status": "running"}, 200
     pass
-

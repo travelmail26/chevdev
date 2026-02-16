@@ -1,0 +1,65 @@
+LiveCook Transfer Handoff (LLM Guide)
+
+Purpose
+- This folder is a portable snapshot of the working LiveCook simulation app.
+- It captures browser video+audio, writes a single clip per capture session, uploads the clip to Firebase Storage, stores metadata in MongoDB, and stores a full transcript with the metadata.
+
+Folder Contents
+- app.js: frontend capture UI/logic.
+- server.js: backend upload/transcript/metadata pipeline.
+- onboardTranscriber.js: transcription integration helper.
+- index.html, styles.css: UI shell.
+- package.json, package-lock.json: dependencies/scripts.
+- start_livecook_server.sh, run_livecook_tmux.sh: local run scripts.
+- e2e_livecook_playwright.mjs, verify_with_screenshots.mjs: verification tools.
+- README.md: local usage notes.
+
+Core Runtime Flow
+1. Browser captures media stream (video + audio).
+2. Recorder emits one final clip file (not many chunk files) for upload.
+3. Backend receives clip and uploads it directly to Firebase Storage.
+4. Backend gets the Firebase download URL.
+5. Backend transcribes the uploaded clip audio using a low-cost transcription model/service.
+6. Backend writes a MongoDB document containing:
+   - Firebase URL
+   - capture/upload metadata
+   - full transcript text
+
+Environment Variables (expected)
+- Firebase:
+  - FIREBASE_STORAGE_BUCKET
+  - FIREBASE_PROJECT_ID / service account settings used by firebase-admin
+- MongoDB:
+  - MONGODB_URI
+  - MONGODB_DB_NAME
+  - MONGODB_COLLECTION_NAME (LiveCook media metadata collection)
+- Transcription/OpenAI:
+  - OPENAI_API_KEY (if using OpenAI transcription)
+- Server:
+  - PORT (default app port)
+
+How To Run
+1. In this folder: npm install
+2. Start server: node server.js
+3. Open app (via served URL), run low-res simulation, record ~30s clip.
+4. Stop recording and confirm upload/transcript/metadata completion in server logs.
+
+Expected Output Artifacts
+- Firebase: one uploaded clip object for each completed recording session.
+- MongoDB: one metadata document per clip including URL + transcript.
+- Logs: upload success, transcript success, Mongo write success.
+
+Operational Rules
+- Keep “single final clip upload” behavior: do not persist intermediate chunks to Firebase.
+- Store transcript with metadata in Mongo as plain text for quick retrieval.
+- If encoding is changed, preserve browser compatibility and transcript extractability.
+
+Quick Validation Checklist
+- Clip plays from Firebase URL.
+- Audio is clearly audible at normal volume.
+- Mongo document has valid URL + duration/timestamps + transcript text.
+- No extra “partial” files uploaded for one recording.
+
+Transfer Notes
+- This folder is designed to be copied as-is to another workspace.
+- After transfer, only secrets/env vars need to be reconfigured.

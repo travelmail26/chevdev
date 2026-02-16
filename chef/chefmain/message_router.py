@@ -104,13 +104,173 @@ class MessageRouter:
             except Exception as exc:
                 logging.warning(f"Could not read instruction file '{path}': {exc}")
         return "\n\n".join(collected)
+
+    def _build_search_tool_schema(self):
+        # Before example: web search routing was hard-coded by command prefix.
+        # After example: model can call a standard function tool when policy allows.
+        # LLM instruction:
+        # - Keep search policy in instruction files + tool description text.
+        # - Do NOT add keyword/regex gating logic in Python here unless explicitly requested by user.
+        return [
+            {
+                "type": "function",
+                "function": {
+                    "name": "search_perplexity",
+                    "description": (
+                        "Use the existing Perplexity web search utility to fetch live internet results. "
+                        "REQUIRED CONDITION: call this tool ONLY if the CURRENT user message explicitly asks "
+                        "to search internet/web/online, or explicitly asks for latest/current/news. "
+                        "If those explicit words/intent are not present in the current user message, do not call. "
+                        "Do NOT call for normal chat, brainstorming, meal ideas, preference discussions, "
+                        "or follow-up explanation questions that can be answered from existing conversation context. "
+                        "If user asks a follow-up like 'why does thickness matter?' after a hashbrown discussion, "
+                        "answer from context without calling this tool unless user explicitly asks to search again."
+                    ),
+                    "strict": True,
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "query": {
+                                "type": "string",
+                                "description": "Exact internet search query to send to Perplexity.",
+                            }
+                        },
+                        "required": ["query"],
+                        "additionalProperties": False,
+                    },
+                },
+            }
+        ]
+
+    def _parse_tool_arguments(self, raw_arguments):
+        # Before example: malformed tool args could crash JSON decode.
+        # After example: invalid args safely degrade to an empty dict.
+        if isinstance(raw_arguments, dict):
+            return raw_arguments
+        if not raw_arguments:
+            return {}
+        try:
+            return json.loads(raw_arguments)
+        except Exception:
+            return {}
+
+    def _build_perplexity_context_messages(
+        self,
+        conversation_messages: list | None,
+        current_user_query: str,
+        max_turns: int = 8,
+    ):
+        """Build ordered user/assistant context for Perplexity (turn-by-turn)."""
+        context_messages = []
+        for entry in conversation_messages or []:
+            if not isinstance(entry, dict):
+                continue
+            role = entry.get("role")
+            content = entry.get("content")
+            if role in {"user", "assistant"} and isinstance(content, str) and content.strip():
+                context_messages.append({"role": role, "content": content.strip()})
+
+        # Keep a turn-based window: 8 turns => up to 16 user/assistant messages.
+        max_messages = max_turns * 2
+        context_messages = context_messages[-max_messages:]
+
+        # If truncation starts on assistant, drop that leading assistant so payload starts on user.
+        while context_messages and context_messages[0].get("role") != "user":
+            context_messages.pop(0)
+
+        if not context_messages or context_messages[-1].get("content") != current_user_query:
+            context_messages.append({"role": "user", "content": current_user_query})
+
+        # Normalize shape for API consistency: only {role, content}.
+        normalized_messages = [
+            {"role": message["role"], "content": message["content"]}
+            for message in context_messages
+            if isinstance(message, dict) and message.get("role") in {"user", "assistant"} and message.get("content")
+        ]
+        return normalized_messages
+
+    def _execute_tool_call(
+        self,
+        tool_call,
+        verbatim_user_query: str | None = None,
+        conversation_messages: list | None = None,
+    ):
+        # Before example: command-prefix routing called Perplexity directly in route_message.
+        # After example: tool execution is centralized and tied to tool_call payload.
+        function_payload = tool_call.get("function") or {}
+        function_name = function_payload.get("name")
+        function_args = self._parse_tool_arguments(function_payload.get("arguments"))
+
+        if function_name != "search_perplexity":
+            return f"Tool error: unsupported function '{function_name}'."
+
+        model_query = str(function_args.get("query", "")).strip()
+        query = str(verbatim_user_query or "").strip() or model_query
+        if not query:
+            return "Tool error: missing required argument 'query'."
+
+        # Before example: user says "search the internet for ... keep your answer very short"
+        # and model tool args become shortened "ways of making ...".
+        # After example:  Perplexity receives the full original user message verbatim.
+        logging.info(
+            "tool_query_resolution: function=%s using_verbatim=%s model_query_preview='%s' final_query_preview='%s'",
+            function_name,
+            bool(str(verbatim_user_query or "").strip()),
+            model_query[:160],
+            query[:160],
+        )
+
+        perplexity_query_payload = self._build_perplexity_context_messages(
+            conversation_messages=conversation_messages,
+            current_user_query=query,
+        )
+        logging.info(
+            "tool_context_messages: function=%s count=%s first_role=%s last_role=%s",
+            function_name,
+            len(perplexity_query_payload),
+            perplexity_query_payload[0].get("role") if perplexity_query_payload else "none",
+            perplexity_query_payload[-1].get("role") if perplexity_query_payload else "none",
+        )
+
+        from utilities.perplexity import search_perplexity
+        return search_perplexity(perplexity_query_payload)
+
+    def _call_model(self, model, messages, tools=None):
+        # Before example: request/response parsing was duplicated in multiple places.
+        # After example: one helper sends the call and returns the assistant message object.
+        payload = {
+            "model": model,
+            "messages": messages,
+            "max_tokens": 256,
+            "temperature": 0.7,
+        }
+        if tools:
+            payload["tools"] = tools
+            payload["tool_choice"] = "auto"
+
+        response = requests.post(
+            "https://api.x.ai/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {self.xai_api_key}",
+                "Content-Type": "application/json",
+            },
+            json=payload,
+            timeout=180,
+        )
+        response.raise_for_status()
+        data = response.json()
+        choices = data.get("choices") or []
+        if not choices:
+            return {}
+        return choices[0].get("message") or {}
     
     def route_message(self, messages=None, message_object=None):
         """Route a message from a user to OpenAI, persist history, and return the response.
 
-        Tool calling removed:
-        - Before: sent `tools` + `tool_choice=auto`, and sometimes did a 2nd OpenAI call.
-        - After: single OpenAI call with no tools; response is stored in message history.
+        Tool calling behavior:
+        - Uses standard function-calling flow (assistant tool call -> tool result -> assistant follow-up).
+        - Internet search tool is available only in general mode.
+        - Policy on when to call tools must stay instruction-driven (not code-gated heuristics).
         
         Args:
             messages: Optional list of message dictionaries for the conversation history
@@ -146,34 +306,8 @@ class MessageRouter:
         if not effective_bot_mode:
             effective_bot_mode = os.getenv("BOT_MODE") or "chefmain"
         self.combined_instructions = self.load_instructions(bot_mode=effective_bot_mode)
-        system_instruction = {"role": "system", "content": self.combined_instructions}
-
-        # --- SIMPLE GENERAL MODE PERPLEXITY BLOCK (easy to remove) ---
-        # Before example: "/pplx latest ai news" in general mode went through xAI.
-        # After example:  "/pplx latest ai news" in general mode calls utilities.perplexity directly.
-        if effective_bot_mode == "general" and isinstance(message_object, dict):
-            raw_user_message = str(message_object.get("user_message", "") or "").strip()
-            perplexity_query = None
-            if raw_user_message.lower().startswith("/pplx "):
-                perplexity_query = raw_user_message[6:].strip()
-            elif raw_user_message.lower().startswith("/perplexity "):
-                perplexity_query = raw_user_message[12:].strip()
-
-            if perplexity_query:
-                assistant_content = ""
-                try:
-                    from utilities.perplexity import search_perplexity
-                    assistant_content = search_perplexity(perplexity_query)
-                except Exception as exc:
-                    assistant_content = f"Perplexity error: {exc}"
-
-                # Return Perplexity output verbatim.
-                if message_object and assistant_content:
-                    partial = message_object.copy()
-                    partial["user_message"] = assistant_content
-                    process_message_object(partial)
-                    message_history_process(message_object, {"role": "assistant", "content": assistant_content})
-                return assistant_content
+        system_prompt = self.combined_instructions
+        system_instruction = {"role": "system", "content": system_prompt}
 
         # Ensure messages is a proper list
         if not isinstance(messages, list):
@@ -189,7 +323,7 @@ class MessageRouter:
             instructions_applied = True
         elif messages[0].get("content") in (None, ""):
             # Before: the stored system stub remained blank. After example: we refill it with the combined prompt.
-            messages[0]["content"] = self.combined_instructions
+            messages[0]["content"] = system_prompt
             instructions_applied = True
 
         if instructions_applied and full_message_object and message_object:
@@ -201,31 +335,32 @@ class MessageRouter:
         messages = [m for m in messages if m.get('content') is not None or m.get('tool_calls') is not None]
         
         xai_model = os.getenv("XAI_MODEL", "grok-4-1-fast-non-reasoning-latest")
-        payload = {
-            # Before: OpenAI GPT-5 nano model. After example: xAI Grok model for router test.
-            "model": xai_model,
-            "messages": messages,
-            "max_tokens": 256,
-            "temperature": 0.7,
-        }
+        # LLM instruction:
+        # - Keep this simple: in general mode expose search tool; model decides based on prompt/tool text.
+        # - Do NOT add extra code-level filters for user wording without explicit user approval.
+        search_tools = self._build_search_tool_schema() if effective_bot_mode == "general" else []
 
         try:
             # Before: OpenAI call timing was opaque; after example: log start/end with model + duration.
             openai_start = time.monotonic()
-            message_count = len(payload["messages"])
+            message_count = len(messages)
             last_user_content = None
-            for entry in reversed(payload["messages"]):
+            for entry in reversed(messages):
                 if entry.get("role") == "user":
                     last_user_content = entry.get("content")
                     break
             logging.info(
-                "xai_call start: user_id=%s, model=%s, message_count=%s",
+                "xai_call start: user_id=%s, model=%s, message_count=%s, tools_enabled=%s",
                 user_id,
-                payload["model"],
+                xai_model,
                 message_count,
+                bool(search_tools),
             )
             # Example before/after: no stdout log -> missing in Cloud Run UI; now prints to stdout too.
-            print(f"XAI_CALL_START user_id={user_id} model={payload['model']} message_count={message_count}")
+            print(
+                f"XAI_CALL_START user_id={user_id} model={xai_model} "
+                f"message_count={message_count} tools_enabled={bool(search_tools)}"
+            )
             # Example before/after: no message visibility -> hard to debug; now logs preview.
             logging.info(
                 "xai_call payload_preview: user_id=%s, last_user_preview='%s'",
@@ -239,25 +374,59 @@ class MessageRouter:
                 self.xai_api_key[-4:] if self.xai_api_key else "NONE",
             )
 
-            response = requests.post(
-                "https://api.x.ai/v1/chat/completions",
-                headers={
-                    "Authorization": f"Bearer {self.xai_api_key}",
-                    "Content-Type": "application/json",
-                },
-                json=payload,
-                timeout=180,
+            assistant_message = self._call_model(
+                model=xai_model,
+                messages=messages,
+                tools=search_tools,
             )
+            assistant_content = assistant_message.get("content") or ""
+            tool_calls = assistant_message.get("tool_calls") or []
 
-            assistant_content = ""
-            if response.status_code == 200:
-                data = response.json()
+            if tool_calls:
+                tool_context_messages = list(messages)
+                logging.info(
+                    "xai_tool_round start: user_id=%s round=%s tool_calls=%s",
+                    user_id,
+                    1,
+                    len(tool_calls),
+                )
+                messages.append(
+                    {
+                        "role": "assistant",
+                        "content": assistant_message.get("content"),
+                        "tool_calls": tool_calls,
+                    }
+                )
+                if len(tool_calls) > 1:
+                    logging.warning(
+                        "xai_tool_round multiple_calls: user_id=%s count=%s using_first_call_only",
+                        user_id,
+                        len(tool_calls),
+                    )
+
+                tool_call = tool_calls[0]
+                tool_call_id = tool_call.get("id") or "tool_call_1_1"
+                function_name = (tool_call.get("function") or {}).get("name")
                 try:
-                    assistant_content = data["choices"][0]["message"]["content"]
-                except Exception:
-                    assistant_content = ""
-            else:
-                logging.error("xai_call http_error status=%s body=%s", response.status_code, response.text[:300])
+                    tool_output = self._execute_tool_call(
+                        tool_call,
+                        verbatim_user_query=str(last_user_content or ""),
+                        conversation_messages=tool_context_messages,
+                    )
+                except Exception as tool_exc:
+                    tool_output = f"Tool execution error: {tool_exc}"
+
+                messages.append(
+                    {
+                        "role": "tool",
+                        "tool_call_id": tool_call_id,
+                        "name": function_name,
+                        "content": tool_output,
+                    }
+                )
+
+                # User preference: return Perplexity output verbatim (no rewrite, no trim).
+                assistant_content = tool_output if isinstance(tool_output, str) else str(tool_output)
 
             if message_object and assistant_content:
                 partial = message_object.copy()
@@ -274,13 +443,13 @@ class MessageRouter:
             logging.info(
                 "xai_call end: user_id=%s, model=%s, duration_ms=%s, response_chars=%s",
                 user_id,
-                payload["model"],
+                xai_model,
                 openai_duration_ms,
                 len(assistant_content),
             )
             print(
                 "XAI_CALL_END "
-                f"user_id={user_id} model={payload['model']} "
+                f"user_id={user_id} model={xai_model} "
                 f"duration_ms={openai_duration_ms} response_chars={len(assistant_content)}"
             )
             if not assistant_content:
@@ -291,7 +460,6 @@ class MessageRouter:
             status = getattr(getattr(http_err, "response", None), "status_code", "unknown")
             body = getattr(getattr(http_err, "response", None), "text", str(http_err))
             logging.error(f"HTTP Error {status}: {body}")
-            logging.error(f"Request payload: {payload}")
             if message_object:
                 # Example before/after: error swallowed -> user sees nothing; now user gets a brief error.
                 error_message = f"Sorry, I hit an upstream error ({status}). Please try again."

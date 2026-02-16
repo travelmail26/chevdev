@@ -38,6 +38,14 @@
  - NEVER NEVER change major code structure or approach without approval. The user must know exactly how the code works and changing major strategies or variables confuses the user. Do not do without approval. 
 
 - Add inline comments that show concrete before/after examples so the user can follow each step easily.
+- CRITICAL: instruction-first behavior changes. If behavior is wrong, first update prompt/instruction files and tool descriptions. Do not add new behavioral gating, keyword filters, or routing heuristics in Python code unless the user explicitly asks for code-level logic.
+- CRITICAL: never silently replace instruction-driven behavior with hard-coded logic. If a code-level fallback is truly required, call it out first, explain why instruction-only is insufficient, and wait for approval before implementing.
+- Prefer prompt/instruction-driven behavior and standard model tool-calling patterns over hard-coded trigger logic whenever feasible.
+- Decision order for behavior fixes (must follow in order):
+  - 1) Prompt/instruction updates
+  - 2) Tool schema/description updates
+  - 3) Minimal code logic only with explicit user approval
+- When integrating or changing API model/tool behavior, regularly check official provider documentation for current best practices and align implementations to those standards.
 
 ## Testing Guidelines
 - Framework: pytest. Name files `test_*.py`; keep unit helpers near the code or under `testscripts`.
@@ -59,3 +67,10 @@
 
 --You will ALWAYS keep notes on what you have changed, as though you were keeping notes for yourself that you can reference later. Keep very brief notes on code has been changes, including any mistakes or feedback you get from the user. If the session closes, the user can tell you to reference this and you can immediately begin where you left off as though you knew everything to start exactly from where you were working. The user will give you the file to take notes from.  
 --Append major updates (especially credential or storage changes) to `agentlogs/agentlog010125` right after performing them so the history stays current.
+
+## LiveCook Transfer Bundle
+- Transfer-ready LiveCook package lives in `testscripts/livecook_transfer/`.
+- This folder must include all top-level files from `testscripts/livecook/` plus `LLM_HANDOFF.txt`.
+- Do not include generated runtime directories in transfer bundles (`node_modules/`, `logs/`, `downloads/`).
+- Refresh bundle command:
+  - `cp testscripts/livecook/{README.md,app.js,e2e_livecook_playwright.mjs,index.html,onboardTranscriber.js,package-lock.json,package.json,run_livecook_tmux.sh,server.js,start_livecook_server.sh,styles.css,verify_with_screenshots.mjs} testscripts/livecook_transfer/`

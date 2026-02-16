@@ -7,7 +7,6 @@ const simulateWakeBtn = document.getElementById("simulateWakeBtn");
 const lowResStatus = document.getElementById("lowResStatus");
 const wakeStatus = document.getElementById("wakeStatus");
 const highResStatus = document.getElementById("highResStatus");
-const uploadStatus = document.getElementById("uploadStatus");
 const lowResClips = document.getElementById("lowResClips");
 const highResClips = document.getElementById("highResClips");
 const audioMeterFill = document.getElementById("audioMeterFill");
@@ -16,15 +15,11 @@ const transcriptLog = document.getElementById("transcriptLog");
 const diagnosticsStatus = document.getElementById("diagnosticsStatus");
 const diagnosticsLog = document.getElementById("diagnosticsLog");
 const clearDiagnosticsBtn = document.getElementById("clearDiagnosticsBtn");
-const retryFailedUploadsBtn = document.getElementById("retryFailedUploadsBtn");
 
 const WAKE_WORD = "record";
 const STOP_WORD = "stop";
 const LOG_RELAY_ENDPOINT = "/client-log-v2";
 const CLIP_UPLOAD_ENDPOINT = "/api/clips";
-const CLIP_UPLOAD_TIMEOUT_MS = 120000;
-const CLIP_UPLOAD_MAX_RETRIES = 8;
-const CLIP_UPLOAD_BASE_RETRY_DELAY_MS = 3000;
 const CLIENT_SESSION_ID = (typeof crypto !== "undefined" && crypto.randomUUID)
   ? crypto.randomUUID().slice(0, 8)
   : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
@@ -94,36 +89,12 @@ const state = {
   lastRealTranscriptAt: 0,
   diagnosticsCount: 0,
   remoteLogRelayState: "unknown",
-  remoteLogFailureCount: 0,
-  pendingUploads: [],
-  uploadWorkerActive: false,
-  failedUploads: []
+  remoteLogFailureCount: 0
 };
 
 function setStatus(element, message, warning = false) {
   element.textContent = message;
   element.classList.toggle("warn", warning);
-}
-
-function updateUploadUiStatus() {
-  const pendingCount = state.pendingUploads.length;
-  const failedCount = state.failedUploads.length;
-  const isBusy = state.uploadWorkerActive || pendingCount > 0;
-
-  if (failedCount > 0) {
-    setStatus(uploadStatus, `Upload issue: ${failedCount} clip(s) failed. Use manual retry.`, true);
-  } else if (isBusy) {
-    setStatus(uploadStatus, `Uploading clips... queue=${pendingCount}.`, false);
-  } else {
-    setStatus(uploadStatus, "Uploads healthy. New clips auto-upload.", false);
-  }
-
-  retryFailedUploadsBtn.disabled = failedCount === 0;
-  if (failedCount > 0) {
-    retryFailedUploadsBtn.textContent = `Retry failed uploads (${failedCount})`;
-  } else {
-    retryFailedUploadsBtn.textContent = "Retry failed uploads";
-  }
 }
 
 function addDiagnosticLog(event, detail = "") {
@@ -235,137 +206,6 @@ function getTranscriptDataForRange(startMs, endMs) {
 }
 
 async function uploadClipToMongo({
-  payload,
-  clipName,
-  attempt
-}) {
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort("upload-timeout"), CLIP_UPLOAD_TIMEOUT_MS);
-    let response;
-    try {
-      response = await fetch(CLIP_UPLOAD_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload),
-        signal: controller.signal
-      });
-    } finally {
-      clearTimeout(timeoutId);
-    }
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      const detail = `${clipName} attempt=${attempt} status=${response.status} ${errorText}`.trim();
-      addDiagnosticLog("mongo-upload-error", detail);
-      throw new Error(detail);
-    }
-
-    const uploadResult = await response.json();
-    const transcriptLength = (uploadResult.transcriptChars || 0);
-    addDiagnosticLog(
-      "mongo-upload-ok",
-      `${clipName} attempt=${attempt} -> livecook (${uploadResult.documentId || "no-id"}) url=${uploadResult.url || "n/a"} transcriptChars=${transcriptLength}`
-    );
-    return uploadResult;
-  } catch (error) {
-    const message = String(error?.message || "unknown error");
-    addDiagnosticLog("mongo-upload-error", `${clipName} attempt=${attempt} ${message}`);
-    throw error;
-  }
-}
-
-function buildUploadPayload({
-  blob,
-  clipName,
-  clipType,
-  reason,
-  clipStartedAtMs,
-  clipEndedAtMs,
-  dataBase64
-}) {
-  const transcript = getTranscriptDataForRange(clipStartedAtMs, clipEndedAtMs);
-  const uploadKey = `${CLIENT_SESSION_ID}:${clipName}:${clipStartedAtMs}:${clipEndedAtMs}`;
-  return {
-    clientUploadKey: uploadKey,
-    sessionId: CLIENT_SESSION_ID,
-    clipName,
-    clipType,
-    reason,
-    mimeType: blob.type || "video/webm",
-    sizeBytes: blob.size,
-    dataBase64,
-    capturedAt: new Date().toISOString(),
-    clipStartedAt: new Date(clipStartedAtMs).toISOString(),
-    clipEndedAt: new Date(clipEndedAtMs).toISOString(),
-    transcriptFullText: transcript.fullText,
-    transcriptEntries: transcript.entries
-  };
-}
-
-function getRetryDelayMs(attempt) {
-  const exponent = Math.max(0, attempt - 1);
-  const rawDelay = CLIP_UPLOAD_BASE_RETRY_DELAY_MS * (2 ** exponent);
-  return Math.min(rawDelay, 60000);
-}
-
-async function processUploadQueue() {
-  if (state.uploadWorkerActive) {
-    return;
-  }
-
-  state.uploadWorkerActive = true;
-  updateUploadUiStatus();
-  try {
-    while (state.pendingUploads.length > 0) {
-      const job = state.pendingUploads[0];
-      const now = Date.now();
-      if (job.nextAttemptAt > now) {
-        await new Promise((resolve) => setTimeout(resolve, Math.min(job.nextAttemptAt - now, 1000)));
-        continue;
-      }
-
-      job.attempt += 1;
-      try {
-        await uploadClipToMongo({
-          payload: job.payload,
-          clipName: job.clipName,
-          attempt: job.attempt
-        });
-        state.pendingUploads.shift();
-        state.failedUploads = state.failedUploads.filter(
-          (failedJob) => failedJob.payload.clientUploadKey !== job.payload.clientUploadKey
-        );
-        updateUploadUiStatus();
-      } catch {
-        if (job.attempt >= CLIP_UPLOAD_MAX_RETRIES) {
-          addDiagnosticLog("mongo-upload-give-up", `${job.clipName} attempts=${job.attempt}`);
-          state.failedUploads.push({
-            clipName: job.clipName,
-            payload: job.payload,
-            attempt: job.attempt,
-            nextAttemptAt: Date.now()
-          });
-          state.pendingUploads.shift();
-          updateUploadUiStatus();
-          continue;
-        }
-
-        const delayMs = getRetryDelayMs(job.attempt);
-        job.nextAttemptAt = Date.now() + delayMs;
-        addDiagnosticLog("mongo-upload-retry", `${job.clipName} in ${Math.round(delayMs / 1000)}s (attempt ${job.attempt + 1})`);
-        updateUploadUiStatus();
-      }
-    }
-  } finally {
-    state.uploadWorkerActive = false;
-    updateUploadUiStatus();
-  }
-}
-
-async function enqueueClipUpload({
   blob,
   clipName,
   clipType,
@@ -374,30 +214,45 @@ async function enqueueClipUpload({
   clipEndedAtMs
 }) {
   try {
-    // Before: every clip was posted immediately in parallel (example: low-res + high-res overlap).
-    // After: clip payloads are queued and retried serially to survive transient network/proxy failures.
     const dataBase64 = await blobToBase64(blob);
-    const payload = buildUploadPayload({
-      blob,
+    const transcript = getTranscriptDataForRange(clipStartedAtMs, clipEndedAtMs);
+    const payload = {
+      sessionId: CLIENT_SESSION_ID,
       clipName,
       clipType,
       reason,
-      clipStartedAtMs,
-      clipEndedAtMs,
-      dataBase64
+      mimeType: blob.type || "video/webm",
+      sizeBytes: blob.size,
+      dataBase64,
+      capturedAt: new Date().toISOString(),
+      clipStartedAt: new Date(clipStartedAtMs).toISOString(),
+      clipEndedAt: new Date(clipEndedAtMs).toISOString(),
+      transcriptFullText: transcript.fullText,
+      transcriptEntries: transcript.entries
+    };
+
+    const response = await fetch(CLIP_UPLOAD_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
     });
-    state.pendingUploads.push({
-      clipName,
-      payload,
-      attempt: 0,
-      nextAttemptAt: Date.now()
-    });
-    updateUploadUiStatus();
-    addDiagnosticLog("mongo-upload-queued", `${clipName} queue=${state.pendingUploads.length}`);
-    void processUploadQueue();
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      addDiagnosticLog("mongo-upload-error", `${clipName} status=${response.status} ${errorText}`.trim());
+      return;
+    }
+
+    const uploadResult = await response.json();
+    const transcriptLength = (uploadResult.transcriptChars || 0);
+    addDiagnosticLog(
+      "mongo-upload-ok",
+      `${clipName} -> livecook (${uploadResult.documentId || "no-id"}) url=${uploadResult.url || "n/a"} transcriptChars=${transcriptLength}`
+    );
   } catch (error) {
-    addDiagnosticLog("mongo-upload-error", `${clipName} queue-build-failed ${error?.message || "unknown"}`);
-    updateUploadUiStatus();
+    addDiagnosticLog("mongo-upload-error", `${clipName} ${error?.message || "unknown error"}`);
   }
 }
 
@@ -450,7 +305,7 @@ function saveLowResSegment(reason = "rolling") {
   // Before: low-res clips were only added to the "Saved clips" list locally.
   // After: the same clip is still listed locally and also uploaded to MongoDB livecook.
   appendClip(lowResClips, blob, "low-res", state.lowClipCount);
-  void enqueueClipUpload({
+  void uploadClipToMongo({
     blob,
     clipName,
     clipType: "low-res",
@@ -870,7 +725,7 @@ async function triggerHighResRecording(triggerSource = "Manual wake-word trigger
     // Before: high-res trigger clips were only downloadable in-browser.
     // After: each clip remains downloadable and is also posted to MongoDB livecook.
     appendClip(highResClips, blob, "high-res", state.highClipCount);
-    void enqueueClipUpload({
+    void uploadClipToMongo({
       blob,
       clipName,
       clipType: "high-res",
@@ -1006,26 +861,6 @@ clearDiagnosticsBtn.addEventListener("click", () => {
   diagnosticsStatus.textContent = "Diagnostics cleared.";
 });
 
-retryFailedUploadsBtn.addEventListener("click", () => {
-  if (!state.failedUploads.length) {
-    return;
-  }
-
-  const requeued = state.failedUploads.splice(0, state.failedUploads.length);
-  for (const failedJob of requeued) {
-    state.pendingUploads.push({
-      clipName: failedJob.clipName,
-      payload: failedJob.payload,
-      attempt: 0,
-      nextAttemptAt: Date.now()
-    });
-  }
-
-  addDiagnosticLog("mongo-upload-manual-retry", `requeued=${requeued.length} queue=${state.pendingUploads.length}`);
-  updateUploadUiStatus();
-  void processUploadQueue();
-});
-
 window.__liveCookTest = {
   triggerWakeWord: (transcript = "record") => {
     handleIncomingTranscript(transcript);
@@ -1063,8 +898,6 @@ window.__liveCookTest = {
 setStatus(lowResStatus, "Low-res recorder idle.");
 setStatus(wakeStatus, "Wake-word listener idle.");
 setStatus(highResStatus, "High-res recorder idle.");
-setStatus(uploadStatus, "Uploads healthy. New clips auto-upload.");
 transcriptStatus.textContent = "Waiting for transcription...";
 diagnosticsStatus.textContent = "Diagnostics ready.";
-updateUploadUiStatus();
 addDiagnosticLog("app-ready", `session=${CLIENT_SESSION_ID}`);

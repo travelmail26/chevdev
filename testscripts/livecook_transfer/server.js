@@ -325,7 +325,6 @@ async function handleClipUpload(req, res) {
   try {
     const payload = await readJsonBody(req);
     const {
-      clientUploadKey = "",
       sessionId = "unknown",
       clipName = "clip.webm",
       clipType = "unknown",
@@ -335,39 +334,13 @@ async function handleClipUpload(req, res) {
       dataBase64 = "",
       capturedAt = null,
       clipStartedAt = null,
-      clipEndedAt = null,
-      transcriptFullText = "",
-      transcriptEntries = []
+      clipEndedAt = null
     } = payload;
 
     if (!dataBase64) {
       logServer("upload-rejected", "missing dataBase64");
       sendJson(res, 400, { ok: false, error: "dataBase64 is required." });
       return;
-    }
-
-    const normalizedClientUploadKey = String(clientUploadKey || "").trim();
-    const clientTranscriptText = String(transcriptFullText || "").trim();
-    const clientTranscriptEntries = normalizeTranscriptEntries(transcriptEntries);
-    const collection = await getMongoCollection();
-
-    if (normalizedClientUploadKey) {
-      const existingDoc = await collection.findOne(
-        { source: "livecook", clientUploadKey: normalizedClientUploadKey },
-        { projection: { _id: 1, url: 1, transcript_full_text: 1 } }
-      );
-      if (existingDoc) {
-        logServer("upload-dedup-hit", `key=${normalizedClientUploadKey} clip=${clipName}`);
-        sendJson(res, 200, {
-          ok: true,
-          deduped: true,
-          collection: MONGODB_COLLECTION_NAME,
-          documentId: String(existingDoc._id),
-          url: existingDoc.url || "",
-          transcriptChars: String(existingDoc.transcript_full_text || "").length
-        });
-        return;
-      }
     }
 
     const originalClipBuffer = Buffer.from(dataBase64, "base64");
@@ -384,13 +357,6 @@ async function handleClipUpload(req, res) {
       clipName: transcoded.clipName,
       mimeType: transcoded.mimeType
     });
-    const useOpenAiTranscript = Boolean(transcriptResult.transcriptText);
-    const transcriptTextFinal = useOpenAiTranscript ? transcriptResult.transcriptText : clientTranscriptText;
-    const transcriptSourceFinal = useOpenAiTranscript
-      ? transcriptResult.transcriptSource
-      : (clientTranscriptText ? "client_relay_fallback" : transcriptResult.transcriptSource);
-    const transcriptModelFinal = useOpenAiTranscript ? transcriptResult.transcriptModel : "";
-    const transcriptEntriesFinal = useOpenAiTranscript ? [] : clientTranscriptEntries;
 
     const firebaseUpload = await uploadClipBufferToFirebase({
       clipBuffer: transcoded.clipBuffer,
@@ -401,9 +367,9 @@ async function handleClipUpload(req, res) {
     });
     logServer("firebase-uploaded", `clip=${clipName} path=${firebaseUpload.firebasePath}`);
     const indexedAt = new Date().toISOString();
+    const collection = await getMongoCollection();
 
     const document = {
-      clientUploadKey: normalizedClientUploadKey,
       sessionId,
       clipName: transcoded.clipName,
       clipNameOriginal: clipName,
@@ -425,42 +391,21 @@ async function handleClipUpload(req, res) {
         bucket: firebaseUpload.firebaseBucket,
         path: firebaseUpload.firebasePath
       },
-      transcript_full_text: transcriptTextFinal,
-      transcript_entries: transcriptEntriesFinal,
-      transcript_entry_count: transcriptEntriesFinal.length || (transcriptTextFinal ? 1 : 0),
-      transcript_source: transcriptSourceFinal,
-      transcript_model: transcriptModelFinal
+      transcript_full_text: transcriptResult.transcriptText,
+      transcript_entries: [],
+      transcript_entry_count: transcriptResult.transcriptText ? 1 : 0,
+      transcript_source: transcriptResult.transcriptSource,
+      transcript_model: transcriptResult.transcriptModel
     };
 
-    let storedId = null;
-    if (normalizedClientUploadKey) {
-      const upsertResult = await collection.updateOne(
-        { source: "livecook", clientUploadKey: normalizedClientUploadKey },
-        { $setOnInsert: document },
-        { upsert: true }
-      );
-
-      if (upsertResult.upsertedId) {
-        storedId = String(upsertResult.upsertedId);
-      } else {
-        const existingDoc = await collection.findOne(
-          { source: "livecook", clientUploadKey: normalizedClientUploadKey },
-          { projection: { _id: 1 } }
-        );
-        storedId = existingDoc ? String(existingDoc._id) : "unknown";
-      }
-    } else {
-      const insertResult = await collection.insertOne(document);
-      storedId = String(insertResult.insertedId);
-    }
-
-    logServer("upload-inserted", `id=${storedId} collection=${MONGODB_COLLECTION_NAME}`);
+    const result = await collection.insertOne(document);
+    logServer("upload-inserted", `id=${String(result.insertedId)} collection=${MONGODB_COLLECTION_NAME}`);
     sendJson(res, 201, {
       ok: true,
       collection: MONGODB_COLLECTION_NAME,
-      documentId: storedId,
+      documentId: String(result.insertedId),
       url: firebaseUpload.url,
-      transcriptChars: transcriptTextFinal.length
+      transcriptChars: transcriptResult.transcriptText.length
     });
   } catch (error) {
     logServer("upload-error", error?.message || "Upload failed");

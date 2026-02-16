@@ -1,1 +1,1 @@
-Application[bot=ExtBot[token='8081302314:AAHLAeYPVNVI1r9Z5C1lvM-H4iE2moKIvOE']]
+Application[bot=ExtBot[token=8081302314:AAHLAeYPVNVI1r9Z5C1lvM-H4iE2moKIvOE]]
