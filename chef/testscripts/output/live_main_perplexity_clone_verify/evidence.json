@@ -1,0 +1,117 @@
+{
+  "uid": "1275063227",
+  "web_port": 9131,
+  "backend_port": 9132,
+  "webhook_port": 8080,
+  "webhook_statuses": [
+    200,
+    200,
+    200,
+    200,
+    200,
+    200
+  ],
+  "runtime_flags": {
+    "has_chat_not_found": false,
+    "explicit_search_true_count": 1,
+    "explicit_search_false_count": 5
+  },
+  "mongo_before": {
+    "available": true,
+    "bot_mode": "general",
+    "active_session_id": "1275063227_17022026_011957_925399",
+    "general_count": 21,
+    "general_latest_id": "1275063227_16022026_194706_707993",
+    "general_latest_updated": "2026-02-16T19:47:30.919048+00:00",
+    "cheflog_count": 56,
+    "dietlog_count": 15
+  },
+  "mongo_after": {
+    "available": true,
+    "bot_mode": "general",
+    "active_session_id": "1275063227_17022026_012208_268071",
+    "general_count": 22,
+    "general_latest_id": "1275063227_17022026_012208_268071",
+    "general_latest_updated": "2026-02-17T01:22:34.024715+00:00",
+    "cheflog_count": 56,
+    "dietlog_count": 15
+  },
+  "telegram_expected_webhook_url": "https://ominous-halibut-6xjwqqw7qwc55r4-8080.app.github.dev/webhook",
+  "telegram_webhook_info": {
+    "ok": true,
+    "result": {
+      "url": "https://ominous-halibut-6xjwqqw7qwc55r4-8080.app.github.dev/webhook",
+      "has_custom_certificate": false,
+      "pending_update_count": 3,
+      "last_error_date": 1771291294,
+      "last_error_message": "Wrong response from the webhook: 404 Not Found",
+      "max_connections": 40,
+      "ip_address": "20.103.221.187",
+      "allowed_updates": [
+        "message",
+        "callback_query"
+      ]
+    }
+  },
+  "runtime_markers_found": [
+    "route_message start: user_id=1275063227",
+    "xai_tool_round start",
+    "Perplexity clone URL:"
+  ],
+  "session_message_count": 12,
+  "session_tail": [
+    {
+      "content": "Nice. You mean \"shallow\" hashbrowns? What's your twist on them?",
+      "role": "assistant"
+    },
+    {
+      "content": "search the internet for common mistakes for butter emulsion and keep it short",
+      "role": "user"
+    },
+    {
+      "content": "telegram note saffron-42",
+      "role": "user"
+    },
+    {
+      "content": "<function_call name=\"search_perplexity\"> <argument name=\"query\">common mistakes for butter emulsion</argument> </function_call>",
+      "role": "assistant"
+    },
+    {
+      "content": "Common mistakes in **butter emulsion** (like beurre blanc or hollandaise) include overheating, poor temperature control, and improper incorporation, leading to separation.\n\n- **Overheating or wrong temperature**: Butter melts too fast or burns, breaking the emulsion; \"pay careful attention to the smoke point\" and avoid high heat to prevent \"burning the butter\"[1](https://www.youtube.com/watch?v=Ri3Koxefm0w).\n- **Over-softening/melting butter**: Use softened (not melted) butter; if \"you let it sit out for too long... the mixture could turn your baked goods gummy,\" which applies to emulsions too[1](https://www.youtube.com/watch?v=Ri3Koxefm0w).\n- **Insufficient creaming/mixing**: Not mixing long enough fails emulsion; \"if you don't cream it long enough you won't get Peaks\"[1](https://www.youtube.com/watch?v=Ri3Koxefm0w).\n- **Violating emulsification rules**: Follow simple rules for stages; \"The Really Simple Rule of Emulsification\" stresses proper fat-water balance to avoid separation[2](https://www.youtube.com/shorts/gitCR-iTofw).",
+      "role": "assistant"
+    },
+    {
+      "content": "what did i just ask?",
+      "role": "user"
+    },
+    {
+      "content": "You just asked: \"what did i just ask?\"",
+      "role": "assistant"
+    },
+    {
+      "content": "code 11",
+      "role": "user"
+    },
+    {
+      "content": "What's \"code 11\"?",
+      "role": "assistant"
+    },
+    {
+      "content": "what did i just ask?",
+      "role": "user"
+    }
+  ],
+  "web_phase_1": {
+    "ok": true,
+    "chatPosts": 2
+  },
+  "web_phase_2": {
+    "ok": true,
+    "body_head": "Perplexity\nNew Thread\nHome\nDiscover\nLIBRARY\nwhat did i just ask?\nthinking about making fallow hashbrown\nU\n\nUser\n\nFree Plan\n\nShared session lookup for 1275063227...\nAttach\nPerplexity can make mistakes. Consider checking important information."
+  },
+  "screenshots": [
+    "/workspaces/chevdev/chef/testscripts/output/live_main_perplexity_clone_verify/01_clone_web_before_telegram.png",
+    "/workspaces/chevdev/chef/testscripts/output/live_main_perplexity_clone_verify/02_clone_web_after_telegram.png"
+  ],
+  "main_log": "/workspaces/chevdev/chef/testscripts/output/live_main_perplexity_clone_verify/main_runtime.log"
+}

@@ -79,7 +79,6 @@ export default function Thread() {
 
   const isStreaming = isLoading;
   const showStreamingBubble = phase !== 'idle' && phase !== 'done' && phase !== 'error';
-  const showStreamedContent = streamContent.length > 0 || streamThinking.length > 0 || streamSources.length > 0;
 
   return (
     <div className="flex flex-col h-full relative">
@@ -106,7 +105,7 @@ export default function Thread() {
                 />
               ))}
 
-              {(showStreamingBubble || showStreamedContent) && (
+              {showStreamingBubble && (
                 <>
                   {streamContent || streamThinking || streamSources.length > 0 || phase === 'searching' || phase === 'thinking' ? (
                     <MessageBubble

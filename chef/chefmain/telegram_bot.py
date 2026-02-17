@@ -6,6 +6,7 @@ import subprocess
 import traceback
 import time
 import threading
+from urllib.parse import urlparse
 
 # Add current + parent directories to path so local utilities resolve first.
 base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -132,6 +133,37 @@ def _clip_telegram_text(text: str, limit: int = 3900) -> str:
     return content[: limit - 26] + "\n\n[truncated for Telegram]"
 
 
+def _preview_stream_text(text: str, limit: int = 3900) -> str:
+    """Build a live preview that keeps changing even after very long outputs."""
+    content = str(text or "")
+    if len(content) <= limit:
+        return content
+    prefix = "[streaming latest section]\n\n"
+    available = max(1, limit - len(prefix))
+    # Before example: preview used the beginning and appeared frozen after cap.
+    # After example:  preview follows the newest tail so edits keep updating.
+    return prefix + content[-available:]
+
+
+def _split_telegram_text(text: str, limit: int = 3900) -> list[str]:
+    content = str(text or "")
+    if len(content) <= limit:
+        return [content]
+    chunks: list[str] = []
+    start = 0
+    while start < len(content):
+        end = min(start + limit, len(content))
+        if end < len(content):
+            nl = content.rfind("\n", start, end)
+            if nl > start + 200:
+                end = nl
+        chunk = content[start:end].strip()
+        if chunk:
+            chunks.append(chunk)
+        start = end
+    return chunks or [content[:limit]]
+
+
 async def _safe_edit_stream_message(bot, chat_id: int, message_id: int, text: str) -> None:
     try:
         await bot.edit_message_text(chat_id=chat_id, message_id=message_id, text=_clip_telegram_text(text))
@@ -145,6 +177,12 @@ async def _handle_general_single_message_stream(update: Update, context: Context
     user_id = update.effective_user.id
     chat_id = update.effective_chat.id
     run_id = _stream_start_run(user_id)
+    logging.info(
+        "tg_stream_start user_id=%s run_id=%s preview='%s'",
+        user_id,
+        run_id,
+        str(message_object.get("user_message", ""))[:120],
+    )
     status_msg = await update.message.reply_text(
         "Thinking... streaming in one message. Send /stop to stop."
     )
@@ -187,6 +225,7 @@ async def _handle_general_single_message_stream(update: Update, context: Context
 
     last_sent = ""
     last_typing_at = 0.0
+    edit_count = 0
     while True:
         await asyncio.sleep(0.35)
         now = time.monotonic()
@@ -197,13 +236,15 @@ async def _handle_general_single_message_stream(update: Update, context: Context
             final_text = stream_state["final_text"]
 
         if latest_text and latest_text != last_sent:
+            preview = _preview_stream_text(latest_text)
             await _safe_edit_stream_message(
                 context.bot,
                 chat_id,
                 status_msg.message_id,
-                latest_text + (" ▌" if not done else ""),
+                preview + (" ▌" if not done else ""),
             )
             last_sent = latest_text
+            edit_count += 1
 
         if now - last_typing_at >= 4.0 and not done:
             try:
@@ -223,11 +264,22 @@ async def _handle_general_single_message_stream(update: Update, context: Context
                 )
             else:
                 final_display = final_text or latest_text or "No output was generated."
+                chunks = _split_telegram_text(final_display)
                 await _safe_edit_stream_message(
                     context.bot,
                     chat_id,
                     status_msg.message_id,
-                    final_display,
+                    chunks[0],
+                )
+                for chunk in chunks[1:]:
+                    await update.message.reply_text(chunk)
+                logging.info(
+                    "tg_stream_done user_id=%s run_id=%s edits=%s final_len=%s chunks=%s",
+                    user_id,
+                    run_id,
+                    edit_count,
+                    len(final_display),
+                    len(chunks),
                 )
             break
 
@@ -324,6 +376,9 @@ def get_user_handler(user_id, session_info, user_message, application_data=None)
             #'application': application_data,
             'session_info': session_info,
             'user_message': user_message,  # Add the user's message to the context
+            # Before example: frontend source was implicit.
+            # After example: router sees this as a Telegram-origin turn for shared-session continuity.
+            'source_interface': 'telegram',
             # Before: stale bot_mode stuck in memory; After: bot_mode is read fresh each message.
             'bot_mode': get_user_bot_mode(user_id),
             # Add other relevant data here as needed
@@ -336,6 +391,8 @@ def get_user_handler(user_id, session_info, user_message, application_data=None)
         user_context['session_info'] = session_info
         # Update user message
         user_context['user_message'] = user_message
+        # Keep this explicit on every turn so prompt context remains stable.
+        user_context['source_interface'] = 'telegram'
         # Before: /1 switch updated Mongo but not in-memory context; After: syncs from Mongo every turn.
         user_context['bot_mode'] = get_user_bot_mode(user_id)
     return user_context
@@ -349,6 +406,46 @@ def get_user_handler(user_id, session_info, user_message, application_data=None)
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Hello! I'm your AI assistant. How can I help you today?")
+
+
+def _resolve_perplexity_web_public_base() -> str | None:
+    # Before example: /web had no route to the running clone UI.
+    # After example:  /web returns the same Perplexity clone frontend URL main.py starts.
+    explicit_url = os.getenv("PERPLEXITY_PUBLIC_URL", "").strip().rstrip("/")
+    if explicit_url:
+        return explicit_url
+
+    web_port = str(os.getenv("PERPLEXITY_WEB_PORT", "9001")).strip() or "9001"
+    codespace_name = os.getenv("CODESPACE_NAME", "").strip()
+    if codespace_name:
+        return f"https://{codespace_name}-{web_port}.app.github.dev"
+
+    webhook_url = os.getenv("TELEGRAM_WEBHOOK_CODESPACE", "").strip()
+    if webhook_url:
+        try:
+            host = (urlparse(webhook_url).hostname or "").strip()
+            if host.endswith(".app.github.dev"):
+                subdomain = host[: -len(".app.github.dev")]
+                main_port = str(os.getenv("PORT", "8080")).strip()
+                suffix = f"-{main_port}"
+                if subdomain.endswith(suffix):
+                    subdomain = subdomain[: -len(suffix)]
+                if subdomain:
+                    return f"https://{subdomain}-{web_port}.app.github.dev"
+        except Exception:
+            pass
+    return None
+
+
+async def web_link(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_user.id
+    base_url = _resolve_perplexity_web_public_base()
+    if not base_url:
+        await update.message.reply_text(
+            "Web UI URL is not configured. Set PERPLEXITY_PUBLIC_URL or run from Codespaces."
+        )
+        return
+    await update.message.reply_text(f"{base_url}/?uid={user_id}")
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
@@ -815,6 +912,7 @@ def setup_bot() -> Application:
     application.add_handler(CommandHandler("cook", bot_mode_switch_cook))
     application.add_handler(CommandHandler("log", bot_mode_switch_log))
     application.add_handler(CommandHandler("general", bot_mode_switch_general))
+    application.add_handler(CommandHandler("web", web_link))
     application.add_handler(CommandHandler("1", bot_mode_switch_log))
     application.add_handler(CommandHandler("restart", restart))
     application.add_handler(CommandHandler("stop", stop_stream))
@@ -823,6 +921,7 @@ def setup_bot() -> Application:
     application.add_handler(MessageHandler(filters.Regex(r"^\s*/cook(?:@\w+)?(\s|$)"), bot_mode_switch_cook))
     application.add_handler(MessageHandler(filters.Regex(r"^\s*/(log|1)(?:@\w+)?(\s|$)"), bot_mode_switch_log))
     application.add_handler(MessageHandler(filters.Regex(r"^\s*/general(?:@\w+)?(\s|$)"), bot_mode_switch_general))
+    application.add_handler(MessageHandler(filters.Regex(r"^\s*/web(?:@\w+)?(\s|$)"), web_link))
     application.add_handler(MessageHandler(filters.Regex(r"^\s*/stop(?:@\w+)?(\s|$)"), stop_stream))
     application.add_handler(CommandHandler("openai_ping", openai_ping))
     application.add_handler(CommandHandler("openai_version", openai_version))
@@ -857,8 +956,10 @@ def run_bot_webhook_set():
             )
         elif runtime == "codespaces":
             webhook_url = get_webhook_url(runtime)
-            if webhook_url:
-                # Example before/after: TELEGRAM_WEBHOOK_CODESPACE unset -> polling; set -> webhook in Codespaces.
+            transport = os.getenv("TELEGRAM_CODESPACES_TRANSPORT", "polling").strip().lower()
+            # Before example: codespaces defaulted to webhook and failed when public port tunnel was unavailable.
+            # After example:  codespaces defaults to polling; set TELEGRAM_CODESPACES_TRANSPORT=webhook to force webhook mode.
+            if transport == "webhook" and webhook_url:
                 logging.info(f"Using {get_webhook_env_var_name(runtime)}: {webhook_url}")
                 app.run_webhook(
                     listen="0.0.0.0",
@@ -867,6 +968,16 @@ def run_bot_webhook_set():
                     webhook_url=f"{webhook_url}/webhook"
                 )
             else:
+                if transport == "webhook" and not webhook_url:
+                    logging.warning(
+                        "TELEGRAM_CODESPACES_TRANSPORT=webhook but %s is missing; falling back to polling.",
+                        get_webhook_env_var_name(runtime),
+                    )
+                else:
+                    logging.info(
+                        "Codespaces transport=%s. Running Telegram in polling mode.",
+                        transport or "polling",
+                    )
                 app.run_polling()
         elif environment == 'production':
             webhook_url = get_webhook_url(runtime)

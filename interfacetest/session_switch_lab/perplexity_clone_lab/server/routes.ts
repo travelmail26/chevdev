@@ -2,18 +2,26 @@ import type { Express } from "express";
 import type { Server } from "http";
 import { storage } from "./storage";
 import { api } from "@shared/routes";
-import { callSharedBackend, resolveCanonicalUserId } from "./shared-backend";
+import { resolveCanonicalUserId, streamSharedBackend } from "./shared-backend";
 
 const threadOwners = new Map<number, string>();
+
+function normalizeCanonicalUserId(raw: string): string {
+  const trimmed = String(raw || "").trim();
+  if (trimmed.startsWith("tg_") && /^[0-9]+$/.test(trimmed.slice(3))) {
+    return trimmed.slice(3);
+  }
+  return trimmed;
+}
 
 function resolveCanonicalUserFromRequest(req: { headers: Record<string, unknown> }): string {
   const raw = req.headers["x-canonical-user-id"];
   if (Array.isArray(raw)) {
     const first = String(raw[0] || "").trim();
-    return first || resolveCanonicalUserId();
+    return normalizeCanonicalUserId(first || resolveCanonicalUserId());
   }
   const direct = String(raw || "").trim();
-  return direct || resolveCanonicalUserId();
+  return normalizeCanonicalUserId(direct || resolveCanonicalUserId());
 }
 
 export async function registerRoutes(
@@ -62,7 +70,12 @@ export async function registerRoutes(
         threadId = thread.id;
         threadOwners.set(threadId, canonicalUserId);
       } else if (threadOwners.get(threadId) !== canonicalUserId) {
-        return res.status(404).json({ message: "Thread not found" });
+        // Before example: stale threadId after restart returned 404 and blocked chat.
+        // After example: recover by creating a fresh thread for this user.
+        const title = message.slice(0, 50) + (message.length > 50 ? "..." : "");
+        const thread = await storage.createThread(title);
+        threadId = thread.id;
+        threadOwners.set(threadId, canonicalUserId);
       }
 
       await storage.createMessage({
@@ -88,11 +101,25 @@ export async function registerRoutes(
         text: `Shared session lookup for ${canonicalUserId}...`,
       });
 
-      const result = await callSharedBackend({
-        latestUserMessage: message,
-        canonicalUserId,
-        botMode: "general",
+      sendEvent("status", {
+        phase: "answering",
+        text: "Writing final answer...",
       });
+
+      const result = await streamSharedBackend(
+        {
+          latestUserMessage: message,
+          canonicalUserId,
+          botMode: "general",
+        },
+        {
+          onContent: (delta: string) => {
+            if (delta) {
+              sendEvent("content", { text: delta });
+            }
+          },
+        },
+      );
 
       if (result.sources.length > 0) {
         sendEvent("sources", { sources: result.sources });
@@ -105,12 +132,6 @@ export async function registerRoutes(
         });
         sendEvent("thinking", { content: result.thinking });
       }
-
-      sendEvent("status", {
-        phase: "answering",
-        text: "Writing final answer...",
-      });
-      sendEvent("content", { text: result.content });
 
       await storage.createMessage({
         threadId,

@@ -119,7 +119,7 @@ class MessageRouter:
                     "description": (
                         "Use the existing Perplexity web search utility to fetch live internet results. "
                         "REQUIRED CONDITION: call this tool ONLY if the CURRENT user message explicitly asks "
-                        "to search internet/web/online, or explicitly asks for latest/current/news. "
+                        "to search internet/web/online/perplexity, or explicitly asks for latest/current/news. "
                         "If those explicit words/intent are not present in the current user message, do not call. "
                         "Do NOT call for normal chat, brainstorming, meal ideas, preference discussions, "
                         "or follow-up explanation questions that can be answered from existing conversation context. "
@@ -170,24 +170,46 @@ class MessageRouter:
             if role in {"user", "assistant"} and isinstance(content, str) and content.strip():
                 context_messages.append({"role": role, "content": content.strip()})
 
-        # Keep a turn-based window: 8 turns => up to 16 user/assistant messages.
+        # Merge adjacent same-role messages so role sequence alternates.
+        cleaned_messages = []
+        for message in context_messages:
+            if not cleaned_messages:
+                if message.get("role") != "user":
+                    continue
+                cleaned_messages.append(message)
+                continue
+            if cleaned_messages[-1].get("role") == message.get("role"):
+                cleaned_messages[-1]["content"] = (
+                    f"{cleaned_messages[-1]['content']}\n\n{message.get('content', '')}".strip()
+                )
+            else:
+                cleaned_messages.append(message)
+
         max_messages = max_turns * 2
-        context_messages = context_messages[-max_messages:]
+        cleaned_messages = cleaned_messages[-max_messages:]
+        while cleaned_messages and cleaned_messages[0].get("role") != "user":
+            cleaned_messages.pop(0)
 
-        # If truncation starts on assistant, drop that leading assistant so payload starts on user.
-        while context_messages and context_messages[0].get("role") != "user":
-            context_messages.pop(0)
+        query_text = str(current_user_query or "").strip()
+        if not cleaned_messages and query_text:
+            cleaned_messages = [{"role": "user", "content": query_text}]
+        elif query_text and cleaned_messages[-1].get("role") != "user":
+            cleaned_messages.append({"role": "user", "content": query_text})
 
-        if not context_messages or context_messages[-1].get("content") != current_user_query:
-            context_messages.append({"role": "user", "content": current_user_query})
-
-        # Normalize shape for API consistency: only {role, content}.
-        normalized_messages = [
+        return [
             {"role": message["role"], "content": message["content"]}
-            for message in context_messages
+            for message in cleaned_messages
             if isinstance(message, dict) and message.get("role") in {"user", "assistant"} and message.get("content")
         ]
-        return normalized_messages
+
+    def _should_emit_chat_output(self, message_object: dict | None) -> bool:
+        # For web-origin turns, persist history but avoid Telegram send side-effects.
+        if not isinstance(message_object, dict):
+            return False
+        source = str(message_object.get("source_interface") or "").strip().lower()
+        if source == "web":
+            return False
+        return True
 
     def _execute_tool_call(
         self,
@@ -311,7 +333,114 @@ class MessageRouter:
         if not choices:
             return {}
         return choices[0].get("message") or {}
-    
+
+    def _call_model_stream(self, model, messages, tools=None, stream_callback=None, should_stop=None):
+        """Call xAI with server-side streaming and assemble assistant message."""
+        payload = {
+            "model": model,
+            "messages": messages,
+            "max_tokens": 256,
+            "temperature": 0.7,
+            "stream": True,
+        }
+        if tools:
+            payload["tools"] = tools
+            payload["tool_choice"] = "auto"
+
+        response = requests.post(
+            "https://api.x.ai/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {self.xai_api_key}",
+                "Content-Type": "application/json",
+            },
+            json=payload,
+            stream=True,
+            timeout=180,
+        )
+        response.raise_for_status()
+
+        content_parts = []
+        tool_calls_by_index = {}
+
+        for raw_line in response.iter_lines(decode_unicode=True):
+            if callable(should_stop) and should_stop():
+                break
+            if not raw_line:
+                continue
+
+            line = str(raw_line).strip()
+            if line.startswith("data:"):
+                line = line[5:].strip()
+            if not line or line == "[DONE]":
+                continue
+
+            try:
+                chunk = json.loads(line)
+            except Exception:
+                continue
+
+            choices = chunk.get("choices") or []
+            if not choices:
+                continue
+            delta = (choices[0] or {}).get("delta") or {}
+
+            token = delta.get("content")
+            if token:
+                content_parts.append(str(token))
+                if callable(stream_callback):
+                    # Before example: general replies were emitted only after full completion.
+                    # After example:  each new token updates the in-flight Telegram/web stream.
+                    stream_callback("".join(content_parts))
+
+            tool_deltas = delta.get("tool_calls") or []
+            for item in tool_deltas:
+                idx = int(item.get("index", 0))
+                assembled = tool_calls_by_index.setdefault(
+                    idx,
+                    {"id": "", "type": "function", "function": {"name": "", "arguments": ""}},
+                )
+                if item.get("id"):
+                    assembled["id"] = str(item["id"])
+                if item.get("type"):
+                    assembled["type"] = str(item["type"])
+                fn = item.get("function") or {}
+                if fn.get("name"):
+                    assembled["function"]["name"] += str(fn["name"])
+                if fn.get("arguments"):
+                    assembled["function"]["arguments"] += str(fn["arguments"])
+
+        assistant_message = {
+            "role": "assistant",
+            "content": "".join(content_parts),
+        }
+        if tool_calls_by_index:
+            assistant_message["tool_calls"] = [
+                tool_calls_by_index[index] for index in sorted(tool_calls_by_index.keys())
+            ]
+        return assistant_message
+
+    def _build_frontend_context_note(self, message_object: dict | None) -> str:
+        """Add tiny context so the model knows which frontend produced this turn."""
+        if not isinstance(message_object, dict):
+            return ""
+        source = str(
+            message_object.get("source_interface")
+            or message_object.get("source")
+            or ""
+        ).strip().lower()
+        if source not in {"telegram", "web"}:
+            return ""
+        if source == "telegram":
+            source_note = "Current frontend: Telegram chat."
+        else:
+            source_note = "Current frontend: Web UI chat."
+        return (
+            "\n\nFrontend context:\n"
+            f"- {source_note}\n"
+            "- Same user may switch frontends in one shared session.\n"
+            "- Continue only from stored conversation history."
+        )
+
     def route_message(self, messages=None, message_object=None, stream=False, stream_callback=None, should_stop=None):
         """Route a message from a user to OpenAI, persist history, and return the response.
 
@@ -357,7 +486,7 @@ class MessageRouter:
         if not effective_bot_mode:
             effective_bot_mode = os.getenv("BOT_MODE") or "chefmain"
         self.combined_instructions = self.load_instructions(bot_mode=effective_bot_mode)
-        system_prompt = self.combined_instructions
+        system_prompt = self.combined_instructions + self._build_frontend_context_note(message_object)
         system_instruction = {"role": "system", "content": system_prompt}
 
         # Ensure messages is a proper list
@@ -372,8 +501,9 @@ class MessageRouter:
             # Before: an empty history after /restart stayed empty. After example: we re-seed with the base prompt.
             messages.insert(0, system_instruction)
             instructions_applied = True
-        elif messages[0].get("content") in (None, ""):
-            # Before: the stored system stub remained blank. After example: we refill it with the combined prompt.
+        elif messages[0].get("content") != system_prompt:
+            # Before: first-turn system prompt could linger and miss updated mode/frontend context.
+            # After example: system prompt is refreshed each turn while keeping a single system entry.
             messages[0]["content"] = system_prompt
             instructions_applied = True
 
@@ -384,11 +514,15 @@ class MessageRouter:
 
         # Clean messages before sending to OpenAI: remove any with content None, but preserve those with tool_calls
         messages = [m for m in messages if m.get('content') is not None or m.get('tool_calls') is not None]
-        
+
+        last_user_content = None
+        for entry in reversed(messages):
+            if entry.get("role") == "user":
+                last_user_content = entry.get("content")
+                break
+
         xai_model = os.getenv("XAI_MODEL", "grok-4-1-fast-non-reasoning-latest")
-        # LLM instruction:
-        # - Keep this simple: in general mode expose search tool; model decides based on prompt/tool text.
-        # - Do NOT add extra code-level filters for user wording without explicit user approval.
+        # Keep search decision instruction-driven for general mode.
         search_tools = self._build_search_tool_schema() if effective_bot_mode == "general" else []
 
         try:
@@ -405,11 +539,6 @@ class MessageRouter:
             # Before: OpenAI call timing was opaque; after example: log start/end with model + duration.
             openai_start = time.monotonic()
             message_count = len(messages)
-            last_user_content = None
-            for entry in reversed(messages):
-                if entry.get("role") == "user":
-                    last_user_content = entry.get("content")
-                    break
             logging.info(
                 "xai_call start: user_id=%s, model=%s, message_count=%s, tools_enabled=%s",
                 user_id,
@@ -435,11 +564,22 @@ class MessageRouter:
                 self.xai_api_key[-4:] if self.xai_api_key else "NONE",
             )
 
-            assistant_message = self._call_model(
-                model=xai_model,
-                messages=messages,
-                tools=search_tools,
-            )
+            used_native_stream = False
+            if stream and callable(stream_callback):
+                assistant_message = self._call_model_stream(
+                    model=xai_model,
+                    messages=messages,
+                    tools=search_tools,
+                    stream_callback=stream_callback,
+                    should_stop=should_stop,
+                )
+                used_native_stream = True
+            else:
+                assistant_message = self._call_model(
+                    model=xai_model,
+                    messages=messages,
+                    tools=search_tools,
+                )
             assistant_content = assistant_message.get("content") or ""
             tool_calls = assistant_message.get("tool_calls") or []
 
@@ -492,7 +632,13 @@ class MessageRouter:
                 assistant_content = tool_output if isinstance(tool_output, str) else str(tool_output)
 
             # Stream non-tool model text via progressive single-message updates.
-            if stream and assistant_content and effective_bot_mode == "general" and not tool_calls:
+            if (
+                stream
+                and assistant_content
+                and effective_bot_mode == "general"
+                and not tool_calls
+                and not used_native_stream
+            ):
                 streamed_text, stopped_early = self._emit_text_stream(
                     assistant_content,
                     stream_callback=stream_callback,
@@ -502,7 +648,12 @@ class MessageRouter:
                 if stopped_early:
                     assistant_content = (assistant_content + "\n\n[Stopped by user]").strip()
 
-            if message_object and assistant_content and (not stream or not callable(stream_callback)):
+            if (
+                message_object
+                and assistant_content
+                and (not stream or not callable(stream_callback))
+                and self._should_emit_chat_output(message_object)
+            ):
                 partial = message_object.copy()
                 partial["user_message"] = assistant_content
                 process_message_object(partial)
@@ -534,7 +685,7 @@ class MessageRouter:
             status = getattr(getattr(http_err, "response", None), "status_code", "unknown")
             body = getattr(getattr(http_err, "response", None), "text", str(http_err))
             logging.error(f"HTTP Error {status}: {body}")
-            if message_object:
+            if message_object and self._should_emit_chat_output(message_object):
                 # Example before/after: error swallowed -> user sees nothing; now user gets a brief error.
                 error_message = f"Sorry, I hit an upstream error ({status}). Please try again."
                 partial = message_object.copy()
@@ -543,7 +694,7 @@ class MessageRouter:
             return f"HTTP Error {status}: {body}"
         except Exception as e:
             logging.error(f"Error in openai API call in message_router.py: {str(e)}", exc_info=True)
-            if message_object:
+            if message_object and self._should_emit_chat_output(message_object):
                 # Example before/after: exception -> silent; now a short error reply is sent.
                 error_message = "Sorry, I ran into an error while generating a response. Please try again."
                 partial = message_object.copy()
