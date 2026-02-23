@@ -27,3 +27,4 @@
 - 2026-02-23T22:26:18Z: Added fail-fast photo pipeline handling with TELEGRAM_MEDIA_TIMEOUT_SEC and fallback marker when Telegram get_file/download times out.
 - 2026-02-23T22:53:23Z: Fixed media backfill robustness by adding ai_description fallback for user_description, avoiding early return on first no_candidate/no_choice, and allowing vision listener stderr/stdout into Cloud Run logs for diagnosis.
 - 2026-02-23T23:00:09Z: Pushed hotfix commit 2d4a84e to origin/main; GitHub Actions run 22328384790 deployed chef-bot revision chef-bot-00017-heb at 100% traffic; deleted extra Cloud Run services chefdev and chevdev so only chef-bot remains.
+- 2026-02-23T23:01:32Z: Deploy run 22328523313 failed during Docker base image pull (docker.io python:3.11-slim 504). Triggering fresh push-based redeploy with no functional code change.
