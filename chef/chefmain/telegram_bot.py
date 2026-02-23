@@ -546,40 +546,64 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             photo = update.message.photo[-1]
             # Example before/after: no photo -> skip; photo present -> download + upload flow
             logging.info("handle_message: received photo message")
-            get_file_start = time.time()
-            file = await context.bot.get_file(photo.file_id)
-            # Example before/after: no timing logs -> "media_timing photo_get_file_ms=35 file_id=abc size=12345"
-            logging.info(
-                "media_timing photo_get_file_ms=%d file_id=%s size=%s",
-                int((time.time() - get_file_start) * 1000),
-                photo.file_id,
-                getattr(photo, "file_size", None),
-            )
-            photo_dir = "saved_photos"
-            os.makedirs(photo_dir, exist_ok=True)
-            local_path = f"{photo_dir}/{photo.file_id}.jpg"
-            download_start = time.time()
-            await file.download_to_drive(local_path)
-            # Example before/after: no timing logs -> "media_timing photo_download_ms=4200 path=saved_photos/... size=45678"
-            logging.info(
-                "media_timing photo_download_ms=%d path=%s size=%s",
-                int((time.time() - download_start) * 1000),
-                local_path,
-                os.path.getsize(local_path) if os.path.exists(local_path) else None,
-            )
-            firebase_url = None
+            media_timeout_sec = float(os.getenv("TELEGRAM_MEDIA_TIMEOUT_SEC", "12"))
+            local_path = None
             try:
-                # Before example: photos already go to telegram_photos by default.
-                # After example:  media_type=photo keeps that explicit.
-                firebase_url = firebase_get_media_url(local_path, media_type="photo")
-            except Exception as firebase_error:
-                logging.error(f"Firebase upload failed for photo: {firebase_error}")
+                get_file_start = time.time()
+                file = await context.bot.get_file(
+                    photo.file_id,
+                    connect_timeout=media_timeout_sec,
+                    read_timeout=media_timeout_sec,
+                    write_timeout=media_timeout_sec,
+                    pool_timeout=media_timeout_sec,
+                )
+                # Example before/after: no timing logs -> "media_timing photo_get_file_ms=35 file_id=abc size=12345"
+                logging.info(
+                    "media_timing photo_get_file_ms=%d file_id=%s size=%s",
+                    int((time.time() - get_file_start) * 1000),
+                    photo.file_id,
+                    getattr(photo, "file_size", None),
+                )
+                photo_dir = "saved_photos"
+                os.makedirs(photo_dir, exist_ok=True)
+                local_path = f"{photo_dir}/{photo.file_id}.jpg"
+                download_start = time.time()
+                await file.download_to_drive(
+                    local_path,
+                    connect_timeout=media_timeout_sec,
+                    read_timeout=media_timeout_sec,
+                    write_timeout=media_timeout_sec,
+                    pool_timeout=media_timeout_sec,
+                )
+                # Example before/after: no timing logs -> "media_timing photo_download_ms=4200 path=saved_photos/... size=45678"
+                logging.info(
+                    "media_timing photo_download_ms=%d path=%s size=%s",
+                    int((time.time() - download_start) * 1000),
+                    local_path,
+                    os.path.getsize(local_path) if os.path.exists(local_path) else None,
+                )
 
-            if firebase_url:
-                # Example before/after: [photo_gridfs_id: 456] -> [photo_url: https://...]
-                user_input = f"[photo_url: {firebase_url}]"
-            else:
-                user_input = f"[Photo saved locally: {local_path}]"
+                firebase_url = None
+                try:
+                    # Before example: photos already go to telegram_photos by default.
+                    # After example:  media_type=photo keeps that explicit.
+                    firebase_url = firebase_get_media_url(local_path, media_type="photo")
+                except Exception as firebase_error:
+                    logging.error(f"Firebase upload failed for photo: {firebase_error}")
+
+                if firebase_url:
+                    # Example before/after: [photo_gridfs_id: 456] -> [photo_url: https://...]
+                    user_input = f"[photo_url: {firebase_url}]"
+                else:
+                    user_input = f"[Photo saved locally: {local_path}]"
+            except Exception as photo_error:
+                logging.error(
+                    "photo_pipeline_failed file_id=%s timeout_sec=%s error=%s",
+                    photo.file_id,
+                    media_timeout_sec,
+                    photo_error,
+                )
+                user_input = "[photo_unavailable: failed to fetch image from Telegram in time]"
 
         elif update.message.video:
             video = update.message.video
