@@ -43,7 +43,8 @@ PERPLEXITY_CLONE_ROOT = Path(
 )
 PERPLEXITY_WEB_PORT = str(os.getenv("PERPLEXITY_WEB_PORT", "9001"))
 PERPLEXITY_SHARED_BACKEND_PORT = str(os.getenv("PERPLEXITY_SHARED_BACKEND_PORT", "9002"))
-ENABLE_PERPLEXITY_CLONE = os.getenv("ENABLE_PERPLEXITY_CLONE", "1").strip().lower() not in {"0", "false", "no", "off"}
+DEFAULT_ENABLE_PERPLEXITY_CLONE = "1" if os.getenv("CODESPACES") == "true" else "0"
+ENABLE_PERPLEXITY_CLONE = os.getenv("ENABLE_PERPLEXITY_CLONE", DEFAULT_ENABLE_PERPLEXITY_CLONE).strip().lower() not in {"0", "false", "no", "off"}
 RESET_TEST_SESSION_ON_START = os.getenv("RESET_TEST_SESSION_ON_START", "1").strip().lower() not in {"0", "false", "no", "off"}
 
 
@@ -347,9 +348,11 @@ def main():
     try:
         child_services = _start_perplexity_clone_services()
     except Exception as exc:
+        # Keep Cloud Run bot service alive even if optional local UI stack cannot boot.
         logging.error(f"[Main] Perplexity clone startup failed: {exc}")
+        logging.warning("[Main] Continuing without Perplexity clone services.")
         _stop_services(child_services)
-        raise
+        child_services = []
 
     # We rely on run_bot() for everything.
     # If environment=development => polling
