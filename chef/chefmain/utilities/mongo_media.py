@@ -132,8 +132,6 @@ def _spawn_vision_listener(url: str) -> None:
         subprocess.Popen(
             [sys.executable, script_path],
             env={**os.environ, "VISION_TRIGGER_URL": url},
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
         )
         logging.info("Spawned %s for URL: %s", script_name, url)
     except Exception as exc:
