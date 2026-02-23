@@ -498,6 +498,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
         user_input = "" # Initialize user_input
+        media_user_error = None
 
 
         if update.message.audio or update.message.voice:
@@ -609,6 +610,10 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     media_timeout_sec,
                     photo_error,
                 )
+                media_user_error = (
+                    "I couldn't fetch that image from Telegram in time. "
+                    "Please resend the photo and try again."
+                )
                 user_input = "[photo_unavailable: failed to fetch image from Telegram in time]"
 
         elif update.message.video:
@@ -657,6 +662,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         else:
             # Unknown message type
             await update.message.reply_text("Could not process the message type.")
+            return
+
+        if media_user_error:
+            logging.info("handle_message: returning media_user_error for user_id=%s", user_id)
+            await update.message.reply_text(media_user_error)
             return
 
         # Centralized call to agentchat and response handling for all types

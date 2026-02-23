@@ -29,3 +29,4 @@
 - 2026-02-23T23:00:09Z: Pushed hotfix commit 2d4a84e to origin/main; GitHub Actions run 22328384790 deployed chef-bot revision chef-bot-00017-heb at 100% traffic; deleted extra Cloud Run services chefdev and chevdev so only chef-bot remains.
 - 2026-02-23T23:01:32Z: Deploy run 22328523313 failed during Docker base image pull (docker.io python:3.11-slim 504). Triggering fresh push-based redeploy with no functional code change.
 - 2026-02-23T23:09:45Z: Added hard asyncio.wait_for timeout wrappers to Telegram photo get_file/download_to_drive in telegram_bot.py to prevent indefinite media pipeline hangs before streaming.
+- 2026-02-23T23:10:36Z: On photo pipeline failure, bot now returns immediate user-facing retry error and exits cleanly without routing broken media marker through model.
