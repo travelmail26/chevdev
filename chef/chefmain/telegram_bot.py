@@ -752,7 +752,9 @@ async def _apply_restart_flow(
     had_handler = user_id in handlers_per_user
     handlers_per_user.pop(user_id, None)
     conversations.pop(user_id, None)
-    if _is_mode_switch_backfill_enabled():
+    if trigger_command == "/restart":
+        _spawn_media_description_backfill(limit=20)
+    elif _is_mode_switch_backfill_enabled():
         _spawn_media_description_backfill(limit=20)
     else:
         logging.info("media_backfill_skipped trigger=%s reason=disabled_on_mode_switch", trigger_command)

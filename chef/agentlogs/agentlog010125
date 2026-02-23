@@ -22,3 +22,4 @@
 2026-01-02: Removed turn_window/turn_overlap args/constants from build_chat_session_chunks.py now that sentence chunking is used.
 2026-01-02: Added embedding batch support in build_chat_session_chunks.py to reduce API calls (embedding-batch-size).
 2026-01-02: Pointed simple_database_approach/mongo_worker_embedding.py to chat_session_sentence_chunks for vector search.
+- 2026-02-23T20:37:58Z: Restored explicit per-turn mode persistence in history; /restart now always triggers media backfill; added migration handoff requirements to AGENTS.md.

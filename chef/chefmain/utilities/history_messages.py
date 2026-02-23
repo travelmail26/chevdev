@@ -446,9 +446,8 @@ def message_history_process(message_object: dict, message_to_append_history=None
     effective_mode = _normalize_bot_mode(explicit_mode) if explicit_mode else get_user_bot_mode(user_id)
     if isinstance(message_object, dict):
         message_object["bot_mode"] = effective_mode
-        if explicit_mode and bool(message_object.get("persist_mode_on_history", False)):
-            # Before example: every message re-persisted mode and added avoidable DB write latency.
-            # After example: mode persistence is opt-in here; commands persist mode explicitly.
+        if explicit_mode:
+            # Keep each turn's explicit mode persisted with session metadata for continuity.
             set_user_bot_mode(user_id, effective_mode, session_info=message_object.get("session_info"))
     # Example: effective_mode="cheflog" -> writes to chef_chatbot.chat_sessions.
     mongo_doc = _upsert_mongo_history(user_id, message_object, safe_message, effective_mode)
