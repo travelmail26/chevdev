@@ -23,3 +23,4 @@
 2026-01-02: Added embedding batch support in build_chat_session_chunks.py to reduce API calls (embedding-batch-size).
 2026-01-02: Pointed simple_database_approach/mongo_worker_embedding.py to chat_session_sentence_chunks for vector search.
 - 2026-02-23T20:37:58Z: Restored explicit per-turn mode persistence in history; /restart now always triggers media backfill; added migration handoff requirements to AGENTS.md.
+- 2026-02-23T22:21:25Z: Incident fix in progress for production bot: restored media-analysis behavior in instructions_base, made create_media_metadata async to reduce turn latency, and prevented stream abort when Telegram status message times out.

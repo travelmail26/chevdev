@@ -183,9 +183,13 @@ async def _handle_general_single_message_stream(update: Update, context: Context
         run_id,
         str(message_object.get("user_message", ""))[:120],
     )
-    status_msg = await update.message.reply_text(
-        "Thinking... streaming in one message. Send /stop to stop."
-    )
+    status_msg = None
+    try:
+        status_msg = await update.message.reply_text(
+            "Thinking... streaming in one message. Send /stop to stop."
+        )
+    except Exception as exc:
+        logging.warning("tg_stream_status_send_failed user_id=%s run_id=%s error=%s", user_id, run_id, exc)
 
     stream_state = {
         "latest_text": "",
@@ -235,7 +239,7 @@ async def _handle_general_single_message_stream(update: Update, context: Context
             error = stream_state["error"]
             final_text = stream_state["final_text"]
 
-        if latest_text and latest_text != last_sent:
+        if status_msg and latest_text and latest_text != last_sent:
             preview = _preview_stream_text(latest_text)
             await _safe_edit_stream_message(
                 context.bot,
@@ -256,23 +260,30 @@ async def _handle_general_single_message_stream(update: Update, context: Context
         if done:
             await worker_task
             if error:
-                await _safe_edit_stream_message(
-                    context.bot,
-                    chat_id,
-                    status_msg.message_id,
-                    f"Streaming failed: {error}",
-                )
+                if status_msg:
+                    await _safe_edit_stream_message(
+                        context.bot,
+                        chat_id,
+                        status_msg.message_id,
+                        f"Streaming failed: {error}",
+                    )
+                else:
+                    await update.message.reply_text(f"Streaming failed: {error}")
             else:
                 final_display = final_text or latest_text or "No output was generated."
                 chunks = _split_telegram_text(final_display)
-                await _safe_edit_stream_message(
-                    context.bot,
-                    chat_id,
-                    status_msg.message_id,
-                    chunks[0],
-                )
-                for chunk in chunks[1:]:
-                    await update.message.reply_text(chunk)
+                if status_msg:
+                    await _safe_edit_stream_message(
+                        context.bot,
+                        chat_id,
+                        status_msg.message_id,
+                        chunks[0],
+                    )
+                    for chunk in chunks[1:]:
+                        await update.message.reply_text(chunk)
+                else:
+                    for chunk in chunks:
+                        await update.message.reply_text(chunk)
                 logging.info(
                     "tg_stream_done user_id=%s run_id=%s edits=%s final_len=%s chunks=%s",
                     user_id,

@@ -12,6 +12,7 @@ import json
 import time
 import datetime
 import logging
+import threading
 from chefmain.utilities.mongo_media import create_media_metadata
 from google.cloud import storage as gcs_storage 
 
@@ -104,18 +105,23 @@ def firebase_get_media_url(media_path, media_type: str = "photo"):
     # Get the public download URL
     url = blob.public_url
     print(f"Media uploaded to: {url}")
-    try:
-        metadata_start = time.time()
-        create_media_metadata(url=url, indexed_at=datetime.datetime.now(datetime.timezone.utc).isoformat())
-        # Example before/after: no timing log -> "media_timing firebase_metadata_ms=90 file=foo.jpg"
-        logging.info(
-            "media_timing firebase_metadata_ms=%d file=%s",
-            int((time.time() - metadata_start) * 1000),
-            cloud_storage_filename,
-        )
-        print("DEBUG: create_media_metadata succeeded")
-    except Exception as e:
-        print(f"DEBUG: create_media_metadata failed: {e}")
+    indexed_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+    def _metadata_worker() -> None:
+        try:
+            metadata_start = time.time()
+            create_media_metadata(url=url, indexed_at=indexed_at)
+            logging.info(
+                "media_timing firebase_metadata_ms=%d file=%s",
+                int((time.time() - metadata_start) * 1000),
+                cloud_storage_filename,
+            )
+            print("DEBUG: create_media_metadata succeeded")
+        except Exception as e:
+            print(f"DEBUG: create_media_metadata failed: {e}")
+
+    # Keep user response path fast: metadata indexing runs in background.
+    threading.Thread(target=_metadata_worker, daemon=True).start()
     return url
 
 if __name__ == "__main__":
