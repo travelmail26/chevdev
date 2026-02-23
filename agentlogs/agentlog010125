@@ -453,3 +453,5 @@ Initialized agent log. All actions and decisions will be noted chronologically.
   - web_func_long: first=2.978s total=5.295s events=249 len=1380.
 - Set cross-UI marker via web: `STREAM_SYNC_BETA_17` -> assistant replied `saved`.
 - Blocking note: Telegram Bot API cannot simulate inbound user messages; waiting for live user Telegram turns to capture `tg_stream_start/tg_stream_done` evidence in runtime logs.
+2026-02-23T14:31:23Z Updated chefmain general instruction prompt to add concise rescue guidance for explicit cooking failures and repeated frustration signals (instruction-only change).
+2026-02-23T14:39:53Z Revised general instructions to remove unsolicited rescue guidance; enforce explicit-ask-only suggestions/info/search and default-to-no-answer assumption for general mode prompt.
