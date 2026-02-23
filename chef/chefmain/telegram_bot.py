@@ -353,6 +353,13 @@ def _spawn_media_description_backfill(limit: int = 20) -> None:
     except Exception as exc:
         logging.warning("media_backfill_failed error=%s", exc)
 
+
+def _is_mode_switch_backfill_enabled() -> bool:
+    # Before example: mode switches always spawned media backfill and could delay first reply.
+    # After example:  mode-switch backfill is opt-in via env for predictable response latency.
+    raw = os.getenv("ENABLE_MEDIA_BACKFILL_ON_MODE_SWITCH", "0").strip().lower()
+    return raw in {"1", "true", "yes", "on"}
+
 def get_user_handler(user_id, session_info, user_message, application_data=None):
     """
     Creates or retrieves a user context dictionary.
@@ -745,7 +752,10 @@ async def _apply_restart_flow(
     had_handler = user_id in handlers_per_user
     handlers_per_user.pop(user_id, None)
     conversations.pop(user_id, None)
-    _spawn_media_description_backfill(limit=20)
+    if _is_mode_switch_backfill_enabled():
+        _spawn_media_description_backfill(limit=20)
+    else:
+        logging.info("media_backfill_skipped trigger=%s reason=disabled_on_mode_switch", trigger_command)
 
     if send_restart_reply:
         if had_handler:
