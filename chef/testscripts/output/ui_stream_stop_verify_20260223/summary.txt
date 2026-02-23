@@ -1,0 +1,5 @@
+chatPosts=1
+stop_button_transition=visible_to_hidden
+hasError=false
+assistantCount=0
+finalUrl=http://127.0.0.1:9161/thread/3

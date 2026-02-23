@@ -1,0 +1,178 @@
+{
+  "started_at": "2026-02-23T18:43:39.100485+00:00",
+  "started_at_z": "2026-02-23T18:43:39Z",
+  "finished_at": "2026-02-23T18:44:04.000441+00:00",
+  "project_id": "cheftest-f174c",
+  "service_name": "chef-bot",
+  "main_bot_webhook_base_url": "https://chef-bot-209538059512.us-central1.run.app",
+  "test_uid": "1275063227",
+  "marker": "saffron-main-1771872219",
+  "steps": [
+    {
+      "text": "/general",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "text": "/restart",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "text": "search the internet for hashbrown texture methods; include marker saffron-main-1771872219 and write a long answer",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "text": "/stop",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "text": "what marker did i ask you to include?",
+      "status": 200,
+      "ok": true
+    }
+  ],
+  "webhook_statuses": [
+    200,
+    200,
+    200,
+    200,
+    200
+  ],
+  "mongo_before": {
+    "available": true,
+    "bot_mode": "general",
+    "active_session_id": "1275063227_23022026_184311_677835",
+    "general_count": 34,
+    "general_latest_id": "1275063227_23022026_184311_677835",
+    "general_latest_session_id": "1275063227_23022026_184311_677835",
+    "general_latest_updated": "2026-02-23T18:43:26.253019+00:00",
+    "general_latest_messages": [
+      {
+        "role": "system",
+        "content": "You are a general brainstorming assistant.\n\nBehavior rules:\n- Help the user think through ideas, options, and tradeoffs across any topic, not only cooking.\n- Keep responses practical and structured when useful (short lists, pros/cons, clear next steps).\n- Ask brief clarifying questions only when needed to make the brainstorming output better.\n- Avoid pretending to have done actions you cannot actually do.\n- If the user wants an execution plan, provide a simple step-by-step plan.\n\nTone:\n- Collaborative, concise, and direct.\n- No unnecessary filler.\n\n***GENERAL BRAINSTORMING INSTRUCTIONS END***"
+      },
+      {
+        "role": "user",
+        "content": "search the internet for hashbrown texture methods; include marker saffron-main-1771872180 and write a long answer"
+      },
+      {
+        "role": "assistant",
+        "content": "### Hashbrown Texture Methods: Comprehensive Guide from Online Research\n\n**Marker: saffron-main-1771872180**\n\nI've compiled this from top search results across sites like Serious Eats, Allrecipes, Food Network, The Kitchn, Reddit (r/AskCulinary, r/cooking), and YouTube channels (e.g., Joshua Weissman, Binging with Babish). Key focus: achieving the holy grail of hashbrowns\u2014**crispy, golden exterior with fluffy, tender interior**. Poor texture (soggy, mushy, or falling apart) often stems from excess moisture, wrong potato type, or improper technique. Below, I break it down into **methods ranked by effectiveness** (based on expert consensus and user ratings), **step-by-step processes**, **pros/cons/tradeoffs**, **potato prep variations**, **tools/ingredients**, and **common pitfalls/fixes**. This is practical for home cooks; aim for russet or Yukon Gold potatoes (high starch for crispiness).\n\n#### 1. **Top Method: The Serious Eats Dry-Out Technique (Most Reliable for Ultra-Crispy)**\n   Pioneered by J. Kenji L\u00f3pez-Alt. Rids potatoes of *all* moisture via salting and rinsing.\n   \n"
+      },
+      {
+        "role": "user",
+        "content": "/stop"
+      },
+      {
+        "role": "assistant",
+        "content": "Stopped."
+      },
+      {
+        "role": "user",
+        "content": "what marker did i ask you to include?"
+      },
+      {
+        "role": "assistant",
+        "content": "You asked me to include the marker **saffron-main-1771872180**."
+      }
+    ],
+    "cheflog_count": 57,
+    "dietlog_count": 15
+  },
+  "mongo_after": {
+    "available": true,
+    "bot_mode": "general",
+    "active_session_id": "1275063227_23022026_184343_215025",
+    "general_count": 35,
+    "general_latest_id": "1275063227_23022026_184343_215025",
+    "general_latest_session_id": "1275063227_23022026_184343_215025",
+    "general_latest_updated": "2026-02-23T18:43:55.206384+00:00",
+    "cheflog_count": 57,
+    "dietlog_count": 15,
+    "general_latest_messages_tail": [
+      {
+        "role": "system",
+        "content": "You are a general brainstorming assistant.\n\nBehavior rules:\n- Help the user think through ideas, options, and tradeoffs across any topic, not only cooking.\n- Keep responses practical and structured when useful (short lists, pros/cons, clear next steps).\n- Ask brief clarifying questions only when needed to make the brainstorming output better.\n- Avoid pretending to have done actions you cannot actually do.\n- If the user wants an execution plan, provide a simple step-by-step plan.\n\nTone:\n- Collaborative, concise, and direct.\n- No unnecessary filler.\n\n***GENERAL BRAINSTORMING INSTRUCTIONS END***"
+      },
+      {
+        "role": "user",
+        "content": "search the internet for hashbrown texture methods; include marker saffron-main-1771872219 and write a long answer"
+      },
+      {
+        "role": "assistant",
+        "content": "### Hashbrown Texture Methods: Comprehensive Guide from Online Research\n\n**Marker: saffron-main-1771872219**\n\nI've compiled this detailed guide by searching and synthesizing top results from sources like Serious Eats, Allrecipes, Food Network, King Arthur Baking, Reddit (r/AskCulinary, r/cooking), and cooking blogs (e.g., The Kitchn, Simply Recipes). The focus is on achieving the holy grail of hashbrown texture: **ultra-crispy exterior, fluffy interior, without sogginess or falling apart**. Key principle across sources: moisture is the enemy\u2014extract it aggressively, use starch to your advantage, and fry hot with minimal interference.\n\nThis is a **long, structured breakdown** covering methods, science, step-by-step recipes, variations, tools, common pitfalls, and pro tips. Methods are ranked by effectiveness based on user reviews and expert tests (e.g., Serious Eats' J. Kenji L\u00f3pez-Alt ranks rinsing + drying highest).\n\n#### 1. Core Science of Perfect Texture\n- **Crispy exterior**: High-heat frying (350-375\u00b0F oil) triggers Maillard reaction for browning. Needs dry surface starch.\n- **Fluffy interior**: Shredded potatoes release steam internally if not over-packed.\n- **No sogg"
+      },
+      {
+        "role": "user",
+        "content": "/stop"
+      },
+      {
+        "role": "assistant",
+        "content": "Stopped."
+      },
+      {
+        "role": "user",
+        "content": "what marker did i ask you to include?"
+      },
+      {
+        "role": "assistant",
+        "content": "You asked me to include **marker saffron-main-1771872219**."
+      }
+    ]
+  },
+  "runtime_flags": {
+    "logs_found": 33,
+    "has_route_message_start": 2,
+    "has_tg_stream_start": 0,
+    "has_tg_stream_done": 0,
+    "has_stream_edit_failed": 0,
+    "has_chat_not_found": false
+  },
+  "checks": {
+    "webhook_status_ok": true,
+    "mongo_available": true,
+    "mongo_general_non_decreasing": true,
+    "mongo_marker_seen_in_latest_session": true,
+    "cloud_run_logs_present": true,
+    "cloud_run_no_chat_not_found": true,
+    "cloud_run_stream_markers_present": false
+  },
+  "cloud_run_log_lines_tail": [
+    "2026-02-23T18:43:55.236401Z INFO:root:Message object for user 1275063227 passed to message router.",
+    "2026-02-23T18:43:55.235778Z INFO:root:xai_call end: user_id=1275063227, model=grok-4-1-fast-non-reasoning-latest, duration_ms=1079, response_chars=59",
+    "2026-02-23T18:43:55.235728Z INFO:root:route_message end: user_id=1275063227, response_chars=59",
+    "2026-02-23T18:43:55.171825Z INFO:message_user:Chunk 1/1 sent successfully to chat_id 1275063227. Response: {'ok': True, 'result': {'message_id': 5592, 'from': {'id': 7912564126, 'is_bot': True, 'first_name': 'cheftest', 'username': 'cheftest22bot'}, 'chat': {'id': 1275063227, 'first_name': 'Greg', 'last_name': 'Ferenstein', 'username': 'ferenstein', 'type': 'private'}, 'date': 1771872235, 'text': 'You asked me to include **marker saffron-main-1771872219**.'}}",
+    "2026-02-23T18:43:50.238747Z INFO:root:Message object for user 1275063227 passed to message router.",
+    "2026-02-23T18:43:50.238319Z INFO:root:xai_call end: user_id=1275063227, model=grok-4-1-fast-non-reasoning-latest, duration_ms=1162, response_chars=8",
+    "2026-02-23T18:43:50.238273Z INFO:root:route_message end: user_id=1275063227, response_chars=8",
+    "2026-02-23T18:43:50.177354Z INFO:message_user:Chunk 1/1 sent successfully to chat_id 1275063227. Response: {'ok': True, 'result': {'message_id': 5591, 'from': {'id': 7912564126, 'is_bot': True, 'first_name': 'cheftest', 'username': 'cheftest22bot'}, 'chat': {'id': 1275063227, 'first_name': 'Greg', 'last_name': 'Ferenstein', 'username': 'ferenstein', 'type': 'private'}, 'date': 1771872230, 'text': 'Stopped.'}}",
+    "2026-02-23T18:43:49.696258Z INFO:message_user:Sending chunk 1/1 to chat_id 1275063227...",
+    "2026-02-23T18:43:49.696192Z INFO:message_user:Attempting to send message to chat_id: 1275063227",
+    "2026-02-23T18:43:49.075527Z INFO:root:xai_call auth: user_id=1275063227, key_suffix=...L4lI",
+    "2026-02-23T18:43:49.075476Z INFO:root:xai_call payload_preview: user_id=1275063227, last_user_preview='/stop'",
+    "2026-02-23T18:43:49.075424Z INFO:root:xai_call start: user_id=1275063227, model=grok-4-1-fast-non-reasoning-latest, message_count=4",
+    "2026-02-23T18:43:49.015204Z INFO:root:route_message start: user_id=1275063227, has_message_object=True",
+    "2026-02-23T18:43:49.015151Z INFO:root:handle_message: routing message for user_id=1275063227",
+    "2026-02-23T18:43:48.959796Z INFO:root:handle_message start: user_id=1275063227, has_text=True",
+    "2026-02-23T18:43:48.957941Z INFO:root:Message object for user 1275063227 passed to message router.",
+    "2026-02-23T18:43:48.957492Z INFO:root:xai_call end: user_id=1275063227, model=grok-4-1-fast-non-reasoning-latest, duration_ms=2989, response_chars=1192",
+    "2026-02-23T18:43:48.957463Z INFO:root:route_message end: user_id=1275063227, response_chars=1192",
+    "2026-02-23T18:43:48.894597Z INFO:message_user:Chunk 1/1 sent successfully to chat_id 1275063227. Response: {'ok': True, 'result': {'message_id': 5590, 'from': {'id': 7912564126, 'is_bot': True, 'first_name': 'cheftest', 'username': 'cheftest22bot'}, 'chat': {'id': 1275063227, 'first_name': 'Greg', 'last_name': 'Ferenstein', 'username': 'ferenstein', 'type': 'private'}, 'date': 1771872228, 'text': \"### Hashbrown Texture Methods: Comprehensive Guide from Online Research\\n\\n**Marker: saffron-main-1771872219**\\n\\nI've compiled this detailed guide by searching and synthesizing top results from sources like Serious Eats, Allrecipes, Food Network, King Arthur Baking, Reddit (r/AskCulinary, r/cooking), and cooking blogs (e.g., The Kitchn, Simply Recipes). The focus is on achieving the holy grail of hashbrown texture: **ultra-crispy exterior, fluffy interior, without sogginess or falling apart**. Key principle across sources: moisture is the enemy\u2014extract it aggressively, use starch to your advantage, and fry hot with minimal interference.\\n\\nThis is a **long, structured breakdown** covering methods, science, step-by-step recipes, variations, tools, common pitfalls, and pro tips. Methods are ranked by effectiveness based on user reviews and expert tests (e.g., Serious Eats' J. Kenji L\u00f3pez-Alt ranks rinsing + drying highest).\\n\\n#### 1. Core Science of Perfect Texture\\n- **Crispy exterior**: High-heat frying (350-375\u00b0F oil) triggers Maillard reaction for browning. Needs dry surface starch.\\n- **Fluffy interior**: Shredded potatoes release steam internally if not over-packed.\\n- **No sogg\"}}",
+    "2026-02-23T18:43:48.399547Z INFO:message_user:Sending chunk 1/1 to chat_id 1275063227...",
+    "2026-02-23T18:43:48.399478Z INFO:message_user:Attempting to send message to chat_id: 1275063227",
+    "2026-02-23T18:43:45.968194Z INFO:root:xai_call auth: user_id=1275063227, key_suffix=...L4lI",
+    "2026-02-23T18:43:45.968146Z INFO:root:xai_call payload_preview: user_id=1275063227, last_user_preview='search the internet for hashbrown texture methods; include marker saffron-main-1771872219 and write a long answer'",
+    "2026-02-23T18:43:45.968110Z INFO:root:xai_call start: user_id=1275063227, model=grok-4-1-fast-non-reasoning-latest, message_count=2",
+    "2026-02-23T18:43:45.948850Z 2026-02-23 18:43:45,949 INFO no_choice url=https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIVbmmLmyUTvqQtnxOKpTKiWijx0aK4AAIEDGsbmQ1YROe55BGfkvxIAQADAgADeQADOgQ.jpg session_id=1275063227_10022026_175839_575423",
+    "2026-02-23T18:43:45.845752Z INFO:root:route_message start: user_id=1275063227, has_message_object=True",
+    "2026-02-23T18:43:45.845697Z INFO:root:handle_message: routing message for user_id=1275063227",
+    "2026-02-23T18:43:45.788747Z INFO:root:handle_message start: user_id=1275063227, has_text=True",
+    "2026-02-23T18:43:45.531626Z 2026-02-23 18:43:45,532 INFO no_choice url=https://storage.googleapis.com/cheftest-f174c/telegram_photos/AgACAgEAAxkBAAIVwWmcbxHT0ZPrDcRLNIjjr9BQHxttAALtC2sbzVrhRAj9uYS_YoLQAQADAgADeQADOgQ.jpg session_id=1275063227_23022026_141409_781781",
+    "2026-02-23T18:43:43.254623Z INFO:root:restart_new_session: user_id=1275063227 chat_session_id=1275063227_23022026_184343_215025",
+    "2026-02-23T18:43:43.213906Z INFO:root:Restart command received. Session info for restart: {'user_id': 1275063227, 'chat_id': 1275063227, 'message_id': 1771872222, 'timestamp': 1771872223.0, 'timestamp_iso': '2026-02-23T18:43:43+00:00', 'username': 'live_verify', 'first_name': 'Live', 'last_name': None, 'trigger_command': '/restart'}",
+    "2026-02-23T18:43:41.175920Z INFO:root:mode_switch: user_id=1275063227 from=general to=general"
+  ]
+}

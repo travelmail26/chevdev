@@ -1,0 +1,11 @@
+marker: saffron-rightbot-1771874851
+revision: chef-bot-00069-quq
+right_bot_username: cheftest22bot
+dev_bot_username: cheftestdevbot
+steps_statuses: [200, 200, 200, 200, 200]
+marker_in_mongo_tail: True
+log_marker_hits_count: 3
+log_stream_hits_count: 16
+log_botname_hits_count: 8
+evidence_json: /workspaces/chevdev/chef/testscripts/output/cloud_run_main_bot_verify_20260223b/evidence.json
+logs_tail: /workspaces/chevdev/chef/testscripts/output/cloud_run_main_bot_verify_20260223b/cloud_run_logs_tail.txt

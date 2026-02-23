@@ -61,6 +61,54 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
+def _resolve_output_log_limit(default: int = 4000) -> int:
+    raw = str(os.getenv("BOT_OUTPUT_LOG_MAX_CHARS", default)).strip()
+    try:
+        value = int(raw)
+        if value > 0:
+            return value
+    except Exception:
+        pass
+    return default
+
+
+def _clip_output_for_log(text: str, limit: int) -> str:
+    content = str(text or "")
+    if len(content) <= limit:
+        return content
+    extra = len(content) - limit
+    return f"{content[:limit]}\n...[truncated {extra} chars]"
+
+
+def _log_bot_user_output(
+    user_id: str,
+    assistant_text: str,
+    *,
+    source_interface: str = "unknown",
+    bot_mode: str = "unknown",
+    stream: bool = False,
+) -> None:
+    content = str(assistant_text or "")
+    if not content:
+        return
+    limit = _resolve_output_log_limit()
+    clipped = _clip_output_for_log(content, limit)
+    logging.info(
+        "bot_user_output user_id=%s source=%s bot_mode=%s stream=%s chars=%s text=%s",
+        user_id,
+        source_interface,
+        bot_mode,
+        bool(stream),
+        len(content),
+        clipped,
+    )
+    print(
+        "BOT_USER_OUTPUT "
+        f"user_id={user_id} source={source_interface} bot_mode={bot_mode} "
+        f"stream={bool(stream)} chars={len(content)} text={clipped}"
+    )
+
+
 class MessageRouter:
     def __init__(self, openai_api_key=None):
         """Initialize the MessageRouter with API key"""
@@ -457,6 +505,11 @@ class MessageRouter:
             should_stop: Callable that returns True when generation should stop safely
         """
         user_id = str(message_object.get("user_id", "unknown")) if message_object else "unknown"
+        source_interface = (
+            str(message_object.get("source_interface", "unknown")).strip().lower()
+            if isinstance(message_object, dict)
+            else "unknown"
+        )
         logging.info(f"route_message start: user_id={user_id}, has_message_object={bool(message_object)}")
         logging.debug(f"DEBUG: route_message called with messages={messages}, message_object={message_object}")
         
@@ -528,6 +581,13 @@ class MessageRouter:
         try:
             if callable(should_stop) and should_stop():
                 assistant_content = "Stopped by user before generation started."
+                _log_bot_user_output(
+                    user_id,
+                    assistant_content,
+                    source_interface=source_interface,
+                    bot_mode=str(effective_bot_mode or "unknown"),
+                    stream=stream,
+                )
                 if message_object:
                     message_history_process(message_object, {"role": "assistant", "content": assistant_content})
                 if message_object and (not stream or not callable(stream_callback)):
@@ -664,6 +724,13 @@ class MessageRouter:
 
             # Example before/after: empty response -> troubleshoot logs; non-empty -> user sees reply
             openai_duration_ms = int((time.monotonic() - openai_start) * 1000)
+            _log_bot_user_output(
+                user_id,
+                assistant_content,
+                source_interface=source_interface,
+                bot_mode=str(effective_bot_mode or "unknown"),
+                stream=stream,
+            )
             logging.info(f"route_message end: user_id={user_id}, response_chars={len(assistant_content)}")
             logging.info(
                 "xai_call end: user_id=%s, model=%s, duration_ms=%s, response_chars=%s",
@@ -688,6 +755,13 @@ class MessageRouter:
             if message_object and self._should_emit_chat_output(message_object):
                 # Example before/after: error swallowed -> user sees nothing; now user gets a brief error.
                 error_message = f"Sorry, I hit an upstream error ({status}). Please try again."
+                _log_bot_user_output(
+                    user_id,
+                    error_message,
+                    source_interface=source_interface,
+                    bot_mode=str(effective_bot_mode or "unknown"),
+                    stream=stream,
+                )
                 partial = message_object.copy()
                 partial["user_message"] = error_message
                 process_message_object(partial)
@@ -697,6 +771,13 @@ class MessageRouter:
             if message_object and self._should_emit_chat_output(message_object):
                 # Example before/after: exception -> silent; now a short error reply is sent.
                 error_message = "Sorry, I ran into an error while generating a response. Please try again."
+                _log_bot_user_output(
+                    user_id,
+                    error_message,
+                    source_interface=source_interface,
+                    bot_mode=str(effective_bot_mode or "unknown"),
+                    stream=stream,
+                )
                 partial = message_object.copy()
                 partial["user_message"] = error_message
                 process_message_object(partial)

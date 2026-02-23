@@ -52,6 +52,14 @@
 - Run all: `pytest -q`. Target critical paths in `telegram_bot.py`, `message_router.py`, and utilities.
 - Add reproducible fixtures for env-dependent code; mock Telegram/Firebase/OpenAI I/O.
 - CRITICAL: final verification must use the real user interfaces (actual Telegram bot + actual web UI) for turn-by-turn flow checks, not only mocked/unit tests.
+- CRITICAL: any final test must confirm the run actually saved data to MongoDB (not just logs/UI); include direct Mongo evidence (query result, inserted document id, or saved-record count).
+- CRITICAL: before marking a migration/user test complete, explicitly verify all key features in the same run:
+  - Web UI load + send/receive flow
+  - Streaming start + stop behavior (including `/stop`)
+  - Conversation upload/persistence in MongoDB
+  - Bot switching behavior (dev bot vs user-facing/main bot)
+  - Restart behavior (`/restart`) and session continuity/reset
+  - Function/tool calls to Perplexity path still execute correctly
 
 ## Commit & Pull Request Guidelines
 - Commits: imperative mood with scope prefix. Example: `chefmain: route audio to Firebase`.
@@ -68,6 +76,10 @@
 
 --You will ALWAYS keep notes on what you have changed, as though you were keeping notes for yourself that you can reference later. Keep very brief notes on code has been changes, including any mistakes or feedback you get from the user. If the session closes, the user can tell you to reference this and you can immediately begin where you left off as though you knew everything to start exactly from where you were working. The user will give you the file to take notes from.  
 --Append major updates (especially credential or storage changes) to `agentlogs/agentlog010125` right after performing them so the history stays current.
+- CRITICAL for migrations: create and keep a separate temporary live migration log file so another agent can continue immediately if the session is interrupted.
+- Migration live-log location/pattern: `agentlogs/migration_live_<YYYYMMDD>_<source>-to-<target>.md`.
+- Update that migration log after each major step with: timestamp, branch/commit SHA, GitHub Actions run ID/URL, Cloud Run revision/traffic, test evidence paths, and open blockers/next step.
+- Keep the migration log updated until rollout is complete and stable, then mark it completed (do not delete active logs mid-migration).
 
 ## LiveCook Transfer Bundle
 - Transfer-ready LiveCook package lives in `testscripts/livecook_transfer/`.

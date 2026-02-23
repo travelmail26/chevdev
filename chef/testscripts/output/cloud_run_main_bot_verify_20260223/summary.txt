@@ -1,0 +1,7 @@
+marker: saffron-main-rev69-1771874563
+steps_statuses: [200, 200, 200, 200, 200]
+marker_in_mongo_tail: True
+mongo_before_count: 13
+mongo_after_count: 5
+log_hits: 12
+evidence_json: /workspaces/chevdev/chef/testscripts/output/cloud_run_main_bot_verify_20260223/evidence.json

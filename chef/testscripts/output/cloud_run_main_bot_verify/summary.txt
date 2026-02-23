@@ -1,0 +1,13 @@
+started_at: 2026-02-23T18:43:39.100485+00:00
+finished_at: 2026-02-23T18:44:04.000441+00:00
+project_id: cheftest-f174c
+service_name: chef-bot
+main_bot_webhook_base_url: https://chef-bot-209538059512.us-central1.run.app
+test_uid: 1275063227
+marker: saffron-main-1771872219
+webhook_statuses: [200, 200, 200, 200, 200]
+runtime_flags: {'logs_found': 33, 'has_route_message_start': 2, 'has_tg_stream_start': 0, 'has_tg_stream_done': 0, 'has_stream_edit_failed': 0, 'has_chat_not_found': False}
+checks: {'webhook_status_ok': True, 'mongo_available': True, 'mongo_general_non_decreasing': True, 'mongo_marker_seen_in_latest_session': True, 'cloud_run_logs_present': True, 'cloud_run_no_chat_not_found': True, 'cloud_run_stream_markers_present': False}
+evidence_json: /workspaces/chevdev/chef/testscripts/output/cloud_run_main_bot_verify/evidence.json
+screenshot_logs: /workspaces/chevdev/chef/testscripts/output/cloud_run_main_bot_verify/screenshot_cloud_run_logs.png
+screenshot_mongo: /workspaces/chevdev/chef/testscripts/output/cloud_run_main_bot_verify/screenshot_mongo_tail.png

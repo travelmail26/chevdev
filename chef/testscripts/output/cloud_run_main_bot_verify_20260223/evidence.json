@@ -1,0 +1,107 @@
+{
+  "timestamp": "2026-02-23T19:23:11.913205+00:00",
+  "service_url": "https://chef-bot-xmsmumaliq-uc.a.run.app",
+  "webhook_url": "https://chef-bot-xmsmumaliq-uc.a.run.app/webhook",
+  "uid": "1275063227",
+  "marker": "saffron-main-rev69-1771874563",
+  "steps": [
+    {
+      "text": "/general",
+      "status": 200,
+      "body_head": ""
+    },
+    {
+      "text": "/restart",
+      "status": 200,
+      "body_head": ""
+    },
+    {
+      "text": "search the internet for hashbrown streaming tips and include marker saffron-main-rev69-1771874563 in the answer",
+      "status": 200,
+      "body_head": ""
+    },
+    {
+      "text": "/stop",
+      "status": 200,
+      "body_head": ""
+    },
+    {
+      "text": "what marker did i ask for?",
+      "status": 200,
+      "body_head": ""
+    }
+  ],
+  "mongo_before": {
+    "chat_session_id": "1275063227_23022026_184455_489141",
+    "last_updated_at": "2026-02-23T18:45:23.568864+00:00",
+    "message_count": 13,
+    "tail": [
+      {
+        "role": "user",
+        "content": "what did i just ask?"
+      },
+      {
+        "role": "assistant",
+        "content": "You just asked: \"what did i just ask?\""
+      },
+      {
+        "role": "user",
+        "content": "code 11"
+      },
+      {
+        "role": "assistant",
+        "content": "What's \"code 11\"?"
+      },
+      {
+        "role": "user",
+        "content": "what did i just ask?"
+      },
+      {
+        "role": "assistant",
+        "content": "You just asked: \"what did i just ask?\""
+      }
+    ]
+  },
+  "mongo_after": {
+    "chat_session_id": "1275063227_23022026_192247_696817",
+    "last_updated_at": "2026-02-23T19:23:03.657672+00:00",
+    "message_count": 5,
+    "tail": [
+      {
+        "role": "system",
+        "content": "You are a general assistant.\n\nDefault behavior:\n- Be curious.\n- Ask one short question at a time by default.\n- Keep responses short and conversational.\n- Follow the user's tone and stay tightly on the current context.\n- The user can switch between frontends (for example, web UI and Telegram) within one session.\n- Treat all turns in conversation history as one shared session across frontends.\n- Use only conversation history for continuity. Do not invent prior turns, steps, sources, or facts.\n- Do"
+      },
+      {
+        "role": "user",
+        "content": "search the internet for hashbrown streaming tips and include marker saffron-main-rev69-1771874563 in the answer"
+      },
+      {
+        "role": "assistant",
+        "content": "**Hashbrown streaming tips primarily refer to implementing HTTP streaming in the Hashbrown framework for browser-based agents, as shown in its official documentation.** This enables real-time communication between Node.js backends and UI components like React or Angular hooks[1](https://github.com/liveloveapp/hashbrown). For example, \"Hashbrown uses HTTP streaming to communicate between Node backends and UI hooks/resources,\" where you expose a POST endpoint like `/chat` that streams LLM response"
+      },
+      {
+        "role": "user",
+        "content": "what marker did i ask for?"
+      },
+      {
+        "role": "assistant",
+        "content": "You asked to \"include marker saffron-main-rev69-1771874563 in the answer\"."
+      }
+    ]
+  },
+  "marker_in_mongo_tail": true,
+  "recent_log_hits": [
+    "2026-02-23T19:22:53.161791Z\tDEBUG: User handler object: {'user_id': 1275063227, 'session_info': {'user_id': 1275063227, 'chat_id': 1275063227, 'message_id': 1771874569, 'timestamp': 1771874569.0, 'timestamp_iso': '2026-02-23T19:22:49+00:00', 'username': 'ferenstein', 'first_name': 'Greg', 'last_name': None}, 'user_message': 'search the internet for hashbrown streaming tips and include marker saffron-main-rev69-1771874563 in the answer', 'source_interface': 'telegram', 'bot_mode': 'general'}",
+    "2026-02-23T19:22:52.813050Z\tINFO:root:xai_tool_round start: user_id=1275063227 round=1 tool_calls=1",
+    "2026-02-23T19:22:50.518118Z\tINFO:root:xai_call payload_preview: user_id=1275063227, last_user_preview='search the internet for hashbrown streaming tips and include marker saffron-main-rev69-1771874563 in the answer'",
+    "2026-02-23T19:22:49.833650Z\tINFO:root:tg_stream_start user_id=1275063227 run_id=1 preview='search the internet for hashbrown streaming tips and include marker saffron-main-rev69-1771874563 in the answer'",
+    "2026-02-23T19:22:47.730464Z\tINFO:root:reset_new_session: user_id=1275063227 trigger=/restart chat_session_id=1275063227_23022026_192247_696817",
+    "2026-02-23T19:22:47.695563Z\tINFO:root:/restart command received. Session info: {'user_id': 1275063227, 'chat_id': 1275063227, 'message_id': 1771874567, 'timestamp': 1771874567.0, 'timestamp_iso': '2026-02-23T19:22:47+00:00', 'username': 'ferenstein', 'first_name': 'Greg', 'last_name': None, 'trigger_command': '/restart'}",
+    "2026-02-23T18:58:55.052250Z\tDEBUG: User handler object: {'user_id': 1275063227, 'session_info': {'user_id': 1275063227, 'chat_id': 1275063227, 'message_id': 1771872224, 'timestamp': 1771872227.0, 'timestamp_iso': '2026-02-23T18:43:47+00:00', 'username': 'live_verify', 'first_name': 'Live', 'last_name': None}, 'user_message': '/stop', 'bot_mode': 'general', 'chat_session_id': '1275063227_23022026_184343_215025', 'chat_session_created_at': '2026-02-23T18:43:43.215047+00:00'}",
+    "2026-02-23T18:58:55.052125Z\tDEBUG: User handler object: {'user_id': 1275063227, 'session_info': {'user_id': 1275063227, 'chat_id': 1275063227, 'message_id': 1771872186, 'timestamp': 1771872196.0, 'timestamp_iso': '2026-02-23T18:43:16+00:00', 'username': 'live_verify', 'first_name': 'Live', 'last_name': None}, 'user_message': '/stop', 'bot_mode': 'general', 'chat_session_id': '1275063227_23022026_184311_677835', 'chat_session_created_at': '2026-02-23T18:43:11.677899+00:00'}",
+    "2026-02-23T18:43:49.075476Z\tINFO:root:xai_call payload_preview: user_id=1275063227, last_user_preview='/stop'",
+    "2026-02-23T18:43:43.213906Z\tINFO:root:Restart command received. Session info for restart: {'user_id': 1275063227, 'chat_id': 1275063227, 'message_id': 1771872222, 'timestamp': 1771872223.0, 'timestamp_iso': '2026-02-23T18:43:43+00:00', 'username': 'live_verify', 'first_name': 'Live', 'last_name': None, 'trigger_command': '/restart'}",
+    "2026-02-23T18:43:19.826914Z\tINFO:root:xai_call payload_preview: user_id=1275063227, last_user_preview='/stop'",
+    "2026-02-23T18:43:11.677150Z\tINFO:root:Restart command received. Session info for restart: {'user_id': 1275063227, 'chat_id': 1275063227, 'message_id': 1771872184, 'timestamp': 1771872191.0, 'timestamp_iso': '2026-02-23T18:43:11+00:00', 'username': 'live_verify', 'first_name': 'Live', 'last_name': None, 'trigger_command': '/restart'}"
+  ]
+}

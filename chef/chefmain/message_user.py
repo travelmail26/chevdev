@@ -3,9 +3,47 @@
 import requests
 import re 
 import logging
+import os
 
 # It's good practice to get a logger specific to this module
 logger = logging.getLogger(__name__)
+
+
+def _resolve_output_log_limit(default: int = 4000) -> int:
+    raw = str(os.getenv("BOT_OUTPUT_LOG_MAX_CHARS", default)).strip()
+    try:
+        value = int(raw)
+        if value > 0:
+            return value
+    except Exception:
+        pass
+    return default
+
+
+def _clip_output_for_log(text: str, limit: int) -> str:
+    content = str(text or "")
+    if len(content) <= limit:
+        return content
+    extra = len(content) - limit
+    return f"{content[:limit]}\n...[truncated {extra} chars]"
+
+
+def _log_telegram_outbound(chat_id, text, *, chunk_index: int, chunk_total: int) -> None:
+    content = str(text or "")
+    limit = _resolve_output_log_limit()
+    clipped = _clip_output_for_log(content, limit)
+    logger.info(
+        "telegram_outbound chat_id=%s chunk=%s/%s chars=%s text=%s",
+        chat_id,
+        chunk_index,
+        chunk_total,
+        len(content),
+        clipped,
+    )
+    print(
+        "TELEGRAM_OUTBOUND "
+        f"chat_id={chat_id} chunk={chunk_index}/{chunk_total} chars={len(content)} text={clipped}"
+    )
 
 
 
@@ -107,7 +145,7 @@ def process_message_object(message_object):
     logger.info(f"Attempting to send message to chat_id: {chat_id_to_send}")
     # For security, avoid logging the full token or log only a small, non-sensitive part if necessary for debugging.
     # logger.debug(f"Using bot_token (last 6 chars for verification): ...{bot_token[-6:]}") 
-    logger.info(f"Message content (first 200 chars): '{message_to_send[:200]}...'")
+    logger.info(f"Message content chars={len(message_to_send)}")
 
     # Call the function to send the message via Telegram API
     send_telegram_message(chat_id_to_send, bot_token, message_to_send)
@@ -128,6 +166,12 @@ def send_telegram_message(chat_id, token, message_text):
         message_chunks = [message_text[i:i + max_length] for i in range(0, len(message_text), max_length)]
 
     for i, chunk in enumerate(message_chunks):
+        _log_telegram_outbound(
+            chat_id,
+            chunk,
+            chunk_index=i + 1,
+            chunk_total=len(message_chunks),
+        )
         payload = {
             'chat_id': chat_id,
             'text': str(chunk)  # Ensure chunk is explicitly a string
