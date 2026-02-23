@@ -550,12 +550,15 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             local_path = None
             try:
                 get_file_start = time.time()
-                file = await context.bot.get_file(
-                    photo.file_id,
-                    connect_timeout=media_timeout_sec,
-                    read_timeout=media_timeout_sec,
-                    write_timeout=media_timeout_sec,
-                    pool_timeout=media_timeout_sec,
+                file = await asyncio.wait_for(
+                    context.bot.get_file(
+                        photo.file_id,
+                        connect_timeout=media_timeout_sec,
+                        read_timeout=media_timeout_sec,
+                        write_timeout=media_timeout_sec,
+                        pool_timeout=media_timeout_sec,
+                    ),
+                    timeout=media_timeout_sec,
                 )
                 # Example before/after: no timing logs -> "media_timing photo_get_file_ms=35 file_id=abc size=12345"
                 logging.info(
@@ -568,12 +571,15 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 os.makedirs(photo_dir, exist_ok=True)
                 local_path = f"{photo_dir}/{photo.file_id}.jpg"
                 download_start = time.time()
-                await file.download_to_drive(
-                    local_path,
-                    connect_timeout=media_timeout_sec,
-                    read_timeout=media_timeout_sec,
-                    write_timeout=media_timeout_sec,
-                    pool_timeout=media_timeout_sec,
+                await asyncio.wait_for(
+                    file.download_to_drive(
+                        local_path,
+                        connect_timeout=media_timeout_sec,
+                        read_timeout=media_timeout_sec,
+                        write_timeout=media_timeout_sec,
+                        pool_timeout=media_timeout_sec,
+                    ),
+                    timeout=media_timeout_sec,
                 )
                 # Example before/after: no timing logs -> "media_timing photo_download_ms=4200 path=saved_photos/... size=45678"
                 logging.info(
