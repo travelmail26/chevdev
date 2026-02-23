@@ -30,3 +30,6 @@
 - 2026-02-23T23:01:32Z: Deploy run 22328523313 failed during Docker base image pull (docker.io python:3.11-slim 504). Triggering fresh push-based redeploy with no functional code change.
 - 2026-02-23T23:09:45Z: Added hard asyncio.wait_for timeout wrappers to Telegram photo get_file/download_to_drive in telegram_bot.py to prevent indefinite media pipeline hangs before streaming.
 - 2026-02-23T23:10:36Z: On photo pipeline failure, bot now returns immediate user-facing retry error and exits cleanly without routing broken media marker through model.
+- 2026-02-23T23:19:34Z: Regression triage now compares main/dev bot webhooks first; found main bot webhook healthy and dev bot webhook returning 404. Added this protocol to chef/AGENTS.md and chef/chefmain/AGENTS.md.
+- 2026-02-23T23:19:34Z: Root cause analysis for image regressions: instruction drift in instructions_general changed image reply style; Cloud Run background media subprocesses were unreliable under default CPU throttling. Added --no-cpu-throttling to deploy workflow.
+- 2026-02-23T23:19:34Z: Hardened telegram_bot media error path so photo failures return a user-facing retry message without propagating unhandled reply exceptions.

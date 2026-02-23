@@ -666,7 +666,14 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         if media_user_error:
             logging.info("handle_message: returning media_user_error for user_id=%s", user_id)
-            await update.message.reply_text(media_user_error)
+            try:
+                await update.message.reply_text(media_user_error)
+            except Exception as send_error:
+                logging.error(
+                    "media_user_error_send_failed user_id=%s error=%s",
+                    user_id,
+                    send_error,
+                )
             return
 
         # Centralized call to agentchat and response handling for all types
@@ -750,7 +757,10 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         error_message = f"Error in handle_message: {e}\n{traceback.format_exc()}"
         logging.error(error_message)
-        await update.message.reply_text("An error occurred while processing your message.")
+        try:
+            await update.message.reply_text("An error occurred while processing your message.")
+        except Exception as send_error:
+            logging.error("handle_message_error_reply_failed error=%s", send_error)
 
 async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:

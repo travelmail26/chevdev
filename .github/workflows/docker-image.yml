@@ -106,4 +106,5 @@ jobs:
             --image docker.io/travelmail26/cheftest:${{ env.DATE_TAG }} \
             --region us-central1 \
             --allow-unauthenticated \
+            --no-cpu-throttling \
             --env-vars-file env-vars.yaml

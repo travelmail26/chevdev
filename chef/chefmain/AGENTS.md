@@ -52,7 +52,11 @@
 - Run all: `pytest -q`. Target critical paths in `telegram_bot.py`, `message_router.py`, and utilities.
 - Add reproducible fixtures for env-dependent code; mock Telegram/Firebase/OpenAI I/O.
 - CRITICAL: final verification must use the real user interfaces (actual Telegram bot + actual web UI) for turn-by-turn flow checks, not only mocked/unit tests.
-- CRITICAL: before marking user testing complete, verify all key features end-to-end: UI response, streaming (including stop), conversation writes to MongoDB per turn, bot mode switching, `/restart` media backfill, and Perplexity function calls.
+- CRITICAL: first regression-triage step is a side-by-side Telegram smoke test on both bot paths before coding:
+  - main/user bot (`TELEGRAM_KEY` / Cloud Run webhook)
+  - dev bot (`TELEGRAM_DEV_KEY` / Codespaces webhook)
+- If a regression reproduces on only one bot, treat it as deployment/config/environment drift first and document that diagnosis before code changes.
+- CRITICAL: before marking user testing complete, verify all key features end-to-end: UI response, streaming (including stop), conversation writes to MongoDB per turn, bot mode switching, `/restart` media backfill, image processing instruction-following behavior, and Perplexity function calls.
 
 ## Commit & Pull Request Guidelines
 - Commits: imperative mood with scope prefix. Example: `chefmain: route audio to Firebase`.
