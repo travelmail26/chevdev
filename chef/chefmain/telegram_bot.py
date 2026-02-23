@@ -597,12 +597,16 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     firebase_url = firebase_get_media_url(local_path, media_type="photo")
                 except Exception as firebase_error:
                     logging.error(f"Firebase upload failed for photo: {firebase_error}")
+                    media_user_error = (
+                        "I received your image, but storage failed before analysis. "
+                        "Please resend the image in a moment."
+                    )
 
                 if firebase_url:
                     # Example before/after: [photo_gridfs_id: 456] -> [photo_url: https://...]
                     user_input = f"[photo_url: {firebase_url}]"
                 else:
-                    user_input = f"[Photo saved locally: {local_path}]"
+                    user_input = "[photo_unavailable: image storage failed before analysis]"
             except Exception as photo_error:
                 logging.error(
                     "photo_pipeline_failed file_id=%s timeout_sec=%s error=%s",
