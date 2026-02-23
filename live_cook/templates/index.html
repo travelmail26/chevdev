@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gemini Live Cooking Assistant</title>
+    <style>
+        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background-color: #f0f0f0; }
+        #video-container { position: relative; width: 640px; height: 480px; background: black; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        video { width: 100%; height: 100%; transform: scaleX(-1); } /* Mirror effect */
+        #controls { margin-top: 20px; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #007bff; color: white; border: none; border-radius: 4px; }
+        button:disabled { background-color: #ccc; }
+        #status { margin-top: 10px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div id="video-container">
+        <video id="webcam" autoplay playsinline muted></video>
+    </div>
+
+    <div id="controls">
+        <button id="startBtn">Start Assistant</button>
+        <button id="stopBtn" disabled>Stop</button>
+    </div>
+    <div id="status">Ready to connect...</div>
+
+    <script>
+        const video = document.getElementById('webcam');
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const statusDiv = document.getElementById('status');
+        
+        let ws;
+        let mediaStream;
+        let audioContext;
+        let audioWorkletNode;
+        let videoInterval;
+
+        // Audio Configuration
+        const SAMPLE_RATE = 16000; // Gemini prefers 16kHz
+        
+        startBtn.onclick = async () => {
+            try {
+                // Get Media Stream (Video + Audio)
+                mediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: {
+                    sampleRate: SAMPLE_RATE,
+                    channelCount: 1,
+                    echoCancellation: true
+                }});
+                video.srcObject = mediaStream;
+
+                // Connect WebSocket
+                const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+                ws = new WebSocket(`${protocol}//${window.location.host}/ws`);
+
+                ws.onopen = () => {
+                    statusDiv.innerText = "Connected! Listening...";
+                    startBtn.disabled = true;
+                    stopBtn.disabled = false;
+                    startAudioProcessing();
+                    startVideoProcessing();
+                };
+
+                ws.onmessage = async (event) => {
+                    const data = JSON.parse(event.data);
+                    if (data.audio) {
+                        playAudio(data.audio);
+                    }
+                };
+
+                ws.onclose = () => {
+                   stopSession();
+                   statusDiv.innerText = "Connection closed.";
+                };
+
+            } catch (err) {
+                console.error("Error starting:", err);
+                statusDiv.innerText = "Error: " + err.message;
+            }
+        };
+
+        stopBtn.onclick = stopSession;
+
+        function stopSession() {
+            if (ws) ws.close();
+            if (mediaStream) mediaStream.getTracks().forEach(track => track.stop());
+            if (audioContext) audioContext.close();
+            if (videoInterval) clearInterval(videoInterval);
+            
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            statusDiv.innerText = "Stopped.";
+        }
+
+        // --- Audio Processing ---
+        async function startAudioProcessing() {
+            audioContext = new AudioContext({ sampleRate: SAMPLE_RATE });
+            const source = audioContext.createMediaStreamSource(mediaStream);
+            
+            // Allow browser to optimize, simply capture PCM
+            await audioContext.audioWorklet.addModule("data:text/javascript;charset=utf-8," + encodeURIComponent(`
+                class PCMProcessor extends AudioWorkletProcessor {
+                    process(inputs, outputs, parameters) {
+                        const input = inputs[0];
+                        if (input.length > 0) {
+                            const float32Data = input[0];
+                            const int16Data = new Int16Array(float32Data.length);
+                            for (let i = 0; i < float32Data.length; i++) {
+                                let s = Math.max(-1, Math.min(1, float32Data[i]));
+                                int16Data[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+                            }
+                            this.port.postMessage(int16Data.buffer);
+                        }
+                        return true;
+                    }
+                }
+                registerProcessor('pcm-processor', PCMProcessor);
+            `));
+
+            audioWorkletNode = new AudioWorkletNode(audioContext, 'pcm-processor');
+            source.connect(audioWorkletNode);
+            
+            audioWorkletNode.port.onmessage = (event) => {
+                if (ws && ws.readyState === WebSocket.OPEN) {
+                    const base64Audio = arrayBufferToBase64(event.data);
+                     ws.send(JSON.stringify({
+                        realtime_input: {
+                            media_chunks: [{
+                                mime_type: "audio/pcm",
+                                data: base64Audio
+                            }]
+                        }
+                    }));
+                }
+            };
+        }
+
+        // --- Video Processing ---
+        function startVideoProcessing() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Send frames every 1 second (1 FPS) for token efficiency
+            videoInterval = setInterval(() => {
+                if (ws && ws.readyState === WebSocket.OPEN) {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    ctx.drawImage(video, 0, 0);
+                    
+                    const base64Image = canvas.toDataURL('image/jpeg', 0.8).split(',')[1];
+                    
+                    ws.send(JSON.stringify({
+                        realtime_input: {
+                            media_chunks: [{
+                                mime_type: "image/jpeg",
+                                data: base64Image
+                            }]
+                        }
+                    }));
+                }
+            }, 1000); 
+        }
+
+        // --- Utils ---
+        function arrayBufferToBase64(buffer) {
+            let binary = '';
+            const bytes = new Uint8Array(buffer);
+            const len = bytes.byteLength;
+            for (let i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            return window.btoa(binary);
+        }
+
+        function playAudio(base64String) {
+            const binaryString = window.atob(base64String);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            
+            // Create a blob and play it? No, raw PCM from Gemini is tricky. 
+            // Usually Gemini defines the output format. 
+            // For simplicity in this HTML MVP, we might assume standard audio, 
+            // BUT Gemini Live typically returns PCM 24kHz.
+            // Let's create a simple wav header or use AudioContext to play PCM.
+            
+            playPCM(bytes.buffer);
+        }
+        
+        let pcmContext;
+        let nextStartTime = 0;
+        
+        function playPCM(arrayBuffer) {
+             if (!pcmContext) {
+                pcmContext = new AudioContext({ sampleRate: 24000 }); // Gemini default output
+             }
+             
+             const float32Data = new Float32Array(arrayBuffer.byteLength / 2);
+             const dataView = new DataView(arrayBuffer);
+             
+             for (let i = 0; i < float32Data.length; i++) {
+                 const int16 = dataView.getInt16(i * 2, true); // Little endian
+                 float32Data[i] = int16 < 0 ? int16 / 0x8000 : int16 / 0x7FFF;
+             }
+             
+             const buffer = pcmContext.createBuffer(1, float32Data.length, 24000);
+             buffer.getChannelData(0).set(float32Data);
+             
+             const source = pcmContext.createBufferSource();
+             source.buffer = buffer;
+             source.connect(pcmContext.destination);
+             
+             const currentTime = pcmContext.currentTime;
+             if (nextStartTime < currentTime) {
+                 nextStartTime = currentTime;
+             }
+             source.start(nextStartTime);
+             nextStartTime += buffer.duration;
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LiveCook Recorder</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header>
+        <h1>LiveCook Recorder</h1>
+        <p>Low-res always-on recording with wake-word high-res capture.</p>
+      </header>
+
+      <section class="panel">
+        <p class="fixed-wake">
+          Voice commands: <strong id="wakeWordValue">record, stop</strong>
+        </p>
+        <div class="row buttons">
+          <button id="toggleLowResBtn" type="button">Start low-res recording</button>
+          <button id="simulateWakeBtn" type="button">Simulate wake word</button>
+          <button id="retryFailedUploadsBtn" type="button" class="btn-warn" disabled>Retry failed uploads</button>
+        </div>
+        <div class="status-grid">
+          <p id="lowResStatus" class="status">Low-res recorder idle.</p>
+          <p id="wakeStatus" class="status">Wake-word listener idle.</p>
+          <p id="highResStatus" class="status">High-res recorder idle.</p>
+          <p id="uploadStatus" class="status">Uploads healthy. New clips auto-upload.</p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Live transcription</h2>
+        <p id="transcriptStatus" class="status">Waiting for transcription...</p>
+        <ul id="transcriptLog" class="transcript-log"></ul>
+      </section>
+
+      <section class="panel">
+        <div class="diag-head">
+          <h2>Live diagnostics</h2>
+          <div class="diag-buttons">
+            <button id="clearDiagnosticsBtn" type="button">Clear logs</button>
+          </div>
+        </div>
+        <p id="diagnosticsStatus" class="status">Diagnostics idle.</p>
+        <ul id="diagnosticsLog" class="diagnostics-log"></ul>
+      </section>
+
+      <section class="preview-grid">
+        <article class="panel">
+          <h2>Low-res live preview</h2>
+          <video id="lowResPreview" autoplay muted playsinline></video>
+          <div class="meter-wrap" aria-label="Microphone level">
+            <span>Mic level</span>
+            <div class="meter-track">
+              <div id="audioMeterFill" class="meter-fill"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <h2>High-res triggered preview</h2>
+          <video id="highResPreview" autoplay muted playsinline></video>
+          <p class="hint">Captures for 10 seconds when wake word is detected.</p>
+        </article>
+      </section>
+
+      <section class="panel clip-panel">
+        <h2>Saved clips</h2>
+        <div class="clips-wrap">
+          <div>
+            <h3>Low-res clips</h3>
+            <ul id="lowResClips" class="clips"></ul>
+          </div>
+          <div>
+            <h3>High-res clips</h3>
+            <ul id="highResClips" class="clips"></ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

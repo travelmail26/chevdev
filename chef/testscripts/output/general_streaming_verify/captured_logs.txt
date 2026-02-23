@@ -1,0 +1,12 @@
+2026-02-16 15:02:39,101 INFO route_message start: user_id=1275063227, has_message_object=True
+2026-02-16 15:02:44,872 INFO route_message end: user_id=1275063227, response_chars=1107
+2026-02-16 15:02:46,838 INFO route_message start: user_id=1275063227, has_message_object=True
+2026-02-16 15:02:48,530 INFO xai_tool_round start: user_id=1275063227 round=1 tool_calls=1
+2026-02-16 15:02:48,530 INFO tool_context_messages: function=search_perplexity count=1 first_role=user last_role=user
+2026-02-16 15:02:51,721 INFO route_message end: user_id=1275063227, response_chars=1406
+2026-02-16 15:02:52,757 INFO route_message start: user_id=1275063227, has_message_object=True
+2026-02-16 15:02:54,622 INFO route_message end: user_id=1275063227, response_chars=231
+2026-02-16 15:02:56,757 INFO route_message start: user_id=1275063227, has_message_object=True
+2026-02-16 15:02:58,365 INFO xai_tool_round start: user_id=1275063227 round=1 tool_calls=1
+2026-02-16 15:02:58,365 INFO tool_context_messages: function=search_perplexity count=1 first_role=user last_role=user
+2026-02-16 15:02:59,793 INFO route_message end: user_id=1275063227, response_chars=54

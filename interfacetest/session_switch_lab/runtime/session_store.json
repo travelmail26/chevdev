@@ -1,0 +1,42 @@
+{
+  "users": {
+    "tg_dupe_test": {
+      "canonical_user_id": "tg_dupe_test",
+      "bot_mode": "general",
+      "active_session_id": "tg_dupe_test_20260216T183108356821Z",
+      "messages": [
+        {
+          "role": "user",
+          "source": "web",
+          "content": "test duplicate answer check",
+          "created_at": "2026-02-16T18:31:08.357247+00:00"
+        },
+        {
+          "role": "assistant",
+          "source": "web",
+          "content": "Research brief: follow restaurants + new hashbrown brainstorming.\n\n- Target brunch-forward and late-night comfort-food spots first.\n- Pilot 2 SKUs: classic crispy stack + loaded signature version.\n- Test a weekly 'new hashbrown' drop and track repeat orders.",
+          "thinking": "Scanning local research index, clustering restaurant + hash brown opportunities, then drafting concise actions.",
+          "sources": [
+            {
+              "title": "How to Build a Restaurant Trend Board",
+              "url": "https://lab.local/source/trend-board",
+              "snippet": "Framework for evaluating ideas like: test duplicate answer check"
+            },
+            {
+              "title": "Hash Brown Menu Innovation Patterns",
+              "url": "https://lab.local/source/hashbrown-patterns",
+              "snippet": "Common variations: loaded hash browns, crisp texture upgrades, brunch pairings."
+            },
+            {
+              "title": "Neighborhood Restaurant Follow Strategy",
+              "url": "https://lab.local/source/local-follow",
+              "snippet": "Use neighborhood segmentation, timing tests, and repeatable social hooks."
+            }
+          ],
+          "created_at": "2026-02-16T18:31:08.357247+00:00"
+        }
+      ],
+      "last_updated_at": "2026-02-16T18:31:08.357247+00:00"
+    }
+  }
+}

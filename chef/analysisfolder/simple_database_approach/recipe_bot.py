@@ -742,7 +742,7 @@ def main():
     if len(sys.argv) > 1:
         question = " ".join(sys.argv[1:])
     else:
-        question = "I want to make hollandaise, but don't have a double boiler. Can I do that? How?"
+        question = "I want to bake onions in the oven; what temps have I used before?"
     
     answer = run_bot(question)
     print(answer)

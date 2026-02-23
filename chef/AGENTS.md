@@ -50,11 +50,20 @@
 - Mongo lexical search must be simple: $text on `messages.content` only, with include/exclude keyword lists (no regex, no boolean operators, no before/after windowing). Keep the parameters minimal and obvious.
 
 - Add inline comments that show concrete before/after examples so the user can follow each step easily.
+- CRITICAL: instruction-first behavior changes. If behavior is wrong, first update prompt/instruction files and tool descriptions. Do not add new behavioral gating, keyword filters, or routing heuristics in Python code unless the user explicitly asks for code-level logic.
+- CRITICAL: never silently replace instruction-driven behavior with hard-coded logic. If a code-level fallback is truly required, call it out first, explain why instruction-only is insufficient, and wait for approval before implementing.
+- Prefer prompt/instruction-driven behavior and standard model tool-calling patterns over hard-coded trigger logic whenever feasible.
+- Decision order for behavior fixes (must follow in order):
+  - 1) Prompt/instruction updates
+  - 2) Tool schema/description updates
+  - 3) Minimal code logic only with explicit user approval
+- When integrating or changing API model/tool behavior, regularly check official provider documentation for current best practices and align implementations to those standards.
 
 ## Testing Guidelines
 - Framework: pytest. Name files `test_*.py`; keep unit helpers near the code or under `testscripts`.
 - Run all: `pytest -q`. Target critical paths in `telegram_bot.py`, `message_router.py`, and utilities.
 - Add reproducible fixtures for env-dependent code; mock Telegram/Firebase/OpenAI I/O.
+- CRITICAL: final verification must use the real user interfaces (actual Telegram bot + actual web UI) for turn-by-turn flow checks, not only mocked/unit tests.
 
 ## Commit & Pull Request Guidelines
 - Commits: imperative mood with scope prefix. Example: `chefmain: route audio to Firebase`.
@@ -71,3 +80,50 @@
 
 --You will ALWAYS keep notes on what you have changed, as though you were keeping notes for yourself that you can reference later. Keep very brief notes on code has been changes, including any mistakes or feedback you get from the user. If the session closes, the user can tell you to reference this and you can immediately begin where you left off as though you knew everything to start exactly from where you were working. The user will give you the file to take notes from.  
 --Append major updates (especially credential or storage changes) to `agentlogs/agentlog010125` right after performing them so the history stays current.
+
+## LiveCook Transfer Bundle
+- Transfer-ready LiveCook package lives in `testscripts/livecook_transfer/`.
+- This folder must include all top-level files from `testscripts/livecook/` plus `LLM_HANDOFF.txt`.
+- Do not include generated runtime directories in transfer bundles (`node_modules/`, `logs/`, `downloads/`).
+- Refresh bundle command:
+  - `cp testscripts/livecook/{README.md,app.js,e2e_livecook_playwright.mjs,index.html,onboardTranscriber.js,package-lock.json,package.json,run_livecook_tmux.sh,server.js,start_livecook_server.sh,styles.css,verify_with_screenshots.mjs} testscripts/livecook_transfer/`
+
+# Web UI + Common Backend Map
+
+This note is the canonical quick reference for questions about the web UI and shared backend.
+
+## Web UI (Perplexity clone)
+- Root folder: `interfacetest/session_switch_lab/perplexity_clone_lab/`
+- Frontend app code: `interfacetest/session_switch_lab/perplexity_clone_lab/client/`
+- Web server/API facade: `interfacetest/session_switch_lab/perplexity_clone_lab/server/`
+- The web UI is the existing Perplexity clone (no separate custom UI).
+
+## Common backend (shared with Telegram)
+- Shared backend adapter: `chef/chefmain/perplexity_clone_shared_backend.py`
+- It exposes:
+  - `POST /api/chat`
+  - `GET /api/session/<canonical_user_id>`
+  - `GET /health`
+- It forwards turns into `MessageRouter` and shared history utilities in `chef/chefmain/`.
+
+## How web acts as frontend
+1. Browser sends message to clone server route: `perplexity_clone_lab/server/routes.ts` (`POST /api/chat`).
+2. Clone server calls shared backend via `perplexity_clone_lab/server/shared-backend.ts` (`LAB_SHARED_BACKEND_URL`).
+3. Shared backend (`perplexity_clone_shared_backend.py`) calls `MessageRouter` and reads/writes shared history.
+4. Result is streamed back through clone server to the browser.
+
+## How Telegram uses same backend/session
+- Telegram bot runtime: `chef/chefmain/telegram_bot.py`
+- Startup/orchestration: `chef/chefmain/main.py`
+- Telegram turns and web turns both land in shared history through `MessageRouter` + history utilities.
+
+## Canonical user/session behavior
+- `tg_<id>` and numeric `<id>` are normalized to the same canonical ID in:
+  - `chef/chefmain/perplexity_clone_shared_backend.py`
+  - `interfacetest/session_switch_lab/perplexity_clone_lab/server/routes.ts`
+- This keeps Telegram and web on one shared conversation history.
+
+## Ports when running `main.py`
+- Telegram bot runtime port: `PORT` (default `8080`)
+- Web UI: `PERPLEXITY_WEB_PORT` (default `9001`)
+- Shared backend: `PERPLEXITY_SHARED_BACKEND_PORT` (default `9002`)
