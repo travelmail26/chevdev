@@ -33,3 +33,4 @@
 - 2026-02-23T23:19:34Z: Regression triage now compares main/dev bot webhooks first; found main bot webhook healthy and dev bot webhook returning 404. Added this protocol to chef/AGENTS.md and chef/chefmain/AGENTS.md.
 - 2026-02-23T23:19:34Z: Root cause analysis for image regressions: instruction drift in instructions_general changed image reply style; Cloud Run background media subprocesses were unreliable under default CPU throttling. Added --no-cpu-throttling to deploy workflow.
 - 2026-02-23T23:19:34Z: Hardened telegram_bot media error path so photo failures return a user-facing retry message without propagating unhandled reply exceptions.
+- 2026-02-23T23:21:51Z: Updated media ingest path per user requirement: create_media_metadata now defers description enrichment during active conversation turns; restart-time background backfill remains the trigger for enrichment.

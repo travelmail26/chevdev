@@ -102,8 +102,13 @@ def create_media_metadata(url: str, indexed_at: str) -> None:
         db = client[db_name]
         collection = db["media_metadata"]
         collection.insert_one({"url": url, "indexed_at": indexed_at})
-        _spawn_vision_listener(url)
-        logging.info("Media metadata created for URL: %s", url)
+        # Keep conversation turns fast: defer enrichment to /restart background backfill by default.
+        analyze_on_ingest = os.environ.get("MEDIA_ANALYZE_ON_INGEST", "0") == "1"
+        if analyze_on_ingest:
+            _spawn_vision_listener(url)
+            logging.info("Media metadata created for URL: %s (ingest_enrichment=on)", url)
+        else:
+            logging.info("Media metadata created for URL: %s (ingest_enrichment=deferred_to_restart)", url)
     except Exception as exc:
         logging.warning("Failed to create media metadata: %s", exc)
 
