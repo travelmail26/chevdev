@@ -819,6 +819,12 @@ async def bot_mode_switch_general(update: Update, context: ContextTypes.DEFAULT_
     user_id = update.effective_user.id
     current_mode = get_user_bot_mode(str(user_id))
     next_mode = "general"
+    if current_mode == next_mode:
+        # Before example: /general in general mode still reset session and added avoidable latency.
+        # After example:  /general is a no-op when already general; use /restart to force reset.
+        await update.message.reply_text("Already in general mode.")
+        logging.info("mode_switch_noop: user_id=%s mode=%s", user_id, current_mode)
+        return
     try:
         session_info = await _apply_restart_flow(
             update,
