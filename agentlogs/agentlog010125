@@ -455,3 +455,4 @@ Initialized agent log. All actions and decisions will be noted chronologically.
 - Blocking note: Telegram Bot API cannot simulate inbound user messages; waiting for live user Telegram turns to capture `tg_stream_start/tg_stream_done` evidence in runtime logs.
 2026-02-23T14:31:23Z Updated chefmain general instruction prompt to add concise rescue guidance for explicit cooking failures and repeated frustration signals (instruction-only change).
 2026-02-23T14:39:53Z Revised general instructions to remove unsolicited rescue guidance; enforce explicit-ask-only suggestions/info/search and default-to-no-answer assumption for general mode prompt.
+2026-02-23T16:04:47Z Reverted explicit-ask edits out of instructions_base and moved strict explicit-ask/no-unsolicited-guidance behavior into instructions_general for general mode.
