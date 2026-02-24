@@ -623,13 +623,23 @@ def process_media_doc(
 
             choice_id = call_xai_select(api_key, model, url, candidates, timing=timing)
             if not choice_id:
-                logging.info("no_choice url=%s session_id=%s", url, session.get("_id"))
-                continue
-
-            selected = next((item for item in candidates if item["id"] == choice_id), None)
-            if not selected:
-                logging.info("choice_missing url=%s choice_id=%s", url, choice_id)
-                continue
+                selected = candidates[0]
+                logging.info(
+                    "no_choice_fallback_first_candidate url=%s session_id=%s fallback_choice_id=%s",
+                    url,
+                    session.get("_id"),
+                    selected["id"],
+                )
+            else:
+                selected = next((item for item in candidates if item["id"] == choice_id), None)
+                if not selected:
+                    selected = candidates[0]
+                    logging.info(
+                        "choice_missing_fallback_first_candidate url=%s choice_id=%s fallback_choice_id=%s",
+                        url,
+                        choice_id,
+                        selected["id"],
+                    )
 
             saved = update_user_description(media_collection, doc.get("_id"), selected["text"], dry_run)
             logging.info(
