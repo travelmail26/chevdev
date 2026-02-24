@@ -12,8 +12,6 @@ import json
 import logging
 import os
 import re
-import subprocess
-import sys
 import time
 from datetime import datetime, timezone
 from typing import Dict, Iterable, List, Optional
@@ -536,64 +534,6 @@ def update_ai_description(
     return True
 
 
-def _try_fill_user_description_from_ai(
-    media_collection,
-    doc: dict,
-    dry_run: bool,
-    timing: bool,
-) -> bool:
-    """Fallback path when no user text candidate can be selected."""
-    doc_id = doc.get("_id")
-    url = doc.get("url")
-    ai_text = (doc.get("ai_description") or "").strip() if isinstance(doc.get("ai_description"), str) else ""
-
-    if not ai_text and isinstance(url, str) and url:
-        script_path = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), "..", "..", "testscripts", "mongo_firebase_vision_listener.py")
-        )
-        if os.path.exists(script_path) and os.environ.get("OPENAI_API_KEY"):
-            try:
-                start = time.monotonic() if timing else None
-                completed = subprocess.run(
-                    [sys.executable, script_path],
-                    env={**os.environ, "VISION_TRIGGER_URL": url},
-                    capture_output=True,
-                    text=True,
-                    timeout=120,
-                    check=False,
-                )
-                if timing and start is not None:
-                    logging.info(
-                        "vision_listener_fallback_timing url=%s duration_ms=%s rc=%s",
-                        url,
-                        int((time.monotonic() - start) * 1000),
-                        completed.returncode,
-                    )
-                if completed.returncode != 0:
-                    logging.warning(
-                        "vision_listener_fallback_failed url=%s rc=%s stderr=%s",
-                        url,
-                        completed.returncode,
-                        (completed.stderr or "")[:400],
-                    )
-            except Exception as exc:
-                logging.warning("vision_listener_fallback_exception url=%s error=%s", url, exc)
-        else:
-            logging.info("vision_listener_fallback_skip url=%s reason=missing_script_or_openai_key", url)
-
-        refreshed = media_collection.find_one({"_id": doc_id}, {"ai_description": 1})
-        if isinstance(refreshed, dict):
-            ai_text = (refreshed.get("ai_description") or "").strip() if isinstance(refreshed.get("ai_description"), str) else ""
-
-    if not ai_text:
-        return False
-
-    saved = update_user_description(media_collection, doc_id, ai_text, dry_run)
-    if saved:
-        logging.info("user_description_saved_from_ai url=%s source=ai_description", url)
-    return saved
-
-
 def process_media_doc(
     media_collection,
     chat_collections,
@@ -655,7 +595,7 @@ def process_media_doc(
     search_start = time.monotonic() if timing else None
     if not chat_collections:
         logging.info("no_chat_collections url=%s", url)
-        return _try_fill_user_description_from_ai(media_collection, doc, dry_run, timing)
+        return False
     # Before example: only chef_chatbot.chat_sessions scanned.
     # After example:  scan all configured chat collections for the media stub.
     found_stub = False
@@ -705,13 +645,13 @@ def process_media_doc(
             return saved
 
     if found_stub:
-        return _try_fill_user_description_from_ai(media_collection, doc, dry_run, timing)
+        return False
 
     logging.info("no_session_match url=%s", url)
     if timing and doc_start is not None:
         total_ms = int((time.monotonic() - doc_start) * 1000)
         logging.info("media_backfill_total url=%s duration_ms=%s", url, total_ms)
-    return _try_fill_user_description_from_ai(media_collection, doc, dry_run, timing)
+    return False
 
 
 def main() -> None:
