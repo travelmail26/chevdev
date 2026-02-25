@@ -1,0 +1,16 @@
+{
+  "_id": "pref_general_1275063227_24022026_181127_069995",
+  "user_id": "1275063227",
+  "schema_version": 1,
+  "type": "preference",
+  "key": "general.cooking_preference",
+  "value": "Prefers lighter, craving-aligned lunches over heavy rice-centered lunch experiments.",
+  "constraints": "",
+  "reason": "",
+  "example": "",
+  "created_on": "2026-02-25T00:00:00Z",
+  "created_at": "2026-02-25T00:00:00Z",
+  "updated_at": "2026-02-25T00:00:00Z",
+  "source_chat_session_id": "1275063227_24022026_181127_069995",
+  "source_conversation_hash": "example_hash_replace_during_backfill"
+}

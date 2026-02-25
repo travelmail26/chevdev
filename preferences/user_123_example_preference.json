@@ -1,0 +1,13 @@
+{
+  "_id": "pref_0001",
+  "user_id": "user_123",
+  "schema_version": 1,
+  "type": "pairwise",
+  "key": "diet.source",
+  "pairwise": "animal based over plant based",
+  "constraints": "",
+  "reason": "",
+  "example": "",
+  "created_at": "2026-02-25T00:00:00Z",
+  "updated_at": "2026-02-25T00:00:00Z"
+}

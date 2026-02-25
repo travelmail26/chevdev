@@ -12,8 +12,30 @@
 - `chef/chefmain/`: Telegram bot entrypoint (`main.py`) and runtime code (`telegram_bot.py`, `message_router.py`).
 - `chef/utilities/`: Shared helpers (Firebase upload, Sheets, history logging, OpenAI glue).
 - `chef/testscripts/`: Test scripts and scenario-based tests (`test_*.py`).
+- `preferences/`: LLM preference-memory examples and import-ready JSON documents (one document per preference, keyed by `user_id`).
+- `insights_general/`: Example documents for short general-chat insight memory and generated preference memory.
 - Generated assets: `chat_history_logs/`, `saved_audio/`, `saved_photos/`, `saved_videos/`.
 - Node/TS (optional): `package.json`, `tsconfig.json` target `chef/mcp/**/*` → compiled to `dist/`.
+
+## Preference Memory (LLM)
+- Mongo collection: `preferences` (top-level collection, one preference document per record).
+- Required fields: `_id`, `user_id`, `schema_version`, `type`, `key`, `created_at`, `updated_at`.
+- Pairwise format is plain natural language for LLM retrieval, e.g. `pairwise: "animal based over plant based"`.
+- For this format, avoid nested option lists for pairwise values; keep the statement flat and human-readable.
+- Optional metadata like `constraints`, `reason`, and `example` can be blank strings when unknown.
+- `strength` and `status` were intentionally removed from the preference document to keep schema minimal.
+- Example file added: `preferences/user_123_example_preference.json`.
+
+## General Memory Backfill (LLM)
+- Backfill script: `chef/chefmain/utilities/mongo_general_insights_backfill.py`.
+- Trigger behavior: non-blocking subprocess spawned during restart/mode-reset flow in `chef/chefmain/telegram_bot.py` (`_spawn_general_memory_backfill(limit=10)`).
+- Source scan: latest unsummarized general conversations from `chat_general.chat_general` by default.
+- Done marker: each processed source conversation gets `insight_general_hash` so backfill does not reprocess it.
+- Insight destination (default): `chat_general.insights_general`.
+- Preference destination (default): `chef_chatbot.preferences`.
+- Destination overrides:
+  - Insights: `MONGODB_INSIGHTS_DB_NAME`, `MONGODB_INSIGHTS_COLLECTION_NAME`
+  - Preferences: `MONGODB_PREFERENCES_DB_NAME`, `MONGODB_PREFERENCES_COLLECTION_NAME`
 
 ## Build, Test, and Development Commands
 - Python deps (uv): `uv sync` in repo root (uses `pyproject.toml`).
@@ -59,6 +81,7 @@
   - Conversation upload/persistence in MongoDB
   - Bot switching behavior (dev bot vs user-facing/main bot)
   - Restart behavior (`/restart`) and session continuity/reset
+  - Image processing behavior follows instructions correctly (media analysis/handling matches expected prompts)
   - Function/tool calls to Perplexity path still execute correctly
 
 ## Commit & Pull Request Guidelines

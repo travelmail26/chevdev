@@ -353,6 +353,37 @@ def _spawn_media_description_backfill(limit: int = 20) -> None:
     except Exception as exc:
         logging.warning("media_backfill_failed error=%s", exc)
 
+
+def _spawn_general_memory_backfill(limit: int = 10) -> None:
+    """Kick off background backfill for insights_general + preferences."""
+    if not os.environ.get("MONGODB_URI"):
+        logging.info("general_memory_backfill_skip missing_env=MONGODB_URI")
+        return
+    if not os.environ.get("XAI_API_KEY"):
+        logging.info("general_memory_backfill_skip missing_env=XAI_API_KEY")
+        return
+
+    script_path = os.path.join(parent_dir, "chefmain", "utilities", "mongo_general_insights_backfill.py")
+    if not os.path.exists(script_path):
+        logging.warning("general_memory_backfill_skip missing_script path=%s", script_path)
+        return
+
+    try:
+        env = {
+            **os.environ,
+            # Before example: subprocess model settings drifted from runtime.
+            # After example:  spawned backfill reuses the same configured XAI model.
+            "XAI_MODEL": os.environ.get("XAI_MODEL", "grok-4-1-fast-non-reasoning-latest"),
+        }
+        subprocess.Popen(
+            [sys.executable, script_path, "--scan-latest", str(limit)],
+            env=env,
+        )
+        logging.info("general_memory_backfill_spawned limit=%s script=%s", limit, script_path)
+    except Exception as exc:
+        logging.warning("general_memory_backfill_failed error=%s", exc)
+
+
 def get_user_handler(user_id, session_info, user_message, application_data=None):
     """
     Creates or retrieves a user context dictionary.
@@ -746,6 +777,7 @@ async def _apply_restart_flow(
     handlers_per_user.pop(user_id, None)
     conversations.pop(user_id, None)
     _spawn_media_description_backfill(limit=20)
+    _spawn_general_memory_backfill(limit=10)
 
     if send_restart_reply:
         if had_handler:
