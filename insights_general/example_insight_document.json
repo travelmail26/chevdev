@@ -5,6 +5,7 @@
   "source_chat_session_id": "1275063227_24022026_181127_069995",
   "source_conversation_hash": "example_hash_replace_during_backfill",
   "source_last_updated_at": "2026-02-24T18:16:52.334760+00:00",
+  "principle": false,
   "date": "2026-02-24",
   "insight": "Rice at lunch felt heavy and sleepy; lighter craving-aligned lunch felt like a better fit."
 }

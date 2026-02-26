@@ -45,9 +45,12 @@ Rules:
 - No advice, no steps, no fluff.
 - Do not invent facts.
 - If no useful cooking signal exists, return empty strings.
+- `principle` must be boolean.
+- Set `principle` to true ONLY when the user explicitly states a durable rule or principle they follow.
+- If it is just an observation/result without an explicit user-defined rule, set `principle` to false.
 
 Return JSON only:
-{"insight":"<short insight or empty string>","preference":"<short preference or empty string>"}
+{"insight":"<short insight or empty string>","preference":"<short preference or empty string>","principle":false}
 """.strip()
 
 
@@ -74,10 +77,34 @@ def get_mongo_client() -> MongoClient:
     return MongoClient(uri)
 
 
-def get_chat_collection(client: MongoClient):
-    db_name = os.environ.get("MONGODB_DB_NAME_GENERAL", "chat_general")
-    collection_name = os.environ.get("MONGODB_COLLECTION_NAME_GENERAL", "chat_general")
-    return client[db_name][collection_name]
+def get_chat_sources(client: MongoClient) -> list[dict]:
+    """Return all chat-mode collections that should feed insight backfill."""
+    return [
+        {
+            "mode": "cheflog",
+            "db": os.environ.get("MONGODB_DB_NAME", "chef_chatbot"),
+            "collection": os.environ.get("MONGODB_COLLECTION_NAME", "chat_sessions"),
+            "handle": client[
+                os.environ.get("MONGODB_DB_NAME", "chef_chatbot")
+            ][os.environ.get("MONGODB_COLLECTION_NAME", "chat_sessions")],
+        },
+        {
+            "mode": "dietlog",
+            "db": os.environ.get("MONGODB_DB_NAME_DIETLOG", "chef_dietlog"),
+            "collection": os.environ.get("MONGODB_COLLECTION_NAME_DIETLOG", "chat_dietlog_sessions"),
+            "handle": client[
+                os.environ.get("MONGODB_DB_NAME_DIETLOG", "chef_dietlog")
+            ][os.environ.get("MONGODB_COLLECTION_NAME_DIETLOG", "chat_dietlog_sessions")],
+        },
+        {
+            "mode": "general",
+            "db": os.environ.get("MONGODB_DB_NAME_GENERAL", "chat_general"),
+            "collection": os.environ.get("MONGODB_COLLECTION_NAME_GENERAL", "chat_general"),
+            "handle": client[
+                os.environ.get("MONGODB_DB_NAME_GENERAL", "chat_general")
+            ][os.environ.get("MONGODB_COLLECTION_NAME_GENERAL", "chat_general")],
+        },
+    ]
 
 
 def get_insights_collection(client: MongoClient):
@@ -102,7 +129,13 @@ def iter_unsummarized_conversations(chat_collection, limit: int) -> Iterable[dic
     query = {
         "$and": [
             {"messages.0": {"$exists": True}},
-            {"$or": [{"bot_mode": "general"}, {"bot_mode": {"$exists": False}}]},
+            {
+                "$or": [
+                    {"insight_memory_hash": {"$exists": False}},
+                    {"insight_memory_hash": None},
+                    {"insight_memory_hash": ""},
+                ]
+            },
             {
                 "$or": [
                     {"insight_general_hash": {"$exists": False}},
@@ -113,6 +146,37 @@ def iter_unsummarized_conversations(chat_collection, limit: int) -> Iterable[dic
         ]
     }
     yield from chat_collection.find(query).sort("last_updated_at", -1).limit(limit)
+
+
+def _iso_sort_value(value: str | None) -> datetime:
+    raw = str(value or "").strip()
+    if not raw:
+        return datetime.min.replace(tzinfo=timezone.utc)
+    try:
+        return datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except Exception:
+        return datetime.min.replace(tzinfo=timezone.utc)
+
+
+def collect_latest_unsummarized_conversations(chat_sources: list[dict], limit: int) -> list[dict]:
+    """Collect latest unsummarized docs across all chat modes."""
+    candidates: list[dict] = []
+    for source in chat_sources:
+        for doc in iter_unsummarized_conversations(source["handle"], limit):
+            candidates.append(
+                {
+                    "doc": doc,
+                    "mode": source["mode"],
+                    "db": source["db"],
+                    "collection": source["collection"],
+                    "handle": source["handle"],
+                    "sort_dt": _iso_sort_value(
+                        doc.get("last_updated_at") or doc.get("chat_session_created_at")
+                    ),
+                }
+            )
+    candidates.sort(key=lambda item: item["sort_dt"], reverse=True)
+    return candidates[:limit]
 
 
 def _normalize_text(value: str) -> str:
@@ -204,15 +268,16 @@ def call_xai_summary(api_key: str, model: str, user_texts: List[str]) -> dict:
     data = response.json()
     choices = data.get("choices") or []
     if not choices:
-        return {"insight": "", "preference": ""}
+        return {"insight": "", "preference": "", "principle": False}
     message = choices[0].get("message") or {}
     content = message.get("content") or ""
     parsed = _extract_json_object(content)
     if not isinstance(parsed, dict):
-        return {"insight": "", "preference": ""}
+        return {"insight": "", "preference": "", "principle": False}
     insight = str(parsed.get("insight", "") or "").strip()
     preference = str(parsed.get("preference", "") or "").strip()
-    return {"insight": insight, "preference": preference}
+    principle = bool(parsed.get("principle", False))
+    return {"insight": insight, "preference": preference, "principle": principle}
 
 
 def iso_to_date(value: str | None) -> str:
@@ -235,8 +300,10 @@ def trim_words(text: str, max_words: int = 45) -> str:
 
 def upsert_memory_docs(
     conversation: dict,
+    source_mode: str,
     insight_text: str,
     preference_text: str,
+    principle: bool,
     conversation_hash: str,
     insights_collection,
     preferences_collection,
@@ -258,6 +325,8 @@ def upsert_memory_docs(
         insight_doc = {
             "_id": insight_doc_id,
             "user_id": user_id,
+            "source_bot_mode": source_mode,
+            "principle": bool(principle),
             "created_on": created_on,
             "source_chat_session_id": source_chat_session_id,
             "source_conversation_hash": conversation_hash,
@@ -273,6 +342,7 @@ def upsert_memory_docs(
         preference_doc = {
             "_id": preference_doc_id,
             "user_id": user_id,
+            "source_bot_mode": source_mode,
             "schema_version": 1,
             "type": "preference",
             "key": "general.cooking_preference",
@@ -285,6 +355,7 @@ def upsert_memory_docs(
             "updated_at": created_on,
             "source_chat_session_id": source_chat_session_id,
             "source_conversation_hash": conversation_hash,
+            "principle": bool(principle),
         }
         preferences_collection.update_one({"_id": preference_doc_id}, {"$set": preference_doc}, upsert=True)
 
@@ -295,8 +366,10 @@ def mark_conversation_processed(
     chat_collection,
     conversation_id: str,
     conversation_hash: str,
+    source_mode: str,
     insight_doc_id: str | None,
     preference_doc_id: str | None,
+    principle: bool,
 ) -> None:
     # Before example: restart backfill re-scanned the same chats repeatedly.
     # After example:  each processed chat stores insight_general_hash as a done marker.
@@ -304,10 +377,13 @@ def mark_conversation_processed(
         {"_id": conversation_id},
         {
             "$set": {
+                "insight_memory_hash": conversation_hash,
                 "insight_general_hash": conversation_hash,
                 "insight_general_backfilled_at": now_iso(),
+                "insight_source_mode": source_mode,
                 "insight_general_doc_id": insight_doc_id,
                 "preference_doc_id": preference_doc_id,
+                "insight_principle": bool(principle),
             }
         },
     )
@@ -321,7 +397,7 @@ def backfill_latest_conversations(limit: int) -> None:
 
     model = os.environ.get("XAI_MODEL", DEFAULT_XAI_MODEL)
     client = get_mongo_client()
-    chat_collection = get_chat_collection(client)
+    chat_sources = get_chat_sources(client)
     insights_collection = get_insights_collection(client)
     preferences_collection = get_preferences_collection(client)
 
@@ -330,7 +406,10 @@ def backfill_latest_conversations(limit: int) -> None:
     insight_writes = 0
     preference_writes = 0
 
-    for conversation in iter_unsummarized_conversations(chat_collection, limit):
+    for record in collect_latest_unsummarized_conversations(chat_sources, limit):
+        conversation = record["doc"]
+        source_mode = str(record["mode"] or "").strip().lower() or "unknown"
+        source_collection = record["handle"]
         conversation_id = str(conversation.get("_id") or "")
         if not conversation_id:
             continue
@@ -340,12 +419,14 @@ def backfill_latest_conversations(limit: int) -> None:
 
         insight_text = ""
         preference_text = ""
+        principle = False
 
         if user_texts:
             try:
                 summary = call_xai_summary(api_key=api_key, model=model, user_texts=user_texts)
                 insight_text = str(summary.get("insight", "") or "").strip()
                 preference_text = str(summary.get("preference", "") or "").strip()
+                principle = bool(summary.get("principle", False))
             except Exception as exc:
                 logging.warning(
                     "general_insight_backfill_llm_failed chat_session_id=%s error=%s",
@@ -355,18 +436,22 @@ def backfill_latest_conversations(limit: int) -> None:
 
         insight_doc_id, preference_doc_id = upsert_memory_docs(
             conversation=conversation,
+            source_mode=source_mode,
             insight_text=insight_text,
             preference_text=preference_text,
+            principle=principle,
             conversation_hash=conversation_hash,
             insights_collection=insights_collection,
             preferences_collection=preferences_collection,
         )
         mark_conversation_processed(
-            chat_collection=chat_collection,
+            chat_collection=source_collection,
             conversation_id=conversation_id,
             conversation_hash=conversation_hash,
+            source_mode=source_mode,
             insight_doc_id=insight_doc_id,
             preference_doc_id=preference_doc_id,
+            principle=principle,
         )
 
         processed += 1

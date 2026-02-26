@@ -5,6 +5,8 @@ import logging
 import requests
 import time
 import importlib.util
+import threading
+import re
 try:
     from dotenv import load_dotenv
     # Load default .env
@@ -26,8 +28,41 @@ if parent_dir not in sys.path:
     sys.path.append(parent_dir)
 from message_user import process_message_object
 from utilities.history_messages import message_history_process, archive_message_history
+from utilities.insight_memory import load_user_insights, add_user_principle_insight
 
 _bot_config_module = None
+_principles_memory_lock = threading.Lock()
+_principles_memory_enabled_by_user = {}
+
+
+def _is_load_principles_trigger(text: str | None) -> bool:
+    return " ".join(str(text or "").strip().lower().split()) == "load principles into memory"
+
+
+def _extract_add_principle_text(text: str | None) -> str:
+    raw = str(text or "").strip()
+    if not raw:
+        return ""
+    # Supports: "add a cooking principle into memory: <text>"
+    # Also supports typo "priniciple".
+    pattern = re.compile(
+        r"^\s*add\s+a\s+cooking\s+prini?ciple\s+into\s+memory\s*:\s*(.+?)\s*$",
+        re.IGNORECASE,
+    )
+    match = pattern.match(raw)
+    if not match:
+        return ""
+    return " ".join(match.group(1).strip().split())
+
+
+def _set_principles_memory_enabled(user_id: str, enabled: bool) -> None:
+    with _principles_memory_lock:
+        _principles_memory_enabled_by_user[str(user_id)] = bool(enabled)
+
+
+def _is_principles_memory_enabled(user_id: str) -> bool:
+    with _principles_memory_lock:
+        return bool(_principles_memory_enabled_by_user.get(str(user_id), False))
 
 
 def _get_bot_config_module():
@@ -489,6 +524,50 @@ class MessageRouter:
             "- Continue only from stored conversation history."
         )
 
+    def _build_principles_context_note(self, user_id: str, source_mode: str | None = None) -> str:
+        """Load explicit user-defined principles and format a compact system note."""
+        if not user_id or user_id == "unknown":
+            return ""
+        filter_by_mode = os.environ.get("INSIGHT_PRINCIPLES_FILTER_BY_MODE", "0").strip().lower() in {
+            "1",
+            "true",
+            "yes",
+            "on",
+        }
+        mode_filter = (source_mode or None) if filter_by_mode else None
+        try:
+            principles = load_user_insights(
+                user_id=str(user_id),
+                principle_only=True,
+                source_mode=mode_filter,
+                limit=int(os.environ.get("INSIGHT_PRINCIPLES_LIMIT", "5")),
+            )
+        except Exception as exc:
+            logging.warning("insight_principles_load_failed user_id=%s error=%s", user_id, exc)
+            return ""
+        if not principles:
+            return ""
+
+        lines = [
+            "",
+            "User-defined principles context:",
+            "- These principles are explicit user-defined rules from prior conversations.",
+            "- Treat them as anchor reasoning for future suggestions unless user overrides them now.",
+        ]
+        for item in principles:
+            text = str(item.get("insight") or "").strip()
+            if not text:
+                continue
+            # Keep the appended system note short to avoid token bloat.
+            text = " ".join(text.split())
+            if len(text) > 220:
+                text = text[:220].rstrip() + "..."
+            mode = str(item.get("source_bot_mode") or "").strip().lower() or "unknown"
+            lines.append(f"- ({mode}) {text}")
+        if len(lines) <= 4:
+            return ""
+        return "\n".join(lines)
+
     def route_message(self, messages=None, message_object=None, stream=False, stream_callback=None, should_stop=None):
         """Route a message from a user to OpenAI, persist history, and return the response.
 
@@ -538,8 +617,109 @@ class MessageRouter:
             effective_bot_mode = message_object.get("bot_mode")
         if not effective_bot_mode:
             effective_bot_mode = os.getenv("BOT_MODE") or "chefmain"
+
+        current_user_message = (
+            str(message_object.get("user_message", "")).strip()
+            if isinstance(message_object, dict)
+            else ""
+        )
+        add_principle_text = _extract_add_principle_text(current_user_message)
+        add_principles_triggered = (
+            str(effective_bot_mode).strip().lower() == "general"
+            and bool(add_principle_text)
+        )
+        load_principles_triggered = (
+            str(effective_bot_mode).strip().lower() == "general"
+            and _is_load_principles_trigger(current_user_message)
+        )
+        if add_principles_triggered:
+            created_doc = add_user_principle_insight(
+                user_id=str(user_id),
+                insight_text=add_principle_text,
+                source_mode=str(effective_bot_mode or "general"),
+                source_chat_session_id=(
+                    str(full_message_object.get("chat_session_id"))
+                    if isinstance(full_message_object, dict) and full_message_object.get("chat_session_id")
+                    else None
+                ),
+            )
+            _set_principles_memory_enabled(user_id, True)
+            loaded_after = load_user_insights(
+                user_id=str(user_id),
+                principle_only=True,
+                limit=int(os.environ.get("INSIGHT_PRINCIPLES_LIMIT", "5")),
+            )
+            if created_doc is not None:
+                assistant_content = (
+                    f'Principle added to memory ({len(loaded_after)} total): "{add_principle_text}".'
+                )
+            else:
+                assistant_content = "Could not add principle to memory."
+            _log_bot_user_output(
+                user_id,
+                assistant_content,
+                source_interface=source_interface,
+                bot_mode=str(effective_bot_mode or "unknown"),
+                stream=stream,
+            )
+            if message_object:
+                message_history_process(message_object, {"role": "assistant", "content": assistant_content})
+            if (
+                message_object
+                and (not stream or not callable(stream_callback))
+                and self._should_emit_chat_output(message_object)
+            ):
+                partial = message_object.copy()
+                partial["user_message"] = assistant_content
+                process_message_object(partial)
+            return assistant_content
+
+        if load_principles_triggered:
+            _set_principles_memory_enabled(user_id, True)
+            loaded = load_user_insights(
+                user_id=str(user_id),
+                principle_only=True,
+                limit=int(os.environ.get("INSIGHT_PRINCIPLES_LIMIT", "5")),
+            )
+            assistant_content = (
+                f"Loaded {len(loaded)} principle insights into memory."
+                if loaded
+                else "No principle insights found to load yet."
+            )
+            _log_bot_user_output(
+                user_id,
+                assistant_content,
+                source_interface=source_interface,
+                bot_mode=str(effective_bot_mode or "unknown"),
+                stream=stream,
+            )
+            if message_object:
+                message_history_process(message_object, {"role": "assistant", "content": assistant_content})
+            if (
+                message_object
+                and (not stream or not callable(stream_callback))
+                and self._should_emit_chat_output(message_object)
+            ):
+                partial = message_object.copy()
+                partial["user_message"] = assistant_content
+                process_message_object(partial)
+            return assistant_content
+
         self.combined_instructions = self.load_instructions(bot_mode=effective_bot_mode)
-        system_prompt = self.combined_instructions + self._build_frontend_context_note(message_object)
+        principles_note = ""
+        if (
+            str(effective_bot_mode).strip().lower() == "general"
+            and _is_principles_memory_enabled(user_id)
+        ):
+            principles_note = self._build_principles_context_note(
+                user_id=user_id,
+                source_mode=effective_bot_mode,
+            )
+        system_prompt = (
+            self.combined_instructions
+            + self._build_frontend_context_note(message_object)
+            + principles_note
+        )
         system_instruction = {"role": "system", "content": system_prompt}
 
         # Ensure messages is a proper list

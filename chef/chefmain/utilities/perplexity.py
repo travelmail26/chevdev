@@ -55,6 +55,68 @@ def search_perplexity(query, stream_callback=None, should_stop=None):
         }  # Get detailed reasoning tokens
     }
 
+    def _dedupe_urls(urls):
+        deduped = []
+        seen = set()
+        for raw in urls:
+            url = str(raw or "").strip()
+            if not url.startswith("http"):
+                continue
+            if url in seen:
+                continue
+            seen.add(url)
+            deduped.append(url)
+        return deduped
+
+    def _extract_urls_from_nonstream_payload(payload):
+        """Extract URLs from known Perplexity response fields."""
+        urls = []
+        if not isinstance(payload, dict):
+            return urls
+
+        # Common non-stream location from Perplexity.
+        for item in payload.get("search_results", []) or []:
+            if isinstance(item, dict):
+                url = item.get("url")
+                if isinstance(url, str):
+                    urls.append(url)
+
+        # Some responses include citations at top-level.
+        for citation in payload.get("citations", []) or []:
+            if isinstance(citation, str):
+                urls.append(citation)
+
+        # Some variants may include citations in assistant message metadata.
+        choices = payload.get("choices") or []
+        if choices:
+            msg = (choices[0] or {}).get("message") or {}
+            for key in ("citations", "sources", "references"):
+                for item in msg.get(key, []) or []:
+                    if isinstance(item, str):
+                        urls.append(item)
+                    elif isinstance(item, dict):
+                        val = item.get("url")
+                        if isinstance(val, str):
+                            urls.append(val)
+        return _dedupe_urls(urls)
+
+    def _fetch_citations_from_nonstream():
+        """One non-stream request to fetch stable citation URLs."""
+        fallback_data = dict(data)
+        fallback_data["stream"] = False
+        try:
+            fallback_response = requests.post(
+                "https://api.perplexity.ai/chat/completions",
+                headers=headers,
+                json=fallback_data,
+                timeout=120,
+            )
+            fallback_response.raise_for_status()
+            payload = fallback_response.json()
+            return _extract_urls_from_nonstream_payload(payload)
+        except Exception:
+            return []
+
     try:
         print("\n=== Streaming reasoning tokens: ===\n")
         response = requests.post(
@@ -92,12 +154,12 @@ def search_perplexity(query, stream_callback=None, should_stop=None):
                                 # Before example: streaming output lived only in local stdout.
                                 # After example:  streaming output can update a Telegram-edited message.
                                 stream_callback(full_content)
-                        # Handle citations - only add new ones
-                        if 'citations' in decoded_line:
-                            for citation in decoded_line['citations']:
-                                if citation not in seen_citations:
-                                    seen_citations.add(citation)
-                                    citations.append(citation)
+                        # Some stream chunks can include citations directly.
+                        chunk_citations = decoded_line.get('citations') or []
+                        for citation in _dedupe_urls(chunk_citations):
+                            if citation not in seen_citations:
+                                seen_citations.add(citation)
+                                citations.append(citation)
                 except json.JSONDecodeError:
                     # Skip lines that aren't JSON
                     continue
@@ -113,6 +175,14 @@ def search_perplexity(query, stream_callback=None, should_stop=None):
                 return "Stopped by user before first token.\n\n[Stopped by user]"
             return f"{partial_text}\n\n[Stopped by user]"
         
+        if not citations:
+            # Before example: content could contain [1][2] with no links appended.
+            # After example: do one non-stream metadata fetch and append stable search_result URLs.
+            for citation in _fetch_citations_from_nonstream():
+                if citation not in seen_citations:
+                    seen_citations.add(citation)
+                    citations.append(citation)
+
         # Create response_data structure matching the non-streaming format
         response_data = {
             'choices': [{

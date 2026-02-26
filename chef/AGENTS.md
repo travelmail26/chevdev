@@ -29,10 +29,16 @@
 ## General Memory Backfill (LLM)
 - Backfill script: `chef/chefmain/utilities/mongo_general_insights_backfill.py`.
 - Trigger behavior: non-blocking subprocess spawned during restart/mode-reset flow in `chef/chefmain/telegram_bot.py` (`_spawn_general_memory_backfill(limit=10)`).
-- Source scan: latest unsummarized general conversations from `chat_general.chat_general` by default.
+- Source scan: latest unsummarized conversations across all modes by default:
+  - `chef_chatbot.chat_sessions` (cheflog)
+  - `chef_dietlog.chat_dietlog_sessions` (dietlog)
+  - `chat_general.chat_general` (general)
 - Done marker: each processed source conversation gets `insight_general_hash` so backfill does not reprocess it.
 - Insight destination (default): `chat_general.insights_general`.
 - Preference destination (default): `chef_chatbot.preferences`.
+- Insight schema includes `principle` (boolean). `true` means an explicit user-defined principle/rule.
+- Runtime loader: `chef/chefmain/utilities/insight_memory.py` supports Mongo filter loading (`principle_only=True`).
+- `MessageRouter` appends filtered principle insights into system context as anchor reasoning.
 - Destination overrides:
   - Insights: `MONGODB_INSIGHTS_DB_NAME`, `MONGODB_INSIGHTS_COLLECTION_NAME`
   - Preferences: `MONGODB_PREFERENCES_DB_NAME`, `MONGODB_PREFERENCES_COLLECTION_NAME`
